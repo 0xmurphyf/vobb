@@ -1,0 +1,212 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String?   @unique
+  username      String    @unique
+  passwordHash  String?
+  guest         Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Game state
+  gold          Int       @default(1000)
+  gems          Int       @default(50)
+  stamina       Int       @default(100)
+  staminaMax    Int       @default(100)
+  staminaRegenAt DateTime @default(now())
+  level         Int       @default(1)
+  exp           Int       @default(0)
+  tutorialStep  Int       @default(0)
+
+  // Relations
+  characters    UserCharacter[]
+  teams         Team[]
+  pvpDefenses   PvpDefense[]
+  gachaHistory  GachaHistory[]
+  dailyTasks    UserDailyTask[]
+  loginHistory  LoginHistory[]
+
+  @@map("users")
+}
+
+model Character {
+  id            String   @id @default(cuid())
+  charId        String   @unique // e.g., "knight_001"
+  name          String
+  element       Element
+  rarity        Rarity
+  baseHp        Int
+  baseAtk       Int
+  baseDef       Int
+  baseSpd       Int
+  skillId       String?
+  passiveId     String?
+  createdAt     DateTime @default(now())
+
+  // Relations
+  userChars     UserCharacter[]
+  gachaPool     GachaPool[]
+
+  @@map("characters")
+}
+
+model UserCharacter {
+  id            String   @id @default(cuid())
+  userId        String
+  characterId   String
+  level         Int      @default(1)
+  exp           Int      @default(0)
+  star          Int      @default(1) // 1-5 star upgrades
+  skillLevel    Int      @default(1)
+  equipped      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user          User     @relation(fields: [userId], references: [id])
+  character     Character @relation(fields: [characterId], references: [id])
+
+  @@unique([userId, characterId])
+  @@index([userId])
+  @@map("user_characters")
+}
+
+model Team {
+  id            String   @id @default(cuid())
+  userId        String
+  name          String   @default("Team 1")
+  slot1         String?  // UserCharacter ID
+  slot2         String?
+  slot3         String?
+  slot4         String?
+  slot5         String?
+  isDefault     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user          User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@map("teams")
+}
+
+model GachaPool {
+  id            String   @id @default(cuid())
+  name          String   @default("Standard")
+  characterId   String
+  weight        Int      @default(1) // relative probability
+  guaranteedSr  Boolean  @default(false) // 10-pull guaranteed SR
+  active        Boolean  @default(true)
+  startsAt      DateTime @default(now())
+  endsAt        DateTime?
+
+  character     Character @relation(fields: [characterId], references: [id])
+
+  @@map("gacha_pools")
+}
+
+model GachaHistory {
+  id            String   @id @default(cuid())
+  userId        String
+  poolId        String
+  characterId   String
+  rarity        Rarity
+  pityCount     Int      // pity counter at time of pull
+  isPity        Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  user          User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@map("gacha_history")
+}
+
+model PvpDefense {
+  id            String   @id @default(cuid())
+  userId        String
+  teamSnapshot  Json     // frozen team state
+  rank          Int      @default(0)
+  wins          Int      @default(0)
+  losses        Int      @default(0)
+  seasonId      String
+  updatedAt     DateTime @updatedAt
+
+  user          User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, seasonId])
+  @@index([seasonId, rank])
+  @@map("pvp_defenses")
+}
+
+model PvpSeason {
+  id            String   @id @default(cuid())
+  name          String
+  startsAt      DateTime
+  endsAt        Json     // reward tiers
+  active        Boolean  @default(false)
+
+  @@map("pvp_seasons")
+}
+
+model Stage {
+  id            String   @id @default(cuid())
+  stageId       String   @unique
+  chapter       Int
+  number        Int
+  name          String
+  staminaCost   Int      @default(6)
+  enemies       Json     // array of enemy formations
+  rewards       Json     // first clear rewards
+  createdAt     DateTime @default(now())
+
+  @@map("stages")
+}
+
+model UserDailyTask {
+  id            String   @id @default(cuid())
+  userId        String
+  taskId        String
+  progress      Int      @default(0)
+  completed     Boolean  @default(false)
+  date          DateTime @default(now())
+
+  user          User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, taskId, date])
+  @@index([userId])
+  @@map("user_daily_tasks")
+}
+
+model LoginHistory {
+  id            String   @id @default(cuid())
+  userId        String
+  loginAt       DateTime @default(now())
+  ip            String?
+
+  user          User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@map("login_history")
+}
+
+enum Element {
+  FIRE
+  WATER
+  EARTH
+  DARK
+  LIGHT
+}
+
+enum Rarity {
+  N
+  R
+  SR
+  SSR
+}
