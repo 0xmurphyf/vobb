@@ -126,33 +126,14 @@ function getFactionMultiplier(attacker: string, defender: string): number {
 
 // ---- Damage Formulas ----
 
-/**
- * Damage Formula: ATK² / (ATK + DEF)
- *
- * Properties:
- * - Never 0 (as long as ATK > 0)
- * - DEF reduces damage but can't nullify it
- * - Scales smoothly: low ATK vs high DEF still deals ~10-20% of ATK
- *
- * Examples:
- * - ATK 100 vs DEF 50  → 10000/150  = 67
- * - ATK 100 vs DEF 200 → 10000/300  = 33
- * - ATK 100 vs DEF 500 → 10000/600  = 17
- * - ATK 200 vs DEF 50  → 40000/250  = 160
- * - ATK 200 vs DEF 200 → 40000/400  = 100
- *
- * Also: min 10% of ATK guaranteed (so even extreme mismatch deals *something*)
- */
+// Old formula: ATK - DEF×0.5, clamp to min 1
 function calculatePhysicalDamage(atk: number, def: number): number {
-  const raw = (atk * atk) / (atk + def);
-  const minimum = Math.floor(atk * 0.1);
-  return Math.max(minimum, Math.round(raw));
+  return Math.max(1, Math.floor(atk - def * 0.5));
 }
 
+// Wisdom variant: WIS×0.8 - DEF×0.3
 function calculateWisdomDamage(wis: number, def: number): number {
-  const raw = (wis * wis * 0.8) / (wis + def * 0.5);
-  const minimum = Math.floor(wis * 0.08);
-  return Math.max(minimum, Math.round(raw));
+  return Math.max(1, Math.floor(wis * 0.8 - def * 0.3));
 }
 
 // ---- Battle Engine ----
