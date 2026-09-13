@@ -84,6 +84,7 @@ model Character {
   baseWis         Int
   baseAgi         Int
   totalExp        Int      @default(0)
+  description     String?  @default("")
   growthId        String?
   skillId         String?
   passiveId       String?
