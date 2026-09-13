@@ -602,7 +602,7 @@ function renderChar(){
   const fb=document.getElementById('charFact');fb.textContent=ch.faction;fb.className='faction-badge '+(FCLASS[ch.faction]||'');
   // Power
   const pwr=Math.floor((c.currentHp||ch.baseHp||0)/10+(c.currentAtk||ch.baseAtk||0)*3+(c.currentDef||ch.baseDef||0)*2);
-  document.getElementById('powerVal').textContent=fmt(pwr);
+  document.getElementById('powerVal').textContent=fmtFull(pwr);
   // Stats - HP/ATK/DEF/WIS/AGI (actual game data)
   const st=[
     {n:'HP',v:c.currentHp||ch.baseHp||0,i:'❤️',c:'hp'},
