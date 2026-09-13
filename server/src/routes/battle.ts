@@ -40,7 +40,7 @@ async function battleRoutes(app: FastifyInstance) {
 
     const instances = await prisma.characterInstance.findMany({
       where: { id: { in: slotIds }, playerId },
-      include: { character: true },
+      include: { character: { include: { skill: true } } },
     });
 
     if (instances.length !== slotIds.length) {
@@ -61,7 +61,7 @@ async function battleRoutes(app: FastifyInstance) {
       def: inst.character.baseDef + inst.level * 1,
       wis: inst.character.baseWis + inst.level * 1,
       agi: inst.character.baseAgi + inst.level * 1,
-      skills: [],
+      skills: inst.character.skill ? [inst.character.skill.skillId] : [],
     }));
 
     // Build enemy team from stage config
@@ -103,7 +103,7 @@ async function battleRoutes(app: FastifyInstance) {
       maxTurns: 50,
       engineVersion: '0.1.0',
       factionCounter: {},
-    });
+    }, battleId);
 
     playerTeam.forEach((char, idx) => engine.addUnit(char, false, 0, idx));
     enemyTeam.forEach((char, idx) => engine.addUnit(char, true, 1, idx));
