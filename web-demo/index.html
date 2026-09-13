@@ -6,302 +6,291 @@
 <title>VOBB — Five Warlords</title>
 <style>
 :root {
-  --bg: #06060f; --bg2: #0c0c1a; --bg3: #12122a;
-  --s1: #181838; --s2: #1e1e48; --s3: #282860;
-  --bdr: #1e1e4a; --bdr2: #2a2a6a; --bdr3: #3a3a8a;
-  --t: #eee; --t2: #aab; --t3: #667;
-  --gold: #f4c430; --red: #ff3860; --green: #23d160;
-  --blue: #3298dc; --purple: #b86bff; --cyan: #00d1b2; --orange: #ff6b35; --pink: #ff3860;
-  --ssr: #f4c430; --sr: #b86bff; --r: #3298dc; --n: #667;
-  --fT: #b86bff; --fP: #ff6b35; --fW: #23d160; --fU: #3298dc; --fC: #ff3860;
+  --bg: #06060f;
+  --bg2: #0a0a1a;
+  --s1: #12122a;
+  --s2: #1a1a40;
+  --s3: #252560;
+  --bdr: #1e1e4a;
+  --bdr2: #2a2a6a;
+  --t: #eee;
+  --t2: #aab;
+  --t3: #667;
+  --gold: #f4c430;
+  --red: #ff3860;
+  --green: #23d160;
+  --blue: #3298dc;
+  --purple: #b86bff;
+  --cyan: #00d1b2;
+  --orange: #ff6b35;
+  --ssr: #f4c430;
+  --sr: #b86bff;
+  --r: #3298dc;
+  --n: #667;
+  --fT: #b86bff;
+  --fP: #ff6b35;
+  --fW: #23d160;
+  --fU: #3298dc;
+  --fC: #ff3860;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--t);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--t);min-height:100vh;overflow-x:hidden}
 button{font-family:inherit;cursor:pointer;border:none;outline:none;background:none;color:inherit}
-input{font-family:inherit;border:none;outline:none;background:none;color:inherit}
 .hidden{display:none!important}
 ::-webkit-scrollbar{width:3px;height:3px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:2px}
 
-/* FACTION EMBLEMS */
-.faction-emblem {
-  width: 60px; height: 60px;
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.faction-emblem.mirrored {
-  transform: scaleX(-1);
-}
-.faction-emblem svg {
-  width: 100%; height: 100%;
-  filter: drop-shadow(0 0 8px currentColor);
-}
-
-/* APP */
-.app{min-height:100vh;display:flex;flex-direction:column}
-
-/* TOP BAR */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:linear-gradient(180deg,rgba(18,18,42,.98),rgba(12,12,30,.95));border-bottom:1px solid var(--bdr);position:sticky;top:0;z-index:200;min-height:48px}
-.topbar-left{display:flex;align-items:center;gap:8px}
-.topbar-right{display:flex;align-items:center;gap:6px}
-.btn-icon{width:32px;height:32px;border-radius:8px;background:var(--s1);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--t2)}
-.btn-icon:active{background:var(--s2)}
-.topbar-title{font-size:.7rem;color:var(--t2);font-weight:600;letter-spacing:1px;text-transform:uppercase}
-.res{display:flex;align-items:center;gap:3px;padding:4px 8px;border-radius:14px;background:var(--s1);border:1px solid var(--bdr);font-size:.65rem;font-weight:700}
-.res.gems{color:var(--cyan)} .res.gold{color:var(--gold)} .res.stam{color:var(--green)}
-
-/* BOTTOM NAV */
-.botnav{display:flex;justify-content:space-around;padding:6px 0;background:linear-gradient(0deg,rgba(12,12,30,.98),rgba(12,12,30,.95));border-top:1px solid var(--bdr);position:sticky;bottom:0;z-index:200}
-.botnav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 12px;border-radius:8px;transition:all .2s}
-.botnav-btn.active{background:var(--s1)}
-.botnav-btn .icon{font-size:1.2rem;filter:grayscale(.5);opacity:.6;transition:all .2s}
-.botnav-btn.active .icon{filter:grayscale(0);opacity:1}
-.botnav-btn .label{font-size:.55rem;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-.botnav-btn.active .label{color:var(--gold)}
-
-/* SCREENS */
+/* ========== APP LAYOUT ========== */
+.app{display:flex;flex-direction:column;min-height:100vh;position:relative}
 .screen{flex:1;display:none;flex-direction:column}
 .screen.active{display:flex}
 
-/* LOGIN */
-#login-screen{align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(circle at 50% 30%,#1a1040 0%,#06060f 70%)}
-.login-logo{font-size:4rem;margin-bottom:12px;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-.login-title{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--gold),#fff,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:4px;margin-bottom:4px}
-.login-sub{font-size:.7rem;color:var(--t2);letter-spacing:2px;text-transform:uppercase;margin-bottom:32px}
-.login-btn{padding:14px 48px;border-radius:24px;font-size:.85rem;font-weight:700;letter-spacing:2px;background:linear-gradient(135deg,var(--gold),#e6a817);color:#000;box-shadow:0 4px 20px rgba(244,196,48,.3);text-transform:uppercase}
+/* ========== BACKGROUND LAYER ========== */
+.bg-layer{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.bg-gradient{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,#1a1040 0%,#0d0825 40%,#06060f 70%)}
+.bg-neon-1{position:absolute;top:-20%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(184,107,255,.08),transparent 60%);animation:pulse-neon 4s ease-in-out infinite alternate}
+.bg-neon-2{position:absolute;bottom:-10%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(0,209,178,.06),transparent 60%);animation:pulse-neon 5s ease-in-out infinite alternate 1s}
+.bg-fog{position:absolute;bottom:0;left:0;right:0;height:30%;background:linear-gradient(0deg,rgba(6,6,15,.95) 0%,transparent 100%)}
+.bg-particles{position:absolute;inset:0}
+.bg-particle{position:absolute;width:2px;height:2px;background:rgba(184,107,255,.3);border-radius:50%;animation:float-particle linear infinite}
+
+@keyframes pulse-neon{0%{opacity:.5;transform:scale(1)}100%{opacity:1;transform:scale(1.1)}}
+@keyframes float-particle{0%{transform:translateY(100vh) translateX(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100vh) translateX(50px);opacity:0}}
+
+/* ========== LOGIN SCREEN ========== */
+#login-screen{position:relative;z-index:10;align-items:center;justify-content:center;min-height:100vh}
+.login-content{text-align:center;z-index:2}
+.login-logo{font-size:5rem;animation:float-logo 3s ease-in-out infinite}
+@keyframes float-logo{0%,100%{transform:translateY(0);filter:drop-shadow(0 0 30px rgba(244,196,48,.4))}50%{transform:translateY(-10px);filter:drop-shadow(0 0 50px rgba(244,196,48,.6))}}
+.login-title{font-size:3rem;font-weight:900;background:linear-gradient(135deg,var(--gold),#fff,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:6px;margin:12px 0 8px}
+.login-sub{font-size:.8rem;color:var(--t2);letter-spacing:3px;text-transform:uppercase;margin-bottom:40px}
+.login-btn{padding:16px 56px;border-radius:30px;font-size:.9rem;font-weight:700;letter-spacing:3px;background:linear-gradient(135deg,var(--gold),#e6a817);color:#000;box-shadow:0 4px 30px rgba(244,196,48,.3);transition:all .3s;text-transform:uppercase}
+.login-btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 8px 40px rgba(244,196,48,.5)}
 .login-btn:active{transform:scale(.96)}
 
-/* HOME */
-.home-scroll{flex:1;overflow-y:auto;padding:12px}
-.home-hero{position:relative;padding:20px;border-radius:16px;background:linear-gradient(135deg,#1a1040,#0d0825);border:1px solid var(--bdr);margin-bottom:12px;overflow:hidden}
-.home-hero::before{content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;background:radial-gradient(circle,rgba(184,107,255,.3),transparent);border-radius:50%}
-.home-hero h2{font-size:1.1rem;font-weight:800;margin-bottom:4px}
-.home-hero p{font-size:.7rem;color:var(--t2)}
-.home-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
-.hstat{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:10px 8px;text-align:center}
-.hstat-val{font-size:1.2rem;font-weight:800}
-.hstat-lbl{font-size:.55rem;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
-.hstat:nth-child(1) .hstat-val{color:var(--gold)}
-.hstat:nth-child(2) .hstat-val{color:var(--cyan)}
-.hstat:nth-child(3) .hstat-val{color:var(--green)}
-.hstat:nth-child(4) .hstat-val{color:var(--purple)}
+/* ========== TOP BAR ========== */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:rgba(12,12,30,.85);border-bottom:1px solid var(--bdr);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.btn-icon{width:36px;height:36px;border-radius:10px;background:var(--s1);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--t2);transition:all .2s}
+.btn-icon:hover{background:var(--s2);border-color:var(--bdr2)}
+.topbar-title{font-size:.75rem;color:var(--t2);font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.res{display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:16px;background:var(--s1);border:1px solid var(--bdr);font-size:.7rem;font-weight:700}
+.res.gems{color:var(--cyan);border-color:rgba(0,209,178,.2)}
+.res.gold{color:var(--gold);border-color:rgba(244,196,48,.2)}
+.res.stam{color:var(--green);border-color:rgba(35,209,96,.2)}
 
-.home-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
-.haction{padding:14px;border-radius:12px;background:var(--s1);border:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;transition:all .2s}
-.haction:active{background:var(--s2);transform:scale(.97)}
-.haction .ha-icon{font-size:1.6rem}
-.haction .ha-name{font-size:.7rem;font-weight:700}
-.haction .ha-desc{font-size:.55rem;color:var(--t3)}
-.haction.primary{background:linear-gradient(135deg,rgba(50,152,220,.15),rgba(184,107,255,.15));border-color:var(--bdr2)}
-.haction.gacha{background:linear-gradient(135deg,rgba(244,196,48,.1),rgba(255,107,53,.1));border-color:var(--bdr2)}
+/* ========== CHARACTER SCREEN ========== */
+.char-screen{flex:1;display:flex;flex-direction:column;position:relative;z-index:1}
+.char-viewport{position:relative;width:100%;height:340px;overflow:hidden}
+.char-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(180,100,255,.12) 0%,transparent 50%)}
+.char-artwork{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:92%;z-index:2;filter:drop-shadow(0 0 40px rgba(180,100,255,.3));animation:char-idle 4s ease-in-out infinite}
+@keyframes char-idle{0%,100%{transform:translateX(-50%) translateY(0) scale(1)}50%{transform:translateX(-50%) translateY(-5px) scale(1.01)}}
+.char-glow{position:absolute;bottom:10%;left:50%;transform:translateX(-50%);width:120px;height:25px;background:radial-gradient(ellipse,rgba(180,100,255,.35),transparent 70%);filter:blur(8px);animation:glow-pulse 3s ease-in-out infinite}
+@keyframes glow-pulse{0%,100%{opacity:.7;transform:translateX(-50%) scaleX(1)}50%{opacity:1;transform:translateX(-50%) scaleX(1.1)}}
+.char-nameplate{position:absolute;bottom:0;left:0;right:0;padding:12px 16px;background:linear-gradient(0deg,rgba(0,0,0,.9) 0%,transparent 100%);z-index:3}
+.char-name{font-size:1.5rem;font-weight:800;color:#fff;text-shadow:0 0 20px rgba(0,0,0,.8)}
+.char-sub-row{display:flex;align-items:center;gap:8px;margin-top:3px}
+.char-stars{color:var(--gold);font-size:.8rem;letter-spacing:2px}
+.char-rar{padding:2px 8px;border-radius:6px;font-size:.6rem;font-weight:700;background:rgba(0,0,0,.5)}
+.char-rar.ssr{color:var(--ssr)} .char-rar.sr{color:var(--sr)} .char-rar.r{color:var(--r)}
+.char-lv{font-size:.85rem;font-weight:700;color:var(--cyan)}
+.char-exp{width:120px;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-top:4px}
+.char-exp-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:2px;transition:width .5s}
+.faction-badge{position:absolute;top:12px;right:12px;padding:4px 12px;border-radius:12px;font-size:.6rem;font-weight:700;letter-spacing:1px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);border:1px solid;z-index:4}
+.faction-badge.fT{color:var(--fT);border-color:var(--fT)}
+.faction-badge.fP{color:var(--fP);border-color:var(--fP)}
+.faction-badge.fW{color:var(--fW);border-color:var(--fW)}
+.faction-badge.fU{color:var(--fU);border-color:var(--fU)}
+.faction-badge.fC{color:var(--fC);border-color:var(--fC)}
 
-/* CHARACTERS */
-.char-layout{flex:1;display:flex;overflow:hidden}
-.roster{width:60px;flex-shrink:0;background:linear-gradient(180deg,rgba(16,16,36,.98),rgba(10,10,24,.98));border-right:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:4px;overflow-y:auto}
-.ri{width:44px;height:56px;border-radius:8px;background:var(--s1);border:2px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;transition:all .15s;flex-shrink:0}
-.ri:active{transform:scale(.92)}
-.ri.active{border-color:var(--gold);box-shadow:0 0 10px rgba(244,196,48,.25)}
-.ri-ava{font-size:1.2rem}
-.ri-lv{font-size:.5rem;font-weight:700;color:var(--t3)}
-.ri.active .ri-lv{color:var(--gold)}
-.ri-sep{width:28px;height:1px;background:var(--bdr);margin:2px 0;flex-shrink:0}
-.ri-sort{width:32px;height:32px;border-radius:50%;background:var(--s1);border:1px dashed var(--bdr);display:flex;align-items:center;justify-content:center;color:var(--t3);font-size:.7rem;margin-top:auto;flex-shrink:0}
+/* ========== CHARACTER ROSTER ========== */
+.roster{display:flex;gap:6px;padding:8px 12px;overflow-x:auto;background:rgba(10,10,24,.9);border-bottom:1px solid var(--bdr)}
+.roster-item{width:52px;height:68px;border-radius:10px;background:var(--s1);border:2px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;transition:all .2s;flex-shrink:0}
+.roster-item:hover{border-color:var(--bdr2);background:var(--s2)}
+.roster-item.active{border-color:var(--gold);box-shadow:0 0 12px rgba(244,196,48,.25)}
+.roster-ava{width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.roster-lv{font-size:.5rem;font-weight:700;color:var(--t3)}
+.roster-item.active .roster-lv{color:var(--gold)}
 
-.char-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.portrait{position:relative;width:100%;height:280px;background:linear-gradient(180deg,#0d0825,#1a1040,#0d0825);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
-.portrait::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 70%,rgba(180,100,255,.15) 0%,transparent 50%);pointer-events:none}
-.portrait-art{font-size:8rem;z-index:2;filter:drop-shadow(0 0 30px rgba(180,100,255,.4));animation:float 3s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.portrait-ov{position:absolute;bottom:0;left:0;right:0;padding:10px 12px;background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,transparent 100%)}
-.p-name{font-size:1.3rem;font-weight:800;color:#fff}
-.p-sub{font-size:.65rem;color:var(--t2);display:flex;align-items:center;gap:6px;margin-top:2px}
-.p-stars{color:var(--gold);font-size:.7rem;letter-spacing:1px}
-.p-rar{padding:1px 6px;border-radius:6px;font-size:.55rem;font-weight:700;background:rgba(255,255,255,.08)}
-.p-rar.ssr{color:var(--ssr)} .p-rar.sr{color:var(--sr)} .p-rar.r{color:var(--r)}
-.p-lv-row{display:flex;align-items:center;gap:6px;margin-top:3px}
-.p-lv{font-size:.75rem;font-weight:700;color:var(--cyan)}
-.p-exp{width:100px;height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
-.p-exp-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:2px}
-.faction-badg{position:absolute;top:10px;right:10px;padding:3px 10px;border-radius:10px;font-size:.55rem;font-weight:700;letter-spacing:1px;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);border:1px solid}
-.faction-badg.fT{color:var(--fT);border-color:var(--fT)}
-.faction-badg.fP{color:var(--fP);border-color:var(--fP)}
-.faction-badg.fW{color:var(--fW);border-color:var(--fW)}
-.faction-badg.fU{color:var(--fU);border-color:var(--fU)}
-.faction-badg.fC{color:var(--fC);border-color:var(--fC)}
-
-.char-detail{flex:1;overflow-y:auto;padding:10px 10px 10px 10px;display:flex;flex-direction:column;gap:8px}
-.tabs{display:flex;border-bottom:2px solid var(--bdr)}
-.tab{padding:7px 14px;font-size:.65rem;font-weight:600;color:var(--t3);position:relative}
-.tab.active{color:var(--t)}
-.tab.active::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--cyan)}
+/* ========== CHARACTER PANEL ========== */
+.char-panel{flex:1;overflow-y:auto;padding:12px;background:var(--bg2)}
+.char-tabs{display:flex;gap:0;border-bottom:2px solid var(--bdr);margin-bottom:12px}
+.char-tab{padding:8px 16px;font-size:.7rem;font-weight:600;color:var(--t3);position:relative;cursor:pointer;transition:color .2s}
+.char-tab.active{color:var(--t)}
+.char-tab.active::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--cyan)}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
 
-.power{display:flex;align-items:center;gap:8px;padding:8px 12px;background:linear-gradient(135deg,rgba(180,100,255,.1),rgba(0,200,255,.05));border:1px solid rgba(180,100,255,.15);border-radius:10px}
-.power-lbl{font-size:.55rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;font-weight:700}
-.power-val{font-size:1.6rem;font-weight:900;color:var(--gold);text-shadow:0 0 12px rgba(244,196,48,.25)}
+/* ========== POWER ========== */
+.power-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(135deg,rgba(180,100,255,.1),rgba(0,209,178,.05));border:1px solid rgba(180,100,255,.2);border-radius:12px;margin-bottom:10px}
+.power-label{font-size:.6rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;font-weight:700}
+.power-val{font-size:2rem;font-weight:900;color:var(--gold);text-shadow:0 0 15px rgba(244,196,48,.25)}
 
-.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
-.stat{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;padding:7px 3px;text-align:center}
-.stat-ic{font-size:.8rem;margin-bottom:1px}
-.stat-nm{font-size:.5rem;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:1px}
-.stat-vl{font-size:.75rem;font-weight:700}
-.stat-vl.hp{color:var(--green)} .stat-vl.atk{color:var(--red)} .stat-vl.def{color:var(--blue)} .stat-vl.spd{color:var(--cyan)} .stat-vl.crt{color:var(--orange)}
+/* ========== STATS ========== */
+.stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px}
+.stat-item{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:10px 6px;text-align:center}
+.stat-icon{font-size:1rem;margin-bottom:3px}
+.stat-name{font-size:.55rem;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
+.stat-val{font-size:.9rem;font-weight:700}
+.stat-val.hp{color:var(--green)} .stat-val.atk{color:var(--red)} .stat-val.def{color:var(--blue)} .stat-val.spd{color:var(--cyan)} .stat-val.crt{color:var(--orange)}
 
-.skills{display:flex;gap:6px;justify-content:space-between}
-.skill{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 3px;background:var(--s1);border:1px solid var(--bdr);border-radius:8px}
-.skill-ic{width:32px;height:32px;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:.9rem;border:2px solid var(--bdr2)}
-.skill-nm{font-size:.5rem;color:var(--t3);text-align:center}
-.skill-lv{font-size:.5rem;font-weight:700;color:var(--gold)}
+/* ========== ELEMENT CHART ========== */
+.elem-chart{display:flex;align-items:center;gap:8px;padding:10px;background:var(--s1);border:1px solid var(--bdr);border-radius:10px;margin-bottom:10px}
+.elem-group{display:flex;flex-direction:column;gap:4px}
+.elem-item{display:flex;align-items:center;gap:6px;font-size:.6rem}
+.elem-dot{width:8px;height:8px;border-radius:50%;background:var(--bdr)}
+.elem-dot.active{box-shadow:0 0 6px currentColor}
+.elem-dot.fire{background:var(--red);color:var(--red)}
+.elem-dot.wind{background:var(--cyan);color:var(--cyan)}
+.elem-dot.water{background:var(--blue);color:var(--blue)}
+.elem-dot.light{background:var(--gold);color:var(--gold)}
+.elem-dot.dark{background:var(--purple);color:var(--purple)}
+.elem-arrow{color:var(--t3);font-size:1.2rem}
 
-.equips{display:flex;gap:5px}
-.equip{flex:1;max-width:56px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;background:var(--s1);border:1px dashed var(--bdr);border-radius:8px}
-.equip.has{border-style:solid;border-color:var(--blue);background:linear-gradient(135deg,var(--s1),rgba(50,152,220,.08))}
-.equip-ic{font-size:1rem;opacity:.7}
-.equip.has .equip-ic{opacity:1}
-.equip-lv{font-size:.45rem;color:var(--t3)}
-.equip-st{font-size:.4rem;color:var(--gold);letter-spacing:.5px}
+/* ========== SKILLS ========== */
+.skills-row{display:flex;gap:8px;justify-content:space-between;margin-bottom:10px}
+.skill-card{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 6px;background:var(--s1);border:1px solid var(--bdr);border-radius:10px;transition:all .2s}
+.skill-card:hover{border-color:var(--purple);background:var(--s2)}
+.skill-icon{width:40px;height:40px;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;border:2px solid var(--bdr2)}
+.skill-name{font-size:.55rem;color:var(--t3);text-align:center}
+.skill-level{font-size:.55rem;font-weight:700;color:var(--gold)}
 
-.btn-upgrade{width:100%;padding:11px;border-radius:10px;font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;box-shadow:0 3px 12px rgba(180,100,255,.25)}
+/* ========== EQUIPMENT ========== */
+.equips-row{display:flex;gap:6px;justify-content:space-between;margin-bottom:10px}
+.equip-slot{flex:1;max-width:64px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--s1);border:1px dashed var(--bdr);border-radius:10px;transition:all .2s}
+.equip-slot.has{border-style:solid;border-color:var(--blue);background:linear-gradient(135deg,var(--s1),rgba(50,152,220,.08))}
+.equip-icon{font-size:1.3rem;opacity:.6}
+.equip-slot.has .equip-icon{opacity:1}
+.equip-lv{font-size:.5rem;color:var(--t3)}
+.equip-stars{font-size:.45rem;color:var(--gold);letter-spacing:.5px}
+
+/* ========== UPGRADE BUTTON ========== */
+.btn-upgrade{width:100%;padding:13px;border-radius:12px;font-size:.85rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;box-shadow:0 4px 15px rgba(180,100,255,.25);transition:all .2s}
+.btn-upgrade:hover{transform:translateY(-2px);box-shadow:0 6px 25px rgba(180,100,255,.4)}
 .btn-upgrade:active{transform:scale(.97)}
 
-.char-bot{display:flex;justify-content:center;gap:20px;padding:8px 10px;background:var(--bg2);border-top:1px solid var(--bdr)}
-.cbot{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 12px;border-radius:8px}
-.cbot:active{background:var(--s1)}
-.cbot-ic{width:32px;height:32px;border-radius:50%;background:var(--s1);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:.9rem}
-.cbot-lbl{font-size:.5rem;color:var(--t3);font-weight:600}
+/* ========== BOTTOM ACTIONS ========== */
+.bottom-actions{display:flex;justify-content:space-around;padding:10px 16px;background:rgba(12,12,30,.9);border-top:1px solid var(--bdr);position:sticky;bottom:0;z-index:50}
+.bot-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 14px;border-radius:10px;transition:all .15s}
+.bot-btn:active{background:var(--s1)}
+.bot-icon{width:36px;height:36px;border-radius:50%;background:var(--s1);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:1rem}
+.bot-label{font-size:.55rem;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 
-/* BATTLE */
-.battle-list{flex:1;overflow-y:auto;padding:10px}
-.bl-section{margin-bottom:12px}
-.bl-title{font-size:.7rem;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;padding-left:4px}
+/* ========== OTHER SCREENS ========== */
+.page-scroll{flex:1;overflow-y:auto;padding:12px}
+.page-title{font-size:.75rem;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+
+/* ========== BATTLE LIST ========== */
+.bl-section{margin-bottom:16px}
+.bl-title{font-size:.7rem;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;padding-left:4px}
 .bl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.stage-card{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:12px;cursor:pointer;transition:all .15s;position:relative;overflow:hidden}
-.stage-card:active{background:var(--s2);transform:scale(.97)}
-.stage-card.locked{opacity:.4;pointer-events:none}
-.stage-num{position:absolute;top:6px;right:8px;font-size:.55rem;color:var(--t3);font-weight:700}
-.stage-name{font-size:.8rem;font-weight:700;margin-bottom:3px}
-.stage-cost{font-size:.6rem;color:var(--green)}
-.stage-diff{margin-top:4px;display:flex;gap:2px}
-.diff-dot{width:6px;height:6px;border-radius:50%;background:var(--bdr)}
-.diff-dot.filled{background:var(--gold)}
+.stage-card{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:14px;cursor:pointer;transition:all .2s;position:relative}
+.stage-card:active{transform:scale(.96);background:var(--s2)}
+.stage-num{position:absolute;top:8px;right:10px;font-size:.55rem;color:var(--t3);font-weight:700}
+.stage-name{font-size:.85rem;font-weight:700;margin-bottom:4px}
+.stage-cost{font-size:.65rem;color:var(--green)}
+.stage-diff{margin-top:6px;display:flex;gap:3px}
+.diff-dot{width:7px;height:7px;border-radius:50%;background:var(--bdr)}
+.diff-dot.filled{background:var(--gold);box-shadow:0 0 4px var(--gold)}
 
+/* ========== GACHA ========== */
+.gacha-banner{width:100%;max-width:360px;margin:0 auto 16px;background:linear-gradient(135deg,#1a1040,#252060);border:1px solid var(--bdr2);border-radius:20px;padding:24px;text-align:center;position:relative;overflow:hidden}
+.gacha-banner::before{content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;background:radial-gradient(circle,rgba(244,196,48,.12),transparent);border-radius:50%}
+.gacha-banner h2{font-size:1.3rem;font-weight:800;margin-bottom:4px}
+.gacha-banner p{font-size:.7rem;color:var(--t2)}
+.gacha-rates{display:flex;justify-content:center;gap:8px;margin:10px 0;flex-wrap:wrap}
+.gacha-rates span{font-size:.65rem;padding:3px 10px;border-radius:8px;background:rgba(0,0,0,.3);font-weight:700}
+.gacha-info{width:100%;max-width:360px;margin:0 auto 16px;background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:12px}
+.gacha-info-row{display:flex;justify-content:space-between;font-size:.75rem;padding:4px 0}
+.gacha-info-row .lbl{color:var(--t3)}
+.gacha-info-row .val{font-weight:700;color:var(--gold)}
+.gacha-btns{width:100%;max-width:360px;margin:0 auto;display:flex;gap:10px}
+.gacha-btn{flex:1;padding:14px;border-radius:12px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.gacha-btn.single{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff}
+.gacha-btn.multi{background:linear-gradient(135deg,var(--gold),var(--orange));color:#000}
+.gacha-btn:active{transform:scale(.96)}
+.gacha-btn:disabled{opacity:.4;pointer-events:none}
+.gacha-result{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.gacha-card{width:70px;height:90px;border-radius:10px;padding:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--s1);border:1px solid var(--bdr2);animation:pop .4s ease-out}
+@keyframes pop{from{opacity:0;transform:scale(.5) rotateY(90deg)}to{opacity:1;transform:scale(1) rotateY(0)}}
+.gc-icon{font-size:1.8rem}
+.gc-name{font-size:.55rem;font-weight:700;margin-top:4px;text-align:center}
+.gc-rar{font-size:.55rem;font-weight:700;margin-top:2px}
+
+/* ========== CODEX ========== */
+.codex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.codex-card{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:12px 8px;text-align:center}
+.cc-ava{font-size:2rem}
+.cc-name{font-size:.7rem;font-weight:700;margin-top:4px}
+.cc-rar{font-size:.6rem;font-weight:700;margin-top:2px}
+.cc-fact{font-size:.55rem;color:var(--t3);margin-top:2px}
+
+/* ========== FORMATION ========== */
+.form-slots{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.f-slot{aspect-ratio:1;border:2px dashed var(--bdr);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;transition:all .2s}
+.f-slot:active{background:var(--s1)}
+.f-slot.filled{border-style:solid;border-color:var(--blue);background:var(--s1)}
+.fs-name{font-size:.65rem;font-weight:700}
+.fs-lv{font-size:.5rem;color:var(--t3)}
+.fs-empty{font-size:.55rem;color:var(--t3)}
+.form-title{font-size:.7rem;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.form-chars{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.f-char{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .15s}
+.f-char:active{transform:scale(.95);background:var(--s2)}
+.fc-ava{font-size:1.5rem}
+.fc-nm{font-size:.6rem;font-weight:700;margin-top:3px}
+.fc-lv{font-size:.5rem;color:var(--t3)}
+.form-save{width:100%;padding:13px;border-radius:12px;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;background:linear-gradient(135deg,var(--green),var(--cyan));color:#000;margin-top:16px}
+
+/* ========== BATTLE ARENA ========== */
 .battle-arena{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.ba-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--s1);border-bottom:1px solid var(--bdr)}
-.ba-timer{font-size:.7rem;color:var(--t2);font-weight:700}
-.ba-field{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:10px;overflow-y:auto;background:linear-gradient(180deg,#0d0825,#12122a,#0d0825)}
-.ba-team{display:flex;gap:6px;justify-content:center}
-.ba-team.enemy{flex-wrap:wrap;gap:4px}
-.ba-unit{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 8px;background:var(--s1);border:1px solid var(--bdr);border-radius:8px;min-width:52px;position:relative}
+.ba-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--s1);border-bottom:1px solid var(--bdr)}
+.ba-timer{font-size:.75rem;color:var(--t2);font-weight:700}
+.ba-field{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:12px;background:linear-gradient(180deg,#0d0825,#12122a,#0d0825);overflow-y:auto}
+.ba-team{display:flex;gap:8px;justify-content:center}
+.ba-team.enemy{flex-wrap:wrap;gap:6px}
+.ba-unit{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 10px;background:var(--s1);border:1px solid var(--bdr);border-radius:10px;min-width:60px;position:relative}
 .ba-unit.dead{opacity:.3}
-.ba-unit.act{border-color:var(--cyan);box-shadow:0 0 8px rgba(0,209,178,.3)}
-.ba-u-ava{font-size:1.4rem}
-.ba-u-nm{font-size:.55rem;font-weight:700;max-width:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ba-u-hp{width:100%;height:3px;background:var(--bdr);border-radius:2px;overflow:hidden;margin-top:2px}
+.ba-unit.act{border-color:var(--cyan);box-shadow:0 0 10px rgba(0,209,178,.3)}
+.ba-u-ava{font-size:1.6rem}
+.ba-u-nm{font-size:.55rem;font-weight:700;max-width:55px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
+.ba-u-hp{width:100%;height:4px;background:var(--bdr);border-radius:2px;overflow:hidden;margin-top:3px}
 .ba-u-hp-fill{height:100%;background:var(--green);border-radius:2px;transition:width .3s}
-.ba-vs{display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:900;color:var(--gold);padding:4px 0}
-.ba-log{flex:1;background:var(--s1);border:1px solid var(--bdr);border-radius:8px;padding:8px;margin:6px 0;overflow-y:auto;font-size:.65rem;line-height:1.5;max-height:120px}
-.ba-log-entry{padding:1px 0;border-bottom:1px solid rgba(255,255,255,.03)}
+.ba-vs{display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;color:var(--gold);padding:6px 0}
+.ba-log{flex:1;background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:10px;margin:8px 0;overflow-y:auto;font-size:.65rem;line-height:1.6;max-height:140px}
+.ba-log-entry{padding:2px 0;border-bottom:1px solid rgba(255,255,255,.03)}
 .ba-log-entry.dmg{color:var(--red)} .ba-log-entry.heal{color:var(--green)} .ba-log-entry.skill{color:var(--purple)} .ba-log-entry.death{color:var(--orange)}
-.ba-actions{display:flex;gap:6px;padding:8px 10px;background:var(--s1);border-top:1px solid var(--bdr)}
-.ba-btn{flex:1;padding:10px;border-radius:8px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.ba-actions{display:flex;gap:8px;padding:10px 12px;background:var(--s1);border-top:1px solid var(--bdr)}
+.ba-btn{flex:1;padding:12px;border-radius:10px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
 .ba-btn.atk{background:linear-gradient(135deg,var(--red),var(--orange));color:#fff}
 .ba-btn.skill{background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff}
 .ba-btn.auto{background:var(--s2);color:var(--t2);border:1px solid var(--bdr)}
 .ba-btn:active{transform:scale(.95)}
 
-/* GACHA */
-.gacha-scroll{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;align-items:center}
-.gacha-banner{width:100%;max-width:360px;background:linear-gradient(135deg,#1a1040,#252060);border:1px solid var(--bdr2);border-radius:16px;padding:20px;text-align:center;margin-bottom:12px;position:relative;overflow:hidden}
-.gacha-banner::before{content:'';position:absolute;top:-40%;right:-20%;width:150px;height:150px;background:radial-gradient(circle,rgba(244,196,48,.15),transparent);border-radius:50%}
-.gacha-banner h2{font-size:1.2rem;font-weight:800;margin-bottom:4px}
-.gacha-banner p{font-size:.65rem;color:var(--t2)}
-.gacha-rates{display:flex;justify-content:center;gap:6px;margin:8px 0;flex-wrap:wrap}
-.gacha-rates span{font-size:.6rem;padding:2px 8px;border-radius:6px;background:rgba(0,0,0,.3);font-weight:700}
-.gacha-rates .ssr{color:var(--ssr)} .gacha-rates .sr{color:var(--sr)} .gacha-rates .r{color:var(--r)} .gacha-rates .n{color:var(--n)}
-.gacha-info{width:100%;max-width:360px;background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:10px;margin-bottom:12px}
-.gacha-info-row{display:flex;justify-content:space-between;font-size:.7rem;padding:3px 0}
-.gacha-info-row .lbl{color:var(--t3)}
-.gacha-info-row .val{font-weight:700;color:var(--gold)}
-.gacha-btns{width:100%;max-width:360px;display:flex;gap:8px}
-.gacha-btn{flex:1;padding:12px;border-radius:10px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.gacha-btn.single{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff}
-.gacha-btn.multi{background:linear-gradient(135deg,var(--gold),var(--orange));color:#000}
-.gacha-btn:active{transform:scale(.96)}
-.gacha-btn:disabled{opacity:.4;pointer-events:none}
-
-.gacha-result{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;width:100%;max-width:360px}
-.gacha-card{width:64px;height:80px;border-radius:8px;padding:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;animation:pop .4s ease-out}
-@keyframes pop{from{opacity:0;transform:scale(.5) rotateY(90deg)}to{opacity:1;transform:scale(1) rotateY(0)}}
-.gacha-card .gc-ic{font-size:1.5rem}
-.gacha-card .gc-nm{font-size:.5rem;font-weight:700;margin-top:2px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
-.gacha-card .gc-rar{font-size:.5rem;font-weight:700;margin-top:1px}
-
-/* FORMATION */
-.form-scroll{flex:1;overflow-y:auto;padding:12px}
-.form-slots{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px}
-.f-slot{aspect-ratio:1;border:2px dashed var(--bdr);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;transition:all .15s}
-.f-slot:active{background:var(--s1)}
-.f-slot.filled{border-style:solid;border-color:var(--blue);background:var(--s1)}
-.f-slot .fs-nm{font-size:.65rem;font-weight:700}
-.f-slot .fs-lv{font-size:.5rem;color:var(--t3)}
-.f-slot .fs-empty{font-size:.55rem;color:var(--t3)}
-.form-title{font-size:.7rem;font-weight:700;color:var(--t2);text-transform:uppercase;letter:.5px;margin-bottom:6px}
-.form-chars{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.f-char{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;padding:8px 6px;text-align:center;cursor:pointer;transition:all .15s}
-.f-char:active{background:var(--s2);transform:scale(.95)}
-.f-char .fc-ava{font-size:1.3rem}
-.f-char .fc-nm{font-size:.6rem;font-weight:700;margin-top:2px}
-.f-char .fc-lv{font-size:.5rem;color:var(--t3)}
-.form-save{width:100%;padding:11px;border-radius:10px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;background:linear-gradient(135deg,var(--green),var(--cyan));color:#000;margin-top:12px}
-
-/* CODEX */
-.codex-scroll{flex:1;overflow-y:auto;padding:12px}
-.codex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.codex-card{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:10px 8px;text-align:center}
-.codex-card .cc-ava{font-size:1.8rem}
-.codex-card .cc-nm{font-size:.7rem;font-weight:700;margin-top:3px}
-.codex-card .cc-rar{font-size:.55rem;font-weight:700;margin-top:1px}
-.codex-card .cc-fact{font-size:.5rem;color:var(--t3);margin-top:1px}
-
-/* LOADING */
+/* ========== LOADING & TOAST ========== */
 .loading{position:fixed;inset:0;background:rgba(6,6,15,.92);display:flex;align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(8px)}
-.loading div{width:28px;height:28px;border:3px solid var(--bdr);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
+.loading div{width:32px;height:32px;border:3px solid var(--bdr);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* TOAST */
-.toast{position:fixed;top:56px;left:50%;transform:translateX(-50%);padding:7px 18px;border-radius:7px;background:var(--s2);border:1px solid var(--gold);font-size:.7rem;z-index:1001;animation:slide .25s}
-@keyframes slide{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);padding:8px 20px;border-radius:8px;background:var(--s2);border:1px solid var(--gold);font-size:.75rem;z-index:1001;animation:slideDown .25s}
+@keyframes slideDown{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 .toast.err{border-color:var(--red)} .toast.ok{border-color:var(--green)}
 
-/* Faction Warlord Display */
-.warlord-display {
-  display: flex;
-  gap: 6px;
-  justify-content: center;
-  padding: 8px;
-  background: var(--s1);
-  border-radius: 10px;
-  margin-bottom: 8px;
+/* ========== RESPONSIVE ========== */
+@media(min-width:768px){
+  .char-viewport{height:420px}
+  .char-artwork{height:90%}
+  .login-title{font-size:4rem}
+  .power-val{font-size:2.5rem}
 }
-.warlord-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 6px 8px;
-  border-radius: 8px;
-  background: var(--s2);
-  border: 1px solid var(--bdr);
-  min-width: 52px;
+@media(min-width:1024px){
+  .char-screen{flex-direction:row}
+  .char-viewport{width:55%;height:auto}
+  .char-panel-wrapper{width:45%;display:flex;flex-direction:column}
+  .char-panel{flex:1}
 }
-.warlord-item .w-ic { font-size: 1.2rem; }
-.warlord-item .w-nm { font-size: .5rem; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -310,21 +299,33 @@ input{font-family:inherit;border:none;outline:none;background:none;color:inherit
   <!-- Loading -->
   <div class="loading hidden" id="loading"><div></div></div>
 
-  <!-- Login -->
+  <!-- Background Layer -->
+  <div class="bg-layer">
+    <div class="bg-gradient"></div>
+    <div class="bg-neon-1"></div>
+    <div class="bg-neon-2"></div>
+    <div class="bg-fog"></div>
+    <div class="bg-particles" id="bgParticles"></div>
+  </div>
+
+  <!-- Login Screen -->
   <div class="screen active" id="login-screen">
-    <div class="login-logo">⚔️</div>
-    <div class="login-title">VOBB</div>
-    <div class="login-sub">Five Warlords</div>
-    <button class="login-btn" onclick="guestLogin()">Enter as Guest</button>
+    <div class="login-content">
+      <div class="login-logo">⚔️</div>
+      <div class="login-title">VOBB</div>
+      <div class="login-sub">Five Warlords</div>
+      <button class="login-btn" onclick="guestLogin()">Enter as Guest</button>
+    </div>
   </div>
 
   <!-- Main App -->
-  <div id="main-app" style="flex:1;display:none;flex-direction:column">
+  <div id="main-app" style="flex:1;display:none;flex-direction:column;position:relative;z-index:1">
+
     <!-- Top Bar -->
     <div class="topbar" id="topbar">
       <div class="topbar-left">
         <button class="btn-icon" onclick="goHome()">🏠</button>
-        <span class="topbar-title" id="tb-title">Home</span>
+        <span class="topbar-title" id="tb-title">Character</span>
       </div>
       <div class="topbar-right">
         <div class="res gems"><span>💎</span><span id="gems">0</span></div>
@@ -333,111 +334,77 @@ input{font-family:inherit;border:none;outline:none;background:none;color:inherit
       </div>
     </div>
 
-    <!-- Screens -->
-    <div class="screen active" id="s-home">
-      <div class="home-scroll">
-        <div class="home-hero">
-          <h2>Welcome, Hunter</h2>
-          <p>Five Warlords. Five Answers. One destiny.</p>
+    <!-- Character Screen -->
+    <div class="screen active" id="s-char">
+      <div class="char-screen">
+        <!-- Viewport -->
+        <div class="char-viewport">
+          <div class="char-bg"></div>
+          <div class="char-artwork" id="charArt">🧬</div>
+          <div class="char-glow"></div>
+          <div class="char-nameplate">
+            <div class="char-name" id="charName">—</div>
+            <div class="char-sub-row">
+              <span class="char-stars" id="charStars">★★★★★</span>
+              <span class="char-rar" id="charRar">SSR</span>
+              <span class="char-lv" id="charLv">Lv.1</span>
+            </div>
+            <div class="char-exp"><div class="char-exp-fill" id="charExp" style="width:0%"></div></div>
+          </div>
+          <div class="faction-badge" id="charFact">TRANSCENDENT</div>
         </div>
-        <div class="home-stats">
-          <div class="hstat"><div class="hstat-val" id="hs-chars">0</div><div class="hstat-lbl">Characters</div></div>
-          <div class="hstat"><div class="hstat-val" id="hs-lv">1</div><div class="hstat-lbl">Player Lv</div></div>
-          <div class="hstat"><div class="hstat-val" id="hs-stg">0</div><div class="hstat-lbl">Stages</div></div>
-          <div class="hstat"><div class="hstat-val" id="hs-pwr">0</div><div class="hstat-lbl">Max Power</div></div>
+        <!-- Roster -->
+        <div class="roster" id="roster"></div>
+        <!-- Panel -->
+        <div class="char-panel" id="charPanel">
+          <div class="char-tabs">
+            <button class="char-tab active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
+            <button class="char-tab" data-tab="skills" onclick="switchTab('skills')">Skills</button>
+            <button class="char-tab" data-tab="equip" onclick="switchTab('equip')">Equipment</button>
+            <button class="char-tab" data-tab="evo" onclick="switchTab('evo')">Evolution</button>
+          </div>
+          <!-- Overview -->
+          <div class="tab-panel active" id="tab-overview">
+            <div class="power-bar"><span class="power-label">POWER</span><span class="power-val" id="powerVal">0</span></div>
+            <div class="stats-grid" id="statsGrid"></div>
+            <div class="elem-chart" id="elemChart"></div>
+            <div class="skills-row" id="skillsRow"></div>
+            <div class="equips-row" id="equipsRow"></div>
+            <button class="btn-upgrade" onclick="upgrade()">⬆ Upgrade</button>
+          </div>
+          <div class="tab-panel" id="tab-skills"><div style="color:var(--t3);font-size:.7rem;padding:20px;text-align:center">Coming soon</div></div>
+          <div class="tab-panel" id="tab-equip"><div style="color:var(--t3);font-size:.7rem;padding:20px;text-align:center">Coming soon</div></div>
+          <div class="tab-panel" id="tab-evo"><div style="color:var(--t3);font-size:.7rem;padding:20px;text-align:center">Coming soon</div></div>
         </div>
-        <div class="home-actions">
-          <button class="haction primary" onclick="showScreen('s-battle')">
-            <span class="ha-icon">⚔️</span><span class="ha-name">Battle</span><span class="ha-desc">Clear stages</span>
-          </button>
-          <button class="haction gacha" onclick="showScreen('s-gacha')">
-            <span class="ha-icon">🎰</span><span class="ha-name">Gacha</span><span class="ha-desc">Summon allies</span>
-          </button>
-          <button class="haction" onclick="showScreen('s-chars')">
-            <span class="ha-icon">👥</span><span class="ha-name">Characters</span><span class="ha-desc">Manage team</span>
-          </button>
-          <button class="haction" onclick="showScreen('s-formation')">
-            <span class="ha-icon">🛡️</span><span class="ha-name">Formation</span><span class="ha-desc">Set lineup</span>
-          </button>
-        </div>
-        <!-- Five Warlords Display -->
-        <div class="warlord-display">
-          <div class="warlord-item"><span class="w-ic">🧬</span><span class="w-nm">TRANS</span></div>
-          <div class="warlord-item"><span class="w-ic">⚔️</span><span class="w-nm">PURIST</span></div>
-          <div class="warlord-item"><span class="w-ic">🐺</span><span class="w-nm">WILD</span></div>
-          <div class="warlord-item"><span class="w-ic">👁️</span><span class="w-nm">UNKWN</span></div>
-          <div class="warlord-item"><span class="w-ic">🤖</span><span class="w-nm">CYBER</span></div>
+        <!-- Bottom Actions -->
+        <div class="bottom-actions">
+          <button class="bot-btn" onclick="showScreen('s-formation')"><div class="bot-icon">🛡️</div><span class="bot-label">Formation</span></button>
+          <button class="bot-btn" onclick="toast('Locked')"><div class="bot-icon">🔒</div><span class="bot-label">Lock</span></button>
+          <button class="bot-btn" onclick="toast('Story')"><div class="bot-icon">📖</div><span class="bot-label">Story</span></button>
+          <button class="bot-btn" onclick="showScreen('s-battle')"><div class="bot-icon">⚔️</div><span class="bot-label">Battle</span></button>
         </div>
       </div>
     </div>
 
-    <!-- Characters -->
-    <div class="screen" id="s-chars">
-      <div class="char-layout">
-        <aside class="roster" id="roster"></aside>
-        <div class="char-main">
-          <div class="portrait">
-            <div class="portrait-art" id="art">🧬</div>
-            <div class="portrait-ov">
-              <div class="p-name" id="name">—</div>
-              <div class="p-sub">
-                <span class="p-stars" id="stars">★★★★★</span>
-                <span class="p-rar" id="rar">SSR</span>
-                <span id="title">—</span>
-              </div>
-              <div class="p-lv-row">
-                <span class="p-lv" id="lv">Lv.1</span>
-                <div class="p-exp"><div class="p-exp-fill" id="expbar" style="width:0%"></div></div>
-              </div>
-            </div>
-            <div class="faction-badg" id="fact">TRANSCENDENT</div>
-          </div>
-          <div class="char-detail">
-            <div class="tabs">
-              <button class="tab active" data-t="overview" onclick="switchTab('overview')">Overview</button>
-              <button class="tab" data-t="skills" onclick="switchTab('skills')">Skills</button>
-              <button class="tab" data-t="equip" onclick="switchTab('equip')">Equipment</button>
-              <button class="tab" data-t="evo" onclick="switchTab('evo')">Evolution</button>
-            </div>
-            <div class="tab-panel active" id="p-overview">
-              <div class="power"><span class="power-lbl">POWER</span><span class="power-val" id="power">0</span></div>
-              <div class="stats" id="stats"></div>
-              <div class="skills" id="skills"></div>
-              <div class="equips" id="equips"></div>
-              <button class="btn-upgrade" style="margin-top:8px" onclick="upgrade()">⬆ Upgrade</button>
-            </div>
-            <div class="tab-panel" id="p-skills"><div style="font-size:.7rem;color:var(--t3);padding:10px">Coming soon</div></div>
-            <div class="tab-panel" id="p-equip"><div style="font-size:.7rem;color:var(--t3);padding:10px">Coming soon</div></div>
-            <div class="tab-panel" id="p-evo"><div style="font-size:.7rem;color:var(--t3);padding:10px">Coming soon</div></div>
-          </div>
-          <div class="char-bot">
-            <button class="cbot" onclick="showScreen('s-formation')"><div class="cbot-ic">🛡️</div><span class="cbot-lbl">Formation</span></button>
-            <button class="cbot" onclick="toast('Locked')"><div class="cbot-ic">🔒</div><span class="cbot-lbl">Lock</span></button>
-            <button class="cbot" onclick="toast('Story')"><div class="cbot-ic">📖</div><span class="cbot-lbl">Story</span></button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Battle -->
+    <!-- Battle Screen -->
     <div class="screen" id="s-battle">
-      <div class="battle-list" id="battle-list"></div>
+      <div class="page-scroll" id="battleList"></div>
     </div>
 
-    <!-- Battle Arena (overlay) -->
+    <!-- Battle Arena -->
     <div class="screen" id="s-arena">
       <div class="battle-arena">
         <div class="ba-header">
           <button class="btn-icon" onclick="exitArena()">✕</button>
-          <span class="ba-timer" id="ba-timer">⏱ 0:00</span>
-          <span style="font-size:.65rem;color:var(--t2);font-weight:700" id="ba-stage-name">Stage</span>
+          <span class="ba-timer" id="baTimer">⏱ 0:00</span>
+          <span style="font-size:.7rem;color:var(--t2);font-weight:700" id="baStageName">Stage</span>
         </div>
         <div class="ba-field">
-          <div class="ba-team enemy" id="ba-enemy"></div>
+          <div class="ba-team enemy" id="baEnemy"></div>
           <div class="ba-vs">⚔️</div>
-          <div class="ba-team" id="ba-player"></div>
+          <div class="ba-team" id="baPlayer"></div>
         </div>
-        <div class="ba-log" id="ba-log"></div>
+        <div class="ba-log" id="baLog"></div>
         <div class="ba-actions">
           <button class="ba-btn atk" onclick="baAction('atk')">Attack</button>
           <button class="ba-btn skill" onclick="baAction('skill')">Skill</button>
@@ -446,64 +413,52 @@ input{font-family:inherit;border:none;outline:none;background:none;color:inherit
       </div>
     </div>
 
-    <!-- Gacha -->
+    <!-- Gacha Screen -->
     <div class="screen" id="s-gacha">
-      <div class="gacha-scroll">
+      <div class="page-scroll" style="display:flex;flex-direction:column;align-items:center;padding-top:20px">
         <div class="gacha-banner">
           <h2>🎰 The Awakening</h2>
           <p>Summon characters aligned with the Five Warlords</p>
-          <div class="gacha-rates">
-            <span class="ssr">SSR 1%</span><span class="sr">SR 4%</span><span class="r">R 25%</span><span class="n">N 70%</span>
-          </div>
+          <div class="gacha-rates"><span style="color:var(--ssr)">SSR 1%</span><span style="color:var(--sr)">SR 4%</span><span style="color:var(--r)">R 25%</span><span style="color:var(--n)">N 70%</span></div>
         </div>
         <div class="gacha-info">
-          <div class="gacha-info-row"><span class="lbl">Pity Count</span><span class="val" id="gacha-pity">0</span></div>
+          <div class="gacha-info-row"><span class="lbl">Pity Count</span><span class="val" id="gachaPity">0</span></div>
           <div class="gacha-info-row"><span class="lbl">SR Guarantee</span><span class="val">at 30</span></div>
           <div class="gacha-info-row"><span class="lbl">SSR Guarantee</span><span class="val">at 90</span></div>
         </div>
         <div class="gacha-btns">
-          <button class="gacha-btn single" id="btn-pull-1" onclick="doGacha('single')">Single<br><span style="font-size:.6rem;font-weight:400">300💎</span></button>
-          <button class="gacha-btn multi" id="btn-pull-10" onclick="doGacha('multi')">Multi<br><span style="font-size:.6rem;font-weight:400">2700💎</span></button>
+          <button class="gacha-btn single" id="btnPull1" onclick="doGacha('single')">Single<br><span style="font-size:.6rem;font-weight:400">300💎</span></button>
+          <button class="gacha-btn multi" id="btnPull10" onclick="doGacha('multi')">Multi<br><span style="font-size:.6rem;font-weight:400">2700💎</span></button>
         </div>
-        <div class="gacha-result" id="gacha-result"></div>
+        <div class="gacha-result" id="gachaResult"></div>
       </div>
     </div>
 
-    <!-- Formation -->
+    <!-- Formation Screen -->
     <div class="screen" id="s-formation">
-      <div class="form-scroll">
+      <div class="page-scroll">
         <div class="form-title">Formation (5 Slots)</div>
-        <div class="form-slots" id="form-slots"></div>
+        <div class="form-slots" id="formSlots"></div>
         <div class="form-title">Available Characters</div>
-        <div class="form-chars" id="form-chars"></div>
+        <div class="form-chars" id="formChars"></div>
         <button class="form-save" onclick="saveFormation()">💾 Save Formation</button>
       </div>
     </div>
 
-    <!-- Codex -->
+    <!-- Codex Screen -->
     <div class="screen" id="s-codex">
-      <div class="codex-scroll">
-        <div class="codex-grid" id="codex-grid"></div>
+      <div class="page-scroll">
+        <div class="page-title">All Characters</div>
+        <div class="codex-grid" id="codexGrid"></div>
       </div>
     </div>
 
     <!-- Bottom Nav -->
-    <div class="botnav" id="botnav">
-      <button class="botnav-btn active" data-s="s-home" onclick="showScreen('s-home')">
-        <span class="icon">🏠</span><span class="label">Home</span>
-      </button>
-      <button class="botnav-btn" data-s="s-chars" onclick="showScreen('s-chars')">
-        <span class="icon">👥</span><span class="label">Chars</span>
-      </button>
-      <button class="botnav-btn" data-s="s-battle" onclick="showScreen('s-battle')">
-        <span class="icon">⚔️</span><span class="label">Battle</span>
-      </button>
-      <button class="botnav-btn" data-s="s-gacha" onclick="showScreen('s-gacha')">
-        <span class="icon">🎰</span><span class="label">Gacha</span>
-      </button>
-      <button class="botnav-btn" data-s="s-codex" onclick="showScreen('s-codex')">
-        <span class="icon">📖</span><span class="label">Codex</span>
-      </button>
+    <div class="bottom-nav" id="bottomNav" style="display:flex;justify-content:space-around;padding:8px 0;background:rgba(12,12,30,.95);border-top:1px solid var(--bdr);position:sticky;bottom:0;z-index:50">
+      <button class="nav-btn active" data-screen="s-char" onclick="showScreen('s-char')"><span style="font-size:1.3rem">👤</span><span style="font-size:.55rem;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px">Char</span></button>
+      <button class="nav-btn" data-screen="s-battle" onclick="showScreen('s-battle')"><span style="font-size:1.3rem">⚔️</span><span style="font-size:.55rem;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px">Battle</span></button>
+      <button class="nav-btn" data-screen="s-gacha" onclick="showScreen('s-gacha')"><span style="font-size:1.3rem">🎰</span><span style="font-size:.55rem;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px">Gacha</span></button>
+      <button class="nav-btn" data-screen="s-codex" onclick="showScreen('s-codex')"><span style="font-size:1.3rem">📖</span><span style="font-size:.55rem;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px">Codex</span></button>
     </div>
   </div>
 </div>
@@ -511,20 +466,12 @@ input{font-family:inherit;border:none;outline:none;background:none;color:inherit
 <script>
 const API='/api';
 const EMOJI={TRANSCENDENT:'🧬',PURIST:'⚔️',WILD:'🐺',UNKNOWN:'👁️',CYBERIST:'🤖'};
-const FACTION_IMAGES={TRANSCENDENT:'/assets/factions/warlord_1.png',PURIST:'/assets/factions/warlord_2.png',WILD:'/assets/factions/warlord_3.png',UNKNOWN:'/assets/factions/warlord_4.png',CYBERIST:'/assets/factions/warlord_5.png'};
-const FACTION_NAMES={TRANSCENDENT:'TRANS',PURIST:'PURIST',WILD:'WILD',UNKNOWN:'UNKNOWN',CYBERIST:'CYBER'};
 const FCLASS={TRANSCENDENT:'fT',PURIST:'fP',WILD:'fW',UNKNOWN:'fU',CYBERIST:'fC'};
 const STARS={SSR:5,SR:4,R:3,N:2};
 
-function factionImg(f,size='60px'){
-  const src=FACTION_IMAGES[f]||FACTION_IMAGES.TRANSCENDENT;
-  return `<img src="${src}" style="width:${size};height:${size};object-fit:contain;filter:drop-shadow(0 0 10px ${factionColor(f)});" alt="${f}">`;
-}
-function factionColor(f){return {TRANSCENDENT:'#b86bff',PURIST:'#ff6b35',WILD:'#23d160',UNKNOWN:'#3298dc',CYBERIST:'#ff3860'}[f]||'#888'}
-
 let state={accessToken:null,refreshToken:null,player:null,chars:[],allChars:[],idx:0,formation:[null,null,null,null,null],stages:[],pity:0,battle:null,timer:null};
 
-// API
+// === API ===
 async function api(p,o={}){
   const h={'Content-Type':'application/json',...o.headers};
   if(state.accessToken)h['Authorization']='Bearer '+state.accessToken;
@@ -533,13 +480,14 @@ async function api(p,o={}){
   const d=await r.json();if(!r.ok)throw new Error(d.message||d.error||'Error');return d;
 }
 
-// Auth
+// === Auth ===
 async function guestLogin(){
   showLoading();
   try{
     const d=await api('/auth/guest',{method:'POST',body:JSON.stringify({playerName:'Hunter'})});
     state.accessToken=d.accessToken;state.refreshToken=d.refreshToken;state.player=d.player||d.user?.player;
-    document.getElementById('login-screen').style.display='none';
+    state.chars=state.player?.characterInstances||[];
+    document.getElementById('login-screen').classList.remove('active');
     document.getElementById('main-app').style.display='flex';
     await loadAll();
   }catch(e){toast(e.message,'err')}
@@ -551,14 +499,13 @@ async function refresh(){
   catch{return false}
 }
 
-// Load Data
+// === Load Data ===
 async function loadAll(){
-  try{state.player=await api('/player/me')}catch(e){}
-  try{state.chars=await api('/characters/mine')}catch(e){state.chars=[]}
+  try{state.player=await api('/player/me');state.chars=state.player.characterInstances||[]}catch(e){}
   try{state.allChars=await api('/characters')}catch(e){state.allChars=[]}
   try{state.stages=await api('/stages')}catch(e){state.stages=[]}
   try{const p=await api('/gacha/pity');state.pity=p.count||0}catch(e){}
-  renderRes();renderHome();renderChars();renderBattle();renderGacha();renderCodex();
+  renderRes();renderChar();renderBattle();renderGacha();renderCodex();
 }
 
 function renderRes(){
@@ -571,43 +518,36 @@ function renderRes(){
 
 function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toString()}
 
-// Navigation
+// === Navigation ===
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.botnav-btn').forEach(b=>b.classList.toggle('active',b.dataset.s===id));
-  const titles={'s-home':'Home','s-chars':'Characters','s-battle':'Battle','s-gacha':'Gacha','s-codex':'Codex','s-formation':'Formation','s-arena':'Battle'};
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.screen===id));
+  const titles={'s-char':'Character','s-battle':'Battle','s-gacha':'Gacha','s-codex':'Codex','s-formation':'Formation','s-arena':'Battle'};
   document.getElementById('tb-title').textContent=titles[id]||'';
-  document.getElementById('botnav').style.display=(id==='s-arena')?'none':'flex';
+  const isArena=id==='s-arena';
+  document.getElementById('topbar').style.display=isArena?'none':'flex';
+  document.getElementById('bottomNav').style.display=isArena?'none':'flex';
 }
 
-function goHome(){showScreen('s-home')}
+function goHome(){showScreen('s-char')}
 
-// Home
-function renderHome(){
-  document.getElementById('hs-chars').textContent=state.chars.length;
-  document.getElementById('hs-lv').textContent=state.player?.level||1;
-  document.getElementById('hs-stg').textContent=state.stages.length;
-  let maxP=0;
-  state.chars.forEach(c=>{const ch=c.character||c;maxP=Math.max(maxP,(c.currentHp||ch.baseHp||0)/10+(c.currentAtk||ch.baseAtk||0)*3+(c.currentDef||ch.baseDef||0)*2)});
-  document.getElementById('hs-pwr').textContent=fmt(maxP);
-}
-
-// Characters
-function renderChars(){
+// === Character ===
+function renderChar(){
   const c=state.chars[state.idx];if(!c)return;
   const ch=c.character||c;
-  document.getElementById('art').innerHTML=factionImg(ch.faction);
-  document.getElementById('name').textContent=ch.name;
-  document.getElementById('title').textContent=ch.title||ch.name;
-  document.getElementById('rar').textContent=ch.rarity;
-  document.getElementById('rar').className='p-rar '+(ch.rarity||'').toLowerCase();
-  document.getElementById('stars').textContent='★'.repeat(STARS[ch.rarity]||3);
-  document.getElementById('lv').textContent='Lv.'+(c.level||1)+'/60';
-  document.getElementById('expbar').style.width=Math.min(100,((c.exp||0)/(c.expMax||100))*100)+'%';
-  const fb=document.getElementById('fact');fb.textContent=ch.faction;fb.className='faction-badg '+(FCLASS[ch.faction]||'');
-  const pwr=Math.floor((c.currentHp||ch.baseHp||1000)/10+(c.currentAtk||ch.baseAtk||100)*3+(c.currentDef||ch.baseDef||100)*2);
-  document.getElementById('power').textContent=fmt(pwr);
+  document.getElementById('charArt').textContent=EMOJI[ch.faction]||'❓';
+  document.getElementById('charName').textContent=ch.name;
+  document.getElementById('charRar').textContent=ch.rarity;
+  document.getElementById('charRar').className='char-rar '+(ch.rarity||'').toLowerCase();
+  document.getElementById('charStars').textContent='★'.repeat(STARS[ch.rarity]||3);
+  document.getElementById('charLv').textContent='Lv.'+(c.level||1)+'/60';
+  document.getElementById('charExp').style.width=Math.min(100,((c.exp||0)/(c.expMax||100))*100)+'%';
+  const fb=document.getElementById('charFact');fb.textContent=ch.faction;fb.className='faction-badge '+(FCLASS[ch.faction]||'');
+  // Power
+  const pwr=Math.floor((c.currentHp||ch.baseHp||0)/10+(c.currentAtk||ch.baseAtk||0)*3+(c.currentDef||ch.baseDef||0)*2);
+  document.getElementById('powerVal').textContent=fmt(pwr);
+  // Stats
   const st=[
     {n:'HP',v:c.currentHp||ch.baseHp||0,i:'❤️',c:'hp'},
     {n:'ATK',v:c.currentAtk||ch.baseAtk||0,i:'⚔️',c:'atk'},
@@ -615,45 +555,38 @@ function renderChars(){
     {n:'SPD',v:c.currentAgi||ch.baseAgi||0,i:'⚡',c:'spd'},
     {n:'CRIT',v:(c.crit||15)+'%',i:'💥',c:'crt'},
   ];
-  document.getElementById('stats').innerHTML=st.map(s=>`<div class="stat"><div class="stat-ic">${s.i}</div><div class="stat-nm">${s.n}</div><div class="stat-vl ${s.c}">${fmt(s.v)}</div></div>`).join('');
-  const sk=[
-    {n:'Normal',i:'⚔️',l:c.skillLv||3},
-    {n:'Skill 1',i:'🔮',l:c.skillLv||3},
-    {n:'Skill 2',i:'💫',l:Math.max(1,(c.skillLv||3)-1)},
-    {n:'Ultimate',i:'✨',l:Math.max(1,(c.skillLv||3)-2)},
-  ];
-  document.getElementById('skills').innerHTML=sk.map(s=>`<div class="skill"><div class="skill-ic">${s.i}</div><div class="skill-nm">${s.n}</div><div class="skill-lv">Lv.${s.l}</div></div>`).join('');
+  document.getElementById('statsGrid').innerHTML=st.map(s=>`<div class="stat-item"><div class="stat-icon">${s.i}</div><div class="stat-name">${s.n}</div><div class="stat-val ${s.c}">${fmt(s.v)}</div></div>`).join('');
+  // Element chart (pentagon placeholder)
+  document.getElementById('elemChart').innerHTML=`<div class="elem-group"><div class="elem-item"><div class="elem-dot fire active"></div>Fire</div><div class="elem-item"><div class="elem-dot wind active"></div>Wind</div><div class="elem-item"><div class="elem-dot water"></div>Water</div></div><div class="elem-arrow">⚔️</div><div class="elem-group"><div class="elem-item"><div class="elem-dot light"></div>Light</div><div class="elem-item"><div class="elem-dot dark active"></div>Dark</div></div>`;
+  // Skills
+  const sk=[{n:'Normal',i:'⚔️',l:c.skillLevel||3},{n:'Skill 1',i:'🔮',l:c.skillLevel||3},{n:'Skill 2',i:'💫',l:Math.max(1,(c.skillLevel||3)-1)},{n:'Ultimate',i:'✨',l:Math.max(1,(c.skillLevel||3)-2)}];
+  document.getElementById('skillsRow').innerHTML=sk.map(s=>`<div class="skill-card"><div class="skill-icon">${s.i}</div><div class="skill-name">${s.n}</div><div class="skill-level">Lv.${s.l}</div></div>`).join('');
+  // Equipment
   const eq=[{i:'⚔️',l:40,s:2},{i:'🪖',l:35,s:3},{i:'💍',l:30,s:3},{i:'👢',l:28,s:3}];
-  document.getElementById('equips').innerHTML=eq.map(e=>`<div class="equip has"><div class="equip-ic">${e.i}</div><div class="equip-lv">Lv.${e.l}</div><div class="equip-st">${'★'.repeat(e.s)}</div></div>`).join('');
-  document.getElementById('roster').innerHTML=state.chars.map((rc,i)=>{const rch=rc.character||rc;return `<div class="ri ${i===state.idx?'active':''}" onclick="selectChar(${i})"><div class="ri-ava">${factionImg(rch.faction,'30px')}</div><div class="ri-lv">Lv.${rc.level||1}</div></div>`}).join('')+'<div class="ri-sep"></div><div class="ri-sort" onclick="sortRoster()">⇅</div>';
+  document.getElementById('equipsRow').innerHTML=eq.map(e=>`<div class="equip-slot has"><div class="equip-icon">${e.i}</div><div class="equip-lv">Lv.${e.l}</div><div class="equip-stars">${'★'.repeat(e.s)}</div></div>`).join('');
+  // Roster
+  document.getElementById('roster').innerHTML=state.chars.map((rc,i)=>{const rch=rc.character||rc;return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})"><div class="roster-ava">${EMOJI[rch.faction]||'❓'}</div><div class="roster-lv">Lv.${rc.level||1}</div></div>`}).join('');
 }
 
-function selectChar(i){state.idx=i;renderChars()}
-function sortRoster(){state.chars.sort((a,b)=>(b.level||1)-(a.level||1));renderChars()}
+function selectChar(i){state.idx=i;renderChar()}
 function switchTab(t){
-  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.t===t));
-  ['overview','skills','equip','evo'].forEach(x=>document.getElementById('p-'+x).classList.toggle('active',x===t));
+  document.querySelectorAll('.char-tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===t));
+  ['overview','skills','equip','evo'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active',x===t));
 }
 function upgrade(){toast('Coming soon')}
 
-// Battle
+// === Battle ===
 function renderBattle(){
-  const el=document.getElementById('battle-list');
+  const el=document.getElementById('battleList');
   if(!state.stages.length){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--t3)">No stages available</div>';return}
-  let html='';
-  const chapters={};
+  let html='';const chapters={};
   state.stages.forEach(s=>{if(!chapters[s.chapter])chapters[s.chapter]=[];chapters[s.chapter].push(s)});
   Object.keys(chapters).sort((a,b)=>a-b).forEach(ch=>{
     html+=`<div class="bl-section"><div class="bl-title">Chapter ${ch}</div><div class="bl-grid">`;
     chapters[ch].forEach(s=>{
-      html+=`<div class="stage-card" onclick="startBattle('${s.id}')">
-        <div class="stage-num">${s.number}</div>
-        <div class="stage-name">${s.name}</div>
-        <div class="stage-cost">⚡ ${s.staminaCost}</div>
-        <div class="stage-diff">${[1,2,3,4,5].map(i=>`<div class="diff-dot ${i<=s.difficulty?'filled':''}"></div>`).join('')}</div>
-      </div>`;
+      html+=`<div class="stage-card" onclick="startBattle('${s.id}')"><div class="stage-num">${s.number}</div><div class="stage-name">${s.name}</div><div class="stage-cost">⚡ ${s.staminaCost}</div><div class="stage-diff">${[1,2,3,4,5].map(i=>`<div class="diff-dot ${i<=s.difficulty?'filled':''}"></div>`).join('')}</div></div>`;
     });
-    html+='</div></div>';
+    html+='</div></div>`;
   });
   el.innerHTML=html;
 }
@@ -669,43 +602,31 @@ function startBattle(stageId){
   showScreen('s-arena');
   renderArena();
   if(state.timer)clearInterval(state.timer);
-  state.timer=setInterval(()=>{state.battle.time++;const m=Math.floor(state.battle.time/60),s=state.battle.time%60;document.getElementById('ba-timer').textContent=`⏱ ${m}:${s.toString().padStart(2,'0')}`},1000);
+  state.timer=setInterval(()=>{state.battle.time++;const m=Math.floor(state.battle.time/60),sc=state.battle.time%60;document.getElementById('baTimer').textContent=`⏱ ${m}:${sc.toString().padStart(2,'0')}`},1000);
 }
 
 function renderArena(){
   const b=state.battle;if(!b)return;
-  document.getElementById('ba-stage-name').textContent=b.stage.name;
-  document.getElementById('ba-player').innerHTML=b.playerUnits.map((u,i)=>`
-    <div class="ba-unit ${!u.alive?'dead':''} ${b.activeUnit===i&&b.turn==='player'?'act':''}" onclick="selectUnit(${i})">
-      <div class="ba-u-ava">${factionImg(u.faction,'30px')}</div>
-      <div class="ba-u-nm">${u.name}</div>
-      <div class="ba-u-hp"><div class="ba-u-hp-fill" style="width:${(u.hp/u.maxHp)*100}%"></div></div>
-    </div>
-  `).join('');
-  document.getElementById('ba-enemy').innerHTML=b.enemyUnits.map((u,i)=>`
-    <div class="ba-unit ${!u.alive?'dead':''}" onclick="targetEnemy(${i})">
-      <div class="ba-u-ava">${factionImg(u.faction,'30px')}</div>
-      <div class="ba-u-nm">${u.name}</div>
-      <div class="ba-u-hp"><div class="ba-u-hp-fill" style="width:${(u.hp/u.maxHp)*100}%"></div></div>
-    </div>
-  `).join('');
-  document.getElementById('ba-log').innerHTML=b.log.map(e=>`<div class="ba-log-entry ${e.type}">${e.msg}</div>`).join('')||'<div style="color:var(--t3)">Battle Start!</div>';
-  document.getElementById('ba-log').scrollTop=document.getElementById('ba-log').scrollHeight;
+  document.getElementById('baStageName').textContent=b.stage.name;
+  document.getElementById('baPlayer').innerHTML=b.playerUnits.map((u,i)=>`<div class="ba-unit ${!u.alive?'dead':''} ${b.activeUnit===i&&b.turn==='player'?'act':''}" onclick="selectUnit(${i})"><div class="ba-u-ava">${EMOJI[u.faction]||'❓'}</div><div class="ba-u-nm">${u.name}</div><div class="ba-u-hp"><div class="ba-u-hp-fill" style="width:${(u.hp/u.maxHp)*100}%"></div></div></div>`).join('');
+  document.getElementById('baEnemy').innerHTML=b.enemyUnits.map((u,i)=>`<div class="ba-unit ${!u.alive?'dead':''}" onclick="targetEnemy(${i})"><div class="ba-u-ava">${EMOJI[u.faction]||'❓'}</div><div class="ba-u-nm">${u.name}</div><div class="ba-u-hp"><div class="ba-u-hp-fill" style="width:${(u.hp/u.maxHp)*100}%"></div></div></div>`).join('');
+  document.getElementById('baLog').innerHTML=b.log.map(e=>`<div class="ba-log-entry ${e.type}">${e.msg}</div>`).join('')||'<div style="color:var(--t3)">Battle Start!</div>';
+  document.getElementById('baLog').scrollTop=document.getElementById('baLog').scrollHeight;
   b.activeUnit=b.playerUnits.findIndex(u=>u.alive);
   b.targetEnemy=b.enemyUnits.findIndex(u=>u.alive);
 }
 
-function selectUnit(i){if(state.battle&&state.battle.playerUnits[i].alive){state.battle.activeUnit=i;renderArena()}}
-function targetEnemy(i){if(state.battle&&state.battle.enemyUnits[i].alive){state.battle.targetEnemy=i;renderArena()}}
+function selectUnit(i){if(state.battle.playerUnits[i].alive){state.battle.activeUnit=i;renderArena()}}
+function targetEnemy(i){if(state.battle.enemyUnits[i].alive){state.battle.targetEnemy=i;renderArena()}}
 
 function baAction(type){
   const b=state.battle;if(!b||b.turn!=='player')return;
   const u=b.playerUnits[b.activeUnit];if(!u||!u.alive)return;
   const t=b.enemyUnits[b.targetEnemy];if(!t||!t.alive)return;
   let dmg=0;let msg='';
-  if(type==='atk'){dmg=Math.max(1,u.atk-Math.floor(t.def*0.5));t.hp=Math.max(0,t.hp-dmg);msg=`${u.name} attacks ${t.name} for ${dmg} damage!`;b.log.push({type:'dmg',msg})}
-  else if(type==='skill'){dmg=Math.max(1,Math.floor(u.atk*1.5)-Math.floor(t.def*0.3));t.hp=Math.max(0,t.hp-dmg);msg=`${u.name} uses Skill on ${t.name} for ${dmg} damage!`;b.log.push({type:'skill',msg})}
-  if(t.hp<=0){t.alive=false;msg+=` ${t.name} defeated!`;b.log.push({type:'death',msg:`${t.name} defeated!`})}
+  if(type==='atk'){dmg=Math.max(1,u.atk-Math.floor(t.def*0.5));t.hp=Math.max(0,t.hp-dmg);b.log.push({type:'dmg',msg:`${u.name} attacks ${t.name} for ${dmg} damage!`})}
+  else if(type==='skill'){dmg=Math.max(1,Math.floor(u.atk*1.5)-Math.floor(t.def*0.3));t.hp=Math.max(0,t.hp-dmg);b.log.push({type:'skill',msg:`${u.name} uses Skill on ${t.name} for ${dmg} damage!`})}
+  if(t.hp<=0){t.alive=false;b.log.push({type:'death',msg:`${t.name} defeated!`})}
   b.targetEnemy=b.enemyUnits.findIndex(x=>x.alive);
   if(b.targetEnemy===-1){endBattle(true);return}
   b.turn='enemy';renderArena();
@@ -735,64 +656,47 @@ function endBattle(win){
   clearInterval(state.timer);
   state.battle.log.push({type:'skill',msg:win?'🎉 Victory!':'💀 Defeated...'});
   renderArena();
-  setTimeout(()=>{
-    if(win)toast('Victory! +1000 Gold','ok');
-    else toast('Defeated. Try again.','err');
-    setTimeout(()=>{exitArena();loadAll()},1500);
-  },1000);
+  setTimeout(()=>{if(win)toast('Victory! +1000 Gold','ok');else toast('Defeated. Try again.','err');setTimeout(()=>{exitArena();loadAll()},1500)},1000);
 }
 
-function exitArena(){
-  if(state.timer)clearInterval(state.timer);
-  state.battle=null;
-  showScreen('s-battle');
-}
+function exitArena(){if(state.timer)clearInterval(state.timer);state.battle=null;showScreen('s-battle')}
 
-// Gacha
-function renderGacha(){
-  document.getElementById('gacha-pity').textContent=state.pity;
-}
+// === Gacha ===
+function renderGacha(){document.getElementById('gachaPity').textContent=state.pity}
 
 async function doGacha(type){
   const cost=type==='multi'?2700:300;
   const gems=state.player?.currencies?.find(c=>c.type==='gems');
   if(!gems||gems.amount<cost){toast('Not enough gems!','err');return}
-  document.getElementById('btn-pull-1').disabled=true;
-  document.getElementById('btn-pull-10').disabled=true;
+  document.getElementById('btnPull1').disabled=true;
+  document.getElementById('btnPull10').disabled=true;
   showLoading();
   try{
     const result=await api('/gacha/pull',{method:'POST',body:JSON.stringify({poolId:'default',pullType:type})});
-    const resDiv=document.getElementById('gacha-result');
-    resDiv.innerHTML=result.results.map((r,i)=>`
-      <div class="gacha-card" style="background:var(--s1);border:1px solid var(--bdr2);animation-delay:${i*0.08}s">
-        <div class="gc-ic">${factionImg(r.faction,'30px')}</div>
-        <div class="gc-nm">${r.name}</div>
-        <div class="gc-rar" style="color:var(--${r.rarity==='SSR'?'ssr':r.rarity==='SR'?'sr':r.rarity==='R'?'r':'n'})">${r.rarity}</div>
-      </div>
-    `).join('');
-    state.pity++;
-    document.getElementById('gacha-pity').textContent=state.pity;
+    const resDiv=document.getElementById('gachaResult');
+    resDiv.innerHTML=result.results.map((r,i)=>`<div class="gacha-card" style="animation-delay:${i*0.08}s"><div class="gc-icon">${EMOJI[r.faction]||'❓'}</div><div class="gc-name">${r.name}</div><div class="gc-rar" style="color:var(--${r.rarity==='SSR'?'ssr':r.rarity==='SR'?'sr':r.rarity==='R'?'r':'n'})">${r.rarity}</div></div>`).join('');
+    state.pity++;document.getElementById('gachaPity').textContent=state.pity;
     await loadAll();
   }catch(e){toast(e.message,'err')}
   hideLoading();
-  document.getElementById('btn-pull-1').disabled=false;
-  document.getElementById('btn-pull-10').disabled=false;
+  document.getElementById('btnPull1').disabled=false;
+  document.getElementById('btnPull10').disabled=false;
 }
 
-// Formation
+// === Formation ===
 function renderFormation(){
-  document.getElementById('form-slots').innerHTML=state.formation.map((sid,i)=>{
+  document.getElementById('formSlots').innerHTML=state.formation.map((sid,i)=>{
     const c=sid?state.chars.find(x=>x.id===sid):null;
-    if(c){const ch=c.character||c;return `<div class="f-slot filled" onclick="removeSlot(${i})"><div class="fs-nm">${ch.name}</div><div class="fs-lv">Lv.${c.level||1}</div></div>`}
+    if(c){const ch=c.character||c;return `<div class="f-slot filled" onclick="removeSlot(${i})"><div class="fs-name">${ch.name}</div><div class="fs-lv">Lv.${c.level||1}</div></div>`}
     return `<div class="f-slot" onclick="pickSlot(${i})"><div class="fs-empty">Slot ${i+1}</div></div>`;
   }).join('');
   const used=state.formation.filter(Boolean);
   const avail=state.chars.filter(c=>!used.includes(c.id));
-  document.getElementById('form-chars').innerHTML=avail.map(c=>{const ch=c.character||c;return `<div class="f-char" onclick="addToSlot('${c.id}')"><div class="fc-ava">${factionImg(ch.faction)}</div><div class="fc-nm">${ch.name}</div><div class="fc-lv">Lv.${c.level||1}</div></div>`}).join('')||'<div style="grid-column:1/-1;color:var(--t3);font-size:.7rem">All characters in formation</div>';
+  document.getElementById('formChars').innerHTML=avail.map(c=>{const ch=c.character||c;return `<div class="f-char" onclick="addToSlot('${c.id}')"><div class="fc-ava">${EMOJI[ch.faction]||'❓'}</div><div class="fc-nm">${ch.name}</div><div class="fc-lv">Lv.${c.level||1}</div></div>`}).join('')||'<div style="grid-column:1/-1;color:var(--t3);font-size:.7rem">All characters in formation</div>';
 }
 
 let pickingSlot=-1;
-function pickSlot(i){pickingSlot=i;renderFormation();document.getElementById('form-chars').style.opacity='1'}
+function pickSlot(i){pickingSlot=i;renderFormation()}
 function addToSlot(charId){
   if(pickingSlot<0){const empty=state.formation.findIndex(s=>!s);if(empty===-1){toast('Formation full','err');return}state.formation[empty]=charId}
   else{state.formation[pickingSlot]=charId;pickingSlot=-1}
@@ -807,22 +711,29 @@ async function saveFormation(){
   }catch(e){toast('Saved locally','ok')}
 }
 
-// Codex
+// === Codex ===
 function renderCodex(){
-  document.getElementById('codex-grid').innerHTML=state.allChars.map(c=>`
-    <div class="codex-card">
-      <div class="cc-ava">${factionImg(c.faction,'40px')}</div>
-      <div class="cc-nm">${c.name}</div>
-      <div class="cc-rar" style="color:var(--${c.rarity==='SSR'?'ssr':c.rarity==='SR'?'sr':c.rarity==='R'?'r':'n'})">${c.rarity}</div>
-      <div class="cc-fact">${c.faction}</div>
-    </div>
-  `).join('')||'<div style="grid-column:1/-1;color:var(--t3);text-align:center;padding:20px">No data</div>';
+  document.getElementById('codexGrid').innerHTML=state.allChars.map(c=>`<div class="codex-card"><div class="cc-ava">${EMOJI[c.faction]||'❓'}</div><div class="cc-nm">${c.name}</div><div class="cc-rar" style="color:var(--${c.rarity==='SSR'?'ssr':c.rarity==='SR'?'sr':c.rarity==='R'?'r':'n'})">${c.rarity}</div><div class="cc-fact">${c.faction}</div></div>`).join('')||'<div style="grid-column:1/-1;color:var(--t3);text-align:center;padding:20px">No data</div>';
 }
 
-// Utils
+// === Utils ===
 function showLoading(){document.getElementById('loading').classList.remove('hidden')}
 function hideLoading(){document.getElementById('loading').classList.add('hidden')}
 function toast(m,type=''){const e=document.createElement('div');e.className='toast '+type;e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),2000)}
+
+// === Background Particles ===
+(function(){
+  const container=document.getElementById('bgParticles');
+  for(let i=0;i<30;i++){
+    const p=document.createElement('div');
+    p.className='bg-particle';
+    p.style.left=Math.random()*100+'%';
+    p.style.animationDuration=(8+Math.random()*12)+'s';
+    p.style.animationDelay=Math.random()*10+'s';
+    p.style.width=p.style.height=(1+Math.random()*2)+'px';
+    container.appendChild(p);
+  }
+})();
 </script>
 </body>
 </html>
