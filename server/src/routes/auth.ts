@@ -28,6 +28,35 @@ async function authRoutes(app: FastifyInstance) {
       include: { player: true },
     });
 
+    // Give guest 5 starter characters (one per faction)
+    const starterChars = await prisma.character.findMany({
+      where: { charId: { in: ['adaptive_stalker', 'steadfast', 'fungal_lurker', 'void_pearl', 'chrome_reaper'] } },
+      include: { growth: true },
+    });
+
+    const STARTER_LEVEL = 10;
+    for (const char of starterChars) {
+      const g = char.growth ? char.growth.statMultipliers as any : null;
+      const growth = g || { hp: 0.10, atk: 0.10, def: 0.08, wis: 0.08, agi: 0.08 };
+      const starMult = 1.0;
+      await prisma.characterInstance.create({
+        data: {
+          playerId: user.player!.id,
+          characterId: char.id,
+          level: STARTER_LEVEL,
+          exp: 0,
+          star: 3,
+          skillLevel: 2,
+          isInFormation: true,
+          currentHp: Math.round(char.baseHp * (1 + (STARTER_LEVEL - 1) * growth.hp) * starMult),
+          currentAtk: Math.round(char.baseAtk * (1 + (STARTER_LEVEL - 1) * growth.atk) * starMult),
+          currentDef: Math.round(char.baseDef * (1 + (STARTER_LEVEL - 1) * growth.def) * starMult),
+          currentWis: Math.round(char.baseWis * (1 + (STARTER_LEVEL - 1) * growth.wis) * starMult),
+          currentAgi: Math.round(char.baseAgi * (1 + (STARTER_LEVEL - 1) * growth.agi) * starMult),
+        },
+      });
+    }
+
     const accessToken = app.jwt.sign({ userId: user.id, playerId: user.player?.id }, { expiresIn: '15m' });
     const refreshToken = app.jwt.sign({ userId: user.id }, { expiresIn: '7d' });
 
@@ -39,6 +68,11 @@ async function authRoutes(app: FastifyInstance) {
       },
     });
 
+    const playerWithInstances = await prisma.player.findUnique({
+      where: { id: user.player!.id },
+      include: { characterInstances: { include: { character: true } } },
+    });
+
     return {
       accessToken,
       refreshToken,
@@ -46,7 +80,7 @@ async function authRoutes(app: FastifyInstance) {
         id: user.id,
         username: user.username,
         guest: user.guest,
-        player: user.player,
+        player: playerWithInstances,
       },
     };
   });
