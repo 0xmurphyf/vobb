@@ -1,58 +1,56 @@
-import { z } from 'zod';
+// JSON Schema for Fastify validation
 
-// ---- Auth Schemas ----
-export const guestLoginSchema = z.object({
-  playerName: z.string().min(1).max(32).optional(),
-});
+export const guestLoginSchema = {
+  type: 'object',
+  properties: {
+    playerName: { type: 'string', minLength: 1, maxLength: 32 },
+  },
+  additionalProperties: true,
+};
 
-export const registerSchema = z.object({
-  email: z.string().email().optional(),
-  username: z.string().min(3).max(32),
-  password: z.string().min(8).max(128),
-});
+export const registerSchema = {
+  type: 'object',
+  properties: {
+    email: { type: 'string', format: 'email' },
+    username: { type: 'string', minLength: 3, maxLength: 32 },
+    password: { type: 'string', minLength: 8, maxLength: 128 },
+  },
+  required: ['username', 'password'],
+  additionalProperties: true,
+};
 
-export const refreshSchema = z.object({
-  refreshToken: z.string().min(10),
-});
+export const refreshSchema = {
+  type: 'object',
+  properties: {
+    refreshToken: { type: 'string', minLength: 10 },
+  },
+  required: ['refreshToken'],
+};
 
-// ---- Character Schemas ----
-export const warlordEnum = z.enum(['TRANSCENDENT', 'PURIST', 'WILD', 'UNKNOWN', 'CYBERIST']);
+export const updateFormationSchema = {
+  type: 'object',
+  properties: {
+    name: { type: 'string', minLength: 1, maxLength: 32 },
+    slots: { type: 'array', items: { type: ['string', 'null'] }, minItems: 5, maxItems: 5 },
+    isDefault: { type: 'boolean' },
+  },
+  additionalProperties: true,
+};
 
-export const characterResponseSchema = z.object({
-  id: z.string(),
-  charId: z.string(),
-  name: z.string(),
-  warlord: warlordEnum,
-  rarity: z.enum(['N', 'R', 'SR', 'SSR']),
-  baseHp: z.number(),
-  baseAtk: z.number(),
-  baseDef: z.number(),
-  baseWis: z.number(),
-  baseAgi: z.number(),
-});
+export const gachaPullSchema = {
+  type: 'object',
+  properties: {
+    poolId: { type: 'string', minLength: 1 },
+    pullType: { type: 'string', enum: ['single', 'multi'] },
+  },
+  required: ['poolId', 'pullType'],
+};
 
-// ---- Formation Schemas ----
-export const updateFormationSchema = z.object({
-  name: z.string().min(1).max(32).optional(),
-  slots: z.array(z.string().nullable()).length(5),
-  isDefault: z.boolean().optional(),
-});
-
-// ---- Gacha Schemas ----
-export const gachaPullSchema = z.object({
-  poolId: z.string().min(1),
-  pullType: z.enum(['single', 'multi']),
-});
-
-// ---- Battle Schemas ----
-export const startBattleSchema = z.object({
-  stageId: z.string().min(1),
-  formationId: z.string().min(1).optional(),
-});
-
-// ---- Error Schema ----
-export const errorResponseSchema = z.object({
-  error: z.string(),
-  message: z.string().optional(),
-  details: z.any().optional(),
-});
+export const startBattleSchema = {
+  type: 'object',
+  properties: {
+    stageId: { type: 'string', minLength: 1 },
+    formationId: { type: 'string', minLength: 1 },
+  },
+  required: ['stageId'],
+};

@@ -2,7 +2,13 @@ import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import jwt from '@fastify/jwt';
 import rateLimit from '@fastify/rate-limit';
+import fastifyStatic from '@fastify/static';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import pino from 'pino';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 import {
   authRoutes,
@@ -43,6 +49,12 @@ await app.register(rateLimit, {
 
 // Health check
 app.get('/health', async () => ({ status: 'ok', timestamp: Date.now() }));
+
+// Static files (web-demo)
+await app.register(fastifyStatic, {
+  root: join(__dirname, '..', 'web-demo'),
+  prefix: '/',
+});
 
 // Routes
 await app.register(authRoutes, { prefix: '/api/auth' });
