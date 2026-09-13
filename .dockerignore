@@ -1,9 +1,12 @@
 node_modules
+npm-debug.log
 .git
 .gitignore
 .env
 .env.*
 *.md
-docker-compose.yml
-Dockerfile
-.dockerignore
+!README.md
+dist
+coverage
+.nyc_output
+web-demo
