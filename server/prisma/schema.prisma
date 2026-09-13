@@ -217,7 +217,6 @@ model GachaPool {
 model GachaItem {
   id        String   @id @default(cuid())
   poolId    String
-  familiarId String
   characterId String
   guaranteedSr Boolean @default(false)
 
