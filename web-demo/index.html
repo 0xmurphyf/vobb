@@ -2,420 +2,1088 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>VOBB — Five Warlords</title>
 <style>
 :root {
-  --bg: #0a0a0f;
-  --surface: #14141f;
-  --surface2: #1e1e2e;
-  --border: #2a2a3e;
-  --text: #e8e8f0;
-  --text-dim: #8888a0;
-  --gold: #d4a84b;
-  --red: #c0392b;
-  --green: #27ae60;
-  --blue: #2980b9;
-  --purple: #8e44ad;
-  --cyan: #00bcd4;
-  --transcendent: #9b59b6;
-  --purist: #e67e22;
-  --wild: #27ae60;
-  --unknown: #3498db;
-  --cyberist: #e74c3c;
+  --bg: #0a0a14;
+  --surface: #12122a;
+  --surface2: #1a1a3e;
+  --surface3: #252560;
+  --border: #2a2a5e;
+  --border-bright: #4a4a9e;
+  --text: #e8e8ff;
+  --text-dim: #8888bb;
+  --text-bright: #ffffff;
+  --gold: #ffd700;
+  --red: #ff4466;
+  --green: #00ff88;
+  --blue: #4488ff;
+  --purple: #aa44ff;
+  --cyan: #00ddff;
+  --pink: #ff44aa;
+  --orange: #ff8844;
+  --rarity-ssr: #ffd700;
+  --rarity-sr: #aa44ff;
+  --rarity-r: #4488ff;
+  --rarity-n: #888888;
+  --faction-t: #aa44ff;
+  --faction-p: #ff8844;
+  --faction-w: #00ff88;
+  --faction-u: #4488ff;
+  --faction-c: #ff4466;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
 body {
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* === Layout === */
-.app { display: flex; flex-direction: column; min-height: 100vh; }
-.header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 12px 24px; background: var(--surface); border-bottom: 1px solid var(--border);
-  position: sticky; top: 0; z-index: 100;
-}
-.header h1 { font-size: 1.2rem; background: linear-gradient(135deg, var(--gold), #f0e68c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.header-nav { display: flex; gap: 8px; }
-.main { flex: 1; padding: 24px; max-width: 1200px; margin: 0 auto; width: 100%; }
+/* === Scrollbar === */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
 
-/* === Buttons === */
-.btn {
-  padding: 8px 20px; border: 1px solid var(--border); border-radius: 6px;
-  background: var(--surface2); color: var(--text); cursor: pointer; font-size: 0.9rem;
+/* === App Container === */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 100vw;
+  position: relative;
+}
+
+/* === Top Header Bar === */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: linear-gradient(180deg, rgba(20,20,50,0.95) 0%, rgba(15,15,40,0.85) 100%);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  min-height: 52px;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar-back {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text);
+  font-size: 1.1rem;
+}
+
+.topbar-back:hover {
+  background: var(--surface3);
+  border-color: var(--border-bright);
+}
+
+.topbar-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.resource-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.resource-chip .icon {
+  font-size: 0.9rem;
+}
+
+.resource-chip.gems { color: var(--cyan); border-color: rgba(0,221,255,0.3); }
+.resource-chip.gold { color: var(--gold); border-color: rgba(255,215,0,0.3); }
+.resource-chip.stamina { color: var(--green); border-color: rgba(0,255,136,0.3); }
+
+/* === Main Content Area === */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* === Character Portrait Section === */
+.portrait-section {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  max-height: 45vh;
+  background: linear-gradient(180deg, #0d0d25 0%, #151540 50%, #1a1a50 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.portrait-bg-effect {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 80%, rgba(170,68,255,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 20%, rgba(0,221,255,0.08) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 30%, rgba(255,68,170,0.08) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.portrait-character {
+  position: relative;
+  z-index: 2;
+  width: 200px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10rem;
+  filter: drop-shadow(0 0 40px rgba(170,68,255,0.4));
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.portrait-glow {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 30px;
+  background: radial-gradient(ellipse, rgba(170,68,255,0.4) 0%, transparent 70%);
+  filter: blur(10px);
+}
+
+/* Character Info Overlay */
+.portrait-info {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.portrait-name {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-bright);
+  text-shadow: 0 0 20px rgba(0,0,0,0.8);
+  letter-spacing: 1px;
+}
+
+.portrait-title {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.portrait-rarity {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.portrait-rarity .stars {
+  color: var(--rarity-ssr);
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+}
+
+.portrait-rarity .rarity-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.6);
+  letter-spacing: 1px;
+}
+
+.portrait-rarity .rarity-text.ssr { color: var(--rarity-ssr); }
+.portrait-rarity .rarity-text.sr { color: var(--rarity-sr); }
+.portrait-rarity .rarity-text.r { color: var(--rarity-r); }
+
+.portrait-level {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.portrait-level .level-text {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--cyan);
+}
+
+.portrait-level .exp-bar {
+  width: 140px;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.portrait-level .exp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--purple));
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.portrait-level .exp-text {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+/* Faction Badge */
+.portrait-faction {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 3;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid;
+}
+
+.faction-badge-transcendent { color: var(--faction-t); border-color: var(--faction-t); }
+.faction-badge-purist { color: var(--faction-p); border-color: var(--faction-p); }
+.faction-badge-wild { color: var(--faction-w); border-color: var(--faction-w); }
+.faction-badge-unknown { color: var(--faction-u); border-color: var(--faction-u); }
+.faction-badge-cyberist { color: var(--faction-c); border-color: var(--faction-c); }
+
+/* === Character Roster Sidebar (Left) === */
+.roster-sidebar {
+  position: fixed;
+  left: 0;
+  top: 52px;
+  bottom: 0;
+  width: 72px;
+  background: linear-gradient(180deg, rgba(18,18,42,0.98) 0%, rgba(12,12,30,0.98) 100%);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0;
+  gap: 8px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.roster-item {
+  width: 56px;
+  height: 72px;
+  border-radius: 10px;
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.roster-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 100%, var(--roster-glow, rgba(170,68,255,0.2)) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.roster-item:hover::before,
+.roster-item.active::before {
+  opacity: 1;
+}
+
+.roster-item:hover {
+  border-color: var(--border-bright);
+  transform: scale(1.05);
+}
+
+.roster-item.active {
+  border-color: var(--gold);
+  box-shadow: 0 0 15px rgba(255,215,0,0.3), inset 0 0 15px rgba(255,215,0,0.05);
+}
+
+.roster-item .avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  background: var(--surface3);
+}
+
+.roster-item .level {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+.roster-item.active .level {
+  color: var(--gold);
+}
+
+.roster-divider {
+  width: 36px;
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+.roster-sort {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-dim);
+  font-size: 1rem;
+  margin-top: auto;
+  flex-shrink: 0;
   transition: all 0.2s;
 }
-.btn:hover { background: var(--border); transform: translateY(-1px); }
-.btn-primary { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 600; }
-.btn-primary:hover:enabled { background: #e6b84a; }
-.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-.btn-gacha { background: linear-gradient(135deg, #667eea, #764ba2); border-color: #667eea; color: white; font-weight: 700; font-size: 1rem; padding: 12px 28px; }
-.btn-gacha:hover { background: linear-gradient(135deg, #764ba2, #667eea); }
-.btn-sm { padding: 4px 12px; font-size: 0.8rem; }
-.btn-active { background: var(--gold); color: #000; border-color: var(--gold); }
-.btn-danger { background: var(--red); border-color: var(--red); }
 
-/* === Cards === */
-.card {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-  padding: 16px; margin-bottom: 12px;
-}
-.card-title { font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-
-/* === Screens === */
-.screen { display: none; }
-.screen.active { display: block; }
-
-/* === Login === */
-.login-container { display: flex; justify-content: center; align-items: center; min-height: 80vh; }
-.login-box { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 40px; text-align: center; max-width: 400px; width: 100%; }
-.login-box h2 { font-size: 2rem; margin-bottom: 8px; background: linear-gradient(135deg, var(--gold), #f0e68c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.login-box p { color: var(--text-dim); margin-bottom: 24px; }
-.login-box .btn { width: 100%; padding: 12px; font-size: 1rem; }
-
-/* === Dashboard === */
-.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 24px; }
-.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; }
-.stat-value { font-size: 1.5rem; font-weight: 700; }
-.stat-label { font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; }
-.stat-gold { color: var(--gold); }
-.stat-gems { color: var(--cyan); }
-.stat-stamina { color: var(--green); }
-
-/* === Section Tabs === */
-.section-tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 8px; overflow-x: auto; }
-.section-tab {
-  padding: 8px 16px; border: none; background: none; color: var(--text-dim);
-  cursor: pointer; font-size: 0.9rem; white-space: nowrap; border-bottom: 2px solid transparent; margin-bottom: -10px;
-}
-.section-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
-.section-panel { display: none; }
-.section-panel.active { display: block; }
-
-/* === Character Grid === */
-.char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
-.char-card {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-  padding: 16px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
-}
-.char-card:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-.char-card.selected { border-color: var(--gold); box-shadow: 0 0 20px rgba(212,168,75,0.2); }
-.char-portrait {
-  width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 12px;
-  display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
-}
-.char-name { font-weight: 600; text-align: center; margin-bottom: 4px; }
-.char-info { display: flex; justify-content: center; gap: 8px; font-size: 0.8rem; color: var(--text-dim); }
-.char-stats { margin-top: 8px; font-size: 0.75rem; color: var(--text-dim); }
-.char-stat-row { display: flex; justify-content: space-between; padding: 2px 0; }
-
-/* === Faction Colors === */
-.faction-transcendent { color: var(--transcendent); border-color: var(--transcendent); }
-.faction-purist { color: var(--purist); border-color: var(--purist); }
-.faction-wild { color: var(--wild); border-color: var(--wild); }
-.faction-unknown { color: var(--unknown); border-color: var(--unknown); }
-.faction-cyberist { color: var(--cyberist); border-color: var(--cyberist); }
-.bg-transcendent { background: rgba(155,89,182,0.15); }
-.bg-purist { background: rgba(230,126,34,0.15); }
-.bg-wild { background: rgba(39,174,96,0.15); }
-.bg-unknown { background: rgba(52,152,219,0.15); }
-.bg-cyberist { background: rgba(231,76,60,0.15); }
-
-/* === Formation === */
-.formation-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 20px; }
-.formation-slot {
-  aspect-ratio: 1; border: 2px dashed var(--border); border-radius: 12px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  cursor: pointer; transition: all 0.2s; min-height: 100px;
-}
-.formation-slot:hover { border-color: var(--gold); }
-.formation-slot.filled { border-style: solid; }
-.formation-slot .slot-label { font-size: 0.7rem; color: var(--text-dim); }
-.formation-slot .slot-char { font-weight: 600; font-size: 0.85rem; }
-
-/* === Stages === */
-.stage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
-.stage-card {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-  padding: 14px; cursor: pointer; transition: all 0.2s;
-}
-.stage-card:hover { border-color: var(--gold); transform: scale(1.02); }
-.stage-name { font-weight: 600; margin-bottom: 4px; }
-.stage-cost { font-size: 0.8rem; color: var(--green); }
-
-/* === Gacha === */
-.gacha-container { text-align: center; padding: 20px 0; }
-.gacha-pool { margin-bottom: 20px; }
-.gacha-rate { display: flex; justify-content: center; gap: 12px; margin-top: 8px; font-size: 0.8rem; }
-.gacha-rate span { padding: 2px 8px; border-radius: 4px; }
-.gacha-result { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 24px; }
-.gacha-char {
-  width: 80px; height: 100px; border-radius: 8px; padding: 8px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  animation: gachaReveal 0.5s ease-out;
-}
-@keyframes gachaReveal {
-  from { opacity: 0; transform: scale(0.5) rotateY(180deg); }
-  to { opacity: 1; transform: scale(1) rotateY(0); }
+.roster-sort:hover {
+  border-color: var(--border-bright);
+  color: var(--text);
 }
 
-/* === Battle === */
-.battle-container { max-width: 800px; margin: 0 auto; }
-.battle-teams { display: flex; justify-content: space-between; margin: 20px 0; gap: 20px; }
-.battle-team { flex: 1; }
-.battle-team h3 { font-size: 0.9rem; margin-bottom: 8px; }
-.battle-unit {
-  display: flex; align-items: center; gap: 8px; padding: 8px; margin-bottom: 4px;
-  background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-size: 0.85rem;
+/* === Detail Panel (Right of portrait, left of roster) === */
+.detail-panel {
+  flex: 1;
+  padding: 16px 16px 16px 88px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: linear-gradient(180deg, #0f0f2a 0%, #0a0a1a 100%);
 }
-.battle-unit.dead { opacity: 0.4; }
-.battle-unit-name { flex: 1; }
-.battle-unit-hp { font-size: 0.75rem; color: var(--text-dim); }
-.hp-bar { width: 60px; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
-.hp-bar-fill { height: 100%; background: var(--green); transition: width 0.3s; }
-.battle-log {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
-  padding: 12px; max-height: 300px; overflow-y: auto; font-size: 0.8rem; line-height: 1.6;
+
+/* Tabs */
+.detail-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 12px;
 }
-.battle-log-entry { padding: 2px 0; border-bottom: 1px solid var(--border); }
-.battle-log-entry.counter { color: var(--gold); }
-.battle-log-entry.countered { color: var(--text-dim); }
-.battle-log-entry.skill { color: var(--purple); }
-.battle-log-entry.death { color: var(--red); }
 
-/* === Common === */
-.flex { display: flex; }
-.flex-between { display: flex; justify-content: space-between; align-items: center; }
-.gap-8 { gap: 8px; }
-.gap-12 { gap: 12px; }
-.mt-12 { margin-top: 12px; }
-.mt-20 { margin-top: 20px; }
-.text-center { text-align: center; }
-.text-dim { color: var(--text-dim); }
-.text-gold { color: var(--gold); }
+.detail-tab {
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+  transition: color 0.2s;
+}
 
-/* === Loading / Toast === */
-.loading { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
+.detail-tab::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--cyan);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+}
+
+.detail-tab.active {
+  color: var(--text-bright);
+}
+
+.detail-tab.active::after {
+  transform: scaleX(1);
+}
+
+/* Power Display */
+.power-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(170,68,255,0.1) 0%, rgba(0,221,255,0.05) 100%);
+  border: 1px solid rgba(170,68,255,0.2);
+  border-radius: 12px;
+}
+
+.power-label {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.power-value {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(255,215,0,0.3);
+  letter-spacing: 2px;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.stat-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 8px;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.stat-item:hover {
+  border-color: var(--border-bright);
+  background: var(--surface2);
+}
+
+.stat-item .stat-icon {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.stat-item .stat-name {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.stat-item .stat-val {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-bright);
+}
+
+.stat-item .stat-val.hp { color: var(--green); }
+.stat-item .stat-val.atk { color: var(--red); }
+.stat-item .stat-val.def { color: var(--blue); }
+.stat-item .stat-val.spd { color: var(--cyan); }
+.stat-item .stat-val.crit { color: var(--orange); }
+
+/* Element Icons */
+.elements-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.element-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  opacity: 0.4;
+  transition: all 0.2s;
+}
+
+.element-icon.active {
+  opacity: 1;
+  border-color: var(--border-bright);
+  box-shadow: 0 0 10px rgba(170,68,255,0.2);
+}
+
+/* Skills Row */
+.skills-row {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.skill-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.skill-item:hover {
+  border-color: var(--purple);
+  background: var(--surface2);
+}
+
+.skill-item .skill-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--surface3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  border: 2px solid var(--border);
+}
+
+.skill-item .skill-name {
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.skill-item .skill-level {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+/* Equipment Row */
+.equipment-row {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.equip-slot {
+  flex: 1;
+  aspect-ratio: 1;
+  max-width: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.equip-slot:hover {
+  border-color: var(--border-bright);
+  background: var(--surface2);
+}
+
+.equip-slot.equipped {
+  border-style: solid;
+  border-color: var(--blue);
+  background: linear-gradient(135deg, var(--surface) 0%, rgba(68,136,255,0.1) 100%);
+}
+
+.equip-slot .equip-icon {
+  font-size: 1.3rem;
+  opacity: 0.5;
+}
+
+.equip-slot.equipped .equip-icon {
+  opacity: 1;
+}
+
+.equip-slot .equip-level {
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+.equip-slot .equip-stars {
+  font-size: 0.5rem;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+/* Action Button */
+.action-btn {
+  width: 100%;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn.upgrade {
+  background: linear-gradient(135deg, #4488ff 0%, #aa44ff 100%);
+  color: white;
+  box-shadow: 0 4px 20px rgba(68,136,255,0.3);
+}
+
+.action-btn.upgrade:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(68,136,255,0.5);
+}
+
+.action-btn.upgrade:active {
+  transform: translateY(0);
+}
+
+/* Bottom Action Bar */
+.bottom-actions {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 12px 16px 16px 88px;
+  background: linear-gradient(0deg, rgba(15,15,40,0.98) 0%, rgba(15,15,40,0.95) 100%);
+}
+
+.bottom-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 8px 16px;
+  border-radius: 10px;
+}
+
+.bottom-action:hover {
+  background: var(--surface);
+}
+
+.bottom-action .action-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.2s;
+}
+
+.bottom-action:hover .action-icon {
+  border-color: var(--border-bright);
+  background: var(--surface3);
+}
+
+.bottom-action .action-label {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+/* === Login Screen === */
+.login-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0a0a1a 0%, #151540 50%, #0a0a2a 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.login-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(170,68,255,0.1) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.01) 2px, rgba(255,255,255,0.01) 4px);
+  pointer-events: none;
+}
+
+.login-logo {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(170,68,255,0.4)); }
+  50% { transform: scale(1.05); filter: drop-shadow(0 0 40px rgba(170,68,255,0.6)); }
+}
+
+.login-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--gold) 0%, #fff 50%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+  letter-spacing: 4px;
+}
+
+.login-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.login-btn {
+  padding: 16px 48px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--gold) 0%, #ffaa00 100%);
+  color: #000;
+  box-shadow: 0 4px 30px rgba(255,215,0,0.3);
+  transition: all 0.3s;
+  text-transform: uppercase;
+}
+
+.login-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 40px rgba(255,215,0,0.5);
+}
+
+.login-demo {
+  margin-top: 20px;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  opacity: 0.6;
+}
+
+/* === Loading === */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,10,26,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* === Toast === */
 .toast {
-  position: fixed; top: 80px; right: 20px; background: var(--surface); border: 1px solid var(--gold);
-  border-radius: 8px; padding: 12px 20px; z-index: 1000; animation: slideIn 0.3s ease;
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 24px;
+  border-radius: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--gold);
+  color: var(--text);
+  font-size: 0.85rem;
+  z-index: 1001;
+  animation: slideDown 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
-@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+@keyframes slideDown {
+  from { transform: translateX(-50%) translateY(-20px); opacity: 0; }
+  to { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+
 .toast.error { border-color: var(--red); }
 .toast.success { border-color: var(--green); }
 
-/* === Landscape Mode for Mobile === */
-@media screen and (orientation: landscape) and (max-height: 500px) {
-  .header { padding: 4px 16px; }
-  .header h1 { font-size: 0.9rem; }
-  .main { padding: 8px 12px; }
-  .stats-row { grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 8px; }
-  .stat-card { padding: 6px; }
-  .stat-value { font-size: 1rem; }
-  .stat-label { font-size: 0.6rem; }
-  .section-tabs { margin-bottom: 8px; }
-  .section-tab { padding: 4px 10px; font-size: 0.75rem; }
-  .card { padding: 8px; margin-bottom: 6px; border-radius: 8px; }
-  .char-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 6px; }
-  .char-card { padding: 6px; }
-  .char-portrait { width: 36px; height: 36px; font-size: 1.2rem; margin: 0 auto 4px; }
-  .char-name { font-size: 0.7rem; }
-  .char-info { font-size: 0.65rem; }
-  .char-stats { display: none; }
-  .formation-grid { gap: 4px; }
-  .formation-slot { min-height: 50px; font-size: 0.7rem; }
-  .stage-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 6px; }
-  .stage-card { padding: 8px; }
-  .battle-container { max-width: 100%; }
-  .battle-teams { flex-direction: row; gap: 8px; margin: 6px 0; }
-  .battle-team { font-size: 0.7rem; }
-  .battle-unit { padding: 4px; font-size: 0.7rem; }
-  .hp-bar { width: 40px; height: 4px; }
-  .battle-log { max-height: 150px; font-size: 0.7rem; padding: 6px; }
-  .gacha-result { gap: 4px; }
-  .gacha-char { width: 50px; height: 70px; font-size: 0.6rem; padding: 4px; }
-}
-
-/* === Force Landscape on Mobile === */
-@media screen and (orientation: portrait) and (max-width: 500px) {
-  body {
-    transform: rotate(90deg);
-    transform-origin: bottom left;
-    width: 100vh;
-    height: 100vw;
-    position: absolute;
-    top: 0;
-    left: 100vw;
-    overflow-x: hidden;
+/* === Responsive === */
+@media (min-width: 768px) {
+  .portrait-section {
+    max-height: 50vh;
+  }
+  .portrait-character {
+    width: 260px;
+    height: 360px;
+    font-size: 14rem;
+  }
+  .detail-panel {
+    padding: 20px 20px 20px 96px;
+  }
+  .bottom-actions {
+    padding: 16px 20px 20px 96px;
   }
 }
+
+@media (min-width: 1024px) {
+  .main-content {
+    flex-direction: row;
+  }
+  .portrait-section {
+    width: 45%;
+    max-height: none;
+    height: auto;
+  }
+  .detail-panel-wrapper {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+  }
+  .detail-panel {
+    padding: 20px;
+  }
+  .bottom-actions {
+    padding: 16px 20px;
+  }
+}
+
+/* === Hidden === */
+.hidden { display: none !important; }
 </style>
 </head>
 <body>
+
 <div class="app" id="app">
-  <!-- Header -->
-  <header class="header" id="header" style="display:none;">
-    <h1>⚔️ VOBB</h1>
-    <div class="header-nav" id="headerNav"></div>
-    <div class="flex gap-8 align-items-center">
-      <span id="playerGold" class="text-gold"></span>
-      <span id="playerGems" style="color:var(--cyan)"></span>
-      <span id="playerStamina" style="color:var(--green)"></span>
-      <button class="btn btn-sm" onclick="logout()">Logout</button>
-    </div>
-  </header>
+  <!-- Loading -->
+  <div class="loading-overlay hidden" id="loading">
+    <div class="loading-spinner"></div>
+  </div>
 
   <!-- Login Screen -->
-  <div class="screen active" id="screen-login">
-    <div class="login-container">
-      <div class="login-box">
-        <h2>⚔️ VOBB</h2>
-        <p class="text-dim">Five Warlords. Five Answers.</p>
-        <button class="btn btn-primary" onclick="guestLogin()">🎮 Enter as Guest</button>
-        <div class="mt-12 text-dim" style="font-size:0.8rem;">Demo Mode — No registration needed</div>
-      </div>
-    </div>
+  <div class="login-screen" id="loginScreen">
+    <div class="login-logo">⚔️</div>
+    <div class="login-title">VOBB</div>
+    <div class="login-subtitle">Five Warlords</div>
+    <button class="login-btn" onclick="guestLogin()">Enter as Guest</button>
+    <div class="login-demo">Demo Mode</div>
   </div>
 
-  <!-- Main Game Screen -->
-  <div class="screen" id="screen-game">
-    <div class="main">
-      <!-- Dashboard Stats -->
-      <div class="stats-row" id="dashboardStats"></div>
-
-      <!-- Section Tabs -->
-      <div class="section-tabs">
-        <button class="section-tab active" data-section="characters" onclick="showSection('characters')">📋 Characters</button>
-        <button class="section-tab" data-section="formation" onclick="showSection('formation')">🛡️ Formation</button>
-        <button class="section-tab" data-section="stages" onclick="showSection('stages')">⚔️ Battle</button>
-        <button class="section-tab" data-section="gacha" onclick="showSection('gacha')">🎰 Gacha</button>
-        <button class="section-tab" data-section="codex" onclick="showSection('codex')">📖 Codex</button>
+  <!-- Game Screen -->
+  <div class="hidden" id="gameScreen">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-back" onclick="showSection('characters')">←</div>
+        <span class="topbar-title" id="topbarTitle">Overview</span>
       </div>
-
-      <!-- Characters Panel -->
-      <div class="section-panel active" id="panel-characters">
-        <div class="card">
-          <div class="flex-between">
-            <span class="card-title">My Characters</span>
-            <span id="charCount" class="text-dim"></span>
-          </div>
-          <div class="char-grid" id="charGrid"></div>
-        </div>
+      <div class="topbar-right">
+        <div class="resource-chip gems" id="resGems"><span class="icon">💎</span><span id="valGems">0</span></div>
+        <div class="resource-chip gold" id="resGold"><span class="icon">🪙</span><span id="valGold">0</span></div>
+        <div class="resource-chip stamina" id="resStamina"><span class="icon">⚡</span><span id="valStamina">0</span></div>
       </div>
+    </header>
 
-      <!-- Formation Panel -->
-      <div class="section-panel" id="panel-formation">
-        <div class="card">
-          <div class="flex-between">
-            <span class="card-title">Formation (5 Slots)</span>
-            <button class="btn btn-sm" onclick="saveFormation()">💾 Save</button>
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+      <!-- Roster Sidebar -->
+      <aside class="roster-sidebar" id="rosterSidebar"></aside>
+
+      <!-- Portrait + Detail Panel Container -->
+      <div class="detail-panel-wrapper" id="detailPanelWrapper">
+        <!-- Character Portrait -->
+        <section class="portrait-section" id="portraitSection">
+          <div class="portrait-bg-effect"></div>
+          <div class="portrait-character" id="portraitCharacter">🧬</div>
+          <div class="portrait-glow"></div>
+
+          <div class="portrait-info">
+            <div class="portrait-name" id="portraitName">—</div>
+            <div class="portrait-title" id="portraitTitle">—</div>
+            <div class="portrait-rarity">
+              <span class="stars" id="portraitStars">★★★★★</span>
+              <span class="rarity-text" id="portraitRarity">SSR</span>
+            </div>
+            <div class="portrait-level">
+              <span class="level-text" id="portraitLevel">Lv.1</span>
+              <div class="exp-bar"><div class="exp-bar-fill" id="portraitExpBar" style="width:0%"></div></div>
+              <span class="exp-text" id="portraitExp">0 / 100</span>
+            </div>
           </div>
-          <div class="formation-grid" id="formationGrid"></div>
-          <div class="card mt-12">
-            <span class="card-title">Available Characters</span>
-            <div class="char-grid" id="formationCharList" style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr))"></div>
+
+          <div class="portrait-faction" id="portraitFaction">TRANSCENDENT</div>
+        </section>
+
+        <!-- Detail Panel -->
+        <div class="detail-panel" id="detailPanel">
+          <!-- Tabs -->
+          <div class="detail-tabs">
+            <button class="detail-tab active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
+            <button class="detail-tab" data-tab="skills" onclick="switchTab('skills')">Skills</button>
+            <button class="detail-tab" data-tab="equipment" onclick="switchTab('equipment')">Equipment</button>
+            <button class="detail-tab" data-tab="evolution" onclick="switchTab('evolution')">Evolution</button>
+          </div>
+
+          <!-- Overview Tab -->
+          <div class="detail-tab-content" id="tab-overview">
+            <div class="power-display">
+              <span class="power-label">POWER</span>
+              <span class="power-value" id="powerValue">0</span>
+            </div>
+
+            <div class="stats-grid" id="statsGrid"></div>
+
+            <div class="elements-row" style="margin-top: 8px;">
+              <div class="element-icon" data-elem="fire">🔥</div>
+              <div class="element-icon" data-elem="wind">🌪️</div>
+              <div class="element-icon" data-elem="water">💧</div>
+              <div class="element-icon" data-elem="light">✨</div>
+              <div class="element-icon" data-elem="dark">🌙</div>
+            </div>
+
+            <div class="skills-row" id="skillsRow" style="margin-top: 8px;"></div>
+
+            <div class="equipment-row" id="equipmentRow" style="margin-top: 8px;"></div>
+
+            <button class="action-btn upgrade" id="btnUpgrade" onclick="upgradeCharacter()" style="margin-top: 12px;">
+              ⬆ Upgrade
+            </button>
+          </div>
+
+          <!-- Skills Tab -->
+          <div class="detail-tab-content hidden" id="tab-skills">
+            <div id="skillsDetail"></div>
+          </div>
+
+          <!-- Equipment Tab -->
+          <div class="detail-tab-content hidden" id="tab-equipment">
+            <div id="equipmentDetail"></div>
+          </div>
+
+          <!-- Evolution Tab -->
+          <div class="detail-tab-content hidden" id="tab-evolution">
+            <div id="evolutionDetail"></div>
           </div>
         </div>
-      </div>
 
-      <!-- Stages Panel -->
-      <div class="section-panel" id="panel-stages">
-        <div class="card">
-          <span class="card-title">PvE Stages</span>
-          <div class="stage-grid" id="stageGrid"></div>
-        </div>
-      </div>
-
-      <!-- Gacha Panel -->
-      <div class="section-panel" id="panel-gacha">
-        <div class="card gacha-container">
-          <h2 style="margin-bottom:4px;">🎰 The Awakening</h2>
-          <div class="text-dim" style="font-size:0.85rem;">Summon characters aligned with the Five Warlords</div>
-          <div class="gacha-rate">
-            <span class="bg-transcendent">SSR 1%</span>
-            <span class="bg-purist">SR 4%</span>
-            <span class="bg-wild">R 25%</span>
-            <span class="bg-unknown">N 70%</span>
+        <!-- Bottom Actions -->
+        <div class="bottom-actions">
+          <div class="bottom-action" onclick="showSection('formation')">
+            <div class="action-icon">🛡️</div>
+            <span class="action-label">Formation</span>
           </div>
-          <div class="gacha-pool mt-20">
-            <div id="gachaPoolInfo" class="text-dim" style="font-size:0.8rem;"></div>
+          <div class="bottom-action" onclick="lockCharacter()">
+            <div class="action-icon">🔒</div>
+            <span class="action-label">Lock</span>
           </div>
-          <button class="btn btn-gacha" id="btnPull1" onclick="doGacha('single')" style="margin-right:8px;">✦ Single (300 💎)</button>
-          <button class="btn btn-gacha" id="btnPull10" onclick="doGacha('multi')">✦✦ Multi (2700 💎)</button>
-          <div class="text-dim mt-12" id="pityInfo" style="font-size:0.8rem;"></div>
-          <div class="gacha-result" id="gachaResult"></div>
-        </div>
-      </div>
-
-      <!-- Codex Panel -->
-      <div class="section-panel" id="panel-codex">
-        <div class="card">
-          <span class="card-title">All Characters</span>
-          <div class="char-grid" id="codexGrid"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Battle Screen (overlay) -->
-  <div class="screen" id="screen-battle">
-    <div class="main">
-      <div class="battle-container">
-        <div class="flex-between">
-          <h2>⚔️ Battle</h2>
-          <div>
-            <span id="battleTimer" class="text-dim"></span>
-            <button class="btn btn-sm" onclick="exitBattle()" style="margin-left:12px;">Exit</button>
+          <div class="bottom-action" onclick="showStory()">
+            <div class="action-icon">📖</div>
+            <span class="action-label">Story</span>
           </div>
         </div>
-
-        <div class="battle-teams">
-          <div class="battle-team">
-            <h3>🛡️ Your Team</h3>
-            <div id="playerTeam"></div>
-          </div>
-          <div class="battle-team">
-            <h3>💀 Enemy Team</h3>
-            <div id="enemyTeam"></div>
-          </div>
-        </div>
-
-        <div class="battle-log" id="battleLog">
-          <div class="text-center text-dim">Battle starting...</div>
-        </div>
-
-        <div id="battleRewards" class="card mt-12" style="display:none;"></div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-// ============================================
-// VOBB Web Demo Client
-// ============================================
-
 const API = '/api';
+
+const FACTION_EMOJI = {
+  TRANSCENDENT: '🧬', PURIST: '⚔️', WILD: '🐺', UNKNOWN: '👁️', CYBERIST: '🤖'
+};
+
+const FACTION_BADGE_CLASS = {
+  TRANSCENDENT: 'faction-badge-transcendent',
+  PURIST: 'faction-badge-purist',
+  WILD: 'faction-badge-wild',
+  UNKNOWN: 'faction-badge-unknown',
+  CYBERIST: 'faction-badge-cyberist'
+};
+
+const RARITY_STARS = { SSR: 5, SR: 4, R: 3, N: 2 };
+
 let state = {
   accessToken: null,
   refreshToken: null,
   player: null,
   characters: [],
-  formation: { slots: [null, null, null, null, null] },
-  stages: [],
-  allCharacters: [],
-  gachaPool: null,
+  selectedCharIndex: 0,
 };
 
-// ---- API Helper ----
-
+// --- API ---
 async function api(path, opts = {}) {
   const headers = { 'Content-Type': 'application/json', ...opts.headers };
   if (state.accessToken) headers['Authorization'] = `Bearer ${state.accessToken}`;
@@ -432,13 +1100,14 @@ async function api(path, opts = {}) {
   return data;
 }
 
-// ---- Auth ----
-
+// --- Auth ---
 async function guestLogin() {
+  showLoading();
   try {
-    showLoading();
     const data = await api('/auth/guest', { method: 'POST', body: JSON.stringify({ playerName: 'Hunter' }) });
-    setSession(data);
+    state.accessToken = data.accessToken;
+    state.refreshToken = data.refreshToken;
+    state.player = data.player || data.user?.player;
     await enterGame();
   } catch (e) {
     toast(e.message, 'error');
@@ -453,440 +1122,226 @@ async function refresh() {
     state.accessToken = data.accessToken;
     state.refreshToken = data.refreshToken || state.refreshToken;
     return true;
-  } catch {
-    logout();
-    return false;
-  }
-}
-
-function setSession(data) {
-  state.accessToken = data.accessToken;
-  state.refreshToken = data.refreshToken;
-  state.player = data.player || data.user?.player;
+  } catch { logout(); return false; }
 }
 
 function logout() {
-  state = { accessToken: null, refreshToken: null, player: null, characters: [], formation: { slots: [null, null, null, null, null] }, stages: [], allCharacters: [], gachaPool: null };
-  document.getElementById('header').style.display = 'none';
-  showScreen('screen-login');
+  state = { accessToken: null, refreshToken: null, player: null, characters: [], selectedCharIndex: 0 };
+  document.getElementById('gameScreen').classList.add('hidden');
+  document.getElementById('loginScreen').classList.remove('hidden');
 }
 
-// ---- Navigation ----
-
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-function showSection(name) {
-  document.querySelectorAll('.section-tab').forEach(t => t.classList.toggle('active', t.dataset.section === name));
-  document.querySelectorAll('.section-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
-  if (name === 'formation') renderFormation();
-  if (name === 'stages') renderStages();
-  if (name === 'gacha') loadGachaInfo();
-  if (name === 'codex') renderCodex();
-}
-
-// ---- Game Entry ----
-
+// --- Game ---
 async function enterGame() {
-  document.getElementById('header').style.display = 'flex';
-  showScreen('screen-game');
-  await Promise.all([
-    loadPlayer(),
-    loadMyCharacters(),
-    loadAllCharacters(),
-    loadStages(),
-    loadGachaInfo(),
-  ]);
-  renderHeader();
-  renderCharacters();
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  await loadData();
+  renderAll();
 }
 
-async function loadPlayer() {
+async function loadData() {
   try {
-    const data = await api('/player/me');
-    state.player = data;
-  } catch (e) { console.error(e); }
-}
-
-async function loadMyCharacters() {
+    state.player = await api('/player/me');
+  } catch(e) { console.error(e); }
   try {
     state.characters = await api('/characters/mine');
-  } catch (e) { state.characters = []; }
+  } catch(e) { state.characters = []; }
+  renderResources();
 }
 
-async function loadAllCharacters() {
-  try {
-    state.allCharacters = await api('/characters');
-  } catch (e) { state.allCharacters = []; }
-}
-
-async function loadStages() {
-  try {
-    state.stages = await api('/stages');
-  } catch (e) { state.stages = []; }
-}
-
-async function loadGachaInfo() {
-  try {
-    const [pool, pity] = await Promise.all([
-      api('/gacha'),
-      api('/gacha/pity'),
-    ]);
-    state.gachaPool = pool[0] || null;
-    state.pity = pity;
-    if (state.gachaPool) {
-      document.getElementById('gachaPoolInfo').textContent = `Pool: ${state.gachaPool.name} — ${state.gachaPool.items.length} characters`;
-    }
-    document.getElementById('pityInfo').textContent = `Pity: ${pity.count} pulls | SR at ${pity.guaranteedSr} | SSR at ${pity.guaranteedSsr}`;
-  } catch (e) { console.error(e); }
-}
-
-// ---- Render Helpers ----
-
-function factionClass(f) {
-  return 'faction-' + f.toLowerCase();
-}
-
-function factionBg(f) {
-  return 'bg-' + f.toLowerCase();
-}
-
-function rarityStyle(r) {
-  const colors = { SSR: '#f0e68c', SR: '#9b59b6', R: '#3498db', N: '#888' };
-  return `color:${colors[r] || '#888'}`;
-}
-
-function renderHeader() {
-  if (!state.player) return;
-  const currencies = state.player.currencies || [];
+function renderResources() {
+  const currencies = state.player?.currencies || [];
   const gold = currencies.find(c => c.type === 'gold');
   const gems = currencies.find(c => c.type === 'gems');
   const stamina = currencies.find(c => c.type === 'stamina');
-  document.getElementById('playerGold').textContent = `💰 ${gold?.amount || 0}`;
-  document.getElementById('playerGems').textContent = `💎 ${gems?.amount || 0}`;
-  document.getElementById('playerStamina').textContent = `⚡ ${stamina?.amount || 0}`;
-
-  document.getElementById('dashboardStats').innerHTML = `
-    <div class="stat-card"><div class="stat-value">${state.characters.length}</div><div class="stat-label">Characters</div></div>
-    <div class="stat-card"><div class="stat-value">${state.player.level || 1}</div><div class="stat-label">Level</div></div>
-    <div class="stat-card"><div class="stat-value stat-gold">${gold?.amount || 0}</div><div class="stat-label">Gold</div></div>
-    <div class="stat-card"><div class="stat-value stat-gems">${gems?.amount || 0}</div><div class="stat-label">Gems</div></div>
-    <div class="stat-card"><div class="stat-value stat-stamina">${stamina?.amount || 0}</div><div class="stat-label">Stamina</div></div>
-  `;
+  document.getElementById('valGold').textContent = formatNumber(gold?.amount || 0);
+  document.getElementById('valGems').textContent = formatNumber(gems?.amount || 0);
+  document.getElementById('valStamina').textContent = stamina?.amount + '/' + (state.player?.staminaMax || 100);
 }
 
-// ---- Characters Panel ----
+function formatNumber(n) {
+  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n/1000).toFixed(1) + 'K';
+  return n.toString();
+}
 
-function renderCharacters() {
-  document.getElementById('charCount').textContent = `${state.characters.length} owned`;
-  document.getElementById('charGrid').innerHTML = state.characters.map((c) => {
+// --- Render All ---
+function renderAll() {
+  renderRoster();
+  renderPortrait();
+  renderDetail();
+}
+
+// --- Roster ---
+function renderRoster() {
+  const sidebar = document.getElementById('rosterSidebar');
+  sidebar.innerHTML = state.characters.map((c, i) => {
     const char = c.character || c;
+    const factionColor = getFactionColor(char.faction);
     return `
-      <div class="char-card" onclick="levelUpCharacter('${c.id}')">
-        <div class="char-portrait ${factionBg(char.faction)} ${factionClass(char.faction)}" style="border:2px solid">
-          ${char.faction === 'TRANSCENDENT' ? '🧬' : char.faction === 'PURIST' ? '⚔️' : char.faction === 'WILD' ? '🐺' : char.faction === 'UNKNOWN' ? '👁️' : '🤖'}
-        </div>
-        <div class="char-name">${char.name}</div>
-        <div class="char-info">
-          <span style="${rarityStyle(char.rarity)}">${char.rarity}</span>
-          <span>Lv.${c.level || 1}</span>
-          <span>${'★'.repeat(c.star || 1)}</span>
-        </div>
-        <div class="char-stats">
-          <div class="char-stat-row"><span>HP</span><span>${c.currentHp || char.baseHp}</span></div>
-          <div class="char-stat-row"><span>ATK</span><span>${c.currentAtk || char.baseAtk}</span></div>
-          <div class="char-stat-row"><span>DEF</span><span>${c.currentDef || char.baseDef}</span></div>
-        </div>
-        <div class="text-dim mt-12" style="font-size:0.7rem;text-align:center;">Tap to level up (100g)</div>
+      <div class="roster-item ${i === state.selectedCharIndex ? 'active' : ''}" 
+           onclick="selectCharacter(${i})"
+           style="--roster-glow: ${factionColor}33">
+        <div class="avatar">${FACTION_EMOJI[char.faction] || '❓'}</div>
+        <div class="level">Lv.${c.level || 1}</div>
       </div>
     `;
-  }).join('') || '<div class="text-center text-dim" style="grid-column:1/-1;padding:40px;">No characters yet. Try the Gacha!</div>';
+  }).join('') + '<div class="roster-divider"></div><div class="roster-sort" onclick="sortRoster()">⇅</div>';
 }
 
-async function levelUpCharacter(instanceId) {
-  try {
-    const result = await api(`/characters/${instanceId}/levelup`, { method: 'POST', body: JSON.stringify({ levels: 1 }) });
-    toast(`Level up! ${result.stats.currentHp} HP`, 'success');
-    await loadMyCharacters();
-    await loadPlayer();
-    renderCharacters();
-    renderHeader();
-  } catch (e) {
-    toast(e.message, 'error');
-  }
+function getFactionColor(f) {
+  const colors = { TRANSCENDENT: '#aa44ff', PURIST: '#ff8844', WILD: '#00ff88', UNKNOWN: '#4488ff', CYBERIST: '#ff4466' };
+  return colors[f] || '#888';
 }
 
-// ---- Formation Panel ----
-
-let selectedSlot = -1;
-
-function renderFormation() {
-  const grid = document.getElementById('formationGrid');
-  grid.innerHTML = state.formation.slots.map((slotId, i) => {
-    const char = slotId ? state.characters.find(c => c.id === slotId) : null;
-    if (char) {
-      const c = char.character || char;
-      return `<div class="formation-slot filled ${factionBg(c.faction)}" onclick="selectSlot(${i})">
-        <div class="slot-char">${c.name}</div>
-        <div class="slot-label">Lv.${char.level || 1}</div>
-      </div>`;
-    }
-    return `<div class="formation-slot ${selectedSlot === i ? 'selected' : ''}" onclick="selectSlot(${i})">
-      <div class="slot-label">Slot ${i + 1}</div>
-    </div>`;
-  }).join('');
-
-  // Available characters (not in formation)
-  const usedIds = state.formation.slots.filter(Boolean);
-  const available = state.characters.filter(c => !usedIds.includes(c.id));
-  document.getElementById('formationCharList').innerHTML = available.map(c => {
-    const char = c.character || c;
-    return `<div class="char-card" style="padding:8px;min-height:auto;" onclick="addToFormation('${c.id}')">
-      <div class="char-name" style="font-size:0.8rem;">${char.name}</div>
-      <div class="char-info"><span style="${rarityStyle(char.rarity)}">${char.rarity}</span> Lv.${c.level || 1}</div>
-    </div>`;
-  }).join('') || '<div class="text-dim" style="grid-column:1/-1;">All characters in formation</div>';
+function selectCharacter(idx) {
+  state.selectedCharIndex = idx;
+  renderAll();
 }
 
-function selectSlot(i) {
-  selectedSlot = selectedSlot === i ? -1 : i;
-  renderFormation();
+function sortRoster() {
+  state.characters.sort((a, b) => (b.level || 1) - (a.level || 1));
+  renderRoster();
 }
 
-function addToFormation(charId) {
-  const emptySlot = state.formation.slots.findIndex(s => !s);
-  if (emptySlot === -1) {
-    toast('Formation full (5 slots)', 'error');
-    return;
-  }
-  state.formation.slots[emptySlot] = charId;
-  selectedSlot = -1;
-  renderFormation();
+// --- Portrait ---
+function renderPortrait() {
+  const c = state.characters[state.selectedCharIndex];
+  if (!c) return;
+  const char = c.character || c;
+  
+  document.getElementById('portraitCharacter').textContent = FACTION_EMOJI[char.faction] || '❓';
+  document.getElementById('portraitName').textContent = char.name;
+  document.getElementById('portraitTitle').textContent = char.title || char.name;
+  
+  const stars = '★'.repeat(RARITY_STARS[char.rarity] || 3);
+  document.getElementById('portraitStars').textContent = stars;
+  
+  const rarityEl = document.getElementById('portraitRarity');
+  rarityEl.textContent = char.rarity;
+  rarityEl.className = 'rarity-text ' + (char.rarity || '').toLowerCase();
+  
+  document.getElementById('portraitLevel').textContent = 'Lv.' + (c.level || 1) + ' / ' + (c.maxLevel || 60);
+  const expPercent = Math.min(100, ((c.exp || 0) / (c.expMax || 100)) * 100);
+  document.getElementById('portraitExpBar').style.width = expPercent + '%';
+  document.getElementById('portraitExp').textContent = (c.exp || 0) + ' / ' + (c.expMax || 100);
+  
+  const factionEl = document.getElementById('portraitFaction');
+  factionEl.textContent = char.faction;
+  factionEl.className = 'portrait-faction ' + (FACTION_BADGE_CLASS[char.faction] || '');
 }
 
-async function saveFormation() {
-  try {
-    const slotIds = state.formation.slots;
-    await api('/formations', { method: 'POST', body: JSON.stringify({ name: 'Main', slots: slotIds, isDefault: true }) });
-    toast('Formation saved!', 'success');
-  } catch (e) {
-    // Formation endpoint might fail if no characters, that's ok
-    toast('Formation saved locally', 'success');
-  }
-}
-
-// ---- Stages Panel ----
-
-function renderStages() {
-  document.getElementById('stageGrid').innerHTML = state.stages.map(s => `
-    <div class="stage-card" onclick="startBattle('${s.stageId}')">
-      <div class="stage-name">${s.name}</div>
-      <div class="stage-cost">⚡ ${s.staminaCost} stamina</div>
-      <div class="text-dim" style="font-size:0.75rem;margin-top:4px;">Ch.${s.chapter} - ${s.number}</div>
+// --- Detail Panel ---
+function renderDetail() {
+  const c = state.characters[state.selectedCharIndex];
+  if (!c) return;
+  const char = c.character || c;
+  
+  // Power
+  const power = calcPower(c);
+  document.getElementById('powerValue').textContent = formatNumber(power);
+  
+  // Stats
+  const stats = [
+    { key: 'hp', name: 'HP', value: c.currentHp || char.baseHp || 0, icon: '❤️', cls: 'hp' },
+    { key: 'atk', name: 'ATK', value: c.currentAtk || char.baseAtk || 0, icon: '⚔️', cls: 'atk' },
+    { key: 'def', name: 'DEF', value: c.currentDef || char.baseDef || 0, icon: '🛡️', cls: 'def' },
+    { key: 'spd', name: 'SPD', value: c.currentAgi || char.baseAgi || 0, icon: '⚡', cls: 'spd' },
+    { key: 'crit', name: 'CRIT', value: (c.crit || 15) + '%', icon: '💥', cls: 'crit' },
+  ];
+  
+  document.getElementById('statsGrid').innerHTML = stats.map(s => `
+    <div class="stat-item">
+      <div class="stat-icon">${s.icon}</div>
+      <div class="stat-name">${s.name}</div>
+      <div class="stat-val ${s.cls}">${formatNumber(s.value)}</div>
     </div>
-  `).join('') || '<div class="text-dim" style="grid-column:1/-1;">No stages available</div>';
-}
+  `).join('');
 
-// ---- Gacha Panel ----
+  // Skills
+  const skills = [
+    { name: 'Normal', icon: '⚔️', level: c.skillLevel || 3 },
+    { name: 'Skill 1', icon: '🔮', level: c.skillLevel || 3 },
+    { name: 'Skill 2', icon: '💫', level: Math.max(1, (c.skillLevel || 3) - 1) },
+    { name: 'Ultimate', icon: '✨', level: Math.max(1, (c.skillLevel || 3) - 2) },
+  ];
+  
+  document.getElementById('skillsRow').innerHTML = skills.map(s => `
+    <div class="skill-item">
+      <div class="skill-icon">${s.icon}</div>
+      <div class="skill-name">${s.name}</div>
+      <div class="skill-level">Lv.${s.level}</div>
+    </div>
+  `).join('');
 
-async function doGacha(type) {
-  if (!state.gachaPool) return;
-  const cost = type === 'multi' ? 2700 : 300;
-  const gems = state.player.currencies?.find(c => c.type === 'gems');
-  if (!gems || gems.amount < cost) {
-    toast('Not enough gems!', 'error');
-    return;
-  }
-
-  document.getElementById('btnPull1').disabled = true;
-  document.getElementById('btnPull10').disabled = true;
-
-  try {
-    const result = await api('/gacha/pull', {
-      method: 'POST',
-      body: JSON.stringify({ poolId: state.gachaPool.id, pullType: type }),
-    });
-
-    // Show results with animation
-    const resultDiv = document.getElementById('gachaResult');
-    resultDiv.innerHTML = result.results.map((r, i) => `
-      <div class="gacha-char ${factionBg(r.faction)}" style="animation-delay:${i * 0.1}s;border:1px solid var(--${r.faction.toLowerCase()})">
-        <div style="font-size:1.5rem;">${r.faction === 'TRANSCENDENT' ? '🧬' : r.faction === 'PURIST' ? '⚔️' : r.faction === 'WILD' ? '🐺' : r.faction === 'UNKNOWN' ? '👁️' : '🤖'}</div>
-        <div style="font-size:0.7rem;font-weight:600;margin-top:4px;">${r.name}</div>
-        <div style="${rarityStyle(r.rarity)};font-size:0.65rem;">${r.rarity}</div>
-      </div>
-    `).join('');
-
-    toast(`${result.results.length} character(s) summoned!`, 'success');
-    await loadMyCharacters();
-    await loadPlayer();
-    await loadGachaInfo();
-    renderCharacters();
-    renderHeader();
-  } catch (e) {
-    toast(e.message, 'error');
-  } finally {
-    document.getElementById('btnPull1').disabled = false;
-    document.getElementById('btnPull10').disabled = false;
-  }
-}
-
-// ---- Codex Panel ----
-
-function renderCodex() {
-  document.getElementById('codexGrid').innerHTML = state.allCharacters.map(char => `
-    <div class="char-card" style="cursor:default;">
-      <div class="char-portrait ${factionBg(char.faction)} ${factionClass(char.faction)}" style="border:2px solid">
-        ${char.faction === 'TRANSCENDENT' ? '🧬' : char.faction === 'PURIST' ? '⚔️' : char.faction === 'WILD' ? '🐺' : char.faction === 'UNKNOWN' ? '👁️' : '🤖'}
-      </div>
-      <div class="char-name">${char.name}</div>
-      <div class="char-info">
-        <span style="${rarityStyle(char.rarity)}">${char.rarity}</span>
-        <span class="${factionClass(char.faction)}" style="font-size:0.75rem;">${char.faction}</span>
-      </div>
-      <div class="char-stats">
-        <div class="char-stat-row"><span>HP</span><span>${char.baseHp}</span></div>
-        <div class="char-stat-row"><span>ATK</span><span>${char.baseAtk}</span></div>
-        <div class="char-stat-row"><span>DEF</span><span>${char.baseDef}</span></div>
-        <div class="char-stat-row"><span>WIS</span><span>${char.baseWis}</span></div>
-        <div class="char-stat-row"><span>AGI</span><span>${char.baseAgi}</span></div>
-      </div>
+  // Equipment
+  const equips = [
+    { name: 'Weapon', icon: '⚔️', level: 40, stars: 2 },
+    { name: 'Helmet', icon: '🪖', level: 35, stars: 3 },
+    { name: 'Ring', icon: '💍', level: 30, stars: 3 },
+    { name: 'Boots', icon: '👢', level: 28, stars: 3 },
+  ];
+  
+  document.getElementById('equipmentRow').innerHTML = equips.map(e => `
+    <div class="equip-slot equipped">
+      <div class="equip-icon">${e.icon}</div>
+      <div class="equip-level">Lv.${e.level}</div>
+      <div class="equip-stars">${'★'.repeat(e.stars)}</div>
     </div>
   `).join('');
 }
 
-// ---- Battle System ----
-
-let battleReplay = null;
-
-async function startBattle(stageId) {
-  try {
-    showScreen('screen-battle');
-    document.getElementById('battleLog').innerHTML = '<div class="text-center"><div class="loading"></div></div>';
-    document.getElementById('battleRewards').style.display = 'none';
-
-    const result = await api('/battle/start', {
-      method: 'POST',
-      body: JSON.stringify({ stageId }),
-    });
-
-    battleReplay = result;
-    animateBattle(result);
-  } catch (e) {
-    toast(e.message, 'error');
-    showScreen('screen-game');
-  }
+function calcPower(c) {
+  const char = c.character || c;
+  const hp = c.currentHp || char.baseHp || 1000;
+  const atk = c.currentAtk || char.baseAtk || 100;
+  const def = c.currentDef || char.baseDef || 100;
+  return Math.floor(hp / 10 + atk * 3 + def * 2);
 }
 
-function animateBattle(result) {
-  const logDiv = document.getElementById('battleLog');
-  logDiv.innerHTML = '';
-
-  // Build team displays from the result data
-  const playerTeam = result.playerTeam || [];
-  const enemyTeam = result.enemyTeam || [];
-
-  const renderTeam = (team, isEnemy) => team.map(u => `
-    <div class="battle-unit ${u.isAlive ? '' : 'dead'}">
-      <span class="battle-unit-name">${u.name}</span>
-      <div class="hp-bar"><div class="hp-bar-fill" style="width:${u.maxHp ? (u.curHp / u.maxHp * 100) : 0}%"></div></div>
-      <span class="battle-unit-hp">${u.curHp || 0}/${u.maxHp || 0}</span>
-    </div>
-  `).join('');
-
-  document.getElementById('playerTeam').innerHTML = renderTeam(playerTeam, false) || '<div class="text-dim">No units</div>';
-  document.getElementById('enemyTeam').innerHTML = renderTeam(enemyTeam, true) || '<div class="text-dim">No units</div>';
-
-  let i = 0;
-  const interval = setInterval(() => {
-    if (!result.events || i >= result.events.length) {
-      clearInterval(interval);
-      showBattleResult(result);
-      return;
-    }
-    const event = result.events[i];
-    const entry = document.createElement('div');
-    entry.className = 'battle-log-entry';
-    if (event.factionRelation === 'counter') entry.classList.add('counter');
-    if (event.factionRelation === 'countered') entry.classList.add('countered');
-    if (event.type === 'skill') entry.classList.add('skill');
-    if (event.type === 'death') entry.classList.add('death');
-
-    let prefix = '';
-    if (event.type === 'skill') prefix = '✨ ';
-    else if (event.type === 'death') prefix = '💀 ';
-    else if (event.type === 'victory') prefix = '🏆 ';
-    else if (event.type === 'defeat') prefix = '💀 ';
-    else if (event.factionRelation === 'counter') prefix = '⚡ ';
-    else prefix = '⚔️ ';
-
-    entry.textContent = `[T${event.turn}] ${prefix}${event.description}`;
-    logDiv.appendChild(entry);
-    logDiv.scrollTop = logDiv.scrollHeight;
-    i++;
-  }, 400);
+// --- Tab Switch ---
+function switchTab(tab) {
+  document.querySelectorAll('.detail-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.tab === tab);
+  });
+  document.querySelectorAll('.detail-tab-content').forEach(c => {
+    c.classList.toggle('hidden', c.id !== 'tab-' + tab);
+  });
 }
 
-function showBattleResult(result) {
-  const rewardsDiv = document.getElementById('battleRewards');
-  if (result.status === 'victory' && result.rewards) {
-    rewardsDiv.innerHTML = `
-      <div class="text-center">
-        <h2 style="color:var(--gold);margin-bottom:8px;">🏆 Victory!</h2>
-        <div class="flex gap-12" style="justify-content:center;">
-          <span style="color:var(--gold)">💰 ${result.rewards.exp} EXP</span>
-          <span style="color:var(--gold)">💰 ${result.rewards.gold} Gold</span>
-        </div>
-        <div class="mt-12 text-dim">Turns: ${result.turnCount} | Seed: ${result.seed}</div>
-      </div>
-    `;
-  } else {
-    rewardsDiv.innerHTML = `<div class="text-center"><h2 style="color:var(--red);">💀 Defeat</h2><div class="mt-12 text-dim">Try leveling up your characters!</div></div>`;
-  }
-  rewardsDiv.style.display = 'block';
-
-  // Refresh player data
-  loadPlayer().then(renderHeader);
+// --- Actions ---
+function upgradeCharacter() {
+  toast('Upgrade feature coming soon!', 'success');
 }
 
-function exitBattle() {
-  showScreen('screen-game');
-  renderCharacters();
+function lockCharacter() {
+  toast('Character locked', 'success');
 }
 
-// ---- Toast / Loading ----
+function showStory() {
+  const c = state.characters[state.selectedCharIndex];
+  if (c) toast('Story: ' + (c.character?.name || c.name), 'success');
+}
 
+function showSection(name) {
+  toast(name + ' - Coming soon', 'success');
+}
+
+// --- Loading ---
+function showLoading() { document.getElementById('loading').classList.remove('hidden'); }
+function hideLoading() { document.getElementById('loading').classList.add('hidden'); }
+
+// --- Toast ---
 function toast(msg, type = '') {
-  const div = document.createElement('div');
-  div.className = 'toast ' + type;
-  div.textContent = msg;
-  document.body.appendChild(div);
-  setTimeout(() => div.remove(), 3000);
+  const el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 2500);
 }
 
-function showLoading() {
-  const btn = document.querySelector('#screen-login .btn');
-  if (btn) { btn.dataset.original = btn.textContent; btn.textContent = 'Loading...'; btn.disabled = true; }
-}
-
-function hideLoading() {
-  const btn = document.querySelector('#screen-login .btn');
-  if (btn && btn.dataset.original) { btn.textContent = btn.dataset.original; btn.disabled = false; }
-}
-
-// ---- Init ----
-// Check for saved session
-const saved = localStorage.getItem('vobb_session');
-if (saved) {
-  try {
-    const session = JSON.parse(saved);
-    state.accessToken = session.accessToken;
-    state.refreshToken = session.refreshToken;
-    enterGame();
-  } catch { logout(); }
-}
+// --- Init ---
+// Check if we have a session stored
 </script>
 </body>
 </html>
