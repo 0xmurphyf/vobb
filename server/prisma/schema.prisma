@@ -219,6 +219,7 @@ model GachaItem {
   poolId    String
   characterId String
   guaranteedSr Boolean @default(false)
+  weight      Int     @default(1)
 
   pool      GachaPool @relation(fields: [poolId], references: [id], onDelete: Cascade)
   character Character @relation(fields: [characterId], references: [id])
