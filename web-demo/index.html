@@ -366,7 +366,7 @@ body {
 // VOBB Web Demo Client
 // ============================================
 
-const API = '/api';
+const API = 'http://localhost:3003/api';
 let state = {
   accessToken: null,
   refreshToken: null,
@@ -745,34 +745,27 @@ async function startBattle(stageId) {
 }
 
 function animateBattle(result) {
-  if (!result.events) {
-    document.getElementById('battleLog').innerHTML = '<div class="text-center text-dim">Battle complete: ' + result.status + '</div>';
-    return;
-  }
-
   const logDiv = document.getElementById('battleLog');
   logDiv.innerHTML = '';
 
-  // Get team info from the result
-  const playerUnits = [];
-  const enemyUnits = [];
+  // Build team displays from the result data
+  const playerTeam = result.playerTeam || [];
+  const enemyTeam = result.enemyTeam || [];
 
-  // Extract unique units from events
-  result.events.forEach(e => {
-    if (e.attacker && !playerUnits.find(u => u.name === e.attacker) && e.attacker !== 'Victory!' && e.attacker !== 'Defeat...') {
-      // Determine if player or enemy by looking at targets
-      const isPlayer = result.events.some(ev => ev.target === e.attacker && ev.attacker !== e.attacker);
-      (isPlayer ? enemyUnits : playerUnits).push({ name: e.attacker, hp: 100, maxHp: 100 });
-    }
-  });
+  const renderTeam = (team, isEnemy) => team.map(u => `
+    <div class="battle-unit ${u.isAlive ? '' : 'dead'}">
+      <span class="battle-unit-name">${u.name}</span>
+      <div class="hp-bar"><div class="hp-bar-fill" style="width:${u.maxHp ? (u.curHp / u.maxHp * 100) : 0}%"></div></div>
+      <span class="battle-unit-hp">${u.curHp || 0}/${u.maxHp || 0}</span>
+    </div>
+  `).join('');
 
-  // We don't have initial state from the API, so let's just show the log
-  document.getElementById('playerTeam').innerHTML = `<div class="text-dim" style="font-size:0.8rem;">${result.status === 'victory' ? '🏆 Victory' : '💀 Defeat'}</div>`;
-  document.getElementById('enemyTeam').innerHTML = '';
+  document.getElementById('playerTeam').innerHTML = renderTeam(playerTeam, false) || '<div class="text-dim">No units</div>';
+  document.getElementById('enemyTeam').innerHTML = renderTeam(enemyTeam, true) || '<div class="text-dim">No units</div>';
 
   let i = 0;
   const interval = setInterval(() => {
-    if (i >= result.events.length) {
+    if (!result.events || i >= result.events.length) {
       clearInterval(interval);
       showBattleResult(result);
       return;
@@ -797,7 +790,7 @@ function animateBattle(result) {
     logDiv.appendChild(entry);
     logDiv.scrollTop = logDiv.scrollHeight;
     i++;
-  }, 300);
+  }, 400);
 }
 
 function showBattleResult(result) {
