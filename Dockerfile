@@ -21,4 +21,4 @@ ENV HOST=0.0.0.0
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "if echo \"$DATABASE_URL\" | grep -q '?'; then export DATABASE_URL=\"${DATABASE_URL}&schema=public&sslmode=disable\"; else export DATABASE_URL=\"${DATABASE_URL}?schema=public&sslmode=disable\"; fi && npx prisma db push --accept-data-loss && npx tsx prisma/seed.ts && npx tsx src/index.ts"]
+CMD ["sh", "-c", "if echo \"$DATABASE_URL\" | grep -q '?'; then export DATABASE_URL=\"${DATABASE_URL}&schema=public&sslmode=disable\"; else export DATABASE_URL=\"${DATABASE_URL}?schema=public&sslmode=disable\"; fi && npx prisma db push --accept-data-loss && npx prisma generate && npx tsx prisma/seed.ts && npx tsx src/index.ts"]
