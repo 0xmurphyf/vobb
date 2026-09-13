@@ -131,8 +131,15 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .tab-panel{display:none}
 .tab-panel.active{display:block}
 
+/* ========== OVERVIEW TOP ========== */
+.overview-top{display:flex;gap:10px;margin-bottom:10px}
+.overview-left{flex:1;display:flex;flex-direction:column;gap:8px}
+.overview-right{width:110px;flex-shrink:0}
+.counter-chart{width:100%;height:100%;min-height:140px;background:var(--s1);border:1px solid var(--bdr);border-radius:10px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.counter-chart svg{width:100%;height:100%}
+
 /* ========== POWER ========== */
-.power-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(135deg,rgba(180,100,255,.1),rgba(0,209,178,.05));border:1px solid rgba(180,100,255,.2);border-radius:12px;margin-bottom:10px}
+.power-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(135deg,rgba(180,100,255,.1),rgba(0,209,178,.05));border:1px solid rgba(180,100,255,.2);border-radius:12px}
 .power-label{font-size:.6rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;font-weight:700}
 .power-val{font-size:2rem;font-weight:900;color:var(--gold);text-shadow:0 0 15px rgba(244,196,48,.25)}
 
@@ -144,30 +151,18 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .stat-val{font-size:.9rem;font-weight:700}
 .stat-val.hp{color:var(--green)} .stat-val.atk{color:var(--red)} .stat-val.def{color:var(--blue)} .stat-val.spd{color:var(--cyan)} .stat-val.crt{color:var(--orange)}
 
-/* ========== ELEMENT CHART ========== */
-.elem-chart{display:flex;align-items:center;gap:8px;padding:10px;background:var(--s1);border:1px solid var(--bdr);border-radius:10px;margin-bottom:10px}
-.elem-group{display:flex;flex-direction:column;gap:4px}
-.elem-item{display:flex;align-items:center;gap:6px;font-size:.6rem}
-.elem-dot{width:8px;height:8px;border-radius:50%;background:var(--bdr)}
-.elem-dot.active{box-shadow:0 0 6px currentColor}
-.elem-dot.fire{background:var(--red);color:var(--red)}
-.elem-dot.wind{background:var(--cyan);color:var(--cyan)}
-.elem-dot.water{background:var(--blue);color:var(--blue)}
-.elem-dot.light{background:var(--gold);color:var(--gold)}
-.elem-dot.dark{background:var(--purple);color:var(--purple)}
-.elem-arrow{color:var(--t3);font-size:1.2rem}
 
 /* ========== SKILLS ========== */
-.skills-row{display:flex;gap:8px;justify-content:space-between;margin-bottom:10px}
-.skill-card{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 6px;background:var(--s1);border:1px solid var(--bdr);border-radius:10px;transition:all .2s}
+.skills-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.skill-card{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 6px;background:var(--s1);border:1px solid var(--bdr);border-radius:10px;transition:all .2s}
 .skill-card:hover{border-color:var(--purple);background:var(--s2)}
 .skill-icon{width:40px;height:40px;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;border:2px solid var(--bdr2)}
 .skill-name{font-size:.55rem;color:var(--t3);text-align:center}
 .skill-level{font-size:.55rem;font-weight:700;color:var(--gold)}
 
 /* ========== EQUIPMENT ========== */
-.equips-row{display:flex;gap:6px;justify-content:space-between;margin-bottom:10px}
-.equip-slot{flex:1;max-width:64px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--s1);border:1px dashed var(--bdr);border-radius:10px;transition:all .2s}
+.equips-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.equip-slot{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--s1);border:1px dashed var(--bdr);border-radius:10px;transition:all .2s}
 .equip-slot.has{border-style:solid;border-color:var(--blue);background:linear-gradient(135deg,var(--s1),rgba(50,152,220,.08))}
 .equip-icon{font-size:1.3rem;opacity:.6}
 .equip-slot.has .equip-icon{opacity:1}
@@ -414,9 +409,17 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
             <button class="char-tab" data-tab="evo" onclick="switchTab('evo')">Evolution</button>
           </div>
           <div class="tab-panel active" id="tab-overview">
-            <div class="power-bar"><span class="power-label">POWER</span><span class="power-val" id="powerVal">0</span></div>
-            <div class="stats-grid" id="statsGrid"></div>
-            <div class="elem-chart" id="elemChart"></div>
+            <!-- Top: Stats Left, Counter Chart Right -->
+            <div class="overview-top">
+              <div class="overview-left">
+                <div class="power-bar"><span class="power-label">POWER</span><span class="power-val" id="powerVal">0</span></div>
+                <div class="stats-grid" id="statsGrid"></div>
+              </div>
+              <div class="overview-right">
+                <div class="counter-chart" id="counterChart"></div>
+              </div>
+            </div>
+            <!-- Bottom: Skills + Equips -->
             <div class="skills-row" id="skillsRow"></div>
             <div class="equips-row" id="equipsRow"></div>
             <button class="btn-upgrade" onclick="upgrade()">⬆ Upgrade</button>
@@ -622,8 +625,35 @@ function renderChar(){
     {n:'CRIT',v:(c.crit||15)+'%',i:'💥',c:'crt'},
   ];
   document.getElementById('statsGrid').innerHTML=st.map(s=>`<div class="stat-item"><div class="stat-icon">${s.i}</div><div class="stat-name">${s.n}</div><div class="stat-val ${s.c}">${fmt(s.v)}</div></div>`).join('');
-  // Element chart (pentagon placeholder)
-  document.getElementById('elemChart').innerHTML=`<div class="elem-group"><div class="elem-item"><div class="elem-dot fire active"></div>Fire</div><div class="elem-item"><div class="elem-dot wind active"></div>Wind</div><div class="elem-item"><div class="elem-dot water"></div>Water</div></div><div class="elem-arrow">⚔️</div><div class="elem-group"><div class="elem-item"><div class="elem-dot light"></div>Light</div><div class="elem-item"><div class="elem-dot dark active"></div>Dark</div></div>`;
+  // Counter Chart (Pentagon)
+  const factions=['TRANSCENDENT','PURIST','WILD','UNKNOWN','CYBERIST'];
+  const colors={TRANSCENDENT:'#b86bff',PURIST:'#ff6b35',WILD:'#23d160',UNKNOWN:'#3298dc',CYBERIST:'#ff3860'};
+  const labels={TRANSCENDENT:'T',PURIST:'P',WILD:'W',UNKNOWN:'U',CYBERIST:'C'};
+  // Pentagon vertices (top, upper-right, lower-right, lower-left, upper-left)
+  const cx=55,cy=70,r=50;
+  const angles=[-90,-18,-54,18,90].map(a=>a*Math.PI/180);
+  const pts=angles.map(a=>({x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)}));
+  // Counter relationships: each faction counters the next 2 in sequence
+  // T->W,C  P->T,W  W->U,C  U->P,T  C->U,P
+  const counters={TRANSCENDENT:['WILD','CYBERIST'],PURIST:['TRANSCENDENT','WILD'],WILD:['UNKNOWN','CYBERIST'],UNKNOWN:['PURIST','TRANSCENDENT'],CYBERIST:['UNKNOWN','PURIST']};
+  let svg='<svg viewBox="0 0 110 140" xmlns="http://www.w3.org/2000/svg">';
+  // Draw counter lines
+  factions.forEach((f,i)=>{
+    counters[f].forEach(target=>{
+      const ti=factions.indexOf(target);
+      svg+=`<line x1="${pts[i].x}" y1="${pts[i].y}" x2="${pts[ti].x}" y2="${pts[ti].y}" stroke="${colors[f]}" stroke-width="1.5" opacity="0.4" marker-end="url(#arrow)"/>`;
+    });
+  });
+  // Arrow marker
+  svg+=`<defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#aab"/></marker></defs>`;
+  // Draw nodes
+  factions.forEach((f,i)=>{
+    const isActive=f===ch.faction;
+    svg+=`<circle cx="${pts[i].x}" cy="${pts[i].y}" r="${isActive?10:7}" fill="${isActive?colors[f]:'#1a1a40'}" stroke="${colors[f]}" stroke-width="${isActive?2:1}"/>`;
+    svg+=`<text x="${pts[i].x}" y="${pts[i].y+3}" text-anchor="middle" font-size="7" font-weight="700" fill="${isActive?'#fff':'#aab'}">${labels[f]}</text>`;
+  });
+  svg+='</svg>';
+  document.getElementById('counterChart').innerHTML=svg;
   // Skills
   const sk=[{n:'Normal',i:'⚔️',l:c.skillLevel||3},{n:'Skill 1',i:'🔮',l:c.skillLevel||3},{n:'Skill 2',i:'💫',l:Math.max(1,(c.skillLevel||3)-1)},{n:'Ultimate',i:'✨',l:Math.max(1,(c.skillLevel||3)-2)}];
   document.getElementById('skillsRow').innerHTML=sk.map(s=>`<div class="skill-card"><div class="skill-icon">${s.i}</div><div class="skill-name">${s.n}</div><div class="skill-level">Lv.${s.l}</div></div>`).join('');
