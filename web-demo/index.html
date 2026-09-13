@@ -6,1052 +6,338 @@
 <title>VOBB — Five Warlords</title>
 <style>
 :root {
-  --bg: #0a0a14;
+  --bg: #06060f;
+  --bg2: #0c0c1a;
   --surface: #12122a;
-  --surface2: #1a1a3e;
+  --surface2: #1a1a40;
   --surface3: #252560;
-  --border: #2a2a5e;
-  --border-bright: #4a4a9e;
-  --text: #e8e8ff;
-  --text-dim: #8888bb;
-  --text-bright: #ffffff;
-  --gold: #ffd700;
-  --red: #ff4466;
-  --green: #00ff88;
-  --blue: #4488ff;
-  --purple: #aa44ff;
-  --cyan: #00ddff;
-  --pink: #ff44aa;
-  --orange: #ff8844;
-  --rarity-ssr: #ffd700;
-  --rarity-sr: #aa44ff;
-  --rarity-r: #4488ff;
-  --rarity-n: #888888;
-  --faction-t: #aa44ff;
-  --faction-p: #ff8844;
-  --faction-w: #00ff88;
-  --faction-u: #4488ff;
-  --faction-c: #ff4466;
+  --border: #1e1e4a;
+  --border2: #2a2a6a;
+  --text: #eee;
+  --text2: #aab;
+  --gold: #f4c430;
+  --red: #ff3860;
+  --green: #23d160;
+  --blue: #3298dc;
+  --purple: #b86bff;
+  --cyan: #00d1b2;
+  --pink: #ff3860;
+  --orange: #ff6b35;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
 }
 
-/* === Scrollbar === */
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
+/* === Reset === */
+button { font-family: inherit; cursor: pointer; border: none; outline: none; }
+.hidden { display: none !important; }
 
-/* === App Container === */
-.app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  max-width: 100vw;
-  position: relative;
-}
+/* === App === */
+.app { min-height: 100vh; display: flex; flex-direction: column; }
 
-/* === Top Header Bar === */
+/* === Top Bar === */
 .topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 16px;
-  background: linear-gradient(180deg, rgba(20,20,50,0.95) 0%, rgba(15,15,40,0.85) 100%);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(20px);
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  min-height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px; background: linear-gradient(180deg, rgba(18,18,42,.98), rgba(12,12,30,.95));
+  border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 200;
 }
-
-.topbar-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.topbar-left { display: flex; align-items: center; gap: 8px; }
+.btn-back {
+  width: 32px; height: 32px; border-radius: 8px; background: var(--surface);
+  border: 1px solid var(--border); color: var(--text2); display: flex; align-items: center;
+  justify-content: center; font-size: 1rem;
 }
-
-.topbar-back {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  color: var(--text);
-  font-size: 1.1rem;
+.btn-back:active { background: var(--surface2); }
+.topbar-title { font-size: .75rem; color: var(--text2); font-weight: 600; letter-spacing: 1px; }
+.topbar-right { display: flex; gap: 6px; }
+.res {
+  display: flex; align-items: center; gap: 4px; padding: 4px 10px;
+  border-radius: 16px; background: var(--surface); border: 1px solid var(--border);
+  font-size: .75rem; font-weight: 700;
 }
+.res.gems { color: var(--cyan); }
+.res.gold { color: var(--gold); }
+.res.stam { color: var(--green); }
 
-.topbar-back:hover {
-  background: var(--surface3);
-  border-color: var(--border-bright);
+/* === Main Layout === */
+.main { flex: 1; display: flex; flex-direction: column; position: relative; }
+
+/* === Character Portrait === */
+.portrait {
+  position: relative; width: 100%; height: 340px;
+  background: linear-gradient(180deg, #0d0825 0%, #1a1040 40%, #0d0825 100%);
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
 }
-
-.topbar-title {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-dim);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.resource-chip {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  border-radius: 20px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  font-size: 0.8rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.resource-chip .icon {
-  font-size: 0.9rem;
-}
-
-.resource-chip.gems { color: var(--cyan); border-color: rgba(0,221,255,0.3); }
-.resource-chip.gold { color: var(--gold); border-color: rgba(255,215,0,0.3); }
-.resource-chip.stamina { color: var(--green); border-color: rgba(0,255,136,0.3); }
-
-/* === Main Content Area === */
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-}
-
-/* === Character Portrait Section === */
-.portrait-section {
-  position: relative;
-  width: 100%;
-  min-height: 320px;
-  max-height: 45vh;
-  background: linear-gradient(180deg, #0d0d25 0%, #151540 50%, #1a1a50 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.portrait-bg-effect {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 80%, rgba(170,68,255,0.15) 0%, transparent 60%),
-    radial-gradient(ellipse at 20% 20%, rgba(0,221,255,0.08) 0%, transparent 40%),
-    radial-gradient(ellipse at 80% 30%, rgba(255,68,170,0.08) 0%, transparent 40%);
+.portrait::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 70%, rgba(180,100,255,.2) 0%, transparent 50%);
   pointer-events: none;
 }
-
-.portrait-character {
-  position: relative;
-  z-index: 2;
-  width: 200px;
-  height: 280px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10rem;
-  filter: drop-shadow(0 0 40px rgba(170,68,255,0.4));
-  animation: float 4s ease-in-out infinite;
+.portrait-art {
+  font-size: 9rem; z-index: 2; filter: drop-shadow(0 0 40px rgba(180,100,255,.5));
+  animation: hover 3s ease-in-out infinite;
 }
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-.portrait-glow {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 150px;
-  height: 30px;
-  background: radial-gradient(ellipse, rgba(170,68,255,0.4) 0%, transparent 70%);
-  filter: blur(10px);
-}
-
-/* Character Info Overlay */
+@keyframes hover { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 .portrait-info {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  position: absolute; bottom: 0; left: 0; right: 0; padding: 12px 16px;
+  background: linear-gradient(0deg, rgba(0,0,0,.8) 0%, transparent 100%);
+  display: flex; flex-direction: column; gap: 4px;
 }
-
-.portrait-name {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: var(--text-bright);
-  text-shadow: 0 0 20px rgba(0,0,0,0.8);
-  letter-spacing: 1px;
+.portrait-name { font-size: 1.4rem; font-weight: 800; color: #fff; letter-spacing: .5px; }
+.portrait-sub { font-size: .75rem; color: var(--text2); display: flex; align-items: center; gap: 6px; }
+.portrait-stars { color: var(--gold); letter-spacing: 1px; font-size: .8rem; }
+.portrait-rar { padding: 1px 8px; border-radius: 8px; font-size: .65rem; font-weight: 700; background: rgba(255,255,255,.1); }
+.portrait-rar.ssr { color: var(--gold); }
+.portrait-rar.sr { color: var(--purple); }
+.portrait-rar.r { color: var(--blue); }
+.portrait-lv { font-size: .8rem; font-weight: 700; color: var(--cyan); }
+.portrait-exp { width: 120px; height: 4px; background: rgba(255,255,255,.1); border-radius: 2px; overflow: hidden; margin-top: 2px; }
+.portrait-exp-fill { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--purple)); border-radius: 2px; }
+.faction-badge {
+  position: absolute; top: 12px; right: 12px; padding: 4px 12px; border-radius: 12px;
+  font-size: .65rem; font-weight: 700; letter-spacing: 1px; background: rgba(0,0,0,.5);
+  backdrop-filter: blur(8px); border: 1px solid;
 }
+.faction-T { color: var(--purple); border-color: var(--purple); }
+.faction-P { color: var(--orange); border-color: var(--orange); }
+.faction-W { color: var(--green); border-color: var(--green); }
+.faction-U { color: var(--blue); border-color: var(--blue); }
+.faction-C { color: var(--red); border-color: var(--red); }
 
-.portrait-title {
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  font-weight: 500;
+/* === Roster (Left) === */
+.roster {
+  position: fixed; left: 0; top: 52px; bottom: 0; width: 64px;
+  background: linear-gradient(180deg, rgba(16,16,36,.98), rgba(10,10,24,.98));
+  border-right: 1px solid var(--border); display: flex; flex-direction: column;
+  align-items: center; padding: 8px 0; gap: 6px; overflow-y: auto; z-index: 100;
 }
-
-.portrait-rarity {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: 2px;
-}
-
-.portrait-rarity .stars {
-  color: var(--rarity-ssr);
-  letter-spacing: 2px;
-  font-size: 0.9rem;
-}
-
-.portrait-rarity .rarity-text {
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 10px;
-  background: rgba(0,0,0,0.6);
-  letter-spacing: 1px;
-}
-
-.portrait-rarity .rarity-text.ssr { color: var(--rarity-ssr); }
-.portrait-rarity .rarity-text.sr { color: var(--rarity-sr); }
-.portrait-rarity .rarity-text.r { color: var(--rarity-r); }
-
-.portrait-level {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.portrait-level .level-text {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--cyan);
-}
-
-.portrait-level .exp-bar {
-  width: 140px;
-  height: 4px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.portrait-level .exp-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--cyan), var(--purple));
-  border-radius: 2px;
-  transition: width 0.5s ease;
-}
-
-.portrait-level .exp-text {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-}
-
-/* Faction Badge */
-.portrait-faction {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 3;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(10px);
-  border: 1px solid;
-}
-
-.faction-badge-transcendent { color: var(--faction-t); border-color: var(--faction-t); }
-.faction-badge-purist { color: var(--faction-p); border-color: var(--faction-p); }
-.faction-badge-wild { color: var(--faction-w); border-color: var(--faction-w); }
-.faction-badge-unknown { color: var(--faction-u); border-color: var(--faction-u); }
-.faction-badge-cyberist { color: var(--faction-c); border-color: var(--faction-c); }
-
-/* === Character Roster Sidebar (Left) === */
-.roster-sidebar {
-  position: fixed;
-  left: 0;
-  top: 52px;
-  bottom: 0;
-  width: 72px;
-  background: linear-gradient(180deg, rgba(18,18,42,0.98) 0%, rgba(12,12,30,0.98) 100%);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px 0;
-  gap: 8px;
-  overflow-y: auto;
-  z-index: 100;
-}
-
 .roster-item {
-  width: 56px;
-  height: 72px;
-  border-radius: 10px;
-  background: var(--surface2);
-  border: 2px solid var(--border);
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
+  width: 48px; height: 60px; border-radius: 8px; background: var(--surface);
+  border: 2px solid var(--border); cursor: pointer; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 1px; transition: all .2s; flex-shrink: 0;
 }
-
-.roster-item::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 100%, var(--roster-glow, rgba(170,68,255,0.2)) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.roster-item:hover::before,
-.roster-item.active::before {
-  opacity: 1;
-}
-
-.roster-item:hover {
-  border-color: var(--border-bright);
-  transform: scale(1.05);
-}
-
-.roster-item.active {
-  border-color: var(--gold);
-  box-shadow: 0 0 15px rgba(255,215,0,0.3), inset 0 0 15px rgba(255,215,0,0.05);
-}
-
-.roster-item .avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  background: var(--surface3);
-}
-
-.roster-item .level {
-  font-size: 0.6rem;
-  font-weight: 700;
-  color: var(--text-dim);
-}
-
-.roster-item.active .level {
-  color: var(--gold);
-}
-
-.roster-divider {
-  width: 36px;
-  height: 1px;
-  background: var(--border);
-  margin: 4px 0;
-}
-
+.roster-item:active { transform: scale(.95); }
+.roster-item.active { border-color: var(--gold); box-shadow: 0 0 12px rgba(244,196,48,.3); }
+.roster-avatar { font-size: 1.4rem; }
+.roster-lv { font-size: .55rem; font-weight: 700; color: var(--text2); }
+.roster-item.active .rost-lv { color: var(--gold); }
+.roster-sep { width: 32px; height: 1px; background: var(--border); margin: 2px 0; flex-shrink: 0; }
 .roster-sort {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--surface2);
-  border: 1px dashed var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--text-dim);
-  font-size: 1rem;
-  margin-top: auto;
-  flex-shrink: 0;
-  transition: all 0.2s;
+  width: 36px; height: 36px; border-radius: 50%; background: var(--surface);
+  border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center;
+  color: var(--text2); margin-top: auto; flex-shrink: 0; font-size: .8rem;
 }
 
-.roster-sort:hover {
-  border-color: var(--border-bright);
-  color: var(--text);
-}
-
-/* === Detail Panel (Right of portrait, left of roster) === */
-.detail-panel {
-  flex: 1;
-  padding: 16px 16px 16px 88px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  background: linear-gradient(180deg, #0f0f2a 0%, #0a0a1a 100%);
+/* === Detail Panel === */
+.detail {
+  padding: 12px 12px 12px 76px; background: var(--bg2);
+  display: flex; flex-direction: column; gap: 10px;
 }
 
 /* Tabs */
-.detail-tabs {
-  display: flex;
-  gap: 0;
-  border-bottom: 2px solid var(--border);
-  margin-bottom: 12px;
+.tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); }
+.tab {
+  padding: 8px 16px; font-size: .75rem; font-weight: 600; color: var(--text2);
+  position: relative; background: none; border: none;
 }
-
-.detail-tab {
-  padding: 10px 20px;
-  border: none;
-  background: none;
-  color: var(--text-dim);
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  position: relative;
-  transition: color 0.2s;
-}
-
-.detail-tab::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  right: 0;
-  height: 2px;
+.tab.active { color: var(--text); }
+.tab.active::after {
+  content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px;
   background: var(--cyan);
-  transform: scaleX(0);
-  transition: transform 0.3s;
 }
 
-.detail-tab.active {
-  color: var(--text-bright);
+/* Power */
+.power {
+  display: flex; align-items: center; gap: 8px; padding: 10px 14px;
+  background: linear-gradient(135deg, rgba(180,100,255,.12), rgba(0,200,255,.06));
+  border: 1px solid rgba(180,100,255,.2); border-radius: 10px;
 }
+.power-label { font-size: .6rem; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+.power-val { font-size: 1.8rem; font-weight: 900; color: var(--gold); text-shadow: 0 0 15px rgba(244,196,48,.3); }
 
-.detail-tab.active::after {
-  transform: scaleX(1);
+/* Stats */
+.stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.stat {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 8px 4px; text-align: center;
 }
+.stat-icon { font-size: .9rem; margin-bottom: 2px; }
+.stat-name { font-size: .55rem; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 1px; }
+.stat-val { font-size: .85rem; font-weight: 700; }
+.stat-val.hp { color: var(--green); }
+.stat-val.atk { color: var(--red); }
+.stat-val.def { color: var(--blue); }
+.stat-val.spd { color: var(--cyan); }
+.stat-val.crit { color: var(--orange); }
 
-/* Power Display */
-.power-display {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  background: linear-gradient(135deg, rgba(170,68,255,0.1) 0%, rgba(0,221,255,0.05) 100%);
-  border: 1px solid rgba(170,68,255,0.2);
-  border-radius: 12px;
+/* Skills */
+.row { display: flex; gap: 8px; }
+.row-title { font-size: .7rem; color: var(--text2); font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .5px; }
+
+.skills { gap: 8px; justify-content: space-between; }
+.skill { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 4px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
+.skill-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 1rem; border: 2px solid var(--border2); }
+.skill-name { font-size: .55rem; color: var(--text2); text-align: center; }
+.skill-lv { font-size: .55rem; font-weight: 700; color: var(--gold); }
+
+/* Equipment */
+.equips { gap: 6px; }
+.equip { flex: 1; max-width: 60px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; background: var(--surface); border: 1px dashed var(--border); border-radius: 8px; }
+.equip.has { border-style: solid; border-color: var(--blue); background: linear-gradient(135deg, var(--surface), rgba(50,152,220,.1)); }
+.equip-icon { font-size: 1.1rem; }
+.equip-lv { font-size: .5rem; color: var(--text2); }
+.equip-stars { font-size: .45rem; color: var(--gold); letter-spacing: 1px; }
+
+/* Upgrade Button */
+.btn-upgrade {
+  width: 100%; padding: 12px; border-radius: 10px; font-size: .9rem; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  background: linear-gradient(135deg, var(--blue), var(--purple)); color: #fff;
+  box-shadow: 0 4px 15px rgba(180,100,255,.3); transition: all .2s;
 }
+.btn-upgrade:active { transform: scale(.98); }
 
-.power-label {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 600;
+/* Bottom Bar */
+.bottom {
+  display: flex; justify-content: center; gap: 24px; padding: 12px 12px 16px 76px;
+  background: linear-gradient(0deg, rgba(10,10,24,.98), rgba(10,10,24,.95));
 }
+.bot-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 14px; border-radius: 8px; background: none; }
+.bot-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+.bot-label { font-size: .55rem; color: var(--text2); font-weight: 600; }
+.bot-btn:active .bot-icon { background: var(--surface2); }
 
-.power-value {
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--gold);
-  text-shadow: 0 0 20px rgba(255,215,0,0.3);
-  letter-spacing: 2px;
+/* === Login === */
+.login {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 100vh; background: radial-gradient(circle at 50% 30%, #1a1040 0%, #06060f 70%);
 }
-
-/* Stats Grid */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
-}
-
-.stat-item {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 8px;
-  text-align: center;
-  transition: all 0.2s;
-}
-
-.stat-item:hover {
-  border-color: var(--border-bright);
-  background: var(--surface2);
-}
-
-.stat-item .stat-icon {
-  font-size: 1rem;
-  margin-bottom: 4px;
-}
-
-.stat-item .stat-name {
-  font-size: 0.65rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 2px;
-}
-
-.stat-item .stat-val {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-bright);
-}
-
-.stat-item .stat-val.hp { color: var(--green); }
-.stat-item .stat-val.atk { color: var(--red); }
-.stat-item .stat-val.def { color: var(--blue); }
-.stat-item .stat-val.spd { color: var(--cyan); }
-.stat-item .stat-val.crit { color: var(--orange); }
-
-/* Element Icons */
-.elements-row {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.element-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  opacity: 0.4;
-  transition: all 0.2s;
-}
-
-.element-icon.active {
-  opacity: 1;
-  border-color: var(--border-bright);
-  box-shadow: 0 0 10px rgba(170,68,255,0.2);
-}
-
-/* Skills Row */
-.skills-row {
-  display: flex;
-  gap: 10px;
-  justify-content: space-between;
-}
-
-.skill-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 10px 6px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.skill-item:hover {
-  border-color: var(--purple);
-  background: var(--surface2);
-}
-
-.skill-item .skill-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--surface3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  border: 2px solid var(--border);
-}
-
-.skill-item .skill-name {
-  font-size: 0.6rem;
-  color: var(--text-dim);
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-
-.skill-item .skill-level {
-  font-size: 0.6rem;
-  font-weight: 700;
-  color: var(--gold);
-}
-
-/* Equipment Row */
-.equipment-row {
-  display: flex;
-  gap: 8px;
-  justify-content: space-between;
-}
-
-.equip-slot {
-  flex: 1;
-  aspect-ratio: 1;
-  max-width: 70px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  background: var(--surface);
-  border: 1px dashed var(--border);
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-}
-
-.equip-slot:hover {
-  border-color: var(--border-bright);
-  background: var(--surface2);
-}
-
-.equip-slot.equipped {
-  border-style: solid;
-  border-color: var(--blue);
-  background: linear-gradient(135deg, var(--surface) 0%, rgba(68,136,255,0.1) 100%);
-}
-
-.equip-slot .equip-icon {
-  font-size: 1.3rem;
-  opacity: 0.5;
-}
-
-.equip-slot.equipped .equip-icon {
-  opacity: 1;
-}
-
-.equip-slot .equip-level {
-  font-size: 0.55rem;
-  font-weight: 700;
-  color: var(--text-dim);
-}
-
-.equip-slot .equip-stars {
-  font-size: 0.5rem;
-  color: var(--gold);
-  letter-spacing: 1px;
-}
-
-/* Action Button */
-.action-btn {
-  width: 100%;
-  padding: 14px 24px;
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.3s;
-  text-transform: uppercase;
-  position: relative;
-  overflow: hidden;
-}
-
-.action-btn.upgrade {
-  background: linear-gradient(135deg, #4488ff 0%, #aa44ff 100%);
-  color: white;
-  box-shadow: 0 4px 20px rgba(68,136,255,0.3);
-}
-
-.action-btn.upgrade:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 30px rgba(68,136,255,0.5);
-}
-
-.action-btn.upgrade:active {
-  transform: translateY(0);
-}
-
-/* Bottom Action Bar */
-.bottom-actions {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  padding: 12px 16px 16px 88px;
-  background: linear-gradient(0deg, rgba(15,15,40,0.98) 0%, rgba(15,15,40,0.95) 100%);
-}
-
-.bottom-action {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  cursor: pointer;
-  transition: all 0.2s;
-  padding: 8px 16px;
-  border-radius: 10px;
-}
-
-.bottom-action:hover {
-  background: var(--surface);
-}
-
-.bottom-action .action-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  transition: all 0.2s;
-}
-
-.bottom-action:hover .action-icon {
-  border-color: var(--border-bright);
-  background: var(--surface3);
-}
-
-.bottom-action .action-label {
-  font-size: 0.65rem;
-  color: var(--text-dim);
-  font-weight: 600;
-}
-
-/* === Login Screen === */
-.login-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background: linear-gradient(180deg, #0a0a1a 0%, #151540 50%, #0a0a2a 100%);
-  position: relative;
-  overflow: hidden;
-}
-
-.login-screen::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 100%, rgba(170,68,255,0.1) 0%, transparent 60%),
-    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.01) 2px, rgba(255,255,255,0.01) 4px);
-  pointer-events: none;
-}
-
-.login-logo {
-  font-size: 4rem;
-  margin-bottom: 16px;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(170,68,255,0.4)); }
-  50% { transform: scale(1.05); filter: drop-shadow(0 0 40px rgba(170,68,255,0.6)); }
-}
-
-.login-title {
-  font-size: 2.5rem;
-  font-weight: 900;
-  background: linear-gradient(135deg, var(--gold) 0%, #fff 50%, var(--gold) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 8px;
-  letter-spacing: 4px;
-}
-
-.login-subtitle {
-  font-size: 0.9rem;
-  color: var(--text-dim);
-  margin-bottom: 40px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
+.login-logo { font-size: 4rem; margin-bottom: 12px; }
+.login-title { font-size: 2.2rem; font-weight: 900; background: linear-gradient(135deg, var(--gold), #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 4px; margin-bottom: 4px; }
+.login-sub { font-size: .75rem; color: var(--text2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 32px; }
 .login-btn {
-  padding: 16px 48px;
-  border: none;
-  border-radius: 30px;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  cursor: pointer;
-  background: linear-gradient(135deg, var(--gold) 0%, #ffaa00 100%);
-  color: #000;
-  box-shadow: 0 4px 30px rgba(255,215,0,0.3);
-  transition: all 0.3s;
-  text-transform: uppercase;
+  padding: 14px 48px; border-radius: 24px; font-size: .9rem; font-weight: 700; letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--gold), #e6a817); color: #000; text-transform: uppercase;
+  box-shadow: 0 4px 20px rgba(244,196,48,.3);
 }
+.login-btn:active { transform: scale(.96); }
 
-.login-btn:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 40px rgba(255,215,0,0.5);
+/* === Loading & Toast === */
+.loading {
+  position: fixed; inset: 0; background: rgba(6,6,15,.9); display: flex;
+  align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(8px);
 }
+.loading div { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--gold); border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.login-demo {
-  margin-top: 20px;
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  opacity: 0.6;
-}
-
-/* === Loading === */
-.loading-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(10,10,26,0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  backdrop-filter: blur(10px);
-}
-
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid var(--border);
-  border-top-color: var(--gold);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* === Toast === */
 .toast {
-  position: fixed;
-  top: 70px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px 24px;
-  border-radius: 8px;
-  background: var(--surface2);
-  border: 1px solid var(--gold);
-  color: var(--text);
-  font-size: 0.85rem;
-  z-index: 1001;
-  animation: slideDown 0.3s ease;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  position: fixed; top: 60px; left: 50%; transform: translateX(-50%);
+  padding: 8px 20px; border-radius: 8px; background: var(--surface2); border: 1px solid var(--gold);
+  font-size: .75rem; z-index: 1001; animation: fade .3s;
 }
-
-@keyframes slideDown {
-  from { transform: translateX(-50%) translateY(-20px); opacity: 0; }
-  to { transform: translateX(-50%) translateY(0); opacity: 1; }
-}
-
-.toast.error { border-color: var(--red); }
-.toast.success { border-color: var(--green); }
+@keyframes fade { from { opacity: 0; transform: translateX(-50%) translateY(-10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
 
 /* === Responsive === */
 @media (min-width: 768px) {
-  .portrait-section {
-    max-height: 50vh;
-  }
-  .portrait-character {
-    width: 260px;
-    height: 360px;
-    font-size: 14rem;
-  }
-  .detail-panel {
-    padding: 20px 20px 20px 96px;
-  }
-  .bottom-actions {
-    padding: 16px 20px 20px 96px;
-  }
+  .portrait { height: 420px; }
+  .portrait-art { font-size: 12rem; }
+  .roster { width: 72px; }
+  .detail, .bottom { padding-left: 88px; }
 }
-
-@media (min-width: 1024px) {
-  .main-content {
-    flex-direction: row;
-  }
-  .portrait-section {
-    width: 45%;
-    max-height: none;
-    height: auto;
-  }
-  .detail-panel-wrapper {
-    width: 55%;
-    display: flex;
-    flex-direction: column;
-  }
-  .detail-panel {
-    padding: 20px;
-  }
-  .bottom-actions {
-    padding: 16px 20px;
-  }
-}
-
-/* === Hidden === */
-.hidden { display: none !important; }
 </style>
 </head>
 <body>
 
 <div class="app" id="app">
   <!-- Loading -->
-  <div class="loading-overlay hidden" id="loading">
-    <div class="loading-spinner"></div>
-  </div>
+  <div class="loading hidden" id="loading"><div></div></div>
 
-  <!-- Login Screen -->
-  <div class="login-screen" id="loginScreen">
+  <!-- Login -->
+  <div class="login hidden" id="login">
     <div class="login-logo">⚔️</div>
     <div class="login-title">VOBB</div>
-    <div class="login-subtitle">Five Warlords</div>
+    <div class="login-sub">Five Warlords</div>
     <button class="login-btn" onclick="guestLogin()">Enter as Guest</button>
-    <div class="login-demo">Demo Mode</div>
   </div>
 
-  <!-- Game Screen -->
-  <div class="hidden" id="gameScreen">
-    <!-- Top Bar -->
-    <header class="topbar">
+  <!-- Game -->
+  <div id="game">
+    <div class="topbar">
       <div class="topbar-left">
-        <div class="topbar-back" onclick="showSection('characters')">←</div>
-        <span class="topbar-title" id="topbarTitle">Overview</span>
+        <button class="btn-back" onclick="showSection('chars')">←</button>
+        <span class="topbar-title">Overview</span>
       </div>
       <div class="topbar-right">
-        <div class="resource-chip gems" id="resGems"><span class="icon">💎</span><span id="valGems">0</span></div>
-        <div class="resource-chip gold" id="resGold"><span class="icon">🪙</span><span id="valGold">0</span></div>
-        <div class="resource-chip stamina" id="resStamina"><span class="icon">⚡</span><span id="valStamina">0</span></div>
+        <div class="res gems"><span>💎</span><span id="gems">0</span></div>
+        <div class="res gold"><span>🪙</span><span id="gold">0</span></div>
+        <div class="res stam"><span>⚡</span><span id="stam">0</span></div>
       </div>
-    </header>
+    </div>
 
-    <!-- Main Content -->
-    <div class="main-content" id="mainContent">
-      <!-- Roster Sidebar -->
-      <aside class="roster-sidebar" id="rosterSidebar"></aside>
+    <div class="main">
+      <!-- Roster -->
+      <aside class="roster" id="roster"></aside>
 
-      <!-- Portrait + Detail Panel Container -->
-      <div class="detail-panel-wrapper" id="detailPanelWrapper">
-        <!-- Character Portrait -->
-        <section class="portrait-section" id="portraitSection">
-          <div class="portrait-bg-effect"></div>
-          <div class="portrait-character" id="portraitCharacter">🧬</div>
-          <div class="portrait-glow"></div>
-
+      <!-- Content -->
+      <div style="margin-left: 64px;">
+        <!-- Portrait -->
+        <div class="portrait">
+          <div class="portrait-art" id="art">🧬</div>
           <div class="portrait-info">
-            <div class="portrait-name" id="portraitName">—</div>
-            <div class="portrait-title" id="portraitTitle">—</div>
-            <div class="portrait-rarity">
-              <span class="stars" id="portraitStars">★★★★★</span>
-              <span class="rarity-text" id="portraitRarity">SSR</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="portrait-name" id="name">—</span>
+              <span class="portrait-rar" id="rar">SSR</span>
             </div>
-            <div class="portrait-level">
-              <span class="level-text" id="portraitLevel">Lv.1</span>
-              <div class="exp-bar"><div class="exp-bar-fill" id="portraitExpBar" style="width:0%"></div></div>
-              <span class="exp-text" id="portraitExp">0 / 100</span>
+            <div class="portrait-sub">
+              <span class="portrait-stars" id="stars">★★★★★</span>
+              <span id="title">—</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:2px;">
+              <span class="portrait-lv" id="lv">Lv.1</span>
+              <div class="portrait-exp"><div class="portrait-exp-fill" id="expbar" style="width:0%"></div></div>
             </div>
           </div>
-
-          <div class="portrait-faction" id="portraitFaction">TRANSCENDENT</div>
-        </section>
-
-        <!-- Detail Panel -->
-        <div class="detail-panel" id="detailPanel">
-          <!-- Tabs -->
-          <div class="detail-tabs">
-            <button class="detail-tab active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
-            <button class="detail-tab" data-tab="skills" onclick="switchTab('skills')">Skills</button>
-            <button class="detail-tab" data-tab="equipment" onclick="switchTab('equipment')">Equipment</button>
-            <button class="detail-tab" data-tab="evolution" onclick="switchTab('evolution')">Evolution</button>
-          </div>
-
-          <!-- Overview Tab -->
-          <div class="detail-tab-content" id="tab-overview">
-            <div class="power-display">
-              <span class="power-label">POWER</span>
-              <span class="power-value" id="powerValue">0</span>
-            </div>
-
-            <div class="stats-grid" id="statsGrid"></div>
-
-            <div class="elements-row" style="margin-top: 8px;">
-              <div class="element-icon" data-elem="fire">🔥</div>
-              <div class="element-icon" data-elem="wind">🌪️</div>
-              <div class="element-icon" data-elem="water">💧</div>
-              <div class="element-icon" data-elem="light">✨</div>
-              <div class="element-icon" data-elem="dark">🌙</div>
-            </div>
-
-            <div class="skills-row" id="skillsRow" style="margin-top: 8px;"></div>
-
-            <div class="equipment-row" id="equipmentRow" style="margin-top: 8px;"></div>
-
-            <button class="action-btn upgrade" id="btnUpgrade" onclick="upgradeCharacter()" style="margin-top: 12px;">
-              ⬆ Upgrade
-            </button>
-          </div>
-
-          <!-- Skills Tab -->
-          <div class="detail-tab-content hidden" id="tab-skills">
-            <div id="skillsDetail"></div>
-          </div>
-
-          <!-- Equipment Tab -->
-          <div class="detail-tab-content hidden" id="tab-equipment">
-            <div id="equipmentDetail"></div>
-          </div>
-
-          <!-- Evolution Tab -->
-          <div class="detail-tab-content hidden" id="tab-evolution">
-            <div id="evolutionDetail"></div>
-          </div>
+          <div class="faction-badge" id="fact">TRANSCENDENT</div>
         </div>
 
-        <!-- Bottom Actions -->
-        <div class="bottom-actions">
-          <div class="bottom-action" onclick="showSection('formation')">
-            <div class="action-icon">🛡️</div>
-            <span class="action-label">Formation</span>
+        <!-- Detail -->
+        <div class="detail">
+          <div class="tabs">
+            <button class="tab active" data-t="overview" onclick="switchTab('overview')">Overview</button>
+            <button class="tab" data-t="skills" onclick="switchTab('skills')">Skills</button>
+            <button class="tab" data-t="equip" onclick="switchTab('equip')">Equipment</button>
+            <button class="tab" data-t="evo" onclick="switchTab('evo')">Evolution</button>
           </div>
-          <div class="bottom-action" onclick="lockCharacter()">
-            <div class="action-icon">🔒</div>
-            <span class="action-label">Lock</span>
+
+          <!-- Overview -->
+          <div id="p-overview">
+            <div class="power">
+              <span class="power-label">POWER</span>
+              <span class="power-val" id="power">0</span>
+            </div>
+            <div class="stats" id="stats"></div>
+            <div class="row skills" id="skills"></div>
+            <div class="row equips" id="equips"></div>
+            <button class="btn-upgrade" style="margin-top:10px;" onclick="upgrade()">⬆ Upgrade</button>
           </div>
-          <div class="bottom-action" onclick="showStory()">
-            <div class="action-icon">📖</div>
-            <span class="action-label">Story</span>
-          </div>
+
+          <div id="p-skills" class="hidden"><div class="row" style="flex-wrap:wrap;gap:8px;"><div style="width:100%;color:var(--text2);font-size:.75rem;">Coming soon</div></div></div>
+          <div id="p-equip" class="hidden"><div style="color:var(--text2);font-size:.75rem;">Coming soon</div></div>
+          <div id="p-evo" class="hidden"><div style="color:var(--text2);font-size:.75rem;">Coming soon</div></div>
+        </div>
+
+        <!-- Bottom -->
+        <div class="bottom">
+          <button class="bot-btn" onclick="showSection('form')"><div class="bot-icon">🛡️</div><span class="bot-label">Formation</span></button>
+          <button class="bot-btn" onclick="toast('Locked')"><div class="bot-icon">🔒</div><span class="bot-label">Lock</span></button>
+          <button class="bot-btn" onclick="toast('Story')"><div class="bot-icon">📖</div><span class="bot-label">Story</span></button>
         </div>
       </div>
     </div>
@@ -1060,288 +346,142 @@ body {
 
 <script>
 const API = '/api';
+const EMOJI = { TRANSCENDENT:'🧬', PURIST:'⚔️', WILD:'🐺', UNKNOWN:'👁️', CYBERIST:'🤖' };
+const FCLASS = { TRANSCENDENT:'faction-T', PURIST:'faction-P', WILD:'faction-W', UNKNOWN:'faction-U', CYBERIST:'faction-C' };
+const STARS = { SSR:5, SR:4, R:3, N:2 };
 
-const FACTION_EMOJI = {
-  TRANSCENDENT: '🧬', PURIST: '⚔️', WILD: '🐺', UNKNOWN: '👁️', CYBERIST: '🤖'
-};
+let state = { accessToken:null, refreshToken:null, player:null, chars:[], idx:0 };
 
-const FACTION_BADGE_CLASS = {
-  TRANSCENDENT: 'faction-badge-transcendent',
-  PURIST: 'faction-badge-purist',
-  WILD: 'faction-badge-wild',
-  UNKNOWN: 'faction-badge-unknown',
-  CYBERIST: 'faction-badge-cyberist'
-};
-
-const RARITY_STARS = { SSR: 5, SR: 4, R: 3, N: 2 };
-
-let state = {
-  accessToken: null,
-  refreshToken: null,
-  player: null,
-  characters: [],
-  selectedCharIndex: 0,
-};
-
-// --- API ---
-async function api(path, opts = {}) {
-  const headers = { 'Content-Type': 'application/json', ...opts.headers };
-  if (state.accessToken) headers['Authorization'] = `Bearer ${state.accessToken}`;
-  const res = await fetch(API + path, { ...opts, headers });
-  if (res.status === 401 && state.refreshToken) {
-    const refreshed = await refresh();
-    if (refreshed) {
-      headers['Authorization'] = `Bearer ${state.accessToken}`;
-      return fetch(API + path, { ...opts, headers }).then(r => r.json());
-    }
+async function api(p, o={}) {
+  const h = {'Content-Type':'application/json',...o.headers};
+  if (state.accessToken) h['Authorization'] = 'Bearer '+state.accessToken;
+  let r = await fetch(API+p,{...o,headers:h});
+  if (r.status===401 && state.refreshToken) {
+    await refresh(); h['Authorization']='Bearer '+state.accessToken;
+    r = await fetch(API+p,{...o,headers:h});
   }
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.message || data.error || 'API Error');
-  return data;
+  const d = await r.json();
+  if (!r.ok) throw new Error(d.message||d.error||'Error');
+  return d;
 }
 
-// --- Auth ---
 async function guestLogin() {
   showLoading();
   try {
-    const data = await api('/auth/guest', { method: 'POST', body: JSON.stringify({ playerName: 'Hunter' }) });
-    state.accessToken = data.accessToken;
-    state.refreshToken = data.refreshToken;
-    state.player = data.player || data.user?.player;
-    await enterGame();
-  } catch (e) {
-    toast(e.message, 'error');
-  } finally {
-    hideLoading();
-  }
+    const d = await api('/auth/guest',{method:'POST',body:JSON.stringify({playerName:'Hunter'})});
+    state.accessToken=d.accessToken; state.refreshToken=d.refreshToken;
+    state.player=d.player||d.user?.player;
+    document.getElementById('login').classList.add('hidden');
+    document.getElementById('game').classList.remove('hidden');
+    await load();
+  } catch(e) { toast(e.message); }
+  hideLoading();
 }
 
 async function refresh() {
   try {
-    const data = await api('/auth/refresh', { method: 'POST', body: JSON.stringify({ refreshToken: state.refreshToken }) });
-    state.accessToken = data.accessToken;
-    state.refreshToken = data.refreshToken || state.refreshToken;
-    return true;
-  } catch { logout(); return false; }
+    const d = await api('/auth/refresh',{method:'POST',body:JSON.stringify({refreshToken:state.refreshToken})});
+    state.accessToken=d.accessToken; return true;
+  } catch { return false; }
 }
 
-function logout() {
-  state = { accessToken: null, refreshToken: null, player: null, characters: [], selectedCharIndex: 0 };
-  document.getElementById('gameScreen').classList.add('hidden');
-  document.getElementById('loginScreen').classList.remove('hidden');
+async function load() {
+  try { state.player = await api('/player/me'); } catch(e){}
+  try { state.chars = await api('/characters/mine'); } catch(e){ state.chars=[]; }
+  renderRes(); renderAll();
 }
 
-// --- Game ---
-async function enterGame() {
-  document.getElementById('loginScreen').classList.add('hidden');
-  document.getElementById('gameScreen').classList.remove('hidden');
-  await loadData();
-  renderAll();
+function renderRes() {
+  const c = state.player?.currencies||[];
+  const g = c.find(x=>x.type==='gold'), gm = c.find(x=>x.type='gems'), s = c.find(x=>x.type==='stamina');
+  document.getElementById('gold').textContent = fmt(g?.amount||0);
+  document.getElementById('gems').textContent = fmt(gm?.amount||0);
+  document.getElementById('stam').textContent = (s?.amount||0)+'/'+(state.player?.staminaMax||100);
 }
 
-async function loadData() {
-  try {
-    state.player = await api('/player/me');
-  } catch(e) { console.error(e); }
-  try {
-    state.characters = await api('/characters/mine');
-  } catch(e) { state.characters = []; }
-  renderResources();
-}
-
-function renderResources() {
-  const currencies = state.player?.currencies || [];
-  const gold = currencies.find(c => c.type === 'gold');
-  const gems = currencies.find(c => c.type === 'gems');
-  const stamina = currencies.find(c => c.type === 'stamina');
-  document.getElementById('valGold').textContent = formatNumber(gold?.amount || 0);
-  document.getElementById('valGems').textContent = formatNumber(gems?.amount || 0);
-  document.getElementById('valStamina').textContent = stamina?.amount + '/' + (state.player?.staminaMax || 100);
-}
-
-function formatNumber(n) {
-  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
-  if (n >= 1000) return (n/1000).toFixed(1) + 'K';
+function fmt(n) {
+  if (n>=1e6) return (n/1e6).toFixed(1)+'M';
+  if (n>=1e3) return (n/1e3).toFixed(1)+'K';
   return n.toString();
 }
 
-// --- Render All ---
 function renderAll() {
-  renderRoster();
-  renderPortrait();
-  renderDetail();
-}
-
-// --- Roster ---
-function renderRoster() {
-  const sidebar = document.getElementById('rosterSidebar');
-  sidebar.innerHTML = state.characters.map((c, i) => {
-    const char = c.character || c;
-    const factionColor = getFactionColor(char.faction);
-    return `
-      <div class="roster-item ${i === state.selectedCharIndex ? 'active' : ''}" 
-           onclick="selectCharacter(${i})"
-           style="--roster-glow: ${factionColor}33">
-        <div class="avatar">${FACTION_EMOJI[char.faction] || '❓'}</div>
-        <div class="level">Lv.${c.level || 1}</div>
-      </div>
-    `;
-  }).join('') + '<div class="roster-divider"></div><div class="roster-sort" onclick="sortRoster()">⇅</div>';
-}
-
-function getFactionColor(f) {
-  const colors = { TRANSCENDENT: '#aa44ff', PURIST: '#ff8844', WILD: '#00ff88', UNKNOWN: '#4488ff', CYBERIST: '#ff4466' };
-  return colors[f] || '#888';
-}
-
-function selectCharacter(idx) {
-  state.selectedCharIndex = idx;
-  renderAll();
-}
-
-function sortRoster() {
-  state.characters.sort((a, b) => (b.level || 1) - (a.level || 1));
-  renderRoster();
-}
-
-// --- Portrait ---
-function renderPortrait() {
-  const c = state.characters[state.selectedCharIndex];
+  const c = state.chars[state.idx];
   if (!c) return;
-  const char = c.character || c;
-  
-  document.getElementById('portraitCharacter').textContent = FACTION_EMOJI[char.faction] || '❓';
-  document.getElementById('portraitName').textContent = char.name;
-  document.getElementById('portraitTitle').textContent = char.title || char.name;
-  
-  const stars = '★'.repeat(RARITY_STARS[char.rarity] || 3);
-  document.getElementById('portraitStars').textContent = stars;
-  
-  const rarityEl = document.getElementById('portraitRarity');
-  rarityEl.textContent = char.rarity;
-  rarityEl.className = 'rarity-text ' + (char.rarity || '').toLowerCase();
-  
-  document.getElementById('portraitLevel').textContent = 'Lv.' + (c.level || 1) + ' / ' + (c.maxLevel || 60);
-  const expPercent = Math.min(100, ((c.exp || 0) / (c.expMax || 100)) * 100);
-  document.getElementById('portraitExpBar').style.width = expPercent + '%';
-  document.getElementById('portraitExp').textContent = (c.exp || 0) + ' / ' + (c.expMax || 100);
-  
-  const factionEl = document.getElementById('portraitFaction');
-  factionEl.textContent = char.faction;
-  factionEl.className = 'portrait-faction ' + (FACTION_BADGE_CLASS[char.faction] || '');
-}
+  const ch = c.character||c;
 
-// --- Detail Panel ---
-function renderDetail() {
-  const c = state.characters[state.selectedCharIndex];
-  if (!c) return;
-  const char = c.character || c;
-  
+  document.getElementById('art').textContent = EMOJI[ch.faction]||'❓';
+  document.getElementById('name').textContent = ch.name;
+  document.getElementById('title').textContent = ch.title||ch.name;
+  document.getElementById('rar').textContent = ch.rarity;
+  document.getElementById('rar').className = 'portrait-rar '+(ch.rarity||'').toLowerCase();
+  document.getElementById('stars').textContent = '★'.repeat(STARS[ch.rarity]||3);
+  document.getElementById('lv').textContent = 'Lv.'+(c.level||1)+'/60';
+  document.getElementById('expbar').style.width = Math.min(100,((c.exp||0)/(c.expMax||100))*100)+'%';
+  const fb = document.getElementById('fact');
+  fb.textContent = ch.faction;
+  fb.className = 'faction-badge '+(FCLASS[ch.faction]||'');
+
   // Power
-  const power = calcPower(c);
-  document.getElementById('powerValue').textContent = formatNumber(power);
-  
+  const pwr = Math.floor((c.currentHp||ch.baseHp||1000)/10 + (c.currentAtk||ch.baseAtk||100)*3 + (c.currentDef||ch.baseDef||100)*2);
+  document.getElementById('power').textContent = fmt(pwr);
+
   // Stats
-  const stats = [
-    { key: 'hp', name: 'HP', value: c.currentHp || char.baseHp || 0, icon: '❤️', cls: 'hp' },
-    { key: 'atk', name: 'ATK', value: c.currentAtk || char.baseAtk || 0, icon: '⚔️', cls: 'atk' },
-    { key: 'def', name: 'DEF', value: c.currentDef || char.baseDef || 0, icon: '🛡️', cls: 'def' },
-    { key: 'spd', name: 'SPD', value: c.currentAgi || char.baseAgi || 0, icon: '⚡', cls: 'spd' },
-    { key: 'crit', name: 'CRIT', value: (c.crit || 15) + '%', icon: '💥', cls: 'crit' },
+  const st = [
+    {n:'HP',v:c.currentHp||ch.baseHp||0,i:'❤️',c:'hp'},
+    {n:'ATK',v:c.currentAtk||ch.baseAtk||0,i:'⚔️',c:'atk'},
+    {n:'DEF',v:c.currentDef||ch.baseDef||0,i:'🛡️',c:'def'},
+    {n:'SPD',v:c.currentAgi||ch.baseAgi||0,i:'⚡',c:'spd'},
+    {n:'CRIT',v:(c.crit||15)+'%',i:'💥',c:'crit'},
   ];
-  
-  document.getElementById('statsGrid').innerHTML = stats.map(s => `
-    <div class="stat-item">
-      <div class="stat-icon">${s.icon}</div>
-      <div class="stat-name">${s.name}</div>
-      <div class="stat-val ${s.cls}">${formatNumber(s.value)}</div>
-    </div>
+  document.getElementById('stats').innerHTML = st.map(s=>`
+    <div class="stat"><div class="stat-icon">${s.i}</div><div class="stat-name">${s.n}</div><div class="stat-val ${s.c}">${fmt(s.v)}</div></div>
   `).join('');
 
   // Skills
-  const skills = [
-    { name: 'Normal', icon: '⚔️', level: c.skillLevel || 3 },
-    { name: 'Skill 1', icon: '🔮', level: c.skillLevel || 3 },
-    { name: 'Skill 2', icon: '💫', level: Math.max(1, (c.skillLevel || 3) - 1) },
-    { name: 'Ultimate', icon: '✨', level: Math.max(1, (c.skillLevel || 3) - 2) },
+  const sk = [
+    {n:'Normal ATK',i:'⚔️',l:c.skillLv||3},
+    {n:'Skill 1',i:'🔮',l:c.skillLv||3},
+    {n:'Skill 2',i:'💫',l:Math.max(1,(c.skillLv||3)-1)},
+    {n:'Ultimate',i:'✨',l:Math.max(1,(c.skillLv||3)-2)},
   ];
-  
-  document.getElementById('skillsRow').innerHTML = skills.map(s => `
-    <div class="skill-item">
-      <div class="skill-icon">${s.icon}</div>
-      <div class="skill-name">${s.name}</div>
-      <div class="skill-level">Lv.${s.level}</div>
-    </div>
+  document.getElementById('skills').innerHTML = sk.map(s=>`
+    <div class="skill"><div class="skill-icon">${s.i}</div><div class="skill-name">${s.n}</div><div class="skill-lv">Lv.${s.l}</div></div>
   `).join('');
 
   // Equipment
-  const equips = [
-    { name: 'Weapon', icon: '⚔️', level: 40, stars: 2 },
-    { name: 'Helmet', icon: '🪖', level: 35, stars: 3 },
-    { name: 'Ring', icon: '💍', level: 30, stars: 3 },
-    { name: 'Boots', icon: '👢', level: 28, stars: 3 },
+  const eq = [
+    {n:'Weapon',i:'⚔️',l:40,s:2},
+    {n:'Helmet',i:'🪖',l:35,s:3},
+    {n:'Ring',i:'💍',l:30,s:3},
+    {n:'Boots',i:'👢',l:28,s:3},
   ];
-  
-  document.getElementById('equipmentRow').innerHTML = equips.map(e => `
-    <div class="equip-slot equipped">
-      <div class="equip-icon">${e.icon}</div>
-      <div class="equip-level">Lv.${e.level}</div>
-      <div class="equip-stars">${'★'.repeat(e.stars)}</div>
-    </div>
+  document.getElementById('equips').innerHTML = eq.map(e=>`
+    <div class="equip has"><div class="equip-icon">${e.i}</div><div class="equip-lv">Lv.${e.l}</div><div class="equip-stars">${'★'.repeat(e.s)}</div></div>
   `).join('');
+
+  // Roster
+  document.getElementById('roster').innerHTML = state.chars.map((rc,i)=>{
+    const rch = rc.character||rc;
+    return `<div class="roster-item ${i===state.idx?'active':''}" onclick="select(${i})"><div class="roster-avatar">${EMOJI[rch.faction]||'❓'}</div><div class="roster-lv">Lv.${rc.level||1}</div></div>`;
+  }).join('')+'<div class="roster-sep"></div><div class="roster-sort" onclick="sortRoster()">⇅</div>';
 }
 
-function calcPower(c) {
-  const char = c.character || c;
-  const hp = c.currentHp || char.baseHp || 1000;
-  const atk = c.currentAtk || char.baseAtk || 100;
-  const def = c.currentDef || char.baseDef || 100;
-  return Math.floor(hp / 10 + atk * 3 + def * 2);
-}
+function select(i) { state.idx = i; renderAll(); }
+function sortRoster() { state.chars.sort((a,b)=>(b.level||1)-(a.level||1)); renderAll(); }
 
-// --- Tab Switch ---
-function switchTab(tab) {
-  document.querySelectorAll('.detail-tab').forEach(t => {
-    t.classList.toggle('active', t.dataset.tab === tab);
-  });
-  document.querySelectorAll('.detail-tab-content').forEach(c => {
-    c.classList.toggle('hidden', c.id !== 'tab-' + tab);
+function switchTab(t) {
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.t===t));
+  ['overview','skills','equip','evo'].forEach(x=>{
+    document.getElementById('p-'+x).classList.toggle('hidden',x!==t);
   });
 }
 
-// --- Actions ---
-function upgradeCharacter() {
-  toast('Upgrade feature coming soon!', 'success');
-}
-
-function lockCharacter() {
-  toast('Character locked', 'success');
-}
-
-function showStory() {
-  const c = state.characters[state.selectedCharIndex];
-  if (c) toast('Story: ' + (c.character?.name || c.name), 'success');
-}
-
-function showSection(name) {
-  toast(name + ' - Coming soon', 'success');
-}
-
-// --- Loading ---
-function showLoading() { document.getElementById('loading').classList.remove('hidden'); }
-function hideLoading() { document.getElementById('loading').classList.add('hidden'); }
-
-// --- Toast ---
-function toast(msg, type = '') {
-  const el = document.createElement('div');
-  el.className = 'toast ' + type;
-  el.textContent = msg;
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 2500);
-}
-
-// --- Init ---
-// Check if we have a session stored
+function upgrade() { toast('Coming soon'); }
+function showSection(s) { toast(s+' - Coming soon'); }
+function showLoading(){document.getElementById('loading').classList.remove('hidden');}
+function hideLoading(){document.getElementById('loading').classList.add('hidden');}
+function toast(m){const e=document.createElement('div');e.className='toast';e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),2000);}
 </script>
 </body>
 </html>
