@@ -211,14 +211,50 @@ body {
 .toast.error { border-color: var(--red); }
 .toast.success { border-color: var(--green); }
 
-/* === Responsive === */
-@media (max-width: 600px) {
-  .header { padding: 10px 12px; }
-  .main { padding: 12px; }
-  .char-grid { grid-template-columns: repeat(2, 1fr); }
-  .formation-grid { grid-template-columns: repeat(5, 1fr); gap: 4px; }
-  .formation-slot { min-height: 70px; }
-  .stats-row { grid-template-columns: repeat(2, 1fr); }
+/* === Landscape Mode for Mobile === */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .header { padding: 4px 16px; }
+  .header h1 { font-size: 0.9rem; }
+  .main { padding: 8px 12px; }
+  .stats-row { grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 8px; }
+  .stat-card { padding: 6px; }
+  .stat-value { font-size: 1rem; }
+  .stat-label { font-size: 0.6rem; }
+  .section-tabs { margin-bottom: 8px; }
+  .section-tab { padding: 4px 10px; font-size: 0.75rem; }
+  .card { padding: 8px; margin-bottom: 6px; border-radius: 8px; }
+  .char-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 6px; }
+  .char-card { padding: 6px; }
+  .char-portrait { width: 36px; height: 36px; font-size: 1.2rem; margin: 0 auto 4px; }
+  .char-name { font-size: 0.7rem; }
+  .char-info { font-size: 0.65rem; }
+  .char-stats { display: none; }
+  .formation-grid { gap: 4px; }
+  .formation-slot { min-height: 50px; font-size: 0.7rem; }
+  .stage-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 6px; }
+  .stage-card { padding: 8px; }
+  .battle-container { max-width: 100%; }
+  .battle-teams { flex-direction: row; gap: 8px; margin: 6px 0; }
+  .battle-team { font-size: 0.7rem; }
+  .battle-unit { padding: 4px; font-size: 0.7rem; }
+  .hp-bar { width: 40px; height: 4px; }
+  .battle-log { max-height: 150px; font-size: 0.7rem; padding: 6px; }
+  .gacha-result { gap: 4px; }
+  .gacha-char { width: 50px; height: 70px; font-size: 0.6rem; padding: 4px; }
+}
+
+/* === Force Landscape on Mobile === */
+@media screen and (orientation: portrait) and (max-width: 500px) {
+  body {
+    transform: rotate(90deg);
+    transform-origin: bottom left;
+    width: 100vh;
+    height: 100vw;
+    position: absolute;
+    top: 0;
+    left: 100vw;
+    overflow-x: hidden;
+  }
 }
 </style>
 </head>
