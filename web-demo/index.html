@@ -600,7 +600,7 @@ function renderBattle(){
     chapters[ch].forEach(s=>{
       html+=`<div class="stage-card" onclick="startBattle('${s.id}')"><div class="stage-num">${s.number}</div><div class="stage-name">${s.name}</div><div class="stage-cost">⚡ ${s.staminaCost}</div><div class="stage-diff">${[1,2,3,4,5].map(i=>`<div class="diff-dot ${i<=s.difficulty?'filled':''}"></div>`).join('')}</div></div>`;
     });
-    html+='</div></div>`;
+    html+='</div></div>';
   });
   el.innerHTML=html;
 }
