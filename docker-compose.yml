@@ -7,33 +7,33 @@ services:
     environment:
       POSTGRES_USER: vobb
       POSTGRES_PASSWORD: vobb_password
-      POSTGRES_DB: vobb_db
+      POSTGRES_DB: vobb
     ports:
-      - '5432:5432'
+      - "5432:5432"
     volumes:
-      - vobb_pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U vobb']
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - vobb_data:/var/lib/postgresql/data
 
   server:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
+    build: ./server
     container_name: vobb-server
     environment:
-      DATABASE_URL: postgresql://vobb:vobb_password@postgres:5432/vobb_db
-      JWT_SECRET: ${JWT_SECRET:-dev-secret-change-in-production}
-      CLIENT_ORIGINS: ${CLIENT_ORIGINS:-*}
-      NODE_ENV: ${NODE_ENV:-development}
+      NODE_ENV: development
       PORT: 3000
+      HOST: 0.0.0.0
+      DATABASE_URL: postgresql://vobb:vobb_password@postgres:5432/vobb?schema=public
+      JWT_SECRET: dev-secret-change-me
+      CLIENT_ORIGINS: "*"
     ports:
-      - '3000:3000'
+      - "3000:3000"
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    command: >
+      sh -c "npx prisma migrate deploy &&
+             npx prisma db seed &&
+             npx tsx src/index.ts"
 
 volumes:
-  vobb_pgdata:
+  vobb_data:

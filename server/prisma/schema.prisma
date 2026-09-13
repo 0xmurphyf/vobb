@@ -56,7 +56,7 @@ model Player {
   updatedAt        DateTime @updatedAt
 
   user             User          @relation(fields: [userId], references: [id])
-  familiarInstances FamiliarInstance[]
+  characterInstances CharacterInstance[]
   formations       Formation[]
   playerProgress   PlayerProgress[]
   pityCounter      PityCounter?
@@ -68,7 +68,7 @@ model Player {
   @@map("players")
 }
 
-// ---- Familiar Definitions ----
+// ---- Character Definitions ----
 
 model Character {
   id              String   @id @default(cuid())
@@ -183,7 +183,7 @@ model Formation {
   id        String   @id @default(cuid())
   playerId  String
   name      String   @default("Formation 1")
-  slot1     String?  // FamiliarInstance ID
+  slot1     String?  // CharacterInstance ID
   slot2     String?
   slot3     String?
   slot4     String?

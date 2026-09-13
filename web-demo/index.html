@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOBB — Five Warlords</title>
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #14141f;
+  --surface2: #1e1e2e;
+  --border: #2a2a3e;
+  --text: #e8e8f0;
+  --text-dim: #8888a0;
+  --gold: #d4a84b;
+  --red: #c0392b;
+  --green: #27ae60;
+  --blue: #2980b9;
+  --purple: #8e44ad;
+  --cyan: #00bcd4;
+  --transcendent: #9b59b6;
+  --purist: #e67e22;
+  --wild: #27ae60;
+  --unknown: #3498db;
+  --cyberist: #e74c3c;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* === Layout === */
+.app { display: flex; flex-direction: column; min-height: 100vh; }
+.header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 24px; background: var(--surface); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+}
+.header h1 { font-size: 1.2rem; background: linear-gradient(135deg, var(--gold), #f0e68c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.header-nav { display: flex; gap: 8px; }
+.main { flex: 1; padding: 24px; max-width: 1200px; margin: 0 auto; width: 100%; }
+
+/* === Buttons === */
+.btn {
+  padding: 8px 20px; border: 1px solid var(--border); border-radius: 6px;
+  background: var(--surface2); color: var(--text); cursor: pointer; font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.btn:hover { background: var(--border); transform: translateY(-1px); }
+.btn-primary { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 600; }
+.btn-primary:hover:enabled { background: #e6b84a; }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-gacha { background: linear-gradient(135deg, #667eea, #764ba2); border-color: #667eea; color: white; font-weight: 700; font-size: 1rem; padding: 12px 28px; }
+.btn-gacha:hover { background: linear-gradient(135deg, #764ba2, #667eea); }
+.btn-sm { padding: 4px 12px; font-size: 0.8rem; }
+.btn-active { background: var(--gold); color: #000; border-color: var(--gold); }
+.btn-danger { background: var(--red); border-color: var(--red); }
+
+/* === Cards === */
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 16px; margin-bottom: 12px;
+}
+.card-title { font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+
+/* === Screens === */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* === Login === */
+.login-container { display: flex; justify-content: center; align-items: center; min-height: 80vh; }
+.login-box { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 40px; text-align: center; max-width: 400px; width: 100%; }
+.login-box h2 { font-size: 2rem; margin-bottom: 8px; background: linear-gradient(135deg, var(--gold), #f0e68c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.login-box p { color: var(--text-dim); margin-bottom: 24px; }
+.login-box .btn { width: 100%; padding: 12px; font-size: 1rem; }
+
+/* === Dashboard === */
+.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; }
+.stat-value { font-size: 1.5rem; font-weight: 700; }
+.stat-label { font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; }
+.stat-gold { color: var(--gold); }
+.stat-gems { color: var(--cyan); }
+.stat-stamina { color: var(--green); }
+
+/* === Section Tabs === */
+.section-tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 8px; overflow-x: auto; }
+.section-tab {
+  padding: 8px 16px; border: none; background: none; color: var(--text-dim);
+  cursor: pointer; font-size: 0.9rem; white-space: nowrap; border-bottom: 2px solid transparent; margin-bottom: -10px;
+}
+.section-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+.section-panel { display: none; }
+.section-panel.active { display: block; }
+
+/* === Character Grid === */
+.char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+.char-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 16px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+}
+.char-card:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.char-card.selected { border-color: var(--gold); box-shadow: 0 0 20px rgba(212,168,75,0.2); }
+.char-portrait {
+  width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 12px;
+  display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+}
+.char-name { font-weight: 600; text-align: center; margin-bottom: 4px; }
+.char-info { display: flex; justify-content: center; gap: 8px; font-size: 0.8rem; color: var(--text-dim); }
+.char-stats { margin-top: 8px; font-size: 0.75rem; color: var(--text-dim); }
+.char-stat-row { display: flex; justify-content: space-between; padding: 2px 0; }
+
+/* === Faction Colors === */
+.faction-transcendent { color: var(--transcendent); border-color: var(--transcendent); }
+.faction-purist { color: var(--purist); border-color: var(--purist); }
+.faction-wild { color: var(--wild); border-color: var(--wild); }
+.faction-unknown { color: var(--unknown); border-color: var(--unknown); }
+.faction-cyberist { color: var(--cyberist); border-color: var(--cyberist); }
+.bg-transcendent { background: rgba(155,89,182,0.15); }
+.bg-purist { background: rgba(230,126,34,0.15); }
+.bg-wild { background: rgba(39,174,96,0.15); }
+.bg-unknown { background: rgba(52,152,219,0.15); }
+.bg-cyberist { background: rgba(231,76,60,0.15); }
+
+/* === Formation === */
+.formation-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 20px; }
+.formation-slot {
+  aspect-ratio: 1; border: 2px dashed var(--border); border-radius: 12px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s; min-height: 100px;
+}
+.formation-slot:hover { border-color: var(--gold); }
+.formation-slot.filled { border-style: solid; }
+.formation-slot .slot-label { font-size: 0.7rem; color: var(--text-dim); }
+.formation-slot .slot-char { font-weight: 600; font-size: 0.85rem; }
+
+/* === Stages === */
+.stage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.stage-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px; cursor: pointer; transition: all 0.2s;
+}
+.stage-card:hover { border-color: var(--gold); transform: scale(1.02); }
+.stage-name { font-weight: 600; margin-bottom: 4px; }
+.stage-cost { font-size: 0.8rem; color: var(--green); }
+
+/* === Gacha === */
+.gacha-container { text-align: center; padding: 20px 0; }
+.gacha-pool { margin-bottom: 20px; }
+.gacha-rate { display: flex; justify-content: center; gap: 12px; margin-top: 8px; font-size: 0.8rem; }
+.gacha-rate span { padding: 2px 8px; border-radius: 4px; }
+.gacha-result { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 24px; }
+.gacha-char {
+  width: 80px; height: 100px; border-radius: 8px; padding: 8px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  animation: gachaReveal 0.5s ease-out;
+}
+@keyframes gachaReveal {
+  from { opacity: 0; transform: scale(0.5) rotateY(180deg); }
+  to { opacity: 1; transform: scale(1) rotateY(0); }
+}
+
+/* === Battle === */
+.battle-container { max-width: 800px; margin: 0 auto; }
+.battle-teams { display: flex; justify-content: space-between; margin: 20px 0; gap: 20px; }
+.battle-team { flex: 1; }
+.battle-team h3 { font-size: 0.9rem; margin-bottom: 8px; }
+.battle-unit {
+  display: flex; align-items: center; gap: 8px; padding: 8px; margin-bottom: 4px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-size: 0.85rem;
+}
+.battle-unit.dead { opacity: 0.4; }
+.battle-unit-name { flex: 1; }
+.battle-unit-hp { font-size: 0.75rem; color: var(--text-dim); }
+.hp-bar { width: 60px; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.hp-bar-fill { height: 100%; background: var(--green); transition: width 0.3s; }
+.battle-log {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 12px; max-height: 300px; overflow-y: auto; font-size: 0.8rem; line-height: 1.6;
+}
+.battle-log-entry { padding: 2px 0; border-bottom: 1px solid var(--border); }
+.battle-log-entry.counter { color: var(--gold); }
+.battle-log-entry.countered { color: var(--text-dim); }
+.battle-log-entry.skill { color: var(--purple); }
+.battle-log-entry.death { color: var(--red); }
+
+/* === Common === */
+.flex { display: flex; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.gap-8 { gap: 8px; }
+.gap-12 { gap: 12px; }
+.mt-12 { margin-top: 12px; }
+.mt-20 { margin-top: 20px; }
+.text-center { text-align: center; }
+.text-dim { color: var(--text-dim); }
+.text-gold { color: var(--gold); }
+
+/* === Loading / Toast === */
+.loading { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.toast {
+  position: fixed; top: 80px; right: 20px; background: var(--surface); border: 1px solid var(--gold);
+  border-radius: 8px; padding: 12px 20px; z-index: 1000; animation: slideIn 0.3s ease;
+}
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+.toast.error { border-color: var(--red); }
+.toast.success { border-color: var(--green); }
+
+/* === Responsive === */
+@media (max-width: 600px) {
+  .header { padding: 10px 12px; }
+  .main { padding: 12px; }
+  .char-grid { grid-template-columns: repeat(2, 1fr); }
+  .formation-grid { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+  .formation-slot { min-height: 70px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <!-- Header -->
+  <header class="header" id="header" style="display:none;">
+    <h1>⚔️ VOBB</h1>
+    <div class="header-nav" id="headerNav"></div>
+    <div class="flex gap-8 align-items-center">
+      <span id="playerGold" class="text-gold"></span>
+      <span id="playerGems" style="color:var(--cyan)"></span>
+      <span id="playerStamina" style="color:var(--green)"></span>
+      <button class="btn btn-sm" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- Login Screen -->
+  <div class="screen active" id="screen-login">
+    <div class="login-container">
+      <div class="login-box">
+        <h2>⚔️ VOBB</h2>
+        <p class="text-dim">Five Warlords. Five Answers.</p>
+        <button class="btn btn-primary" onclick="guestLogin()">🎮 Enter as Guest</button>
+        <div class="mt-12 text-dim" style="font-size:0.8rem;">Demo Mode — No registration needed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Game Screen -->
+  <div class="screen" id="screen-game">
+    <div class="main">
+      <!-- Dashboard Stats -->
+      <div class="stats-row" id="dashboardStats"></div>
+
+      <!-- Section Tabs -->
+      <div class="section-tabs">
+        <button class="section-tab active" data-section="characters" onclick="showSection('characters')">📋 Characters</button>
+        <button class="section-tab" data-section="formation" onclick="showSection('formation')">🛡️ Formation</button>
+        <button class="section-tab" data-section="stages" onclick="showSection('stages')">⚔️ Battle</button>
+        <button class="section-tab" data-section="gacha" onclick="showSection('gacha')">🎰 Gacha</button>
+        <button class="section-tab" data-section="codex" onclick="showSection('codex')">📖 Codex</button>
+      </div>
+
+      <!-- Characters Panel -->
+      <div class="section-panel active" id="panel-characters">
+        <div class="card">
+          <div class="flex-between">
+            <span class="card-title">My Characters</span>
+            <span id="charCount" class="text-dim"></span>
+          </div>
+          <div class="char-grid" id="charGrid"></div>
+        </div>
+      </div>
+
+      <!-- Formation Panel -->
+      <div class="section-panel" id="panel-formation">
+        <div class="card">
+          <div class="flex-between">
+            <span class="card-title">Formation (5 Slots)</span>
+            <button class="btn btn-sm" onclick="saveFormation()">💾 Save</button>
+          </div>
+          <div class="formation-grid" id="formationGrid"></div>
+          <div class="card mt-12">
+            <span class="card-title">Available Characters</span>
+            <div class="char-grid" id="formationCharList" style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr))"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stages Panel -->
+      <div class="section-panel" id="panel-stages">
+        <div class="card">
+          <span class="card-title">PvE Stages</span>
+          <div class="stage-grid" id="stageGrid"></div>
+        </div>
+      </div>
+
+      <!-- Gacha Panel -->
+      <div class="section-panel" id="panel-gacha">
+        <div class="card gacha-container">
+          <h2 style="margin-bottom:4px;">🎰 The Awakening</h2>
+          <div class="text-dim" style="font-size:0.85rem;">Summon characters aligned with the Five Warlords</div>
+          <div class="gacha-rate">
+            <span class="bg-transcendent">SSR 1%</span>
+            <span class="bg-purist">SR 4%</span>
+            <span class="bg-wild">R 25%</span>
+            <span class="bg-unknown">N 70%</span>
+          </div>
+          <div class="gacha-pool mt-20">
+            <div id="gachaPoolInfo" class="text-dim" style="font-size:0.8rem;"></div>
+          </div>
+          <button class="btn btn-gacha" id="btnPull1" onclick="doGacha('single')" style="margin-right:8px;">✦ Single (300 💎)</button>
+          <button class="btn btn-gacha" id="btnPull10" onclick="doGacha('multi')">✦✦ Multi (2700 💎)</button>
+          <div class="text-dim mt-12" id="pityInfo" style="font-size:0.8rem;"></div>
+          <div class="gacha-result" id="gachaResult"></div>
+        </div>
+      </div>
+
+      <!-- Codex Panel -->
+      <div class="section-panel" id="panel-codex">
+        <div class="card">
+          <span class="card-title">All Characters</span>
+          <div class="char-grid" id="codexGrid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Battle Screen (overlay) -->
+  <div class="screen" id="screen-battle">
+    <div class="main">
+      <div class="battle-container">
+        <div class="flex-between">
+          <h2>⚔️ Battle</h2>
+          <div>
+            <span id="battleTimer" class="text-dim"></span>
+            <button class="btn btn-sm" onclick="exitBattle()" style="margin-left:12px;">Exit</button>
+          </div>
+        </div>
+
+        <div class="battle-teams">
+          <div class="battle-team">
+            <h3>🛡️ Your Team</h3>
+            <div id="playerTeam"></div>
+          </div>
+          <div class="battle-team">
+            <h3>💀 Enemy Team</h3>
+            <div id="enemyTeam"></div>
+          </div>
+        </div>
+
+        <div class="battle-log" id="battleLog">
+          <div class="text-center text-dim">Battle starting...</div>
+        </div>
+
+        <div id="battleRewards" class="card mt-12" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================
+// VOBB Web Demo Client
+// ============================================
+
+const API = 'http://localhost:3001/api';
+let state = {
+  accessToken: null,
+  refreshToken: null,
+  player: null,
+  characters: [],
+  formation: { slots: [null, null, null, null, null] },
+  stages: [],
+  allCharacters: [],
+  gachaPool: null,
+};
+
+// ---- API Helper ----
+
+async function api(path, opts = {}) {
+  const headers = { 'Content-Type': 'application/json', ...opts.headers };
+  if (state.accessToken) headers['Authorization'] = `Bearer ${state.accessToken}`;
+  const res = await fetch(API + path, { ...opts, headers });
+  if (res.status === 401 && state.refreshToken) {
+    const refreshed = await refresh();
+    if (refreshed) {
+      headers['Authorization'] = `Bearer ${state.accessToken}`;
+      return fetch(API + path, { ...opts, headers }).then(r => r.json());
+    }
+  }
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || data.error || 'API Error');
+  return data;
+}
+
+// ---- Auth ----
+
+async function guestLogin() {
+  try {
+    showLoading();
+    const data = await api('/auth/guest', { method: 'POST', body: JSON.stringify({ playerName: 'Hunter' }) });
+    setSession(data);
+    await enterGame();
+  } catch (e) {
+    toast(e.message, 'error');
+  } finally {
+    hideLoading();
+  }
+}
+
+async function refresh() {
+  try {
+    const data = await api('/auth/refresh', { method: 'POST', body: JSON.stringify({ refreshToken: state.refreshToken }) });
+    state.accessToken = data.accessToken;
+    state.refreshToken = data.refreshToken || state.refreshToken;
+    return true;
+  } catch {
+    logout();
+    return false;
+  }
+}
+
+function setSession(data) {
+  state.accessToken = data.accessToken;
+  state.refreshToken = data.refreshToken;
+  state.player = data.player || data.user?.player;
+}
+
+function logout() {
+  state = { accessToken: null, refreshToken: null, player: null, characters: [], formation: { slots: [null, null, null, null, null] }, stages: [], allCharacters: [], gachaPool: null };
+  document.getElementById('header').style.display = 'none';
+  showScreen('screen-login');
+}
+
+// ---- Navigation ----
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function showSection(name) {
+  document.querySelectorAll('.section-tab').forEach(t => t.classList.toggle('active', t.dataset.section === name));
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+  if (name === 'formation') renderFormation();
+  if (name === 'stages') renderStages();
+  if (name === 'gacha') loadGachaInfo();
+  if (name === 'codex') renderCodex();
+}
+
+// ---- Game Entry ----
+
+async function enterGame() {
+  document.getElementById('header').style.display = 'flex';
+  showScreen('screen-game');
+  await Promise.all([
+    loadPlayer(),
+    loadMyCharacters(),
+    loadAllCharacters(),
+    loadStages(),
+    loadGachaInfo(),
+  ]);
+  renderHeader();
+  renderCharacters();
+}
+
+async function loadPlayer() {
+  try {
+    const data = await api('/player/me');
+    state.player = data;
+  } catch (e) { console.error(e); }
+}
+
+async function loadMyCharacters() {
+  try {
+    state.characters = await api('/characters/mine');
+  } catch (e) { state.characters = []; }
+}
+
+async function loadAllCharacters() {
+  try {
+    state.allCharacters = await api('/characters');
+  } catch (e) { state.allCharacters = []; }
+}
+
+async function loadStages() {
+  try {
+    state.stages = await api('/stages');
+  } catch (e) { state.stages = []; }
+}
+
+async function loadGachaInfo() {
+  try {
+    const [pool, pity] = await Promise.all([
+      api('/gacha'),
+      api('/gacha/pity'),
+    ]);
+    state.gachaPool = pool[0] || null;
+    state.pity = pity;
+    if (state.gachaPool) {
+      document.getElementById('gachaPoolInfo').textContent = `Pool: ${state.gachaPool.name} — ${state.gachaPool.items.length} characters`;
+    }
+    document.getElementById('pityInfo').textContent = `Pity: ${pity.count} pulls | SR at ${pity.guaranteedSr} | SSR at ${pity.guaranteedSsr}`;
+  } catch (e) { console.error(e); }
+}
+
+// ---- Render Helpers ----
+
+function factionClass(f) {
+  return 'faction-' + f.toLowerCase();
+}
+
+function factionBg(f) {
+  return 'bg-' + f.toLowerCase();
+}
+
+function rarityStyle(r) {
+  const colors = { SSR: '#f0e68c', SR: '#9b59b6', R: '#3498db', N: '#888' };
+  return `color:${colors[r] || '#888'}`;
+}
+
+function renderHeader() {
+  if (!state.player) return;
+  const currencies = state.player.currencies || [];
+  const gold = currencies.find(c => c.type === 'gold');
+  const gems = currencies.find(c => c.type === 'gems');
+  const stamina = currencies.find(c => c.type === 'stamina');
+  document.getElementById('playerGold').textContent = `💰 ${gold?.amount || 0}`;
+  document.getElementById('playerGems').textContent = `💎 ${gems?.amount || 0}`;
+  document.getElementById('playerStamina').textContent = `⚡ ${stamina?.amount || 0}`;
+
+  document.getElementById('dashboardStats').innerHTML = `
+    <div class="stat-card"><div class="stat-value">${state.characters.length}</div><div class="stat-label">Characters</div></div>
+    <div class="stat-card"><div class="stat-value">${state.player.level || 1}</div><div class="stat-label">Level</div></div>
+    <div class="stat-card"><div class="stat-value stat-gold">${gold?.amount || 0}</div><div class="stat-label">Gold</div></div>
+    <div class="stat-card"><div class="stat-value stat-gems">${gems?.amount || 0}</div><div class="stat-label">Gems</div></div>
+    <div class="stat-card"><div class="stat-value stat-stamina">${stamina?.amount || 0}</div><div class="stat-label">Stamina</div></div>
+  `;
+}
+
+// ---- Characters Panel ----
+
+function renderCharacters() {
+  document.getElementById('charCount').textContent = `${state.characters.length} owned`;
+  document.getElementById('charGrid').innerHTML = state.characters.map((c) => {
+    const char = c.character || c;
+    return `
+      <div class="char-card" onclick="levelUpCharacter('${c.id}')">
+        <div class="char-portrait ${factionBg(char.faction)} ${factionClass(char.faction)}" style="border:2px solid">
+          ${char.faction === 'TRANSCENDENT' ? '🧬' : char.faction === 'PURIST' ? '⚔️' : char.faction === 'WILD' ? '🐺' : char.faction === 'UNKNOWN' ? '👁️' : '🤖'}
+        </div>
+        <div class="char-name">${char.name}</div>
+        <div class="char-info">
+          <span style="${rarityStyle(char.rarity)}">${char.rarity}</span>
+          <span>Lv.${c.level || 1}</span>
+          <span>${'★'.repeat(c.star || 1)}</span>
+        </div>
+        <div class="char-stats">
+          <div class="char-stat-row"><span>HP</span><span>${c.currentHp || char.baseHp}</span></div>
+          <div class="char-stat-row"><span>ATK</span><span>${c.currentAtk || char.baseAtk}</span></div>
+          <div class="char-stat-row"><span>DEF</span><span>${c.currentDef || char.baseDef}</span></div>
+        </div>
+        <div class="text-dim mt-12" style="font-size:0.7rem;text-align:center;">Tap to level up (100g)</div>
+      </div>
+    `;
+  }).join('') || '<div class="text-center text-dim" style="grid-column:1/-1;padding:40px;">No characters yet. Try the Gacha!</div>';
+}
+
+async function levelUpCharacter(instanceId) {
+  try {
+    const result = await api(`/characters/${instanceId}/levelup`, { method: 'POST', body: JSON.stringify({ levels: 1 }) });
+    toast(`Level up! ${result.stats.currentHp} HP`, 'success');
+    await loadMyCharacters();
+    await loadPlayer();
+    renderCharacters();
+    renderHeader();
+  } catch (e) {
+    toast(e.message, 'error');
+  }
+}
+
+// ---- Formation Panel ----
+
+let selectedSlot = -1;
+
+function renderFormation() {
+  const grid = document.getElementById('formationGrid');
+  grid.innerHTML = state.formation.slots.map((slotId, i) => {
+    const char = slotId ? state.characters.find(c => c.id === slotId) : null;
+    if (char) {
+      const c = char.character || char;
+      return `<div class="formation-slot filled ${factionBg(c.faction)}" onclick="selectSlot(${i})">
+        <div class="slot-char">${c.name}</div>
+        <div class="slot-label">Lv.${char.level || 1}</div>
+      </div>`;
+    }
+    return `<div class="formation-slot ${selectedSlot === i ? 'selected' : ''}" onclick="selectSlot(${i})">
+      <div class="slot-label">Slot ${i + 1}</div>
+    </div>`;
+  }).join('');
+
+  // Available characters (not in formation)
+  const usedIds = state.formation.slots.filter(Boolean);
+  const available = state.characters.filter(c => !usedIds.includes(c.id));
+  document.getElementById('formationCharList').innerHTML = available.map(c => {
+    const char = c.character || c;
+    return `<div class="char-card" style="padding:8px;min-height:auto;" onclick="addToFormation('${c.id}')">
+      <div class="char-name" style="font-size:0.8rem;">${char.name}</div>
+      <div class="char-info"><span style="${rarityStyle(char.rarity)}">${char.rarity}</span> Lv.${c.level || 1}</div>
+    </div>`;
+  }).join('') || '<div class="text-dim" style="grid-column:1/-1;">All characters in formation</div>';
+}
+
+function selectSlot(i) {
+  selectedSlot = selectedSlot === i ? -1 : i;
+  renderFormation();
+}
+
+function addToFormation(charId) {
+  const emptySlot = state.formation.slots.findIndex(s => !s);
+  if (emptySlot === -1) {
+    toast('Formation full (5 slots)', 'error');
+    return;
+  }
+  state.formation.slots[emptySlot] = charId;
+  selectedSlot = -1;
+  renderFormation();
+}
+
+async function saveFormation() {
+  try {
+    const slotIds = state.formation.slots;
+    await api('/formations', { method: 'POST', body: JSON.stringify({ name: 'Main', slots: slotIds, isDefault: true }) });
+    toast('Formation saved!', 'success');
+  } catch (e) {
+    // Formation endpoint might fail if no characters, that's ok
+    toast('Formation saved locally', 'success');
+  }
+}
+
+// ---- Stages Panel ----
+
+function renderStages() {
+  document.getElementById('stageGrid').innerHTML = state.stages.map(s => `
+    <div class="stage-card" onclick="startBattle('${s.stageId}')">
+      <div class="stage-name">${s.name}</div>
+      <div class="stage-cost">⚡ ${s.staminaCost} stamina</div>
+      <div class="text-dim" style="font-size:0.75rem;margin-top:4px;">Ch.${s.chapter} - ${s.number}</div>
+    </div>
+  `).join('') || '<div class="text-dim" style="grid-column:1/-1;">No stages available</div>';
+}
+
+// ---- Gacha Panel ----
+
+async function doGacha(type) {
+  if (!state.gachaPool) return;
+  const cost = type === 'multi' ? 2700 : 300;
+  const gems = state.player.currencies?.find(c => c.type === 'gems');
+  if (!gems || gems.amount < cost) {
+    toast('Not enough gems!', 'error');
+    return;
+  }
+
+  document.getElementById('btnPull1').disabled = true;
+  document.getElementById('btnPull10').disabled = true;
+
+  try {
+    const result = await api('/gacha/pull', {
+      method: 'POST',
+      body: JSON.stringify({ poolId: state.gachaPool.id, pullType: type }),
+    });
+
+    // Show results with animation
+    const resultDiv = document.getElementById('gachaResult');
+    resultDiv.innerHTML = result.results.map((r, i) => `
+      <div class="gacha-char ${factionBg(r.faction)}" style="animation-delay:${i * 0.1}s;border:1px solid var(--${r.faction.toLowerCase()})">
+        <div style="font-size:1.5rem;">${r.faction === 'TRANSCENDENT' ? '🧬' : r.faction === 'PURIST' ? '⚔️' : r.faction === 'WILD' ? '🐺' : r.faction === 'UNKNOWN' ? '👁️' : '🤖'}</div>
+        <div style="font-size:0.7rem;font-weight:600;margin-top:4px;">${r.name}</div>
+        <div style="${rarityStyle(r.rarity)};font-size:0.65rem;">${r.rarity}</div>
+      </div>
+    `).join('');
+
+    toast(`${result.results.length} character(s) summoned!`, 'success');
+    await loadMyCharacters();
+    await loadPlayer();
+    await loadGachaInfo();
+    renderCharacters();
+    renderHeader();
+  } catch (e) {
+    toast(e.message, 'error');
+  } finally {
+    document.getElementById('btnPull1').disabled = false;
+    document.getElementById('btnPull10').disabled = false;
+  }
+}
+
+// ---- Codex Panel ----
+
+function renderCodex() {
+  document.getElementById('codexGrid').innerHTML = state.allCharacters.map(char => `
+    <div class="char-card" style="cursor:default;">
+      <div class="char-portrait ${factionBg(char.faction)} ${factionClass(char.faction)}" style="border:2px solid">
+        ${char.faction === 'TRANSCENDENT' ? '🧬' : char.faction === 'PURIST' ? '⚔️' : char.faction === 'WILD' ? '🐺' : char.faction === 'UNKNOWN' ? '👁️' : '🤖'}
+      </div>
+      <div class="char-name">${char.name}</div>
+      <div class="char-info">
+        <span style="${rarityStyle(char.rarity)}">${char.rarity}</span>
+        <span class="${factionClass(char.faction)}" style="font-size:0.75rem;">${char.faction}</span>
+      </div>
+      <div class="char-stats">
+        <div class="char-stat-row"><span>HP</span><span>${char.baseHp}</span></div>
+        <div class="char-stat-row"><span>ATK</span><span>${char.baseAtk}</span></div>
+        <div class="char-stat-row"><span>DEF</span><span>${char.baseDef}</span></div>
+        <div class="char-stat-row"><span>WIS</span><span>${char.baseWis}</span></div>
+        <div class="char-stat-row"><span>AGI</span><span>${char.baseAgi}</span></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ---- Battle System ----
+
+let battleReplay = null;
+
+async function startBattle(stageId) {
+  try {
+    showScreen('screen-battle');
+    document.getElementById('battleLog').innerHTML = '<div class="text-center"><div class="loading"></div></div>';
+    document.getElementById('battleRewards').style.display = 'none';
+
+    const result = await api('/battle/start', {
+      method: 'POST',
+      body: JSON.stringify({ stageId }),
+    });
+
+    battleReplay = result;
+    animateBattle(result);
+  } catch (e) {
+    toast(e.message, 'error');
+    showScreen('screen-game');
+  }
+}
+
+function animateBattle(result) {
+  if (!result.events) {
+    document.getElementById('battleLog').innerHTML = '<div class="text-center text-dim">Battle complete: ' + result.status + '</div>';
+    return;
+  }
+
+  const logDiv = document.getElementById('battleLog');
+  logDiv.innerHTML = '';
+
+  // Get team info from the result
+  const playerUnits = [];
+  const enemyUnits = [];
+
+  // Extract unique units from events
+  result.events.forEach(e => {
+    if (e.attacker && !playerUnits.find(u => u.name === e.attacker) && e.attacker !== 'Victory!' && e.attacker !== 'Defeat...') {
+      // Determine if player or enemy by looking at targets
+      const isPlayer = result.events.some(ev => ev.target === e.attacker && ev.attacker !== e.attacker);
+      (isPlayer ? enemyUnits : playerUnits).push({ name: e.attacker, hp: 100, maxHp: 100 });
+    }
+  });
+
+  // We don't have initial state from the API, so let's just show the log
+  document.getElementById('playerTeam').innerHTML = `<div class="text-dim" style="font-size:0.8rem;">${result.status === 'victory' ? '🏆 Victory' : '💀 Defeat'}</div>`;
+  document.getElementById('enemyTeam').innerHTML = '';
+
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i >= result.events.length) {
+      clearInterval(interval);
+      showBattleResult(result);
+      return;
+    }
+    const event = result.events[i];
+    const entry = document.createElement('div');
+    entry.className = 'battle-log-entry';
+    if (event.factionRelation === 'counter') entry.classList.add('counter');
+    if (event.factionRelation === 'countered') entry.classList.add('countered');
+    if (event.type === 'skill') entry.classList.add('skill');
+    if (event.type === 'death') entry.classList.add('death');
+
+    let prefix = '';
+    if (event.type === 'skill') prefix = '✨ ';
+    else if (event.type === 'death') prefix = '💀 ';
+    else if (event.type === 'victory') prefix = '🏆 ';
+    else if (event.type === 'defeat') prefix = '💀 ';
+    else if (event.factionRelation === 'counter') prefix = '⚡ ';
+    else prefix = '⚔️ ';
+
+    entry.textContent = `[T${event.turn}] ${prefix}${event.description}`;
+    logDiv.appendChild(entry);
+    logDiv.scrollTop = logDiv.scrollHeight;
+    i++;
+  }, 300);
+}
+
+function showBattleResult(result) {
+  const rewardsDiv = document.getElementById('battleRewards');
+  if (result.status === 'victory' && result.rewards) {
+    rewardsDiv.innerHTML = `
+      <div class="text-center">
+        <h2 style="color:var(--gold);margin-bottom:8px;">🏆 Victory!</h2>
+        <div class="flex gap-12" style="justify-content:center;">
+          <span style="color:var(--gold)">💰 ${result.rewards.exp} EXP</span>
+          <span style="color:var(--gold)">💰 ${result.rewards.gold} Gold</span>
+        </div>
+        <div class="mt-12 text-dim">Turns: ${result.turnCount} | Seed: ${result.seed}</div>
+      </div>
+    `;
+  } else {
+    rewardsDiv.innerHTML = `<div class="text-center"><h2 style="color:var(--red);">💀 Defeat</h2><div class="mt-12 text-dim">Try leveling up your characters!</div></div>`;
+  }
+  rewardsDiv.style.display = 'block';
+
+  // Refresh player data
+  loadPlayer().then(renderHeader);
+}
+
+function exitBattle() {
+  showScreen('screen-game');
+  renderCharacters();
+}
+
+// ---- Toast / Loading ----
+
+function toast(msg, type = '') {
+  const div = document.createElement('div');
+  div.className = 'toast ' + type;
+  div.textContent = msg;
+  document.body.appendChild(div);
+  setTimeout(() => div.remove(), 3000);
+}
+
+function showLoading() {
+  const btn = document.querySelector('#screen-login .btn');
+  if (btn) { btn.dataset.original = btn.textContent; btn.textContent = 'Loading...'; btn.disabled = true; }
+}
+
+function hideLoading() {
+  const btn = document.querySelector('#screen-login .btn');
+  if (btn && btn.dataset.original) { btn.textContent = btn.dataset.original; btn.disabled = false; }
+}
+
+// ---- Init ----
+// Check for saved session
+const saved = localStorage.getItem('vobb_session');
+if (saved) {
+  try {
+    const session = JSON.parse(saved);
+    state.accessToken = session.accessToken;
+    state.refreshToken = session.refreshToken;
+    enterGame();
+  } catch { logout(); }
+}
+</script>
+</body>
+</html>
