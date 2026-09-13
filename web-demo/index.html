@@ -595,7 +595,8 @@ function renderChar(){
   document.getElementById('charName').textContent=ch.name;
   document.getElementById('charRar').textContent=ch.rarity;
   document.getElementById('charRar').className='char-rar '+(ch.rarity||'').toLowerCase();
-  document.getElementById('charStars').textContent='★'.repeat(c.star||1);
+  const maxStar=5,curStar=c.star||1;
+  document.getElementById('charStars').innerHTML='★'.repeat(curStar)+'<span style="opacity:.3">' + '★'.repeat(maxStar-curStar) + '</span>';
   document.getElementById('charLv').textContent='Lv.'+(c.level||1)+'/60';
   document.getElementById('charExp').style.width=Math.min(100,((c.exp||0)/(c.expMax||100))*100)+'%';
   const fb=document.getElementById('charFact');fb.textContent=ch.faction;fb.className='faction-badge '+(FCLASS[ch.faction]||'');
@@ -641,7 +642,7 @@ function renderChar(){
   document.getElementById('rosterGrid').innerHTML=state.chars.map((rc,i)=>{const rch=rc.character||rc;return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})"><div class="roster-ava">${EMOJI[rch.faction]||'❓'}</div><div class="roster-lv">${'★'.repeat(rc.star||1)} ${rc.level||1}</div></div>`}).join('');
 }
 
-function selectChar(i){state.idx=i;renderChar()}
+function selectChar(i){state.idx=i;renderChar();if(document.getElementById('tab-story').classList.contains('active'))renderStory()}
 function switchTab(t){
   document.querySelectorAll('.char-tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===t));
   ['overview','skills','evo','story'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active',x===t));
