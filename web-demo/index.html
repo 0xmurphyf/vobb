@@ -387,7 +387,6 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
                   <span class="char-rar" id="charRar">SSR</span>
                   <span class="char-lv" id="charLv">Lv.1</span>
                   <button class="char-lock" onclick="toast('Locked')" title="Lock">🔒</button>
-                  <button class="char-story" onclick="switchTab('story')" title="Story">📖</button>
                 </div>
               </div>
               <div class="char-exp"><div class="char-exp-fill" id="charExp" style="width:0%"></div></div>
@@ -402,7 +401,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
             <button class="char-tab active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
             <button class="char-tab" data-tab="skills" onclick="switchTab('skills')">Skills</button>
             <button class="char-tab" data-tab="evo" onclick="switchTab('evo')">Evolution</button>
-            <button class="char-tab" data-tab="story" onclick="switchTab('story')">Story</button>
+            <button class="char-tab" data-tab="story" onclick="switchTab('story')">About</button>
           </div>
           <div class="tab-panel active" id="tab-overview">
             <!-- Stats Full Width -->
@@ -494,7 +493,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 const API='/api';
 const EMOJI={TRANSCENDENT:'🧬',PURIST:'⚔️',WILD:'🐺',UNKNOWN:'👁️',CYBERIST:'🤖'};
 const FCLASS={TRANSCENDENT:'fT',PURIST:'fP',WILD:'fW',UNKNOWN:'fU',CYBERIST:'fC'};
-const STARS={SSR:5,SR:4,R:3,N:2};
+
 
 let state={accessToken:null,refreshToken:null,player:null,chars:[],allChars:[],idx:0,formation:[null,null,null,null,null],stages:[],pity:0,battle:null,timer:null};
 
@@ -558,6 +557,7 @@ function renderRes(){
 }
 
 function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toString()}
+function fmtFull(n){return n.toLocaleString()}
 
 // === Navigation ===
 function showScreen(id){
@@ -596,7 +596,7 @@ function renderChar(){
   document.getElementById('charName').textContent=ch.name;
   document.getElementById('charRar').textContent=ch.rarity;
   document.getElementById('charRar').className='char-rar '+(ch.rarity||'').toLowerCase();
-  document.getElementById('charStars').textContent='★'.repeat(STARS[ch.rarity]||3);
+  document.getElementById('charStars').textContent='★'.repeat(c.star||1);
   document.getElementById('charLv').textContent='Lv.'+(c.level||1)+'/60';
   document.getElementById('charExp').style.width=Math.min(100,((c.exp||0)/(c.expMax||100))*100)+'%';
   const fb=document.getElementById('charFact');fb.textContent=ch.faction;fb.className='faction-badge '+(FCLASS[ch.faction]||'');
@@ -611,7 +611,7 @@ function renderChar(){
     {n:'WIS',v:c.currentWis||ch.baseWis||0,i:'✨',c:'wis'},
     {n:'AGI',v:c.currentAgi||ch.baseAgi||0,i:'💨',c:'agi'},
   ];
-  document.getElementById('statsGrid').innerHTML=st.map(s=>`<div class="stat-item"><span class="stat-icon">${s.i}</span><span class="stat-name">${s.n}</span><span class="stat-val ${s.c}">${fmt(s.v)}</span></div>`).join('');
+  document.getElementById('statsGrid').innerHTML=st.map(s=>`<div class="stat-item"><span class="stat-icon">${s.i}</span><span class="stat-name">${s.n}</span><span class="stat-val ${s.c}">${fmtFull(s.v)}</span></div>`).join('');
   // Counter Chart (Regular Pentagon) - small overlay 70x70
   const factions=['TRANSCENDENT','PURIST','WILD','UNKNOWN','CYBERIST'];
   const colors={TRANSCENDENT:'#b86bff',PURIST:'#ff6b35',WILD:'#23d160',UNKNOWN:'#3298dc',CYBERIST:'#ff3860'};
@@ -639,7 +639,7 @@ function renderChar(){
   const sk=[{n:'Normal',i:'⚔️',l:c.skillLevel||3},{n:'Skill 1',i:'🔮',l:c.skillLevel||3},{n:'Skill 2',i:'💫',l:Math.max(1,(c.skillLevel||3)-1)},{n:'Ultimate',i:'✨',l:Math.max(1,(c.skillLevel||3)-2)}];
   document.getElementById('skillsRow').innerHTML=sk.map(s=>`<div class="skill-card"><div class="skill-icon">${s.i}</div><div class="skill-name">${s.n}</div><div class="skill-level">Lv.${s.l}</div></div>`).join('');
   // Roster
-  document.getElementById('rosterGrid').innerHTML=state.chars.map((rc,i)=>{const rch=rc.character||rc;return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})"><div class="roster-ava">${EMOJI[rch.faction]||'❓'}</div><div class="roster-lv">Lv.${rc.level||1}</div></div>`}).join('');
+  document.getElementById('rosterGrid').innerHTML=state.chars.map((rc,i)=>{const rch=rc.character||rc;return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})"><div class="roster-ava">${EMOJI[rch.faction]||'❓'}</div><div class="roster-lv">${'★'.repeat(rc.star||1)} ${rc.level||1}</div></div>`}).join('');
 }
 
 function selectChar(i){state.idx=i;renderChar()}

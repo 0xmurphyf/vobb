@@ -28,25 +28,28 @@ async function authRoutes(app: FastifyInstance) {
       include: { player: true },
     });
 
-    // Give guest 5 starter characters (one per faction)
+    // Give guest 5 starter characters (one per faction, stars 1/2/3/1/2)
     const starterChars = await prisma.character.findMany({
       where: { charId: { in: ['adaptive_stalker', 'steadfast', 'fungal_lurker', 'void_pearl', 'chrome_reaper'] } },
       include: { growth: true },
     });
 
     const STARTER_LEVEL = 10;
-    for (const char of starterChars) {
+    const STAR_VALUES = [1, 2, 3, 1, 2]; // 1-3 stars each
+    for (let i = 0; i < starterChars.length; i++) {
+      const char = starterChars[i];
+      const star = STAR_VALUES[i] || 1;
+      const starMult = 1 + (star - 1) * 0.1;
       const g = char.growth ? char.growth.statMultipliers as any : null;
       const growth = g || { hp: 0.10, atk: 0.10, def: 0.08, wis: 0.08, agi: 0.08 };
-      const starMult = 1.0;
       await prisma.characterInstance.create({
         data: {
           playerId: user.player!.id,
           characterId: char.id,
           level: STARTER_LEVEL,
           exp: 0,
-          star: 3,
-          skillLevel: 2,
+          star: star,
+          skillLevel: star + 1,
           isInFormation: true,
           currentHp: Math.round(char.baseHp * (1 + (STARTER_LEVEL - 1) * growth.hp) * starMult),
           currentAtk: Math.round(char.baseAtk * (1 + (STARTER_LEVEL - 1) * growth.atk) * starMult),
