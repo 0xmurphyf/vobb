@@ -7,12 +7,11 @@ import pino from 'pino';
 
 import {
   authRoutes,
-  userRoutes,
+  playerRoutes,
+  characterRoutes,
+  formationRoutes,
   gachaRoutes,
   battleRoutes,
-  characterRoutes,
-  teamRoutes,
-  pvpRoutes,
   stageRoutes,
 } from './routes/routes';
 
@@ -35,7 +34,7 @@ await app.register(cors, {
 
 await app.register(jwt, {
   secret: process.env.JWT_SECRET || 'dev-secret-change-in-production',
-  sign: { expiresIn: '7d' },
+  sign: { expiresIn: '15m' },
 });
 
 await app.register(rateLimit, {
@@ -48,12 +47,11 @@ app.get('/health', async () => ({ status: 'ok', timestamp: Date.now() }));
 
 // Routes
 await app.register(authRoutes, { prefix: '/api/auth' });
-await app.register(userRoutes, { prefix: '/api/users' });
+await app.register(playerRoutes, { prefix: '/api/player' });
+await app.register(characterRoutes, { prefix: '/api/characters' });
+await app.register(formationRoutes, { prefix: '/api/formations' });
 await app.register(gachaRoutes, { prefix: '/api/gacha' });
 await app.register(battleRoutes, { prefix: '/api/battle' });
-await app.register(characterRoutes, { prefix: '/api/characters' });
-await app.register(teamRoutes, { prefix: '/api/teams' });
-await app.register(pvpRoutes, { prefix: '/api/pvp' });
 await app.register(stageRoutes, { prefix: '/api/stages' });
 
 const PORT = parseInt(process.env.PORT || '3000', 10);

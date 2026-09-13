@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: vobb-postgres
+    environment:
+      POSTGRES_USER: vobb
+      POSTGRES_PASSWORD: vobb_password
+      POSTGRES_DB: vobb_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - vobb_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U vobb']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: vobb-server
+    environment:
+      DATABASE_URL: postgresql://vobb:vobb_password@postgres:5432/vobb_db
+      JWT_SECRET: ${JWT_SECRET:-dev-secret-change-in-production}
+      CLIENT_ORIGINS: ${CLIENT_ORIGINS:-*}
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: 3000
+    ports:
+      - '3000:3000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  vobb_pgdata:
