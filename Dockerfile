@@ -4,14 +4,14 @@ RUN apk add --no-cache libssl3 openssl3
 
 WORKDIR /app
 
-COPY server/package.json server/package-lock.json* ./
-RUN npm cache clean --force && npm ci
+# Copy entire server directory
+COPY server ./
 
-COPY server/prisma ./prisma
+# Install dependencies
+RUN npm install
+
+# Generate Prisma client
 RUN npx prisma generate
-
-COPY server/src ./src
-COPY server/tsconfig.json ./tsconfig.json
 
 ENV NODE_ENV=production
 ENV PORT=3000
