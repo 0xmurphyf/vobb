@@ -84,13 +84,13 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 
 /* ========== CHARACTER SCREEN ========== */
 .char-screen{flex:1;display:flex;position:relative;z-index:1;border:1px solid var(--bdr);border-radius:12px;overflow:hidden;background:var(--bg2)}
-.char-row{display:flex;flex:1;min-width:0;overflow:hidden;width:100%}
-.char-viewport{position:relative;flex:0 0 65%;width:65%;height:auto;overflow:hidden;display:flex;flex-direction:column;min-height:0;padding-left:70px}
-.char-viewport-top{flex:1;position:relative;display:flex;align-items:flex-end;justify-content:center;min-height:0}
+.char-row{flex:1;display:flex;overflow:hidden}
+.char-viewport{position:relative;width:65%;height:auto;overflow:hidden;display:flex;flex-direction:column;min-height:0}
+.char-viewport-top{flex:1;position:relative;display:flex;align-items:flex-end;justify-content:center;min-height:0;padding-left:70px}
 .char-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(180,100,255,.12) 0%,transparent 50%)}
 .char-artwork{position:relative;height:85%;z-index:2;filter:drop-shadow(0 0 40px rgba(180,100,255,.3));animation:char-idle 4s ease-in-out infinite;font-size:10rem;display:flex;align-items:center;justify-content:center}
 .char-glow{position:absolute;bottom:10%;left:50%;transform:translateX(-50%);width:120px;height:25px;background:radial-gradient(ellipse,rgba(180,100,255,.35),transparent 70%);filter:blur(8px);animation:glow-pulse 3s ease-in-out infinite}
-.char-nameplate{position:absolute;bottom:0;left:70px;right:0;padding:12px 16px;background:linear-gradient(0deg,rgba(0,0,0,.9) 0%,transparent 100%);z-index:3}
+.char-nameplate{position:absolute;bottom:0;left:0;right:0;padding:12px 16px;background:linear-gradient(0deg,rgba(0,0,0,.9) 0%,transparent 100%);z-index:3}
 .char-panel{overflow-y:auto;padding:12px;background:var(--bg2);display:flex;flex-direction:column;flex:0 0 35%;width:35%;min-width:280px}
 @keyframes char-idle{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.02)}}
 .char-name{font-size:1.5rem;font-weight:800;color:#fff;text-shadow:0 0 20px rgba(0,0,0,.8)}
@@ -103,7 +103,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .char-lock:hover{background:rgba(255,255,255,.1)}
 .char-lock:active{transform:scale(.9)}
 .char-exp-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:2px;transition:width .5s}
-.faction-badge{position:absolute;top:12px;left:80px;padding:4px 12px;border-radius:12px;font-size:.6rem;font-weight:700;letter-spacing:1px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);border:1px solid;z-index:4}
+.faction-badge{position:absolute;top:12px;right:12px;padding:4px 12px;border-radius:12px;font-size:.6rem;font-weight:700;letter-spacing:1px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);border:1px solid;z-index:4}
 .faction-badge.fT{color:var(--fT);border-color:var(--fT)}
 .faction-badge.fP{color:var(--fP);border-color:var(--fP)}
 .faction-badge.fW{color:var(--fW);border-color:var(--fW)}
@@ -301,8 +301,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 }
 @media(max-width:767px){
   .char-artwork{font-size:6rem}
-  .char-viewport{padding-left:50px}
-  .faction-badge{left:60px}
+  .char-viewport-top{padding-left:50px}
 }
 </style>
 </head>
