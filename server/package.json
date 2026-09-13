@@ -4,6 +4,9 @@
   "type": "module",
   "description": "Voxx Blood Brothers - Game Server",
   "main": "dist/index.js",
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",

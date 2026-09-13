@@ -8,6 +8,8 @@ COPY server/package.json server/package-lock.json* ./
 RUN npm ci
 
 COPY server/prisma ./prisma
+RUN npx prisma generate
+
 COPY server/src ./src
 COPY server/tsconfig.json ./tsconfig.json
 
@@ -17,4 +19,4 @@ ENV HOST=0.0.0.0
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "export DATABASE_URL=\"${DATABASE_URL}&sslmode=disable\" && npx prisma generate && npx prisma db push --skip-generate --accept-data-loss && npx tsx src/index.ts"]
+CMD ["sh", "-c", "if echo \"$DATABASE_URL\" | grep -q '?'; then export DATABASE_URL=\"${DATABASE_URL}&schema=public&sslmode=disable\"; else export DATABASE_URL=\"${DATABASE_URL}?schema=public&sslmode=disable\"; fi && npx prisma db push --accept-data-loss && npx tsx src/index.ts"]
