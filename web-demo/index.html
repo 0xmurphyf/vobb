@@ -6,251 +6,271 @@
 <title>VOBB — Five Warlords</title>
 <style>
 :root {
-  --bg: #06060f;
-  --bg2: #0c0c1a;
-  --surface: #12122a;
-  --surface2: #1a1a40;
-  --surface3: #252560;
-  --border: #1e1e4a;
-  --border2: #2a2a6a;
-  --text: #eee;
-  --text2: #aab;
-  --gold: #f4c430;
-  --red: #ff3860;
-  --green: #23d160;
-  --blue: #3298dc;
-  --purple: #b86bff;
-  --cyan: #00d1b2;
-  --pink: #ff3860;
-  --orange: #ff6b35;
+  --bg: #06060f; --bg2: #0c0c1a; --bg3: #12122a;
+  --s1: #181838; --s2: #1e1e48; --s3: #282860;
+  --bdr: #1e1e4a; --bdr2: #2a2a6a; --bdr3: #3a3a8a;
+  --t: #eee; --t2: #aab; --t3: #667;
+  --gold: #f4c430; --red: #ff3860; --green: #23d160;
+  --blue: #3298dc; --purple: #b86bff; --cyan: #00d1b2; --orange: #ff6b35; --pink: #ff3860;
+  --ssr: #f4c430; --sr: #b86bff; --r: #3298dc; --n: #667;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--t);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;border:none;outline:none;background:none;color:inherit}
+input{font-family:inherit;border:none;outline:none;background:none;color:inherit}
+.hidden{display:none!important}
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:2px}
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+/* ===== APP ===== */
+.app{min-height:100vh;display:flex;flex-direction:column}
 
-/* === Reset === */
-button { font-family: inherit; cursor: pointer; border: none; outline: none; }
-.hidden { display: none !important; }
+/* ===== TOP BAR ===== */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:linear-gradient(180deg,rgba(18,18,42,.98),rgba(12,12,30,.95));border-bottom:1px solid var(--bdr);position:sticky;top:0;z-index:200;min-height:48px}
+.topbar-left{display:flex;align-items:center;gap:8px}
+.topbar-right{display:flex;align-items:center;gap:6px}
+.btn-icon{width:32px;height:32px;border-radius:8px;background:var(--s1);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--t2)}
+.btn-icon:active{background:var(--s2)}
+.topbar-title{font-size:.7rem;color:var(--t2);font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.res{display:flex;align-items:center;gap:3px;padding:4px 8px;border-radius:14px;background:var(--s1);border:1px solid var(--bdr);font-size:.65rem;font-weight:700}
+.res.gems{color:var(--cyan)} .res.gold{color:var(--gold)} .res.stam{color:var(--green)}
 
-/* === App === */
-.app { min-height: 100vh; display: flex; flex-direction: column; }
+/* ===== BOTTOM NAV ===== */
+.botnav{display:flex;justify-content:space-around;padding:6px 0;background:linear-gradient(0deg,rgba(12,12,30,.98),rgba(12,12,30,.95));border-top:1px solid var(--bdr);position:sticky;bottom:0;z-index:200}
+.botnav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 12px;border-radius:8px;transition:all .2s}
+.botnav-btn.active{background:var(--s1)}
+.botnav-btn .icon{font-size:1.2rem;filter:grayscale(.5);opacity:.6;transition:all .2s}
+.botnav-btn.active .icon{filter:grayscale(0);opacity:1}
+.botnav-btn .label{font-size:.55rem;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.botnav-btn.active .label{color:var(--gold)}
 
-/* === Top Bar === */
-.topbar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 12px; background: linear-gradient(180deg, rgba(18,18,42,.98), rgba(12,12,30,.95));
-  border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 200;
-}
-.topbar-left { display: flex; align-items: center; gap: 8px; }
-.btn-back {
-  width: 32px; height: 32px; border-radius: 8px; background: var(--surface);
-  border: 1px solid var(--border); color: var(--text2); display: flex; align-items: center;
-  justify-content: center; font-size: 1rem;
-}
-.btn-back:active { background: var(--surface2); }
-.topbar-title { font-size: .75rem; color: var(--text2); font-weight: 600; letter-spacing: 1px; }
-.topbar-right { display: flex; gap: 6px; }
-.res {
-  display: flex; align-items: center; gap: 4px; padding: 4px 10px;
-  border-radius: 16px; background: var(--surface); border: 1px solid var(--border);
-  font-size: .75rem; font-weight: 700;
-}
-.res.gems { color: var(--cyan); }
-.res.gold { color: var(--gold); }
-.res.stam { color: var(--green); }
+/* ===== SCREENS ===== */
+.screen{flex:1;display:none;flex-direction:column}
+.screen.active{display:flex}
 
-/* === Main Layout === */
-.main { flex: 1; display: flex; flex-direction: column; position: relative; }
+/* ===== LOGIN ===== */
+#login-screen{align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(circle at 50% 30%,#1a1040 0%,#06060f 70%)}
+.login-logo{font-size:4rem;margin-bottom:12px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.login-title{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--gold),#fff,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:4px;margin-bottom:4px}
+.login-sub{font-size:.7rem;color:var(--t2);letter-spacing:2px;text-transform:uppercase;margin-bottom:32px}
+.login-btn{padding:14px 48px;border-radius:24px;font-size:.85rem;font-weight:700;letter-spacing:2px;background:linear-gradient(135deg,var(--gold),#e6a817);color:#000;box-shadow:0 4px 20px rgba(244,196,48,.3);text-transform:uppercase}
+.login-btn:active{transform:scale(.96)}
 
-/* === Character Portrait === */
-.portrait {
-  position: relative; width: 100%; height: 340px;
-  background: linear-gradient(180deg, #0d0825 0%, #1a1040 40%, #0d0825 100%);
-  display: flex; align-items: center; justify-content: center; overflow: hidden;
-}
-.portrait::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(circle at 50% 70%, rgba(180,100,255,.2) 0%, transparent 50%);
-  pointer-events: none;
-}
-.portrait-art {
-  font-size: 9rem; z-index: 2; filter: drop-shadow(0 0 40px rgba(180,100,255,.5));
-  animation: hover 3s ease-in-out infinite;
-}
-@keyframes hover { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-.portrait-info {
-  position: absolute; bottom: 0; left: 0; right: 0; padding: 12px 16px;
-  background: linear-gradient(0deg, rgba(0,0,0,.8) 0%, transparent 100%);
-  display: flex; flex-direction: column; gap: 4px;
-}
-.portrait-name { font-size: 1.4rem; font-weight: 800; color: #fff; letter-spacing: .5px; }
-.portrait-sub { font-size: .75rem; color: var(--text2); display: flex; align-items: center; gap: 6px; }
-.portrait-stars { color: var(--gold); letter-spacing: 1px; font-size: .8rem; }
-.portrait-rar { padding: 1px 8px; border-radius: 8px; font-size: .65rem; font-weight: 700; background: rgba(255,255,255,.1); }
-.portrait-rar.ssr { color: var(--gold); }
-.portrait-rar.sr { color: var(--purple); }
-.portrait-rar.r { color: var(--blue); }
-.portrait-lv { font-size: .8rem; font-weight: 700; color: var(--cyan); }
-.portrait-exp { width: 120px; height: 4px; background: rgba(255,255,255,.1); border-radius: 2px; overflow: hidden; margin-top: 2px; }
-.portrait-exp-fill { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--purple)); border-radius: 2px; }
-.faction-badge {
-  position: absolute; top: 12px; right: 12px; padding: 4px 12px; border-radius: 12px;
-  font-size: .65rem; font-weight: 700; letter-spacing: 1px; background: rgba(0,0,0,.5);
-  backdrop-filter: blur(8px); border: 1px solid;
-}
-.faction-T { color: var(--purple); border-color: var(--purple); }
-.faction-P { color: var(--orange); border-color: var(--orange); }
-.faction-W { color: var(--green); border-color: var(--green); }
-.faction-U { color: var(--blue); border-color: var(--blue); }
-.faction-C { color: var(--red); border-color: var(--red); }
+/* ===== HOME / DASHBOARD ===== */
+.home-scroll{flex:1;overflow-y:auto;padding:12px}
+.home-hero{position:relative;padding:20px;border-radius:16px;background:linear-gradient(135deg,#1a1040,#0d0825);border:1px solid var(--bdr);margin-bottom:12px;overflow:hidden}
+.home-hero::before{content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;background:radial-gradient(circle,rgba(184,107,255,.3),transparent);border-radius:50%}
+.home-hero h2{font-size:1.1rem;font-weight:800;margin-bottom:4px}
+.home-hero p{font-size:.7rem;color:var(--t2)}
+.home-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.hstat{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:10px 8px;text-align:center}
+.hstat-val{font-size:1.2rem;font-weight:800}
+.hstat-lbl{font-size:.55rem;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.hstat:nth-child(1) .hstat-val{color:var(--gold)}
+.hstat:nth-child(2) .hstat-val{color:var(--cyan)}
+.hstat:nth-child(3) .hstat-val{color:var(--green)}
+.hstat:nth-child(4) .hstat-val{color:var(--purple)}
 
-/* === Roster (Left) === */
-.roster {
-  position: fixed; left: 0; top: 52px; bottom: 0; width: 64px;
-  background: linear-gradient(180deg, rgba(16,16,36,.98), rgba(10,10,24,.98));
-  border-right: 1px solid var(--border); display: flex; flex-direction: column;
-  align-items: center; padding: 8px 0; gap: 6px; overflow-y: auto; z-index: 100;
-}
-.roster-item {
-  width: 48px; height: 60px; border-radius: 8px; background: var(--surface);
-  border: 2px solid var(--border); cursor: pointer; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 1px; transition: all .2s; flex-shrink: 0;
-}
-.roster-item:active { transform: scale(.95); }
-.roster-item.active { border-color: var(--gold); box-shadow: 0 0 12px rgba(244,196,48,.3); }
-.roster-avatar { font-size: 1.4rem; }
-.roster-lv { font-size: .55rem; font-weight: 700; color: var(--text2); }
-.roster-item.active .rost-lv { color: var(--gold); }
-.roster-sep { width: 32px; height: 1px; background: var(--border); margin: 2px 0; flex-shrink: 0; }
-.roster-sort {
-  width: 36px; height: 36px; border-radius: 50%; background: var(--surface);
-  border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center;
-  color: var(--text2); margin-top: auto; flex-shrink: 0; font-size: .8rem;
-}
+.home-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+.haction{padding:14px;border-radius:12px;background:var(--s1);border:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;transition:all .2s}
+.haction:active{background:var(--s2);transform:scale(.97)}
+.haction .ha-icon{font-size:1.6rem}
+.haction .ha-name{font-size:.7rem;font-weight:700}
+.haction .ha-desc{font-size:.55rem;color:var(--t3)}
+.haction.primary{background:linear-gradient(135deg,rgba(50,152,220,.15),rgba(184,107,255,.15));border-color:var(--bdr2)}
+.haction.gacha{background:linear-gradient(135deg,rgba(244,196,48,.1),rgba(255,107,53,.1));border-color:var(--bdr2)}
 
-/* === Detail Panel === */
-.detail {
-  padding: 12px 12px 12px 76px; background: var(--bg2);
-  display: flex; flex-direction: column; gap: 10px;
-}
+/* ===== CHARACTER PAGE ===== */
+.char-layout{flex:1;display:flex;overflow:hidden}
+.roster{width:60px;flex-shrink:0;background:linear-gradient(180deg,rgba(16,16,36,.98),rgba(10,10,24,.98));border-right:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:4px;overflow-y:auto}
+.ri{width:44px;height:56px;border-radius:8px;background:var(--s1);border:2px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;transition:all .15s;flex-shrink:0}
+.ri:active{transform:scale(.92)}
+.ri.active{border-color:var(--gold);box-shadow:0 0 10px rgba(244,196,48,.25)}
+.ri-ava{font-size:1.2rem}
+.ri-lv{font-size:.5rem;font-weight:700;color:var(--t3)}
+.ri.active .ri-lv{color:var(--gold)}
+.ri-sep{width:28px;height:1px;background:var(--bdr);margin:2px 0;flex-shrink:0}
+.ri-sort{width:32px;height:32px;border-radius:50%;background:var(--s1);border:1px dashed var(--bdr);display:flex;align-items:center;justify-content:center;color:var(--t3);font-size:.7rem;margin-top:auto;flex-shrink:0}
 
-/* Tabs */
-.tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); }
-.tab {
-  padding: 8px 16px; font-size: .75rem; font-weight: 600; color: var(--text2);
-  position: relative; background: none; border: none;
-}
-.tab.active { color: var(--text); }
-.tab.active::after {
-  content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px;
-  background: var(--cyan);
-}
+.char-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.portrait{position:relative;width:100%;height:280px;background:linear-gradient(180deg,#0d0825,#1a1040,#0d0825);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.portrait::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 70%,rgba(180,100,255,.15) 0%,transparent 50%);pointer-events:none}
+.portrait-art{font-size:8rem;z-index:2;filter:drop-shadow(0 0 30px rgba(180,100,255,.4));animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.portrait-ov{position:absolute;bottom:0;left:0;right:0;padding:10px 12px;background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,transparent 100%)}
+.p-name{font-size:1.3rem;font-weight:800;color:#fff}
+.p-sub{font-size:.65rem;color:var(--t2);display:flex;align-items:center;gap:6px;margin-top:2px}
+.p-stars{color:var(--gold);font-size:.7rem;letter-spacing:1px}
+.p-rar{padding:1px 6px;border-radius:6px;font-size:.55rem;font-weight:700;background:rgba(255,255,255,.08)}
+.p-rar.ssr{color:var(--ssr)} .p-rar.sr{color:var(--sr)} .p-rar.r{color:var(--r)}
+.p-lv-row{display:flex;align-items:center;gap:6px;margin-top:3px}
+.p-lv{font-size:.75rem;font-weight:700;color:var(--cyan)}
+.p-exp{width:100px;height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.p-exp-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:2px}
+.faction-badg{position:absolute;top:10px;right:10px;padding:3px 10px;border-radius:10px;font-size:.55rem;font-weight:700;letter-spacing:1px;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);border:1px solid}
+.faction-badg.fT{color:var(--purple);border-color:var(--purple)}
+.faction-badg.fP{color:var(--orange);border-color:var(--orange)}
+.faction-badg.fW{color:var(--green);border-color:var(--green)}
+.faction-badg.fU{color:var(--blue);border-color:var(--blue)}
+.faction-badg.fC{color:var(--red);border-color:var(--red)}
 
-/* Power */
-.power {
-  display: flex; align-items: center; gap: 8px; padding: 10px 14px;
-  background: linear-gradient(135deg, rgba(180,100,255,.12), rgba(0,200,255,.06));
-  border: 1px solid rgba(180,100,255,.2); border-radius: 10px;
-}
-.power-label { font-size: .6rem; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
-.power-val { font-size: 1.8rem; font-weight: 900; color: var(--gold); text-shadow: 0 0 15px rgba(244,196,48,.3); }
+.char-detail{flex:1;overflow-y:auto;padding:10px 10px 10px 10px;display:flex;flex-direction:column;gap:8px}
+.tabs{display:flex;border-bottom:2px solid var(--bdr)}
+.tab{padding:7px 14px;font-size:.65rem;font-weight:600;color:var(--t3);position:relative}
+.tab.active{color:var(--t)}
+.tab.active::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--cyan)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
 
-/* Stats */
-.stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
-.stat {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
-  padding: 8px 4px; text-align: center;
-}
-.stat-icon { font-size: .9rem; margin-bottom: 2px; }
-.stat-name { font-size: .55rem; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 1px; }
-.stat-val { font-size: .85rem; font-weight: 700; }
-.stat-val.hp { color: var(--green); }
-.stat-val.atk { color: var(--red); }
-.stat-val.def { color: var(--blue); }
-.stat-val.spd { color: var(--cyan); }
-.stat-val.crit { color: var(--orange); }
+.power{display:flex;align-items:center;gap:8px;padding:8px 12px;background:linear-gradient(135deg,rgba(180,100,255,.1),rgba(0,200,255,.05));border:1px solid rgba(180,100,255,.15);border-radius:10px}
+.power-lbl{font-size:.55rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;font-weight:700}
+.power-val{font-size:1.6rem;font-weight:900;color:var(--gold);text-shadow:0 0 12px rgba(244,196,48,.25)}
 
-/* Skills */
-.row { display: flex; gap: 8px; }
-.row-title { font-size: .7rem; color: var(--text2); font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .5px; }
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.stat{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;padding:7px 3px;text-align:center}
+.stat-ic{font-size:.8rem;margin-bottom:1px}
+.stat-nm{font-size:.5rem;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:1px}
+.stat-vl{font-size:.75rem;font-weight:700}
+.stat-vl.hp{color:var(--green)} .stat-vl.atk{color:var(--red)} .stat-vl.def{color:var(--blue)} .stat-vl.spd{color:var(--cyan)} .stat-vl.crt{color:var(--orange)}
 
-.skills { gap: 8px; justify-content: space-between; }
-.skill { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 4px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
-.skill-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 1rem; border: 2px solid var(--border2); }
-.skill-name { font-size: .55rem; color: var(--text2); text-align: center; }
-.skill-lv { font-size: .55rem; font-weight: 700; color: var(--gold); }
+.skills{display:flex;gap:6px;justify-content:space-between}
+.skill{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 3px;background:var(--s1);border:1px solid var(--bdr);border-radius:8px}
+.skill-ic{width:32px;height:32px;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:.9rem;border:2px solid var(--bdr2)}
+.skill-nm{font-size:.5rem;color:var(--t3);text-align:center}
+.skill-lv{font-size:.5rem;font-weight:700;color:var(--gold)}
 
-/* Equipment */
-.equips { gap: 6px; }
-.equip { flex: 1; max-width: 60px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; background: var(--surface); border: 1px dashed var(--border); border-radius: 8px; }
-.equip.has { border-style: solid; border-color: var(--blue); background: linear-gradient(135deg, var(--surface), rgba(50,152,220,.1)); }
-.equip-icon { font-size: 1.1rem; }
-.equip-lv { font-size: .5rem; color: var(--text2); }
-.equip-stars { font-size: .45rem; color: var(--gold); letter-spacing: 1px; }
+.equips{display:flex;gap:5px}
+.equip{flex:1;max-width:56px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;background:var(--s1);border:1px dashed var(--bdr);border-radius:8px}
+.equip.has{border-style:solid;border-color:var(--blue);background:linear-gradient(135deg,var(--s1),rgba(50,152,220,.08))}
+.equip-ic{font-size:1rem;opacity:.7}
+.equip.has .equip-ic{opacity:1}
+.equip-lv{font-size:.45rem;color:var(--t3)}
+.equip-st{font-size:.4rem;color:var(--gold);letter-spacing:.5px}
 
-/* Upgrade Button */
-.btn-upgrade {
-  width: 100%; padding: 12px; border-radius: 10px; font-size: .9rem; font-weight: 700;
-  letter-spacing: 1px; text-transform: uppercase;
-  background: linear-gradient(135deg, var(--blue), var(--purple)); color: #fff;
-  box-shadow: 0 4px 15px rgba(180,100,255,.3); transition: all .2s;
-}
-.btn-upgrade:active { transform: scale(.98); }
+.btn-upgrade{width:100%;padding:11px;border-radius:10px;font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;box-shadow:0 3px 12px rgba(180,100,255,.25)}
+.btn-upgrade:active{transform:scale(.97)}
 
-/* Bottom Bar */
-.bottom {
-  display: flex; justify-content: center; gap: 24px; padding: 12px 12px 16px 76px;
-  background: linear-gradient(0deg, rgba(10,10,24,.98), rgba(10,10,24,.95));
-}
-.bot-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 14px; border-radius: 8px; background: none; }
-.bot-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
-.bot-label { font-size: .55rem; color: var(--text2); font-weight: 600; }
-.bot-btn:active .bot-icon { background: var(--surface2); }
+.char-bot{display:flex;justify-content:center;gap:20px;padding:8px 10px;background:var(--bg2);border-top:1px solid var(--bdr)}
+.cbot{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 12px;border-radius:8px}
+.cbot:active{background:var(--s1)}
+.cbot-ic{width:32px;height:32px;border-radius:50%;background:var(--s1);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.cbot-lbl{font-size:.5rem;color:var(--t3);font-weight:600}
 
-/* === Login === */
-.login {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  min-height: 100vh; background: radial-gradient(circle at 50% 30%, #1a1040 0%, #06060f 70%);
-}
-.login-logo { font-size: 4rem; margin-bottom: 12px; }
-.login-title { font-size: 2.2rem; font-weight: 900; background: linear-gradient(135deg, var(--gold), #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 4px; margin-bottom: 4px; }
-.login-sub { font-size: .75rem; color: var(--text2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 32px; }
-.login-btn {
-  padding: 14px 48px; border-radius: 24px; font-size: .9rem; font-weight: 700; letter-spacing: 2px;
-  background: linear-gradient(135deg, var(--gold), #e6a817); color: #000; text-transform: uppercase;
-  box-shadow: 0 4px 20px rgba(244,196,48,.3);
-}
-.login-btn:active { transform: scale(.96); }
+/* ===== BATTLE PAGE ===== */
+.battle-list{flex:1;overflow-y:auto;padding:10px}
+.bl-section{margin-bottom:12px}
+.bl-title{font-size:.7rem;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;padding-left:4px}
+.bl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.stage-card{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:12px;cursor:pointer;transition:all .15s;position:relative;overflow:hidden}
+.stage-card:active{background:var(--s2);transform:scale(.97)}
+.stage-card.locked{opacity:.4;pointer-events:none}
+.stage-num{position:absolute;top:6px;right:8px;font-size:.55rem;color:var(--t3);font-weight:700}
+.stage-name{font-size:.8rem;font-weight:700;margin-bottom:3px}
+.stage-cost{font-size:.6rem;color:var(--green)}
+.stage-diff{margin-top:4px;display:flex;gap:2px}
+.diff-dot{width:6px;height:6px;border-radius:50%;background:var(--bdr)}
+.diff-dot.filled{background:var(--gold)}
 
-/* === Loading & Toast === */
-.loading {
-  position: fixed; inset: 0; background: rgba(6,6,15,.9); display: flex;
-  align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(8px);
-}
-.loading div { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--gold); border-radius: 50%; animation: spin .8s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
+.battle-arena{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.ba-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--s1);border-bottom:1px solid var(--bdr)}
+.ba-timer{font-size:.7rem;color:var(--t2);font-weight:700}
+.ba-field{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:10px;overflow-y:auto;background:linear-gradient(180deg,#0d0825,#12122a,#0d0825)}
+.ba-team{display:flex;gap:6px;justify-content:center}
+.ba-team.enemy{flex-wrap:wrap;gap:4px}
+.ba-unit{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 8px;background:var(--s1);border:1px solid var(--bdr);border-radius:8px;min-width:52px;position:relative}
+.ba-unit.dead{opacity:.3}
+.ba-unit.act{border-color:var(--cyan);box-shadow:0 0 8px rgba(0,209,178,.3)}
+.ba-u-ava{font-size:1.4rem}
+.ba-u-nm{font-size:.55rem;font-weight:700;max-width:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ba-u-hp{width:100%;height:3px;background:var(--bdr);border-radius:2px;overflow:hidden;margin-top:2px}
+.ba-u-hp-fill{height:100%;background:var(--green);border-radius:2px;transition:width .3s}
+.ba-vs{display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:900;color:var(--gold);padding:4px 0}
+.ba-log{flex:1;background:var(--s1);border:1px solid var(--bdr);border-radius:8px;padding:8px;margin:6px 0;overflow-y:auto;font-size:.65rem;line-height:1.5;max-height:120px}
+.ba-log-entry{padding:1px 0;border-bottom:1px solid rgba(255,255,255,.03)}
+.ba-log-entry.dmg{color:var(--red)} .ba-log-entry.heal{color:var(--green)} .ba-log-entry.skill{color:var(--purple)} .ba-log-entry.death{color:var(--orange)}
+.ba-actions{display:flex;gap:6px;padding:8px 10px;background:var(--s1);border-top:1px solid var(--bdr)}
+.ba-btn{flex:1;padding:10px;border-radius:8px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.ba-btn.atk{background:linear-gradient(135deg,var(--red),var(--orange));color:#fff}
+.ba-btn.skill{background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff}
+.ba-btn.auto{background:var(--s2);color:var(--t2);border:1px solid var(--bdr)}
+.ba-btn:active{transform:scale(.95)}
 
-.toast {
-  position: fixed; top: 60px; left: 50%; transform: translateX(-50%);
-  padding: 8px 20px; border-radius: 8px; background: var(--surface2); border: 1px solid var(--gold);
-  font-size: .75rem; z-index: 1001; animation: fade .3s;
-}
-@keyframes fade { from { opacity: 0; transform: translateX(-50%) translateY(-10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+/* ===== GACHA PAGE ===== */
+.gacha-scroll{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;align-items:center}
+.gacha-banner{width:100%;max-width:360px;background:linear-gradient(135deg,#1a1040,#252060);border:1px solid var(--bdr2);border-radius:16px;padding:20px;text-align:center;margin-bottom:12px;position:relative;overflow:hidden}
+.gacha-banner::before{content:'';position:absolute;top:-40%;right:-20%;width:150px;height:150px;background:radial-gradient(circle,rgba(244,196,48,.15),transparent);border-radius:50%}
+.gacha-banner h2{font-size:1.2rem;font-weight:800;margin-bottom:4px}
+.gacha-banner p{font-size:.65rem;color:var(--t2)}
+.gacha-rates{display:flex;justify-content:center;gap:6px;margin:8px 0;flex-wrap:wrap}
+.gacha-rates span{font-size:.6rem;padding:2px 8px;border-radius:6px;background:rgba(0,0,0,.3);font-weight:700}
+.gacha-rates .ssr{color:var(--ssr)} .gacha-rates .sr{color:var(--sr)} .gacha-rates .r{color:var(--r)} .gacha-rates .n{color:var(--n)}
+.gacha-info{width:100%;max-width:360px;background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:10px;margin-bottom:12px}
+.gacha-info-row{display:flex;justify-content:space-between;font-size:.7rem;padding:3px 0}
+.gacha-info-row .lbl{color:var(--t3)}
+.gacha-info-row .val{font-weight:700;color:var(--gold)}
+.gacha-btns{width:100%;max-width:360px;display:flex;gap:8px}
+.gacha-btn{flex:1;padding:12px;border-radius:10px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.gacha-btn.single{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff}
+.gacha-btn.multi{background:linear-gradient(135deg,var(--gold),var(--orange));color:#000}
+.gacha-btn:active{transform:scale(.96)}
+.gacha-btn:disabled{opacity:.4;pointer-events:none}
 
-/* === Responsive === */
-@media (min-width: 768px) {
-  .portrait { height: 420px; }
-  .portrait-art { font-size: 12rem; }
-  .roster { width: 72px; }
-  .detail, .bottom { padding-left: 88px; }
-}
+.gacha-result{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;width:100%;max-width:360px}
+.gacha-card{width:64px;height:80px;border-radius:8px;padding:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;animation:pop .4s ease-out}
+@keyframes pop{from{opacity:0;transform:scale(.5) rotateY(90deg)}to{opacity:1;transform:scale(1) rotateY(0)}}
+.gacha-card .gc-ic{font-size:1.5rem}
+.gacha-card .gc-nm{font-size:.5rem;font-weight:700;margin-top:2px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.gacha-card .gc-rar{font-size:.5rem;font-weight:700;margin-top:1px}
+
+/* ===== FORMATION PAGE ===== */
+.form-scroll{flex:1;overflow-y:auto;padding:12px}
+.form-slots{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px}
+.f-slot{aspect-ratio:1;border:2px dashed var(--bdr);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;transition:all .15s}
+.f-slot:active{background:var(--s1)}
+.f-slot.filled{border-style:solid;border-color:var(--blue);background:var(--s1)}
+.f-slot .fs-nm{font-size:.65rem;font-weight:700}
+.f-slot .fs-lv{font-size:.5rem;color:var(--t3)}
+.f-slot .fs-empty{font-size:.55rem;color:var(--t3)}
+.form-title{font-size:.7rem;font-weight:700;color:var(--t2);text-transform:uppercase;letter:.5px;margin-bottom:6px}
+.form-chars{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.f-char{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;padding:8px 6px;text-align:center;cursor:pointer;transition:all .15s}
+.f-char:active{background:var(--s2);transform:scale(.95)}
+.f-char .fc-ava{font-size:1.3rem}
+.f-char .fc-nm{font-size:.6rem;font-weight:700;margin-top:2px}
+.f-char .fc-lv{font-size:.5rem;color:var(--t3)}
+.form-save{width:100%;padding:11px;border-radius:10px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;background:linear-gradient(135deg,var(--green),var(--cyan));color:#000;margin-top:12px}
+
+/* ===== CODEX PAGE ===== */
+.codex-scroll{flex:1;overflow-y:auto;padding:12px}
+.codex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.codex-card{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:10px 8px;text-align:center}
+.codex-card .cc-ava{font-size:1.8rem}
+.codex-card .cc-nm{font-size:.7rem;font-weight:700;margin-top:3px}
+.codex-card .cc-rar{font-size:.55rem;font-weight:700;margin-top:1px}
+.codex-card .cc-fact{font-size:.5rem;color:var(--t3);margin-top:1px}
+
+/* ===== LOADING ===== */
+.loading{position:fixed;inset:0;background:rgba(6,6,15,.92);display:flex;align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(8px)}
+.loading div{width:28px;height:28px;border:3px solid var(--bdr);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== TOAST ===== */
+.toast{position:fixed;top:56px;left:50%;transform:translateX(-50%);padding:7px 18px;border-radius:7px;background:var(--s2);border:1px solid var(--gold);font-size:.7rem;z-index:1001;animation:slide .25s}
+@keyframes slide{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.toast.err{border-color:var(--red)} .toast.ok{border-color:var(--green)}
+
+/* ===== MODAL ===== */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:999;backdrop-filter:blur(4px)}
+.modal{background:var(--s1);border:1px solid var(--bdr2);border-radius:14px;padding:20px;max-width:300px;width:90%;text-align:center}
+.modal h3{font-size:1rem;font-weight:800;margin-bottom:6px}
+.modal p{font-size:.7rem;color:var(--t2);margin-bottom:12px}
+.modal-btns{display:flex;gap:8px}
+.modal-btn{flex:1;padding:9px;border-radius:8px;font-size:.7rem;font-weight:700}
+.modal-btn.confirm{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff}
+.modal-btn.cancel{background:var(--s2);color:var(--t2)}
 </style>
 </head>
 <body>
@@ -260,19 +280,20 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
   <div class="loading hidden" id="loading"><div></div></div>
 
   <!-- Login -->
-  <div class="login hidden" id="login">
+  <div class="screen active" id="login-screen">
     <div class="login-logo">⚔️</div>
     <div class="login-title">VOBB</div>
     <div class="login-sub">Five Warlords</div>
     <button class="login-btn" onclick="guestLogin()">Enter as Guest</button>
   </div>
 
-  <!-- Game -->
-  <div id="game">
-    <div class="topbar">
+  <!-- Main App -->
+  <div class="screen" id="main-app">
+    <!-- Top Bar -->
+    <div class="topbar" id="topbar">
       <div class="topbar-left">
-        <button class="btn-back" onclick="showSection('chars')">←</button>
-        <span class="topbar-title">Overview</span>
+        <button class="btn-icon" onclick="goHome()">🏠</button>
+        <span class="topbar-title" id="tb-title">Home</span>
       </div>
       <div class="topbar-right">
         <div class="res gems"><span>💎</span><span id="gems">0</span></div>
@@ -281,207 +302,481 @@ button { font-family: inherit; cursor: pointer; border: none; outline: none; }
       </div>
     </div>
 
-    <div class="main">
-      <!-- Roster -->
-      <aside class="roster" id="roster"></aside>
-
-      <!-- Content -->
-      <div style="margin-left: 64px;">
-        <!-- Portrait -->
-        <div class="portrait">
-          <div class="portrait-art" id="art">🧬</div>
-          <div class="portrait-info">
-            <div style="display:flex;align-items:center;gap:8px;">
-              <span class="portrait-name" id="name">—</span>
-              <span class="portrait-rar" id="rar">SSR</span>
-            </div>
-            <div class="portrait-sub">
-              <span class="portrait-stars" id="stars">★★★★★</span>
-              <span id="title">—</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;margin-top:2px;">
-              <span class="portrait-lv" id="lv">Lv.1</span>
-              <div class="portrait-exp"><div class="portrait-exp-fill" id="expbar" style="width:0%"></div></div>
-            </div>
-          </div>
-          <div class="faction-badge" id="fact">TRANSCENDENT</div>
+    <!-- Screens -->
+    <div class="screen active" id="s-home">
+      <div class="home-scroll">
+        <div class="home-hero">
+          <h2>Welcome, Hunter</h2>
+          <p>Five Warlords. Five Answers. One destiny.</p>
         </div>
-
-        <!-- Detail -->
-        <div class="detail">
-          <div class="tabs">
-            <button class="tab active" data-t="overview" onclick="switchTab('overview')">Overview</button>
-            <button class="tab" data-t="skills" onclick="switchTab('skills')">Skills</button>
-            <button class="tab" data-t="equip" onclick="switchTab('equip')">Equipment</button>
-            <button class="tab" data-t="evo" onclick="switchTab('evo')">Evolution</button>
-          </div>
-
-          <!-- Overview -->
-          <div id="p-overview">
-            <div class="power">
-              <span class="power-label">POWER</span>
-              <span class="power-val" id="power">0</span>
-            </div>
-            <div class="stats" id="stats"></div>
-            <div class="row skills" id="skills"></div>
-            <div class="row equips" id="equips"></div>
-            <button class="btn-upgrade" style="margin-top:10px;" onclick="upgrade()">⬆ Upgrade</button>
-          </div>
-
-          <div id="p-skills" class="hidden"><div class="row" style="flex-wrap:wrap;gap:8px;"><div style="width:100%;color:var(--text2);font-size:.75rem;">Coming soon</div></div></div>
-          <div id="p-equip" class="hidden"><div style="color:var(--text2);font-size:.75rem;">Coming soon</div></div>
-          <div id="p-evo" class="hidden"><div style="color:var(--text2);font-size:.75rem;">Coming soon</div></div>
+        <div class="home-stats">
+          <div class="hstat"><div class="hstat-val" id="hs-chars">0</div><div class="hstat-lbl">Characters</div></div>
+          <div class="hstat"><div class="hstat-val" id="hs-lv">1</div><div class="hstat-lbl">Player Lv</div></div>
+          <div class="hstat"><div class="hstat-val" id="hs-stg">0</div><div class="hstat-lbl">Stages</div></div>
+          <div class="hstat"><div class="hstat-val" id="hs-pwr">0</div><div class="hstat-lbl">Max Power</div></div>
         </div>
-
-        <!-- Bottom -->
-        <div class="bottom">
-          <button class="bot-btn" onclick="showSection('form')"><div class="bot-icon">🛡️</div><span class="bot-label">Formation</span></button>
-          <button class="bot-btn" onclick="toast('Locked')"><div class="bot-icon">🔒</div><span class="bot-label">Lock</span></button>
-          <button class="bot-btn" onclick="toast('Story')"><div class="bot-icon">📖</div><span class="bot-label">Story</span></button>
+        <div class="home-actions">
+          <button class="haction primary" onclick="showScreen('s-battle')">
+            <span class="ha-icon">⚔️</span><span class="ha-name">Battle</span><span class="ha-desc">Clear stages</span>
+          </button>
+          <button class="haction gacha" onclick="showScreen('s-gacha')">
+            <span class="ha-icon">🎰</span><span class="ha-name">Gacha</span><span class="ha-desc">Summon allies</span>
+          </button>
+          <button class="haction" onclick="showScreen('s-chars')">
+            <span class="ha-icon">👥</span><span class="ha-name">Characters</span><span class="ha-desc">Manage team</span>
+          </button>
+          <button class="haction" onclick="showScreen('s-formation')">
+            <span class="ha-icon">🛡️</span><span class="ha-name">Formation</span><span class="ha-desc">Set lineup</span>
+          </button>
         </div>
       </div>
+    </div>
+
+    <!-- Characters -->
+    <div class="screen" id="s-chars">
+      <div class="char-layout">
+        <aside class="roster" id="roster"></aside>
+        <div class="char-main">
+          <div class="portrait">
+            <div class="portrait-art" id="art">🧬</div>
+            <div class="portrait-ov">
+              <div class="p-name" id="name">—</div>
+              <div class="p-sub">
+                <span class="p-stars" id="stars">★★★★★</span>
+                <span class="p-rar" id="rar">SSR</span>
+                <span id="title">—</span>
+              </div>
+              <div class="p-lv-row">
+                <span class="p-lv" id="lv">Lv.1</span>
+                <div class="p-exp"><div class="p-exp-fill" id="expbar" style="width:0%"></div></div>
+              </div>
+            </div>
+            <div class="faction-badg" id="fact">TRANSCENDENT</div>
+          </div>
+          <div class="char-detail">
+            <div class="tabs">
+              <button class="tab active" data-t="overview" onclick="switchTab('overview')">Overview</button>
+              <button class="tab" data-t="skills" onclick="switchTab('skills')">Skills</button>
+              <button class="tab" data-t="equip" onclick="switchTab('equip')">Equipment</button>
+              <button class="tab" data-t="evo" onclick="switchTab('evo')">Evolution</button>
+            </div>
+            <div class="tab-panel active" id="p-overview">
+              <div class="power"><span class="power-lbl">POWER</span><span class="power-val" id="power">0</span></div>
+              <div class="stats" id="stats"></div>
+              <div class="skills" id="skills"></div>
+              <div class="equips" id="equips"></div>
+              <button class="btn-upgrade" style="margin-top:8px" onclick="upgrade()">⬆ Upgrade</button>
+            </div>
+            <div class="tab-panel" id="p-skills"><div style="font-size:.7rem;color:var(--t3);padding:10px">Coming soon</div></div>
+            <div class="tab-panel" id="p-equip"><div style="font-size:.7rem;color:var(--t3);padding:10px">Coming soon</div></div>
+            <div class="tab-panel" id="p-evo"><div style="font-size:.7rem;color:var(--t3);padding:10px">Coming soon</div></div>
+          </div>
+          <div class="char-bot">
+            <button class="cbot" onclick="showScreen('s-formation')"><div class="cbot-ic">🛡️</div><span class="cbot-lbl">Formation</span></button>
+            <button class="cbot" onclick="toast('Locked')"><div class="cbot-ic">🔒</div><span class="cbot-lbl">Lock</span></button>
+            <button class="cbot" onclick="toast('Story')"><div class="cbot-ic">📖</div><span class="cbot-lbl">Story</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Battle -->
+    <div class="screen" id="s-battle">
+      <div class="battle-list" id="battle-list"></div>
+    </div>
+
+    <!-- Battle Arena (overlay) -->
+    <div class="screen" id="s-arena">
+      <div class="battle-arena">
+        <div class="ba-header">
+          <button class="btn-icon" onclick="exitArena()">✕</button>
+          <span class="ba-timer" id="ba-timer">⏱ 0:00</span>
+          <span style="font-size:.65rem;color:var(--t2);font-weight:700" id="ba-stage-name">Stage</span>
+        </div>
+        <div class="ba-field">
+          <div class="ba-team enemy" id="ba-enemy"></div>
+          <div class="ba-vs">⚔️</div>
+          <div class="ba-team" id="ba-player"></div>
+        </div>
+        <div class="ba-log" id="ba-log"></div>
+        <div class="ba-actions">
+          <button class="ba-btn atk" onclick="baAction('atk')">Attack</button>
+          <button class="ba-btn skill" onclick="baAction('skill')">Skill</button>
+          <button class="ba-btn auto" onclick="baAction('auto')">Auto</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gacha -->
+    <div class="screen" id="s-gacha">
+      <div class="gacha-scroll">
+        <div class="gacha-banner">
+          <h2>🎰 The Awakening</h2>
+          <p>Summon characters aligned with the Five Warlords</p>
+          <div class="gacha-rates">
+            <span class="ssr">SSR 1%</span><span class="sr">SR 4%</span><span class="r">R 25%</span><span class="n">N 70%</span>
+          </div>
+        </div>
+        <div class="gacha-info">
+          <div class="gacha-info-row"><span class="lbl">Pity Count</span><span class="val" id="gacha-pity">0</span></div>
+          <div class="gacha-info-row"><span class="lbl">SR Guarantee</span><span class="val">at 30</span></div>
+          <div class="gacha-info-row"><span class="lbl">SSR Guarantee</span><span class="val">at 90</span></div>
+        </div>
+        <div class="gacha-btns">
+          <button class="gacha-btn single" id="btn-pull-1" onclick="doGacha('single')">Single<br><span style="font-size:.6rem;font-weight:400">300💎</span></button>
+          <button class="gacha-btn multi" id="btn-pull-10" onclick="doGacha('multi')">Multi<br><span style="font-size:.6rem;font-weight:400">2700💎</span></button>
+        </div>
+        <div class="gacha-result" id="gacha-result"></div>
+      </div>
+    </div>
+
+    <!-- Formation -->
+    <div class="screen" id="s-formation">
+      <div class="form-scroll">
+        <div class="form-title">Formation (5 Slots)</div>
+        <div class="form-slots" id="form-slots"></div>
+        <div class="form-title">Available Characters</div>
+        <div class="form-chars" id="form-chars"></div>
+        <button class="form-save" onclick="saveFormation()">💾 Save Formation</button>
+      </div>
+    </div>
+
+    <!-- Codex -->
+    <div class="screen" id="s-codex">
+      <div class="codex-scroll">
+        <div class="codex-grid" id="codex-grid"></div>
+      </div>
+    </div>
+
+    <!-- Bottom Nav -->
+    <div class="botnav" id="botnav">
+      <button class="botnav-btn active" data-s="s-home" onclick="showScreen('s-home')">
+        <span class="icon">🏠</span><span class="label">Home</span>
+      </button>
+      <button class="botnav-btn" data-s="s-chars" onclick="showScreen('s-chars')">
+        <span class="icon">👥</span><span class="label">Chars</span>
+      </button>
+      <button class="botnav-btn" data-s="s-battle" onclick="showScreen('s-battle')">
+        <span class="icon">⚔️</span><span class="label">Battle</span>
+      </button>
+      <button class="botnav-btn" data-s="s-gacha" onclick="showScreen('s-gacha')">
+        <span class="icon">🎰</span><span class="label">Gacha</span>
+      </button>
+      <button class="botnav-btn" data-s="s-codex" onclick="showScreen('s-codex')">
+        <span class="icon">📖</span><span class="label">Codex</span>
+      </button>
     </div>
   </div>
 </div>
 
 <script>
-const API = '/api';
-const EMOJI = { TRANSCENDENT:'🧬', PURIST:'⚔️', WILD:'🐺', UNKNOWN:'👁️', CYBERIST:'🤖' };
-const FCLASS = { TRANSCENDENT:'faction-T', PURIST:'faction-P', WILD:'faction-W', UNKNOWN:'faction-U', CYBERIST:'faction-C' };
-const STARS = { SSR:5, SR:4, R:3, N:2 };
+const API='/api';
+const EMOJI={TRANSCENDENT:'🧬',PURIST:'⚔️',WILD:'🐺',UNKNOWN:'👁️',CYBERIST:'🤖'};
+const FCLASS={TRANSCENDENT:'fT',PURIST:'fP',WILD:'fW',UNKNOWN:'fU',CYBERIST:'fC'};
+const STARS={SSR:5,SR:4,R:3,N:2};
 
-let state = { accessToken:null, refreshToken:null, player:null, chars:[], idx:0 };
+let state={accessToken:null,refreshToken:null,player:null,chars:[],allChars:[],idx:0,formation:[null,null,null,null,null],stages:[],pity:0,battle:null,timer:null};
 
-async function api(p, o={}) {
-  const h = {'Content-Type':'application/json',...o.headers};
-  if (state.accessToken) h['Authorization'] = 'Bearer '+state.accessToken;
-  let r = await fetch(API+p,{...o,headers:h});
-  if (r.status===401 && state.refreshToken) {
-    await refresh(); h['Authorization']='Bearer '+state.accessToken;
-    r = await fetch(API+p,{...o,headers:h});
-  }
-  const d = await r.json();
-  if (!r.ok) throw new Error(d.message||d.error||'Error');
-  return d;
+// === API ===
+async function api(p,o={}){
+  const h={'Content-Type':'application/json',...o.headers};
+  if(state.accessToken)h['Authorization']='Bearer '+state.accessToken;
+  let r=await fetch(API+p,{...o,headers:h});
+  if(r.status===401&&state.refreshToken){await refresh();h['Authorization']='Bearer '+state.accessToken;r=await fetch(API+p,{...o,headers:h})}
+  const d=await r.json();if(!r.ok)throw new Error(d.message||d.error||'Error');return d;
 }
 
-async function guestLogin() {
+// === Auth ===
+async function guestLogin(){
   showLoading();
-  try {
-    const d = await api('/auth/guest',{method:'POST',body:JSON.stringify({playerName:'Hunter'})});
-    state.accessToken=d.accessToken; state.refreshToken=d.refreshToken;
-    state.player=d.player||d.user?.player;
-    document.getElementById('login').classList.add('hidden');
-    document.getElementById('game').classList.remove('hidden');
-    await load();
-  } catch(e) { toast(e.message); }
+  try{
+    const d=await api('/auth/guest',{method:'POST',body:JSON.stringify({playerName:'Hunter'})});
+    state.accessToken=d.accessToken;state.refreshToken=d.refreshToken;state.player=d.player||d.user?.player;
+    document.getElementById('login-screen').classList.remove('active');
+    document.getElementById('main-app').classList.add('active');
+    await loadAll();
+  }catch(e){toast(e.message,'err')}
   hideLoading();
 }
 
-async function refresh() {
-  try {
-    const d = await api('/auth/refresh',{method:'POST',body:JSON.stringify({refreshToken:state.refreshToken})});
-    state.accessToken=d.accessToken; return true;
-  } catch { return false; }
+async function refresh(){
+  try{const d=await api('/auth/refresh',{method:'POST',body:JSON.stringify({refreshToken:state.refreshToken})});state.accessToken=d.accessToken;return true}
+  catch{return false}
 }
 
-async function load() {
-  try { state.player = await api('/player/me'); } catch(e){}
-  try { state.chars = await api('/characters/mine'); } catch(e){ state.chars=[]; }
-  renderRes(); renderAll();
+// === Load Data ===
+async function loadAll(){
+  try{state.player=await api('/player/me')}catch(e){}
+  try{state.chars=await api('/characters/mine')}catch(e){state.chars=[]}
+  try{state.allChars=await api('/characters')}catch(e){state.allChars=[]}
+  try{state.stages=await api('/stages')}catch(e){state.stages=[]}
+  try{const p=await api('/gacha/pity');state.pity=p.count||0}catch(e){}
+  renderRes();renderHome();renderChars();renderBattle();renderGacha();renderCodex();
 }
 
-function renderRes() {
-  const c = state.player?.currencies||[];
-  const g = c.find(x=>x.type==='gold'), gm = c.find(x=>x.type='gems'), s = c.find(x=>x.type==='stamina');
-  document.getElementById('gold').textContent = fmt(g?.amount||0);
-  document.getElementById('gems').textContent = fmt(gm?.amount||0);
-  document.getElementById('stam').textContent = (s?.amount||0)+'/'+(state.player?.staminaMax||100);
+function renderRes(){
+  const c=state.player?.currencies||[];
+  const g=c.find(x=>x.type==='gold'),gm=c.find(x=>x.type==='gems'),s=c.find(x=>x.type==='stamina');
+  document.getElementById('gold').textContent=fmt(g?.amount||0);
+  document.getElementById('gems').textContent=fmt(gm?.amount||0);
+  document.getElementById('stam').textContent=(s?.amount||0)+'/'+(state.player?.staminaMax||100);
 }
 
-function fmt(n) {
-  if (n>=1e6) return (n/1e6).toFixed(1)+'M';
-  if (n>=1e3) return (n/1e3).toFixed(1)+'K';
-  return n.toString();
+function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toString()}
+
+// === Navigation ===
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.botnav-btn').forEach(b=>b.classList.toggle('active',b.dataset.s===id));
+  const titles={'s-home':'Home','s-chars':'Characters','s-battle':'Battle','s-gacha':'Gacha','s-codex':'Codex','s-formation':'Formation','s-arena':'Battle'};
+  document.getElementById('tb-title').textContent=titles[id]||'';
+  document.getElementById('botnav').style.display=(id==='s-arena')?'none':'flex';
 }
 
-function renderAll() {
-  const c = state.chars[state.idx];
-  if (!c) return;
-  const ch = c.character||c;
+function goHome(){showScreen('s-home')}
 
-  document.getElementById('art').textContent = EMOJI[ch.faction]||'❓';
-  document.getElementById('name').textContent = ch.name;
-  document.getElementById('title').textContent = ch.title||ch.name;
-  document.getElementById('rar').textContent = ch.rarity;
-  document.getElementById('rar').className = 'portrait-rar '+(ch.rarity||'').toLowerCase();
-  document.getElementById('stars').textContent = '★'.repeat(STARS[ch.rarity]||3);
-  document.getElementById('lv').textContent = 'Lv.'+(c.level||1)+'/60';
-  document.getElementById('expbar').style.width = Math.min(100,((c.exp||0)/(c.expMax||100))*100)+'%';
-  const fb = document.getElementById('fact');
-  fb.textContent = ch.faction;
-  fb.className = 'faction-badge '+(FCLASS[ch.faction]||'');
+// === Home ===
+function renderHome(){
+  document.getElementById('hs-chars').textContent=state.chars.length;
+  document.getElementById('hs-lv').textContent=state.player?.level||1;
+  document.getElementById('hs-stg').textContent=state.stages.length;
+  let maxP=0;
+  state.chars.forEach(c=>{const ch=c.character||c;maxP=Math.max(maxP,(c.currentHp||ch.baseHp||0)/10+(c.currentAtk||ch.baseAtk||0)*3+(c.currentDef||ch.baseDef||0)*2)});
+  document.getElementById('hs-pwr').textContent=fmt(maxP);
+}
 
-  // Power
-  const pwr = Math.floor((c.currentHp||ch.baseHp||1000)/10 + (c.currentAtk||ch.baseAtk||100)*3 + (c.currentDef||ch.baseDef||100)*2);
-  document.getElementById('power').textContent = fmt(pwr);
-
-  // Stats
-  const st = [
+// === Characters ===
+function renderChars(){
+  const c=state.chars[state.idx];if(!c)return;
+  const ch=c.character||c;
+  document.getElementById('art').textContent=EMOJI[ch.faction]||'❓';
+  document.getElementById('name').textContent=ch.name;
+  document.getElementById('title').textContent=ch.title||ch.name;
+  document.getElementById('rar').textContent=ch.rarity;
+  document.getElementById('rar').className='p-rar '+(ch.rarity||'').toLowerCase();
+  document.getElementById('stars').textContent='★'.repeat(STARS[ch.rarity]||3);
+  document.getElementById('lv').textContent='Lv.'+(c.level||1)+'/60';
+  document.getElementById('expbar').style.width=Math.min(100,((c.exp||0)/(c.expMax||100))*100)+'%';
+  const fb=document.getElementById('fact');fb.textContent=ch.faction;fb.className='faction-badg '+(FCLASS[ch.faction]||'');
+  const pwr=Math.floor((c.currentHp||ch.baseHp||1000)/10+(c.currentAtk||ch.baseAtk||100)*3+(c.currentDef||ch.baseDef||100)*2);
+  document.getElementById('power').textContent=fmt(pwr);
+  const st=[
     {n:'HP',v:c.currentHp||ch.baseHp||0,i:'❤️',c:'hp'},
     {n:'ATK',v:c.currentAtk||ch.baseAtk||0,i:'⚔️',c:'atk'},
     {n:'DEF',v:c.currentDef||ch.baseDef||0,i:'🛡️',c:'def'},
     {n:'SPD',v:c.currentAgi||ch.baseAgi||0,i:'⚡',c:'spd'},
-    {n:'CRIT',v:(c.crit||15)+'%',i:'💥',c:'crit'},
+    {n:'CRIT',v:(c.crit||15)+'%',i:'💥',c:'crt'},
   ];
-  document.getElementById('stats').innerHTML = st.map(s=>`
-    <div class="stat"><div class="stat-icon">${s.i}</div><div class="stat-name">${s.n}</div><div class="stat-val ${s.c}">${fmt(s.v)}</div></div>
-  `).join('');
-
-  // Skills
-  const sk = [
-    {n:'Normal ATK',i:'⚔️',l:c.skillLv||3},
+  document.getElementById('stats').innerHTML=st.map(s=>`<div class="stat"><div class="stat-ic">${s.i}</div><div class="stat-nm">${s.n}</div><div class="stat-vl ${s.c}">${fmt(s.v)}</div></div>`).join('');
+  const sk=[
+    {n:'Normal',i:'⚔️',l:c.skillLv||3},
     {n:'Skill 1',i:'🔮',l:c.skillLv||3},
     {n:'Skill 2',i:'💫',l:Math.max(1,(c.skillLv||3)-1)},
     {n:'Ultimate',i:'✨',l:Math.max(1,(c.skillLv||3)-2)},
   ];
-  document.getElementById('skills').innerHTML = sk.map(s=>`
-    <div class="skill"><div class="skill-icon">${s.i}</div><div class="skill-name">${s.n}</div><div class="skill-lv">Lv.${s.l}</div></div>
-  `).join('');
-
-  // Equipment
-  const eq = [
-    {n:'Weapon',i:'⚔️',l:40,s:2},
-    {n:'Helmet',i:'🪖',l:35,s:3},
-    {n:'Ring',i:'💍',l:30,s:3},
-    {n:'Boots',i:'👢',l:28,s:3},
-  ];
-  document.getElementById('equips').innerHTML = eq.map(e=>`
-    <div class="equip has"><div class="equip-icon">${e.i}</div><div class="equip-lv">Lv.${e.l}</div><div class="equip-stars">${'★'.repeat(e.s)}</div></div>
-  `).join('');
-
+  document.getElementById('skills').innerHTML=sk.map(s=>`<div class="skill"><div class="skill-ic">${s.i}</div><div class="skill-nm">${s.n}</div><div class="skill-lv">Lv.${s.l}</div></div>`).join('');
+  const eq=[{i:'⚔️',l:40,s:2},{i:'🪖',l:35,s:3},{i:'💍',l:30,s:3},{i:'👢',l:28,s:3}];
+  document.getElementById('equips').innerHTML=eq.map(e=>`<div class="equip has"><div class="equip-ic">${e.i}</div><div class="equip-lv">Lv.${e.l}</div><div class="equip-st">${'★'.repeat(e.s)}</div></div>`).join('');
   // Roster
-  document.getElementById('roster').innerHTML = state.chars.map((rc,i)=>{
-    const rch = rc.character||rc;
-    return `<div class="roster-item ${i===state.idx?'active':''}" onclick="select(${i})"><div class="roster-avatar">${EMOJI[rch.faction]||'❓'}</div><div class="roster-lv">Lv.${rc.level||1}</div></div>`;
-  }).join('')+'<div class="roster-sep"></div><div class="roster-sort" onclick="sortRoster()">⇅</div>';
+  document.getElementById('roster').innerHTML=state.chars.map((rc,i)=>{const rch=rc.character||rc;return `<div class="ri ${i===state.idx?'active':''}" onclick="selectChar(${i})"><div class="ri-ava">${EMOJI[rch.faction]||'❓'}</div><div class="ri-lv">Lv.${rc.level||1}</div></div>`}).join('')+'<div class="ri-sep"></div><div class="ri-sort" onclick="sortRoster()">⇅</div>';
 }
 
-function select(i) { state.idx = i; renderAll(); }
-function sortRoster() { state.chars.sort((a,b)=>(b.level||1)-(a.level||1)); renderAll(); }
-
-function switchTab(t) {
+function selectChar(i){state.idx=i;renderChars()}
+function sortRoster(){state.chars.sort((a,b)=>(b.level||1)-(a.level||1));renderChars()}
+function switchTab(t){
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.t===t));
-  ['overview','skills','equip','evo'].forEach(x=>{
-    document.getElementById('p-'+x).classList.toggle('hidden',x!==t);
+  ['overview','skills','equip','evo'].forEach(x=>document.getElementById('p-'+x).classList.toggle('active',x===t));
+}
+function upgrade(){toast('Coming soon')}
+
+// === Battle ===
+function renderBattle(){
+  const el=document.getElementById('battle-list');
+  if(!state.stages.length){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--t3)">No stages available</div>';return}
+  let html='';
+  const chapters={};
+  state.stages.forEach(s=>{if(!chapters[s.chapter])chapters[s.chapter]=[];chapters[s.chapter].push(s)});
+  Object.keys(chapters).sort((a,b)=>a-b).forEach(ch=>{
+    html+=`<div class="bl-section"><div class="bl-title">Chapter ${ch}</div><div class="bl-grid">`;
+    chapters[ch].forEach(s=>{
+      html+=`<div class="stage-card" onclick="startBattle('${s.id}')">
+        <div class="stage-num">${s.number}</div>
+        <div class="stage-name">${s.name}</div>
+        <div class="stage-cost">⚡ ${s.staminaCost}</div>
+        <div class="stage-diff">${[1,2,3,4,5].map(i=>`<div class="diff-dot ${i<=s.difficulty?'filled':''}"></div>`).join('')}</div>
+      </div>`;
+    });
+    html+='</div></div>';
   });
+  el.innerHTML=html;
 }
 
-function upgrade() { toast('Coming soon'); }
-function showSection(s) { toast(s+' - Coming soon'); }
-function showLoading(){document.getElementById('loading').classList.remove('hidden');}
-function hideLoading(){document.getElementById('loading').classList.add('hidden');}
-function toast(m){const e=document.createElement('div');e.className='toast';e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),2000);}
+function startBattle(stageId){
+  const stage=state.stages.find(s=>s.id===stageId);if(!stage)return;
+  const playerUnits=state.chars.slice(0,5).map(c=>({id:c.id,name:(c.character||c).name,faction:(c.character||c).faction,hp:c.currentHp||1000,maxHp:c.currentHp||1000,atk:c.currentAtk||100,def:c.currentDef||50,alive:true,isPlayer:true}));
+  const enemyUnits=[
+    {id:'e1',name:'Shadow Lv.5',faction:'CYBERIST',hp:800,maxHp:800,atk:80,def:40,alive:true,isPlayer:false},
+    {id:'e2',name:'Shadow Lv.3',faction:'WILD',hp:600,maxHp:600,atk:60,def:30,alive:true,isPlayer:false},
+  ];
+  state.battle={stage,playerUnits,enemyUnits,log:[],turn:'player',auto:false,time:0};
+  showScreen('s-arena');
+  renderArena();
+  if(state.timer)clearInterval(state.timer);
+  state.timer=setInterval(()=>{state.battle.time++;const m=Math.floor(state.battle.time/60),s=state.battle.time%60;document.getElementById('ba-timer').textContent=`⏱ ${m}:${s.toString().padStart(2,'0')}`},1000);
+}
+
+function renderArena(){
+  const b=state.battle;if(!b)return;
+  document.getElementById('ba-stage-name').textContent=b.stage.name;
+  document.getElementById('ba-player').innerHTML=b.playerUnits.map((u,i)=>`
+    <div class="ba-unit ${!u.alive?'dead':''} ${b.activeUnit===i&&b.turn==='player'?'act':''}" onclick="selectUnit(${i})">
+      <div class="ba-u-ava">${EMOJI[u.faction]||'❓'}</div>
+      <div class="ba-u-nm">${u.name}</div>
+      <div class="ba-u-hp"><div class="ba-u-hp-fill" style="width:${(u.hp/u.maxHp)*100}%"></div></div>
+    </div>
+  `).join('');
+  document.getElementById('ba-enemy').innerHTML=b.enemyUnits.map((u,i)=>`
+    <div class="ba-unit ${!u.alive?'dead':''}" onclick="targetEnemy(${i})">
+      <div class="ba-u-ava">${EMOJI[u.faction]||'❓'}</div>
+      <div class="ba-u-nm">${u.name}</div>
+      <div class="ba-u-hp"><div class="ba-u-hp-fill" style="width:${(u.hp/u.maxHp)*100}%"></div></div>
+    </div>
+  `).join('');
+  document.getElementById('ba-log').innerHTML=b.log.map(e=>`<div class="ba-log-entry ${e.type}">${e.msg}</div>`).join('')||'<div style="color:var(--t3)">Battle Start!</div>';
+  document.getElementById('ba-log').scrollTop=document.getElementById('ba-log').scrollHeight;
+  b.activeUnit=b.playerUnits.findIndex(u=>u.alive);
+  b.targetEnemy=b.enemyUnits.findIndex(u=>u.alive);
+}
+
+function selectUnit(i){if(state.battle&&state.battle.playerUnits[i].alive){state.battle.activeUnit=i;renderArena()}}
+function targetEnemy(i){if(state.battle&&state.battle.enemyUnits[i].alive){state.battle.targetEnemy=i;renderArena()}}
+
+function baAction(type){
+  const b=state.battle;if(!b||b.turn!=='player')return;
+  const u=b.playerUnits[b.activeUnit];if(!u||!u.alive)return;
+  const t=b.enemyUnits[b.targetEnemy];if(!t||!t.alive)return;
+  let dmg=0;let msg='';
+  if(type==='atk'){dmg=Math.max(1,u.atk-Math.floor(t.def*0.5));t.hp=Math.max(0,t.hp-dmg);msg=`${u.name} attacks ${t.name} for ${dmg} damage!`;b.log.push({type:'dmg',msg})}
+  else if(type==='skill'){dmg=Math.max(1,Math.floor(u.atk*1.5)-Math.floor(t.def*0.3));t.hp=Math.max(0,t.hp-dmg);msg=`${u.name} uses Skill on ${t.name} for ${dmg} damage!`;b.log.push({type:'skill',msg})}
+  if(t.hp<=0){t.alive=false;msg+=` ${t.name} defeated!`;b.log.push({type:'death',msg:`${t.name} defeated!`})}
+  b.targetEnemy=b.enemyUnits.findIndex(x=>x.alive);
+  if(b.targetEnemy===-1){endBattle(true);return}
+  b.turn='enemy';renderArena();
+  if(type==='auto'){setTimeout(()=>baAction('auto'),800);return}
+  setTimeout(enemyTurn,800);
+}
+
+function enemyTurn(){
+  const b=state.battle;if(!b)return;
+  const aliveEnemies=b.enemyUnits.filter(u=>u.alive);
+  if(!aliveEnemies.length){endBattle(true);return}
+  const alivePlayers=b.playerUnits.filter(u=>u.alive);
+  if(!alivePlayers.length){endBattle(false);return}
+  aliveEnemies.forEach(e=>{
+    const target=alivePlayers[Math.floor(Math.random()*alivePlayers.length)];
+    const dmg=Math.max(1,e.atk-Math.floor(target.def*0.5));
+    target.hp=Math.max(0,target.hp-dmg);
+    b.log.push({type:'dmg',msg:`${e.name} attacks ${target.name} for ${dmg} damage!`});
+    if(target.hp<=0){target.alive=false;b.log.push({type:'death',msg:`${target.name} defeated!`})}
+  });
+  const stillAlive=b.playerUnits.filter(u=>u.alive);
+  if(!stillAlive.length){endBattle(false);return}
+  b.turn='player';b.activeUnit=b.playerUnits.findIndex(u=>u.alive);renderArena();
+}
+
+function endBattle(win){
+  clearInterval(state.timer);
+  state.battle.log.push({type:'skill',msg:win?'🎉 Victory!':'💀 Defeated...'});
+  renderArena();
+  setTimeout(()=>{
+    if(win)toast('Victory! +1000 Gold','ok');
+    else toast('Defeated. Try again.','err');
+    setTimeout(()=>{exitArena();loadAll()},1500);
+  },1000);
+}
+
+function exitArena(){
+  if(state.timer)clearInterval(state.timer);
+  state.battle=null;
+  showScreen('s-battle');
+}
+
+// === Gacha ===
+function renderGacha(){
+  document.getElementById('gacha-pity').textContent=state.pity;
+}
+
+async function doGacha(type){
+  const cost=type==='multi'?2700:300;
+  const gems=state.player?.currencies?.find(c=>c.type==='gems');
+  if(!gems||gems.amount<cost){toast('Not enough gems!','err');return}
+  document.getElementById('btn-pull-1').disabled=true;
+  document.getElementById('btn-pull-10').disabled=true;
+  showLoading();
+  try{
+    const result=await api('/gacha/pull',{method:'POST',body:JSON.stringify({poolId:'default',pullType:type})});
+    const resDiv=document.getElementById('gacha-result');
+    resDiv.innerHTML=result.results.map((r,i)=>`
+      <div class="gacha-card" style="background:var(--s1);border:1px solid var(--bdr2);animation-delay:${i*0.08}s">
+        <div class="gc-ic">${EMOJI[r.faction]||'❓'}</div>
+        <div class="gc-nm">${r.name}</div>
+        <div class="gc-rar" style="color:var(--${r.rarity==='SSR'?'ssr':r.rarity==='SR'?'sr':r.rarity==='R'?'r':'n'})">${r.rarity}</div>
+      </div>
+    `).join('');
+    state.pity++;
+    document.getElementById('gacha-pity').textContent=state.pity;
+    await loadAll();
+  }catch(e){toast(e.message,'err')}
+  hideLoading();
+  document.getElementById('btn-pull-1').disabled=false;
+  document.getElementById('btn-pull-10').disabled=false;
+}
+
+// === Formation ===
+function renderFormation(){
+  document.getElementById('form-slots').innerHTML=state.formation.map((sid,i)=>{
+    const c=sid?state.chars.find(x=>x.id===sid):null;
+    if(c){const ch=c.character||c;return `<div class="f-slot filled" onclick="removeSlot(${i})"><div class="fs-nm">${ch.name}</div><div class="fs-lv">Lv.${c.level||1}</div></div>`}
+    return `<div class="f-slot" onclick="pickSlot(${i})"><div class="fs-empty">Slot ${i+1}</div></div>`;
+  }).join('');
+  const used=state.formation.filter(Boolean);
+  const avail=state.chars.filter(c=>!used.includes(c.id));
+  document.getElementById('form-chars').innerHTML=avail.map(c=>{const ch=c.character||c;return `<div class="f-char" onclick="addToSlot('${c.id}')"><div class="fc-ava">${EMOJI[ch.faction]||'❓'}</div><div class="fc-nm">${ch.name}</div><div class="fc-lv">Lv.${c.level||1}</div></div>`}).join('')||'<div style="grid-column:1/-1;color:var(--t3);font-size:.7rem">All characters in formation</div>';
+}
+
+let pickingSlot=-1;
+function pickSlot(i){pickingSlot=i;renderFormation();document.getElementById('form-chars').style.opacity='1'}
+function addToSlot(charId){
+  if(pickingSlot<0){const empty=state.formation.findIndex(s=>!s);if(empty===-1){toast('Formation full','err');return}state.formation[empty]=charId}
+  else{state.formation[pickingSlot]=charId;pickingSlot=-1}
+  renderFormation();
+}
+function removeSlot(i){state.formation[i]=null;renderFormation()}
+
+async function saveFormation(){
+  try{
+    await api('/formations',{method:'POST',body:JSON.stringify({name:'Main',slots:state.formation,isDefault:true})});
+    toast('Formation saved!','ok');
+  }catch(e){toast('Saved locally','ok')}
+}
+
+// === Codex ===
+function renderCodex(){
+  document.getElementById('codex-grid').innerHTML=state.allChars.map(c=>`
+    <div class="codex-card">
+      <div class="cc-ava">${EMOJI[c.faction]||'❓'}</div>
+      <div class="cc-nm">${c.name}</div>
+      <div class="cc-rar" style="color:var(--${c.rarity==='SSR'?'ssr':c.rarity==='SR'?'sr':c.rarity==='R'?'r':'n'})">${c.rarity}</div>
+      <div class="cc-fact">${c.faction}</div>
+    </div>
+  `).join('')||'<div style="grid-column:1/-1;color:var(--t3);text-align:center;padding:20px">No data</div>';
+}
+
+// === Utils ===
+function showLoading(){document.getElementById('loading').classList.remove('hidden')}
+function hideLoading(){document.getElementById('loading').classList.add('hidden')}
+function toast(m,type=''){const e=document.createElement('div');e.className='toast '+type;e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),2000)}
 </script>
 </body>
 </html>
