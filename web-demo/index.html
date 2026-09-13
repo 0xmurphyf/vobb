@@ -108,14 +108,17 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .faction-badge.fU{color:var(--fU);border-color:var(--fU)}
 .faction-badge.fC{color:var(--fC);border-color:var(--fC)}
 
-/* ========== CHARACTER ROSTER ========== */
-.roster{display:flex;gap:6px;padding:8px 12px;overflow-x:auto;background:rgba(10,10,24,.9);border-bottom:1px solid var(--bdr)}
-.roster-item{width:52px;height:68px;border-radius:10px;background:var(--s1);border:2px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;transition:all .2s;flex-shrink:0}
-.roster-item:hover{border-color:var(--bdr2);background:var(--s2)}
-.roster-item.active{border-color:var(--gold);box-shadow:0 0 12px rgba(244,196,48,.25)}
+/* ========== ROSTER TOP ROW ========== */
+.roster-top{display:flex;align-items:center;gap:4px;padding:6px 8px;background:rgba(10,10,24,.95);border-bottom:1px solid var(--bdr);transition:max-height .3s;overflow:hidden;max-height:80px}
+.roster-top.collapsed{max-height:0;padding-top:0;padding-bottom:0;border-bottom:none}
+.roster-toggle{width:28px;height:28px;flex-shrink:0;border-radius:8px;background:var(--s1);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--t2)}
+.roster-scroll{display:flex;gap:6px;overflow-x:auto;flex:1}
+.roster-scroll .roster-item{width:48px;height:62px;border-radius:10px;background:var(--s1);border:2px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;transition:all .2s;flex-shrink:0}
+.roster-scroll .roster-item:hover{border-color:var(--bdr2);background:var(--s2)}
+.roster-scroll .roster-item.active{border-color:var(--gold);box-shadow:0 0 12px rgba(244,196,48,.25)}
 .roster-ava{width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
 .roster-lv{font-size:.5rem;font-weight:700;color:var(--t3)}
-.roster-item.active .roster-lv{color:var(--gold)}
+.roster-scroll .roster-item.active .roster-lv{color:var(--gold)}
 
 /* ========== CHARACTER PANEL ========== */
 .char-panel{flex:1;overflow-y:auto;padding:12px;background:var(--bg2)}
@@ -368,19 +371,19 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
         <button class="menu-item" data-screen="s-codex" onclick="showScreen('s-codex')"><span class="menu-icon">📖</span><span class="menu-label">Codex</span></button>
         <button class="menu-item" data-screen="s-formation" onclick="showScreen('s-formation')"><span class="menu-icon">🛡️</span><span class="menu-label">Formation</span></button>
       </div>
-      <div class="menu-footer">
-        <div class="res gems" style="margin-bottom:4px"><span>💎</span><span id="menu-gems">0</span></div>
-        <div class="res gold" style="margin-bottom:4px"><span>🪙</span><span id="menu-gold">0</span></div>
-        <div class="res stam"><span>⚡</span><span id="menu-stam">0/0</span></div>
-      </div>
     </div>
 
     <!-- Character Screen -->
     <div class="screen active" id="s-char">
+      <!-- Roster Top Row -->
+      <div class="roster-top" id="rosterTop">
+        <button class="roster-toggle" onclick="toggleRoster()">▾</button>
+        <div class="roster-scroll" id="rosterScroll"></div>
+      </div>
       <div class="char-screen">
         <!-- Left-Right Row -->
         <div class="char-row">
-        <!-- Left: Viewport + Roster -->
+        <!-- Left: Viewport -->
         <div class="char-viewport">
           <div class="char-viewport-top">
             <div class="char-bg"></div>
@@ -397,7 +400,6 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
             </div>
             <div class="faction-badge" id="charFact">TRANSCENDENT</div>
           </div>
-          <div class="roster" id="roster"></div>
         </div>
         <!-- Right: Panel -->
         <div class="char-panel" id="charPanel">
@@ -558,9 +560,6 @@ function renderRes(){
   document.getElementById('gold').textContent=fmt(g?.amount||0);
   document.getElementById('gems').textContent=fmt(gm?.amount||0);
   document.getElementById('stam').textContent=(s?.amount||0)+'/'+(state.player?.staminaMax||100);
-  const mg=document.getElementById('menu-gold');if(mg)mg.textContent=fmt(g?.amount||0);
-  const mgm=document.getElementById('menu-gems');if(mgm)mgm.textContent=fmt(gm?.amount||0);
-  const ms=document.getElementById('menu-stam');if(ms)ms.textContent=(s?.amount||0)+'/'+(state.player?.staminaMax||100);
 }
 
 function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toString()}
@@ -587,6 +586,12 @@ function toggleMenu(force){
 }
 
 function goHome(){showScreen('s-char')}
+function toggleRoster(){
+  const top=document.getElementById('rosterTop');
+  top.classList.toggle('collapsed');
+  const btn=top.querySelector('.roster-toggle');
+  btn.textContent=top.classList.contains('collapsed')?'▸':'▾';
+}
 
 // === Character ===
 function renderChar(){
@@ -621,7 +626,7 @@ function renderChar(){
   const eq=[{i:'⚔️',l:40,s:2},{i:'🪖',l:35,s:3},{i:'💍',l:30,s:3},{i:'👢',l:28,s:3}];
   document.getElementById('equipsRow').innerHTML=eq.map(e=>`<div class="equip-slot has"><div class="equip-icon">${e.i}</div><div class="equip-lv">Lv.${e.l}</div><div class="equip-stars">${'★'.repeat(e.s)}</div></div>`).join('');
   // Roster
-  document.getElementById('roster').innerHTML=state.chars.map((rc,i)=>{const rch=rc.character||rc;return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})"><div class="roster-ava">${EMOJI[rch.faction]||'❓'}</div><div class="roster-lv">Lv.${rc.level||1}</div></div>`}).join('');
+  document.getElementById('rosterScroll').innerHTML=state.chars.map((rc,i)=>{const rch=rc.character||rc;return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})"><div class="roster-ava">${EMOJI[rch.faction]||'❓'}</div><div class="roster-lv">Lv.${rc.level||1}</div></div>`}).join('');
 }
 
 function selectChar(i){state.idx=i;renderChar()}
