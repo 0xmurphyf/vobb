@@ -6,7 +6,7 @@
 export interface BattleCharacter {
   id: string;
   name: string;
-  element: 'FIRE' | 'EARTH' | 'WATER' | 'LIGHT' | 'DARK';
+  warlord: 'TRANSCENDENT' | 'PURIST' | 'WILD' | 'UNKNOWN' | 'CYBERIST';
   rarity: 'N' | 'R' | 'SR' | 'SSR';
   level: number;
   star: number;
@@ -43,7 +43,7 @@ export interface BattleConfig {
   seed: number;
   maxTurns: number;
   engineVersion: string;
-  elementMultiplier: Record<string, number>;
+  warlordSynergy: Record<string, number>;
 }
 
 export interface BattleEvent {
@@ -54,7 +54,7 @@ export interface BattleEvent {
   isCrit: boolean;
   isMiss: boolean;
   isSkill: boolean;
-  elementAdvantage: 'advantage' | 'neutral' | 'disadvantage';
+  warlordSynergy: 'synergy' | 'neutral' | 'conflict';
   description: string;
 }
 
@@ -80,20 +80,21 @@ function mulberry32(seed: number): () => number {
   };
 }
 
-// Element Counter
-const ELEMENT_COUNTER: Record<string, { advantage: string[]; disadvantage: string[] }> = {
-  FIRE: { advantage: ['EARTH'], disadvantage: ['WATER'] },
-  EARTH: { advantage: ['WATER'], disadvantage: ['FIRE'] },
-  WATER: { advantage: ['FIRE'], disadvantage: ['EARTH'] },
-  LIGHT: { advantage: ['DARK'], disadvantage: ['DARK'] },
-  DARK: { advantage: ['LIGHT'], disadvantage: ['LIGHT'] },
+// Warlord Synergy Matrix
+// Five-point relationship instead of elemental counter
+const WARLORD_SYNERGY: Record<string, { synergy: string[]; conflict: string[] }> = {
+  TRANSCENDENT: { synergy: ['UNKNOWN', 'PURIST'], conflict: ['WILD', 'CYBERIST'] },
+  PURIST:      { synergy: ['TRANSCENDENT', 'WILD'], conflict: ['CYBERIST', 'UNKNOWN'] },
+  WILD:        { synergy: ['PURIST', 'UNKNOWN'], conflict: ['TRANSCENDENT', 'CYBERIST'] },
+  UNKNOWN:     { synergy: ['TRANSCENDENT', 'CYBERIST'], conflict: ['PURIST', 'WILD'] },
+  CYBERIST:    { synergy: ['WILD', 'UNKNOWN'], conflict: ['TRANSCENDENT', 'PURIST'] },
 };
 
-function getElementMultiplier(attacker: string, defender: string): number {
-  const counter = ELEMENT_COUNTER[attacker];
-  if (!counter) return 1.0;
-  if (counter.advantage.includes(defender)) return 1.25;
-  if (counter.disadvantage.includes(defender)) return 0.8;
+function getWarlordMultiplier(attacker: string, defender: string): number {
+  const relations = WARLORD_SYNERGY[attacker];
+  if (!relations) return 1.0;
+  if (relations.synergy.includes(defender)) return 1.15;
+  if (relations.conflict.includes(defender)) return 0.85;
   return 1.0;
 }
 
@@ -153,11 +154,11 @@ export class BattleEngine {
 
   private attack(attacker: BattleUnit, target: BattleUnit): void {
     const baseDamage = Math.max(1, attacker.instance.atk - target.instance.def * 0.5);
-    const elementMult = getElementMultiplier(attacker.instance.element, target.instance.element);
+    const warlordMult = getWarlordMultiplier(attacker.instance.warlord, target.instance.warlord);
     const isCrit = this.rng() < 0.1;
     const critMult = isCrit ? 1.5 : 1.0;
     const variance = 0.9 + this.rng() * 0.2;
-    const finalDamage = Math.round(baseDamage * elementMult * critMult * variance);
+    const finalDamage = Math.round(baseDamage * warlordMult * critMult * variance);
 
     target.currentHp = Math.max(0, target.currentHp - finalDamage);
     if (target.currentHp === 0) target.isAlive = false;
@@ -170,7 +171,7 @@ export class BattleEngine {
       isCrit,
       isMiss: false,
       isSkill: false,
-      elementAdvantage: elementMult > 1 ? 'advantage' : elementMult < 1 ? 'disadvantage' : 'neutral',
+      warlordSynergy: warlordMult > 1 ? 'synergy' : warlordMult < 1 ? 'conflict' : 'neutral',
       description: `${attacker.instance.name} deals ${finalDamage} damage to ${target.instance.name}`,
     });
   }

@@ -16,17 +16,20 @@ export const refreshSchema = z.body({
 });
 
 // ---- Character Schemas ----
+export const warlordEnum = z.enum(['TRANSCENDENT', 'PURIST', 'WILD', 'UNKNOWN', 'CYBERIST']);
+
 export const characterResponseSchema = z.object({
   id: z.string(),
   charId: z.string(),
   name: z.string(),
-  element: z.enum(['FIRE', 'EARTH', 'WATER', 'LIGHT', 'DARK']),
+  warlord: warlordEnum,
   rarity: z.enum(['N', 'R', 'SR', 'SSR']),
   baseHp: z.number(),
   baseAtk: z.number(),
   baseDef: z.number(),
   baseWis: z.number(),
   baseAgi: z.number(),
+  description: z.string().optional(),
 });
 
 export const characterInstanceResponseSchema = z.object({

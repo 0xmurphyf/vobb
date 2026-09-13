@@ -74,7 +74,7 @@ model Character {
   id              String   @id @default(cuid())
   charId          String   @unique // e.g., "iron_warden"
   name            String
-  element         Element
+  warlord         Warlord
   rarity          Rarity
   baseHp          Int
   baseAtk         Int
@@ -314,12 +314,12 @@ model Inventory {
 
 // ---- Enums ----
 
-enum Element {
-  FIRE
-  EARTH
-  WATER
-  LIGHT
-  DARK
+enum Warlord {
+  TRANSCENDENT
+  PURIST
+  WILD
+  UNKNOWN
+  CYBERIST
 }
 
 enum Rarity {

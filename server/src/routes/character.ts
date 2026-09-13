@@ -14,13 +14,15 @@ async function characterRoutes(app: FastifyInstance) {
       id: c.id,
       charId: c.charId,
       name: c.name,
-      element: c.element,
+      warlord: c.warlord,
       rarity: c.rarity,
       baseHp: c.baseHp,
       baseAtk: c.baseAtk,
       baseDef: c.baseDef,
       baseWis: c.baseWis,
       baseAgi: c.baseAgi,
+      warlord: c.warlord,
+      description: c.description,
       skill: c.skill
         ? { id: c.skill.id, name: c.skill.name, description: c.skill.description }
         : null,
@@ -50,13 +52,14 @@ async function characterRoutes(app: FastifyInstance) {
         id: inst.character.id,
         charId: inst.character.charId,
         name: inst.character.name,
-        element: inst.character.element,
+        warlord: inst.character.warlord,
         rarity: inst.character.rarity,
         baseHp: inst.character.baseHp,
         baseAtk: inst.character.baseAtk,
         baseDef: inst.character.baseDef,
         baseWis: inst.character.baseWis,
         baseAgi: inst.character.baseAgi,
+        description: inst.character.description,
         skill: inst.character.skill
           ? { id: inst.character.skill.id, name: inst.character.skill.name, description: inst.character.skill.description }
           : null,

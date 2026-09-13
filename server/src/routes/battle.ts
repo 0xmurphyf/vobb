@@ -51,7 +51,7 @@ async function battleRoutes(app: FastifyInstance) {
     const playerTeam: BattleCharacter[] = instances.map((inst) => ({
       id: inst.id,
       name: inst.character.name,
-      element: inst.character.element as any,
+      warlord: inst.character.warlord as any,
       rarity: inst.character.rarity as any,
       level: inst.level,
       star: inst.star,
@@ -69,7 +69,7 @@ async function battleRoutes(app: FastifyInstance) {
     const enemyTeam: BattleCharacter[] = enemyConfig.map((enemy, idx) => ({
       id: `enemy_${idx}`,
       name: enemy.name || `Enemy ${idx + 1}`,
-      element: enemy.element || 'FIRE',
+      warlord: enemy.warlord || 'PURIST',
       rarity: enemy.rarity || 'N',
       level: enemy.level || 1,
       star: 1,
@@ -102,7 +102,7 @@ async function battleRoutes(app: FastifyInstance) {
       seed,
       maxTurns: 50,
       engineVersion: '0.1.0',
-      elementMultiplier: {},
+      warlordSynergy: {},
     });
 
     playerTeam.forEach((char, idx) => engine.addUnit(char, false, 0, idx));
