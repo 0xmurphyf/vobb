@@ -4,9 +4,8 @@ RUN apk add --no-cache libssl3 openssl3
 
 WORKDIR /app
 
-# Copy and install
-COPY server/package.json ./
-RUN npm install --include=dev
+COPY server/package.json .
+RUN npm install --include=dev --verbose 2>&1 | tail -50
 
 COPY server/prisma ./prisma
 RUN npx prisma generate
