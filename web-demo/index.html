@@ -132,9 +132,9 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .tab-panel.active{display:block}
 
 /* ========== OVERVIEW TOP ========== */
-.overview-top{display:flex;gap:10px;margin-bottom:10px}
-.overview-left{flex:1;display:flex;flex-direction:column;gap:8px}
-.overview-right{width:110px;flex-shrink:0}
+.overview-top{display:flex;gap:10px;margin-bottom:10px;align-items:stretch}
+.overview-left{flex:6;display:flex;flex-direction:column;gap:6px}
+.overview-right{flex:4;display:flex;align-items:stretch}
 .counter-chart{width:100%;height:100%;min-height:140px;background:var(--s1);border:1px solid var(--bdr);border-radius:10px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .counter-chart svg{width:100%;height:100%}
 
@@ -144,11 +144,11 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .power-val{font-size:2rem;font-weight:900;color:var(--gold);text-shadow:0 0 15px rgba(244,196,48,.25)}
 
 /* ========== STATS ========== */
-.stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px}
-.stat-item{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:10px 6px;text-align:center}
-.stat-icon{font-size:1rem;margin-bottom:3px}
-.stat-name{font-size:.55rem;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
-.stat-val{font-size:.9rem;font-weight:700}
+.stats-grid{display:flex;flex-direction:column;gap:3px;margin-bottom:10px}
+.stat-item{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;padding:6px 10px;text-align:left;display:flex;align-items:center;gap:8px}
+.stat-icon{font-size:.8rem;width:24px;text-align:center;flex-shrink:0}
+.stat-name{font-size:.5rem;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;flex:1}
+.stat-val{font-size:.75rem;font-weight:700;white-space:nowrap}
 .stat-val.hp{color:var(--green)} .stat-val.atk{color:var(--red)} .stat-val.def{color:var(--blue)} .stat-val.spd{color:var(--cyan)} .stat-val.crt{color:var(--orange)}
 
 
@@ -624,32 +624,31 @@ function renderChar(){
     {n:'SPD',v:c.currentAgi||ch.baseAgi||0,i:'⚡',c:'spd'},
     {n:'CRIT',v:(c.crit||15)+'%',i:'💥',c:'crt'},
   ];
-  document.getElementById('statsGrid').innerHTML=st.map(s=>`<div class="stat-item"><div class="stat-icon">${s.i}</div><div class="stat-name">${s.n}</div><div class="stat-val ${s.c}">${fmt(s.v)}</div></div>`).join('');
-  // Counter Chart (Pentagon)
+  document.getElementById('statsGrid').innerHTML=st.map(s=>`<div class="stat-item"><span class="stat-icon">${s.i}</span><span class="stat-name">${s.n}</span><span class="stat-val ${s.c}">${fmt(s.v)}</span></div>`).join('');
+  // Counter Chart (Regular Pentagon)
   const factions=['TRANSCENDENT','PURIST','WILD','UNKNOWN','CYBERIST'];
   const colors={TRANSCENDENT:'#b86bff',PURIST:'#ff6b35',WILD:'#23d160',UNKNOWN:'#3298dc',CYBERIST:'#ff3860'};
   const labels={TRANSCENDENT:'T',PURIST:'P',WILD:'W',UNKNOWN:'U',CYBERIST:'C'};
-  // Pentagon vertices (top, upper-right, lower-right, lower-left, upper-left)
-  const cx=55,cy=70,r=50;
-  const angles=[-90,-18,-54,18,90].map(a=>a*Math.PI/180);
+  // Regular pentagon: vertices at -90, -18, 54, 126, 198 degrees
+  const cx=55,cy=75,r=55;
+  const angles=[-90,-18,54,126,198].map(a=>a*Math.PI/180);
   const pts=angles.map(a=>({x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)}));
-  // Counter relationships: each faction counters the next 2 in sequence
-  // T->W,C  P->T,W  W->U,C  U->P,T  C->U,P
+  // Counter relationships: each faction counters 2 others (perfect pentagon)
   const counters={TRANSCENDENT:['WILD','CYBERIST'],PURIST:['TRANSCENDENT','WILD'],WILD:['UNKNOWN','CYBERIST'],UNKNOWN:['PURIST','TRANSCENDENT'],CYBERIST:['UNKNOWN','PURIST']};
-  let svg='<svg viewBox="0 0 110 140" xmlns="http://www.w3.org/2000/svg">';
+  let svg='<svg viewBox="0 0 110 150" xmlns="http://www.w3.org/2000/svg">';
+  // Arrow marker
+  svg+=`<defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#aab"/></marker></defs>`;
   // Draw counter lines
   factions.forEach((f,i)=>{
     counters[f].forEach(target=>{
       const ti=factions.indexOf(target);
-      svg+=`<line x1="${pts[i].x}" y1="${pts[i].y}" x2="${pts[ti].x}" y2="${pts[ti].y}" stroke="${colors[f]}" stroke-width="1.5" opacity="0.4" marker-end="url(#arrow)"/>`;
+      svg+=`<line x1="${pts[i].x}" y1="${pts[i].y}" x2="${pts[ti].x}" y2="${pts[ti].y}" stroke="${colors[f]}" stroke-width="1.5" opacity="0.5" marker-end="url(#arrow)"/>`;
     });
   });
-  // Arrow marker
-  svg+=`<defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#aab"/></marker></defs>`;
   // Draw nodes
   factions.forEach((f,i)=>{
     const isActive=f===ch.faction;
-    svg+=`<circle cx="${pts[i].x}" cy="${pts[i].y}" r="${isActive?10:7}" fill="${isActive?colors[f]:'#1a1a40'}" stroke="${colors[f]}" stroke-width="${isActive?2:1}"/>`;
+    svg+=`<circle cx="${pts[i].x}" cy="${pts[i].y}" r="${isActive?11:7}" fill="${isActive?colors[f]:'#1a1a40'}" stroke="${colors[f]}" stroke-width="${isActive?2:1}"/>`;
     svg+=`<text x="${pts[i].x}" y="${pts[i].y+3}" text-anchor="middle" font-size="7" font-weight="700" fill="${isActive?'#fff':'#aab'}">${labels[f]}</text>`;
   });
   svg+='</svg>';
