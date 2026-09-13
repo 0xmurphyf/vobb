@@ -1,8 +1,8 @@
 import { FastifyInstance } from 'fastify';
-import { prisma } from '../lib/prisma';
-import { authenticate } from '../middleware/auth';
-import { startBattleSchema } from '../schemas';
-import { BattleEngine, BattleCharacter } from '../battle/engine';
+import { prisma } from '../lib/prisma.js';
+import { authenticate } from '../middleware/auth.js';
+import { startBattleSchema } from '../schemas.js';
+import { BattleEngine, BattleCharacter } from '../battle/engine.js';
 
 async function battleRoutes(app: FastifyInstance) {
   // Start a battle

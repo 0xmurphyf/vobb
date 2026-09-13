@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import bcrypt from 'bcryptjs';
-import { prisma } from '../lib/prisma';
-import { guestLoginSchema, registerSchema, refreshSchema } from '../schemas';
+import { prisma } from '../lib/prisma.js';
+import { guestLoginSchema, registerSchema, refreshSchema } from '../schemas.js';
 
 async function authRoutes(app: FastifyInstance) {
   // Guest login — creates a new guest account

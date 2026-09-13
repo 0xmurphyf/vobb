@@ -13,7 +13,7 @@ import {
   gachaRoutes,
   battleRoutes,
   stageRoutes,
-} from './routes/routes';
+} from './routes/routes.js';
 
 const logger = pino({
   level: process.env.LOG_LEVEL || 'info',

@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
-import { prisma } from '../lib/prisma';
-import { authenticate } from '../middleware/auth';
-import { updateFormationSchema } from '../schemas';
+import { prisma } from '../lib/prisma.js';
+import { authenticate } from '../middleware/auth.js';
+import { updateFormationSchema } from '../schemas.js';
 
 async function formationRoutes(app: FastifyInstance) {
   // Get player's formations

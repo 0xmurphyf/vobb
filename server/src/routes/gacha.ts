@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
-import { prisma } from '../lib/prisma';
-import { authenticate } from '../middleware/auth';
-import { gachaPullSchema } from '../schemas';
+import { prisma } from '../lib/prisma.js';
+import { authenticate } from '../middleware/auth.js';
+import { gachaPullSchema } from '../schemas.js';
 
 // Deterministic RNG (Mulberry32)
 function mulberry32(seed: number): () => number {

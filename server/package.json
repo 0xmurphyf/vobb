@@ -1,6 +1,7 @@
 {
   "name": "vobb-server",
   "version": "0.1.0",
+  "type": "module",
   "description": "Voxx Blood Brothers - Game Server",
   "main": "dist/index.js",
   "scripts": {

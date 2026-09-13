@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
-import { prisma } from '../lib/prisma';
-import { authenticate } from '../middleware/auth';
+import { prisma } from '../lib/prisma.js';
+import { authenticate } from '../middleware/auth.js';
 
 async function playerRoutes(app: FastifyInstance) {
   // Get current player profile

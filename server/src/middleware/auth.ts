@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
-import { prisma } from '../lib/prisma';
+import { prisma } from '../lib/prisma.js';
 
 interface JwtPayload {
   userId: string;
