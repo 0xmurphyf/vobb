@@ -72,22 +72,21 @@ model Player {
 
 model Character {
   id              String   @id @default(cuid())
-  charId          String   @unique // e.g., "iron_warden"
+  charId          String   @unique
   name            String
   warlord         Warlord
   rarity          Rarity
-  race            String   // Human / Beast / Machine / Alien / Mutant / etc.
-  gender          String   // M / F / Unknown / None
-  evolution       Int      @default(0) // 0=base, 1=evolved, 2=final
+  gender          String
+  evolution       Int      @default(0)
   baseHp          Int
   baseAtk         Int
   baseDef         Int
   baseWis         Int
   baseAgi         Int
-  totalExp        Int      @default(0) // cumulative EXP needed for max level
-  growthId        String?  // growth curve reference
+  totalExp        Int      @default(0)
+  growthId        String?
   skillId         String?
-  passiveId       String?  // passive skill
+  passiveId       String?
   evolutionLineId String?
   createdAt       DateTime @default(now())
 

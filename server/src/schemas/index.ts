@@ -24,7 +24,6 @@ export const characterResponseSchema = z.object({
   name: z.string(),
   warlord: warlordEnum,
   rarity: z.enum(['N', 'R', 'SR', 'SSR']),
-  race: z.string(),
   gender: z.string(),
   evolution: z.number(),
   baseHp: z.number(),
