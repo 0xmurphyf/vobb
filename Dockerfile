@@ -4,12 +4,18 @@ RUN apk add --no-cache libssl3 openssl3
 
 WORKDIR /app
 
-COPY server/package.json server/package-lock.json* ./
-RUN npm ci
+# Copy package files
+COPY server/package.json ./
+COPY server/package-lock.json* ./
 
+# Install dependencies
+RUN npm install --production=false
+
+# Copy prisma schema and generate client
 COPY server/prisma ./prisma
 RUN npx prisma generate
 
+# Copy source code
 COPY server/src ./src
 COPY server/tsconfig.json ./tsconfig.json
 
