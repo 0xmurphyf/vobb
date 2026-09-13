@@ -6,7 +6,7 @@
 export interface BattleCharacter {
   id: string;
   name: string;
-  warlord: 'TRANSCENDENT' | 'PURIST' | 'WILD' | 'UNKNOWN' | 'CYBERIST';
+  faction: 'TRANSCENDENT' | 'PURIST' | 'WILD' | 'UNKNOWN' | 'CYBERIST';
   rarity: 'N' | 'R' | 'SR' | 'SSR';
   level: number;
   star: number;
@@ -43,7 +43,7 @@ export interface BattleConfig {
   seed: number;
   maxTurns: number;
   engineVersion: string;
-  warlordSynergy: Record<string, number>;
+  factionSynergy: Record<string, number>;
 }
 
 export interface BattleEvent {
@@ -54,7 +54,7 @@ export interface BattleEvent {
   isCrit: boolean;
   isMiss: boolean;
   isSkill: boolean;
-  warlordRelation: 'counter' | 'neutral' | 'countered';
+  factionRelation: 'counter' | 'neutral' | 'countered';
   description: string;
 }
 
@@ -80,10 +80,10 @@ function mulberry32(seed: number): () => number {
   };
 }
 
-// Warlord Mutual Counter Matrix (Five-Point Star)
-// Each warlord counters exactly 2 others, is countered by exactly 2 others
+// Faction Mutual Counter Matrix (Five-Point Star)
+// Each faction counters exactly 2 others, is countered by exactly 2 others
 // Forms a pentagon: T→P→C→T and T→W→U→T
-const WARLORD_COUNTER: Record<string, { counters: string[]; counteredBy: string[] }> = {
+const FACTION_COUNTER: Record<string, { counters: string[]; counteredBy: string[] }> = {
   TRANSCENDENT:  { counters: ['PURIST', 'WILD'],        counteredBy: ['UNKNOWN', 'CYBERIST'] },
   PURIST:        { counters: ['CYBERIST', 'UNKNOWN'],   counteredBy: ['TRANSCENDENT', 'WILD'] },
   WILD:          { counters: ['PURIST', 'UNKNOWN'],     counteredBy: ['TRANSCENDENT', 'CYBERIST'] },
@@ -94,8 +94,8 @@ const WARLORD_COUNTER: Record<string, { counters: string[]; counteredBy: string[
 const COUNTER_MULTIPLIER = 1.25;
 const COUNTERED_MULTIPLIER = 0.80;
 
-function getWarlordMultiplier(attacker: string, defender: string): number {
-  const relations = WARLORD_COUNTER[attacker];
+function getFactionMultiplier(attacker: string, defender: string): number {
+  const relations = FACTION_COUNTER[attacker];
   if (!relations) return 1.0;
   if (relations.counters.includes(defender)) return COUNTER_MULTIPLIER;
   if (relations.counteredBy.includes(defender)) return COUNTERED_MULTIPLIER;
@@ -158,11 +158,11 @@ export class BattleEngine {
 
   private attack(attacker: BattleUnit, target: BattleUnit): void {
     const baseDamage = Math.max(1, attacker.instance.atk - target.instance.def * 0.5);
-    const warlordMult = getWarlordMultiplier(attacker.instance.warlord, target.instance.warlord);
+    const factionMult = getFactionMultiplier(attacker.instance.faction, target.instance.faction);
     const isCrit = this.rng() < 0.1;
     const critMult = isCrit ? 1.5 : 1.0;
     const variance = 0.9 + this.rng() * 0.2;
-    const finalDamage = Math.round(baseDamage * warlordMult * critMult * variance);
+    const finalDamage = Math.round(baseDamage * factionMult * critMult * variance);
 
     target.currentHp = Math.max(0, target.currentHp - finalDamage);
     if (target.currentHp === 0) target.isAlive = false;
@@ -175,7 +175,7 @@ export class BattleEngine {
       isCrit,
       isMiss: false,
       isSkill: false,
-      warlordRelation: warlordMult > 1 ? 'counter' : warlordMult < 1 ? 'countered' : 'neutral',
+      factionRelation: factionMult > 1 ? 'counter' : factionMult < 1 ? 'countered' : 'neutral',
       description: `${attacker.instance.name} deals ${finalDamage} damage to ${target.instance.name}`,
     });
   }

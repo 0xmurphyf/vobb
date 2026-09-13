@@ -74,7 +74,7 @@ model Character {
   id              String   @id @default(cuid())
   charId          String   @unique
   name            String
-  warlord         Warlord
+  faction         Faction
   rarity          Rarity
   gender          String
   evolution       Int      @default(0)
@@ -346,7 +346,7 @@ model Inventory {
 
 // ---- Enums ----
 
-enum Warlord {
+enum Faction {
   TRANSCENDENT
   PURIST
   WILD

@@ -16,13 +16,13 @@ export const refreshSchema = z.body({
 });
 
 // ---- Character Schemas ----
-export const warlordEnum = z.enum(['TRANSCENDENT', 'PURIST', 'WILD', 'UNKNOWN', 'CYBERIST']);
+export const factionEnum = z.enum(['TRANSCENDENT', 'PURIST', 'WILD', 'UNKNOWN', 'CYBERIST']);
 
 export const characterResponseSchema = z.object({
   id: z.string(),
   charId: z.string(),
   name: z.string(),
-  warlord: warlordEnum,
+  faction: factionEnum,
   rarity: z.enum(['N', 'R', 'SR', 'SSR']),
   gender: z.string(),
   evolution: z.number(),
