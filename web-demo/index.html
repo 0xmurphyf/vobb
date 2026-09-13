@@ -488,7 +488,7 @@ async function guestLogin(){
     const d=await api('/auth/guest',{method:'POST',body:JSON.stringify({playerName:'Hunter'})});
     console.log('API response:',d);
     state.accessToken=d.accessToken;state.refreshToken=d.refreshToken;state.player=d.player||d.user?.player;
-    state.chars=state.player?.characterInstances||[];
+    state.chars=state.player?.characters||[];
     console.log('state.chars:',state.chars.length);
     document.getElementById('login-screen').style.display='none';
     document.getElementById('main-app').style.display='flex';
@@ -511,7 +511,7 @@ async function loadAll(){
   console.log('loadAll start');
   try{
     state.player=await api('/player/me');
-    state.chars=state.player.characterInstances||[];
+    state.chars=state.player.characters||[];
     console.log('loaded player chars:',state.chars.length);
   }catch(e){console.error('load player error:',e)}
   try{state.allChars=await api('/characters');console.log('loaded all chars:',state.allChars.length)}catch(e){state.allChars=[];console.error('load all chars error:',e)}
