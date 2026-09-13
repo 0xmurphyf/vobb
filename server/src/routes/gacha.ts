@@ -44,6 +44,13 @@ async function gachaRoutes(app: FastifyInstance) {
         characterName: item.character.name,
         rarity: item.character.rarity,
         warlord: item.character.warlord,
+        race: item.character.race,
+        evolution: item.character.evolution,
+        baseHp: item.character.baseHp,
+        baseAtk: item.character.baseAtk,
+        baseDef: item.character.baseDef,
+        baseWis: item.character.baseWis,
+        baseAgi: item.character.baseAgi,
         weight: item.weight,
         guaranteedSr: item.guaranteedSr,
       })),
@@ -74,7 +81,7 @@ async function gachaRoutes(app: FastifyInstance) {
     // Get pool with items
     const pool = await prisma.gachaPool.findUnique({
       where: { id: poolId },
-      include: { items: { include: { character: true } } },
+      include: { items: { include: { character: { include: { skill: true, passive: true } } } } },
     });
     if (!pool || !pool.active) {
       return reply.code(404).send({ error: 'not_found', message: 'Gacha pool not found or inactive' });
@@ -170,11 +177,22 @@ async function gachaRoutes(app: FastifyInstance) {
         name: instance.character.name,
         warlord: instance.character.warlord,
         rarity: instance.character.rarity,
+        race: instance.character.race,
+        gender: instance.character.gender,
+        evolution: instance.character.evolution,
         baseHp: instance.character.baseHp,
         baseAtk: instance.character.baseAtk,
         baseDef: instance.character.baseDef,
         baseWis: instance.character.baseWis,
         baseAgi: instance.character.baseAgi,
+        totalExp: instance.character.totalExp,
+        description: instance.character.description,
+        skill: instance.character.skillId
+          ? { id: instance.character.skillId, name: instance.character.skill?.name, description: instance.character.skill?.description }
+          : null,
+        passive: instance.character.passiveId
+          ? { id: instance.character.passiveId, name: instance.character.passive?.name, description: instance.character.passive?.description }
+          : null,
       });
     }
 

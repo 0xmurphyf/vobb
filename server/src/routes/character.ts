@@ -6,7 +6,7 @@ async function characterRoutes(app: FastifyInstance) {
   // Get all character definitions (static data)
   app.get('/', async (_request, reply) => {
     const characters = await prisma.character.findMany({
-      include: { skill: true },
+      include: { skill: true, passive: true, growth: true, evolutionLine: true },
       orderBy: [{ rarity: 'desc' }, { name: 'asc' }],
     });
 
@@ -16,15 +16,27 @@ async function characterRoutes(app: FastifyInstance) {
       name: c.name,
       warlord: c.warlord,
       rarity: c.rarity,
+      race: c.race,
+      gender: c.gender,
+      evolution: c.evolution,
       baseHp: c.baseHp,
       baseAtk: c.baseAtk,
       baseDef: c.baseDef,
       baseWis: c.baseWis,
       baseAgi: c.baseAgi,
-      warlord: c.warlord,
+      totalExp: c.totalExp,
       description: c.description,
       skill: c.skill
-        ? { id: c.skill.id, name: c.skill.name, description: c.skill.description }
+        ? { id: c.skill.id, name: c.skill.name, description: c.skill.description, effects: c.skill.effects }
+        : null,
+      passive: c.passive
+        ? { id: c.passive.id, name: c.passive.name, description: c.passive.description, effects: c.passive.effects }
+        : null,
+      growth: c.growth
+        ? { id: c.growth.id, name: c.growth.name, expCurve: c.growth.expCurve, statMultipliers: c.growth.statMultipliers }
+        : null,
+      evolutionLine: c.evolutionLine
+        ? { id: c.evolutionLine.id, name: c.evolutionLine.name, stages: c.evolutionLine.stages }
         : null,
     }));
   });
@@ -36,7 +48,7 @@ async function characterRoutes(app: FastifyInstance) {
 
     const instances = await prisma.characterInstance.findMany({
       where: { playerId },
-      include: { character: { include: { skill: true } } },
+      include: { character: { include: { skill: true, passive: true, growth: true, evolutionLine: true } } },
       orderBy: [{ character: { rarity: 'desc' } }, { level: 'desc' }],
     });
 
@@ -54,14 +66,27 @@ async function characterRoutes(app: FastifyInstance) {
         name: inst.character.name,
         warlord: inst.character.warlord,
         rarity: inst.character.rarity,
+        race: inst.character.race,
+        gender: inst.character.gender,
+        evolution: inst.character.evolution,
         baseHp: inst.character.baseHp,
         baseAtk: inst.character.baseAtk,
         baseDef: inst.character.baseDef,
         baseWis: inst.character.baseWis,
         baseAgi: inst.character.baseAgi,
+        totalExp: inst.character.totalExp,
         description: inst.character.description,
         skill: inst.character.skill
-          ? { id: inst.character.skill.id, name: inst.character.skill.name, description: inst.character.skill.description }
+          ? { id: inst.character.skill.id, name: inst.character.skill.name, description: inst.character.skill.description, effects: inst.character.skill.effects }
+          : null,
+        passive: inst.character.passive
+          ? { id: inst.character.passive.id, name: inst.character.passive.name, description: inst.character.passive.description, effects: inst.character.passive.effects }
+          : null,
+        growth: inst.character.growth
+          ? { id: inst.character.growth.id, name: inst.character.growth.name, expCurve: inst.character.growth.expCurve, statMultipliers: inst.character.growth.statMultipliers }
+          : null,
+        evolutionLine: inst.character.evolutionLine
+          ? { id: inst.character.evolutionLine.id, name: inst.character.evolutionLine.name, stages: inst.character.evolutionLine.stages }
           : null,
       },
     }));

@@ -24,12 +24,39 @@ export const characterResponseSchema = z.object({
   name: z.string(),
   warlord: warlordEnum,
   rarity: z.enum(['N', 'R', 'SR', 'SSR']),
+  race: z.string(),
+  gender: z.string(),
+  evolution: z.number(),
   baseHp: z.number(),
   baseAtk: z.number(),
   baseDef: z.number(),
   baseWis: z.number(),
   baseAgi: z.number(),
+  totalExp: z.number(),
   description: z.string().optional(),
+  skill: z.object({
+    id: z.string(),
+    name: z.string(),
+    description: z.string(),
+    effects: z.any(),
+  }).nullable(),
+  passive: z.object({
+    id: z.string(),
+    name: z.string(),
+    description: z.string(),
+    effects: z.any(),
+  }).nullable(),
+  growth: z.object({
+    id: z.string(),
+    name: z.string(),
+    expCurve: z.any(),
+    statMultipliers: z.any(),
+  }).nullable(),
+  evolutionLine: z.object({
+    id: z.string(),
+    name: z.string(),
+    stages: z.any(),
+  }).nullable(),
 });
 
 export const characterInstanceResponseSchema = z.object({

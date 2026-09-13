@@ -76,17 +76,24 @@ model Character {
   name            String
   warlord         Warlord
   rarity          Rarity
+  race            String   // Human / Beast / Machine / Alien / Mutant / etc.
+  gender          String   // M / F / Unknown / None
+  evolution       Int      @default(0) // 0=base, 1=evolved, 2=final
   baseHp          Int
   baseAtk         Int
   baseDef         Int
   baseWis         Int
   baseAgi         Int
+  totalExp        Int      @default(0) // cumulative EXP needed for max level
+  growthId        String?  // growth curve reference
   skillId         String?
+  passiveId       String?  // passive skill
   evolutionLineId String?
-  growthId        String?
   createdAt       DateTime @default(now())
 
   skill           Skill?        @relation(fields: [skillId], references: [id])
+  passive         Passive?      @relation(fields: [passiveId], references: [id])
+  growth          Growth?       @relation(fields: [growthId], references: [id])
   evolutionLine   EvolutionLine? @relation(fields: [evolutionLineId], references: [id])
   instances       CharacterInstance[]
   gachaItems      GachaItem[]
@@ -121,18 +128,44 @@ model Skill {
   effects     Json      // skill effects config
   createdAt   DateTime  @default(now())
 
-  familiars   Familiar[]
+  characters  Character[]
 
   @@map("skills")
+}
+
+model Passive {
+  id          String    @id @default(cuid())
+  passiveId   String    @unique
+  name        String
+  description String
+  effects     Json
+  createdAt   DateTime  @default(now())
+
+  characters  Character[]
+
+  @@map("passives")
+}
+
+model Growth {
+  id              String    @id @default(cuid())
+  growthId        String    @unique
+  name            String
+  expCurve        Json      // level thresholds
+  statMultipliers Json      // per-level multipliers
+  createdAt       DateTime  @default(now())
+
+  characters      Character[]
+
+  @@map("growth_curves")
 }
 
 model EvolutionLine {
   id              String    @id @default(cuid())
   name            String
-  stages          Json      // evolution requirements
+  stages          Json      // evolution requirements per stage
   createdAt       DateTime  @default(now())
 
-  familiars       Familiar[]
+  characters      Character[]
 
   @@map("evolution_lines")
 }
