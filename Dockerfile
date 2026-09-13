@@ -17,4 +17,4 @@ ENV HOST=0.0.0.0
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "npx prisma generate && npx prisma db push --skip-generate --accept-data-loss && npx tsx src/index.ts"]
+CMD ["sh", "-c", "export DATABASE_URL=\"${DATABASE_URL}&sslmode=disable\" && npx prisma generate && npx prisma db push --skip-generate --accept-data-loss && npx tsx src/index.ts"]
