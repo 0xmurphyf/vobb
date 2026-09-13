@@ -9,4 +9,3 @@ npm-debug.log
 dist
 coverage
 .nyc_output
-web-demo
