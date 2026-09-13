@@ -94,12 +94,15 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .char-panel{flex:1;overflow-y:auto;padding:12px;background:var(--bg2);display:flex;flex-direction:column;width:35%}
 @keyframes char-idle{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.02)}}
 .char-name{font-size:1.5rem;font-weight:800;color:#fff;text-shadow:0 0 20px rgba(0,0,0,.8)}
-.char-sub-row{display:flex;align-items:center;gap:8px;margin-top:3px}
+.char-sub-row{display:flex;align-items:center;gap:6px;margin-top:2px;font-size:.7rem}
 .char-stars{color:var(--gold);font-size:.8rem;letter-spacing:2px}
 .char-rar{padding:2px 8px;border-radius:6px;font-size:.6rem;font-weight:700;background:rgba(0,0,0,.5)}
 .char-rar.ssr{color:var(--ssr)} .char-rar.sr{color:var(--sr)} .char-rar.r{color:var(--r)}
 .char-lv{font-size:.85rem;font-weight:700;color:var(--cyan)}
-.char-exp{width:120px;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-top:4px}
+.char-lock,.char-story{width:28px;height:28px;border-radius:8px;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--t2);border:1px solid rgba(255,255,255,.1);transition:all .15s}
+.char-lock:hover,.char-story:hover{background:rgba(255,255,255,.1)}
+.char-lock:active,.char-story:active{transform:scale(.9)}
+.char-exp{width:100%;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-top:4px}
 .char-exp-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:2px;transition:width .5s}
 .faction-badge{position:absolute;top:12px;right:12px;padding:4px 12px;border-radius:12px;font-size:.6rem;font-weight:700;letter-spacing:1px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);border:1px solid;z-index:4}
 .faction-badge.fT{color:var(--fT);border-color:var(--fT)}
@@ -145,7 +148,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .power-val{font-size:2rem;font-weight:900;color:var(--gold);text-shadow:0 0 15px rgba(244,196,48,.25)}
 
 /* ========== COUNTER CHART ========== */
-.counter-chart{position:absolute;top:12px;left:12px;width:80px;height:80px;background:transparent;border:none;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.counter-chart{position:absolute;top:50px;right:12px;width:70px;height:70px;background:transparent;border:none;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:4}
 .counter-chart svg{width:100%;height:100%;overflow:visible}
 
 
@@ -386,11 +389,15 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
             <div class="char-artwork" id="charArt">🧬</div>
             <div class="char-glow"></div>
             <div class="char-nameplate">
-              <div class="char-name" id="charName">—</div>
-              <div class="char-sub-row">
-                <span class="char-stars" id="charStars">★★★★★</span>
-                <span class="char-rar" id="charRar">SSR</span>
-                <span class="char-lv" id="charLv">Lv.1</span>
+              <div class="char-name-row">
+                <div class="char-name" id="charName">—</div>
+                <div class="char-sub-row">
+                  <span class="char-stars" id="charStars">★★★★★</span>
+                  <span class="char-rar" id="charRar">SSR</span>
+                  <span class="char-lv" id="charLv">Lv.1</span>
+                  <button class="char-lock" onclick="toast('Locked')" title="Lock">🔒</button>
+                  <button class="char-story" onclick="toast('Story')" title="Story">📖</button>
+                </div>
               </div>
               <div class="char-exp"><div class="char-exp-fill" id="charExp" style="width:0%"></div></div>
             </div>
@@ -616,16 +623,16 @@ function renderChar(){
     {n:'AGI',v:c.currentAgi||ch.baseAgi||0,i:'💨',c:'agi'},
   ];
   document.getElementById('statsGrid').innerHTML=st.map(s=>`<div class="stat-item"><span class="stat-icon">${s.i}</span><span class="stat-name">${s.n}</span><span class="stat-val ${s.c}">${fmt(s.v)}</span></div>`).join('');
-  // Counter Chart (Regular Pentagon) - small overlay
+  // Counter Chart (Regular Pentagon) - small overlay 70x70
   const factions=['TRANSCENDENT','PURIST','WILD','UNKNOWN','CYBERIST'];
   const colors={TRANSCENDENT:'#b86bff',PURIST:'#ff6b35',WILD:'#23d160',UNKNOWN:'#3298dc',CYBERIST:'#ff3860'};
   const labels={TRANSCENDENT:'T',PURIST:'P',WILD:'W',UNKNOWN:'U',CYBERIST:'C'};
-  const cx=40,cy=40,r=30;
+  const cx=35,cy=35,r=25;
   const angles=[-90,-18,54,126,198].map(a=>a*Math.PI/180);
   const pts=angles.map(a=>({x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)}));
   const counters={TRANSCENDENT:['WILD','CYBERIST'],PURIST:['TRANSCENDENT','WILD'],WILD:['UNKNOWN','CYBERIST'],UNKNOWN:['PURIST','TRANSCENDENT'],CYBERIST:['UNKNOWN','PURIST']};
-  let svg='<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">';
-  svg+=`<defs><marker id="arrow" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto"><path d="M0,0 L4,2 L0,4 Z" fill="#aab"/></marker></defs>`;
+  let svg='<svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">';
+  svg+=`<defs><marker id="arrow" markerWidth="3" markerHeight="3" refX="2" refY="1.5" orient="auto"><path d="M0,0 L3,1.5 L0,3 Z" fill="#aab"/></marker></defs>`;
   factions.forEach((f,i)=>{
     counters[f].forEach(target=>{
       const ti=factions.indexOf(target);
@@ -634,8 +641,8 @@ function renderChar(){
   });
   factions.forEach((f,i)=>{
     const isActive=f===ch.faction;
-    svg+=`<circle cx="${pts[i].x}" cy="${pts[i].y}" r="${isActive?7:4}" fill="${isActive?colors[f]:'#1a1a40'}" stroke="${colors[f]}" stroke-width="${isActive?1.5:0.8}"/>`;
-    svg+=`<text x="${pts[i].x}" y="${pts[i].y+2}" text-anchor="middle" font-size="5" font-weight="700" fill="${isActive?'#fff':'#aab'}">${labels[f]}</text>`;
+    svg+=`<circle cx="${pts[i].x}" cy="${pts[i].y}" r="${isActive?6:3.5}" fill="${isActive?colors[f]:'#1a1a40'}" stroke="${colors[f]}" stroke-width="${isActive?1.5:0.8}"/>`;
+    svg+=`<text x="${pts[i].x}" y="${pts[i].y+2}" text-anchor="middle" font-size="4.5" font-weight="700" fill="${isActive?'#fff':'#aab'}">${labels[f]}</text>`;
   });
   svg+='</svg>';
   document.getElementById('counterChart').innerHTML=svg;
