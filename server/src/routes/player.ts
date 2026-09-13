@@ -11,12 +11,12 @@ async function playerRoutes(app: FastifyInstance) {
     const player = await prisma.player.findUnique({
       where: { id: playerId },
       include: {
-        familiarInstances: {
-          include: { familiar: { include: { skill: true } } },
+        characterInstances: {
+          include: { character: { include: { skill: true } } },
+          orderBy: [{ character: { rarity: 'desc' } }, { level: 'desc' }],
         },
         formations: true,
         currencies: true,
-        inventory: true,
       },
     });
 
@@ -31,10 +31,9 @@ async function playerRoutes(app: FastifyInstance) {
       staminaMax: player.staminaMax,
       staminaRegenAt: player.staminaRegenAt,
       tutorialStep: player.tutorialStep,
-      characters: player.familiarInstances,
+      characters: player.characterInstances,
       formations: player.formations,
       currencies: player.currencies,
-      inventory: player.inventory,
     };
   });
 

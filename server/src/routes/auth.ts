@@ -70,7 +70,13 @@ async function authRoutes(app: FastifyInstance) {
 
     const playerWithInstances = await prisma.player.findUnique({
       where: { id: user.player!.id },
-      include: { characterInstances: { include: { character: true } } },
+      include: {
+        characterInstances: {
+          include: { character: true },
+          orderBy: [{ character: { rarity: 'desc' } }, { level: 'desc' }],
+        },
+        currencies: true,
+      },
     });
 
     return {
