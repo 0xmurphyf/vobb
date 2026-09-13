@@ -109,6 +109,14 @@ model CharacterInstance {
   star            Int      @default(1) // 1-5
   skillLevel      Int      @default(1)
   isInFormation   Boolean  @default(false)
+
+  // Pre-computed stats (recalculated on level up / star up)
+  currentHp       Int      @default(0)
+  currentAtk      Int      @default(0)
+  currentDef      Int      @default(0)
+  currentWis      Int      @default(0)
+  currentAgi      Int      @default(0)
+
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 

@@ -3,7 +3,7 @@ import { prisma } from '../lib/prisma';
 import { authenticate } from '../middleware/auth';
 import { gachaPullSchema } from '../schemas';
 
-// Deterministic RNG (same as battle engine)
+// Deterministic RNG (Mulberry32)
 function mulberry32(seed: number): () => number {
   let s = seed | 0;
   return function () {
@@ -14,16 +14,9 @@ function mulberry32(seed: number): () => number {
   };
 }
 
-const RARITY_WEIGHTS: Record<string, number> = {
-  N: 70,
-  R: 25,
-  SR: 4,
-  SSR: 1,
-};
-
 async function gachaRoutes(app: FastifyInstance) {
   // Get active gacha pools
-  app.get('/pools', async (_request, reply) => {
+  app.get('/', async () => {
     const pools = await prisma.gachaPool.findMany({
       where: { active: true },
       include: {
@@ -88,9 +81,9 @@ async function gachaRoutes(app: FastifyInstance) {
 
     // Check player gems
     const player = await prisma.player.findUnique({ where: { id: playerId } });
-    if (!player) return reply.code(404).send({ error: 'not_found', message: 'Player not found' });
+    if (!player) return reply.code(404).send({ error: 'player_not_found' });
 
-    const cost = pullCount * 30; // 30 gems per pull
+    const cost = pullType === 'multi' ? 2700 : 300;
     if (player.gems < cost) {
       return reply.code(400).send({ error: 'insufficient_gems', message: 'Not enough gems' });
     }
@@ -99,7 +92,7 @@ async function gachaRoutes(app: FastifyInstance) {
     let pity = await prisma.pityCounter.findUnique({ where: { playerId } });
     if (!pity) {
       pity = await prisma.pityCounter.create({
-        data: { playerId, poolId, count: 0, guaranteedSr: 10, guaranteedSsr: 100 },
+        data: { playerId, count: 0, guaranteedSr: 10, guaranteedSsr: 100 },
       });
     }
 
@@ -124,7 +117,7 @@ async function gachaRoutes(app: FastifyInstance) {
         const srItems = pool.items.filter((item) => item.character.rarity === 'SR');
         selectedItem = srItems[Math.floor(rng() * srItems.length)] || pool.items[0];
       } else {
-        // Weighted random
+        // Normal pull with weighted random
         const totalWeight = pool.items.reduce((sum, item) => sum + item.weight, 0);
         let roll = rng() * totalWeight;
         selectedItem = pool.items[0];
@@ -143,7 +136,7 @@ async function gachaRoutes(app: FastifyInstance) {
         pity.count = 0;
       }
 
-      // Create character instance for player
+      // Create character instance for player (compute stats at level 1, star 1)
       const instance = await prisma.characterInstance.create({
         data: {
           playerId,
@@ -152,22 +145,13 @@ async function gachaRoutes(app: FastifyInstance) {
           exp: 0,
           star: 1,
           skillLevel: 1,
-          isInFormation: false,
+          currentHp: selectedItem.character.baseHp,
+          currentAtk: selectedItem.character.baseAtk,
+          currentDef: selectedItem.character.baseDef,
+          currentWis: selectedItem.character.baseWis,
+          currentAgi: selectedItem.character.baseAgi,
         },
-        include: { character: true },
-      });
-
-      // Record gacha history
-      await prisma.gachaHistory.create({
-        data: {
-          playerId,
-          userId: request.userId!,
-          poolId,
-          characterId: selectedItem.characterId,
-          rarity: selectedRarity as any,
-          pityCount: pity.count,
-          isPity: false,
-        },
+        include: { character: { include: { skill: true, passive: true } } },
       });
 
       results.push({
@@ -178,18 +162,20 @@ async function gachaRoutes(app: FastifyInstance) {
         rarity: instance.character.rarity,
         gender: instance.character.gender,
         evolution: instance.character.evolution,
-        baseHp: instance.character.baseHp,
-        baseAtk: instance.character.baseAtk,
-        baseDef: instance.character.baseDef,
-        baseWis: instance.character.baseWis,
-        baseAgi: instance.character.baseAgi,
+        level: instance.level,
+        star: instance.star,
+        currentHp: instance.currentHp,
+        currentAtk: instance.currentAtk,
+        currentDef: instance.currentDef,
+        currentWis: instance.currentWis,
+        currentAgi: instance.currentAgi,
         totalExp: instance.character.totalExp,
         description: instance.character.description,
-        skill: instance.character.skillId
-          ? { id: instance.character.skillId, name: instance.character.skill?.name, description: instance.character.skill?.description }
+        skill: instance.character.skill
+          ? { id: instance.character.skill.id, name: instance.character.skill.name, description: instance.character.skill.description, effects: instance.character.skill.effects }
           : null,
-        passive: instance.character.passiveId
-          ? { id: instance.character.passiveId, name: instance.character.passive?.name, description: instance.character.passive?.description }
+        passive: instance.character.passive
+          ? { id: instance.character.passive.id, name: instance.character.passive.name, description: instance.character.passive.description, effects: instance.character.passive.effects }
           : null,
       });
     }
@@ -229,7 +215,6 @@ async function gachaRoutes(app: FastifyInstance) {
       characterId: h.characterId,
       rarity: h.rarity,
       pityCount: h.pityCount,
-      isPity: h.isPity,
       createdAt: h.createdAt.toISOString(),
     }));
   });

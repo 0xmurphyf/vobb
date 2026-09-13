@@ -47,7 +47,7 @@ async function battleRoutes(app: FastifyInstance) {
       return reply.code(400).send({ error: 'validation', message: 'Some characters in formation are invalid' });
     }
 
-    // Build player team
+    // Build player team — read pre-computed stats directly
     const playerTeam: BattleCharacter[] = instances.map((inst) => ({
       id: inst.id,
       name: inst.character.name,
@@ -56,11 +56,11 @@ async function battleRoutes(app: FastifyInstance) {
       level: inst.level,
       star: inst.star,
       skillLevel: inst.skillLevel,
-      hp: inst.character.baseHp + inst.level * 10,
-      atk: inst.character.baseAtk + inst.level * 2,
-      def: inst.character.baseDef + inst.level * 1,
-      wis: inst.character.baseWis + inst.level * 1,
-      agi: inst.character.baseAgi + inst.level * 1,
+      hp: inst.currentHp,
+      atk: inst.currentAtk,
+      def: inst.currentDef,
+      wis: inst.currentWis,
+      agi: inst.currentAgi,
       skills: inst.character.skill ? [inst.character.skill.skillId] : [],
     }));
 

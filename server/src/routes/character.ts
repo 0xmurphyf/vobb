@@ -59,6 +59,11 @@ async function characterRoutes(app: FastifyInstance) {
       star: inst.star,
       skillLevel: inst.skillLevel,
       isInFormation: inst.isInFormation,
+      currentHp: inst.currentHp,
+      currentAtk: inst.currentAtk,
+      currentDef: inst.currentDef,
+      currentWis: inst.currentWis,
+      currentAgi: inst.currentAgi,
       character: {
         id: inst.character.id,
         charId: inst.character.charId,
@@ -90,7 +95,20 @@ async function characterRoutes(app: FastifyInstance) {
     }));
   });
 
-  // Level up a character (spend gold)
+  // Pre-compute stats from base + growth curve + star multiplier
+  const computeStats = (baseHp: number, baseAtk: number, baseDef: number, baseWis: number, baseAgi: number, level: number, star: number, growth?: { hp: number; atk: number; def: number; wis: number; agi: number } | null) => {
+    const starMultiplier = 1 + (star - 1) * 0.05;
+    const g = growth || { hp: 0.10, atk: 0.10, def: 0.08, wis: 0.08, agi: 0.08 };
+    return {
+      currentHp: Math.round(baseHp * (1 + (level - 1) * g.hp) * starMultiplier),
+      currentAtk: Math.round(baseAtk * (1 + (level - 1) * g.atk) * starMultiplier),
+      currentDef: Math.round(baseDef * (1 + (level - 1) * g.def) * starMultiplier),
+      currentWis: Math.round(baseWis * (1 + (level - 1) * g.wis) * starMultiplier),
+      currentAgi: Math.round(baseAgi * (1 + (level - 1) * g.agi) * starMultiplier),
+    };
+  };
+
+  // Level up a character (spend gold, recompute stats)
   app.post('/:instanceId/levelup', { preHandler: authenticate }, async (request, reply) => {
     const playerId = request.playerId;
     if (!playerId) return reply.code(401).send({ error: 'unauthorized' });
@@ -101,7 +119,7 @@ async function characterRoutes(app: FastifyInstance) {
 
     const instance = await prisma.characterInstance.findFirst({
       where: { id: instanceId, playerId },
-      include: { character: true },
+      include: { character: { include: { growth: true } } },
     });
     if (!instance) return reply.code(404).send({ error: 'not_found', message: 'Character not found' });
 
@@ -113,15 +131,27 @@ async function characterRoutes(app: FastifyInstance) {
       return reply.code(400).send({ error: 'insufficient_gold', message: 'Not enough gold' });
     }
 
+    const growth = instance.character.growth ? instance.character.growth.statMultipliers as any : null;
+    const stats = computeStats(
+      instance.character.baseHp,
+      instance.character.baseAtk,
+      instance.character.baseDef,
+      instance.character.baseWis,
+      instance.character.baseAgi,
+      newLevel,
+      instance.star,
+      growth,
+    );
+
     const updated = await prisma.$transaction(async (tx) => {
       await tx.player.update({ where: { id: playerId }, data: { gold: { decrement: cost } } });
       return tx.characterInstance.update({
         where: { id: instanceId },
-        data: { level: newLevel },
+        data: { level: newLevel, ...stats },
       });
     });
 
-    return { success: true, newLevel: updated.level, goldSpent: cost };
+    return { success: true, newLevel: updated.level, goldSpent: cost, stats };
   });
 }
 
