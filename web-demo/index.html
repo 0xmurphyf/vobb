@@ -508,11 +508,18 @@ async function refresh(){
 
 // === Load Data ===
 async function loadAll(){
-  try{state.player=await api('/player/me');state.chars=state.player.characterInstances||[]}catch(e){}
-  try{state.allChars=await api('/characters')}catch(e){state.allChars=[]}
-  try{state.stages=await api('/stages')}catch(e){state.stages=[]}
-  try{const p=await api('/gacha/pity');state.pity=p.count||0}catch(e){}
+  console.log('loadAll start');
+  try{
+    state.player=await api('/player/me');
+    state.chars=state.player.characterInstances||[];
+    console.log('loaded player chars:',state.chars.length);
+  }catch(e){console.error('load player error:',e)}
+  try{state.allChars=await api('/characters');console.log('loaded all chars:',state.allChars.length)}catch(e){state.allChars=[];console.error('load all chars error:',e)}
+  try{state.stages=await api('/stages');console.log('loaded stages:',state.stages.length)}catch(e){state.stages=[];console.error('load stages error:',e)}
+  try{const p=await api('/gacha/pity');state.pity=p.count||0}catch(e){console.error('load pity error:',e)}
+  console.log('rendering...');
   renderRes();renderChar();renderBattle();renderGacha();renderCodex();
+  console.log('render complete');
 }
 
 function renderRes(){
