@@ -601,7 +601,7 @@ function renderChar(){
   document.getElementById('charExp').style.width=Math.min(100,((c.exp||0)/(c.expMax||100))*100)+'%';
   const fb=document.getElementById('charFact');fb.textContent=ch.faction;fb.className='faction-badge '+(FCLASS[ch.faction]||'');
   // Power
-  const pwr=Math.floor((c.currentHp||ch.baseHp||0)/10+(c.currentAtk||ch.baseAtk||0)*3+(c.currentDef||ch.baseDef||0)*2);
+  const pwr=Math.floor((c.currentHp||ch.baseHp||0)/10+(c.currentAtk||ch.baseAtk||0)*3+(c.currentDef||ch.baseDef||0)*2+(c.currentWis||ch.baseWis||0)*1.5+(c.currentAgi||ch.baseAgi||0)*1.5);
   document.getElementById('powerVal').textContent=fmtFull(pwr);
   // Stats - HP/ATK/DEF/WIS/AGI (actual game data)
   const st=[
