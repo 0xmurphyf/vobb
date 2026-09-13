@@ -102,7 +102,7 @@ async function battleRoutes(app: FastifyInstance) {
       seed,
       maxTurns: 50,
       engineVersion: '0.1.0',
-      warlordSynergy: {},
+      warlordCounter: {},
     });
 
     playerTeam.forEach((char, idx) => engine.addUnit(char, false, 0, idx));

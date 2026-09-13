@@ -54,7 +54,7 @@ export interface BattleEvent {
   isCrit: boolean;
   isMiss: boolean;
   isSkill: boolean;
-  warlordSynergy: 'synergy' | 'neutral' | 'conflict';
+  warlordRelation: 'counter' | 'neutral' | 'countered';
   description: string;
 }
 
@@ -80,21 +80,25 @@ function mulberry32(seed: number): () => number {
   };
 }
 
-// Warlord Synergy Matrix
-// Five-point relationship instead of elemental counter
-const WARLORD_SYNERGY: Record<string, { synergy: string[]; conflict: string[] }> = {
-  TRANSCENDENT: { synergy: ['UNKNOWN', 'PURIST'], conflict: ['WILD', 'CYBERIST'] },
-  PURIST:      { synergy: ['TRANSCENDENT', 'WILD'], conflict: ['CYBERIST', 'UNKNOWN'] },
-  WILD:        { synergy: ['PURIST', 'UNKNOWN'], conflict: ['TRANSCENDENT', 'CYBERIST'] },
-  UNKNOWN:     { synergy: ['TRANSCENDENT', 'CYBERIST'], conflict: ['PURIST', 'WILD'] },
-  CYBERIST:    { synergy: ['WILD', 'UNKNOWN'], conflict: ['TRANSCENDENT', 'PURIST'] },
+// Warlord Mutual Counter Matrix (Five-Point Star)
+// Each warlord counters exactly 2 others, is countered by exactly 2 others
+// Forms a pentagon: T→P→C→T and T→W→U→T
+const WARLORD_COUNTER: Record<string, { counters: string[]; counteredBy: string[] }> = {
+  TRANSCENDENT:  { counters: ['PURIST', 'WILD'],        counteredBy: ['UNKNOWN', 'CYBERIST'] },
+  PURIST:        { counters: ['CYBERIST', 'UNKNOWN'],   counteredBy: ['TRANSCENDENT', 'WILD'] },
+  WILD:          { counters: ['PURIST', 'UNKNOWN'],     counteredBy: ['TRANSCENDENT', 'CYBERIST'] },
+  UNKNOWN:       { counters: ['TRANSCENDENT', 'CYBERIST'], counteredBy: ['PURIST', 'WILD'] },
+  CYBERIST:      { counters: ['TRANSCENDENT', 'WILD'],  counteredBy: ['PURIST', 'UNKNOWN'] },
 };
 
+const COUNTER_MULTIPLIER = 1.25;
+const COUNTERED_MULTIPLIER = 0.80;
+
 function getWarlordMultiplier(attacker: string, defender: string): number {
-  const relations = WARLORD_SYNERGY[attacker];
+  const relations = WARLORD_COUNTER[attacker];
   if (!relations) return 1.0;
-  if (relations.synergy.includes(defender)) return 1.15;
-  if (relations.conflict.includes(defender)) return 0.85;
+  if (relations.counters.includes(defender)) return COUNTER_MULTIPLIER;
+  if (relations.counteredBy.includes(defender)) return COUNTERED_MULTIPLIER;
   return 1.0;
 }
 
@@ -171,7 +175,7 @@ export class BattleEngine {
       isCrit,
       isMiss: false,
       isSkill: false,
-      warlordSynergy: warlordMult > 1 ? 'synergy' : warlordMult < 1 ? 'conflict' : 'neutral',
+      warlordRelation: warlordMult > 1 ? 'counter' : warlordMult < 1 ? 'countered' : 'neutral',
       description: `${attacker.instance.name} deals ${finalDamage} damage to ${target.instance.name}`,
     });
   }

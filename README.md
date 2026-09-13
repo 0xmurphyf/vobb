@@ -254,18 +254,19 @@ Victory
 
 ---
 
-## 7. Element System
+### 7. Warlord Counter System
 
-第一版：
-- FIRE → EARTH
-- EARTH → WATER
-- WATER → FIRE
-- LIGHT ↔️ DARK
+五角星互克关系：
+- TRANSCENDENT → PURIST, WILD
+- PURIST → CYBERIST, UNKNOWN
+- WILD → PURIST, UNKNOWN
+- UNKNOWN → TRANSCENDENT, CYBERIST
+- CYBERIST → TRANSCENDENT, WILD
 
 克制关系：
-- Advantage: ×1.25
+- Counter: ×1.25
 - Neutral: ×1.00
-- Disadvantage: ×0.80
+- Countered: ×0.80
 
 但这些数字应该进入配置文件，而不是写死。以后调整平衡无需重新发布 App。
 
