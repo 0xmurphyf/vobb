@@ -319,7 +319,7 @@ input{font-family:inherit;border:none;outline:none;background:none;color:inherit
   </div>
 
   <!-- Main App -->
-  <div class="screen" id="main-app">
+  <div id="main-app" style="flex:1;display:none;flex-direction:column">
     <!-- Top Bar -->
     <div class="topbar" id="topbar">
       <div class="topbar-left">
@@ -539,8 +539,8 @@ async function guestLogin(){
   try{
     const d=await api('/auth/guest',{method:'POST',body:JSON.stringify({playerName:'Hunter'})});
     state.accessToken=d.accessToken;state.refreshToken=d.refreshToken;state.player=d.player||d.user?.player;
-    document.getElementById('login-screen').classList.remove('active');
-    document.getElementById('main-app').classList.add('active');
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('main-app').style.display='flex';
     await loadAll();
   }catch(e){toast(e.message,'err')}
   hideLoading();
@@ -597,7 +597,7 @@ function renderHome(){
 function renderChars(){
   const c=state.chars[state.idx];if(!c)return;
   const ch=c.character||c;
-  document.getElementById('art').textContent=factionImg(ch.faction);
+  document.getElementById('art').innerHTML=factionImg(ch.faction);
   document.getElementById('name').textContent=ch.name;
   document.getElementById('title').textContent=ch.title||ch.name;
   document.getElementById('rar').textContent=ch.rarity;
