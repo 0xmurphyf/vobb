@@ -339,7 +339,7 @@ model Currency {
 model Inventory {
   id        String   @id @default(cuid())
   playerId  String
-  itemType  String   // "equipment", "material", "consumable"
+  itemType  String   // "material", "consumable"
   itemId    String
   quantity  Int      @default(1)
   data      Json?

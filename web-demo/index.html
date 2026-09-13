@@ -160,14 +160,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .skill-name{font-size:.55rem;color:var(--t3);text-align:center}
 .skill-level{font-size:.55rem;font-weight:700;color:var(--gold)}
 
-/* ========== EQUIPMENT ========== */
-.equips-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
-.equip-slot{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--s1);border:1px dashed var(--bdr);border-radius:10px;transition:all .2s}
-.equip-slot.has{border-style:solid;border-color:var(--blue);background:linear-gradient(135deg,var(--s1),rgba(50,152,220,.08))}
-.equip-icon{font-size:1.3rem;opacity:.6}
-.equip-slot.has .equip-icon{opacity:1}
-.equip-lv{font-size:.5rem;color:var(--t3)}
-.equip-stars{font-size:.45rem;color:var(--gold);letter-spacing:.5px}
+
 
 /* ========== UPGRADE BUTTON ========== */
 .btn-upgrade{width:100%;padding:13px;border-radius:12px;font-size:.85rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;box-shadow:0 4px 15px rgba(180,100,255,.25);transition:all .2s}
@@ -410,20 +403,17 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
           <div class="char-tabs">
             <button class="char-tab active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
             <button class="char-tab" data-tab="skills" onclick="switchTab('skills')">Skills</button>
-            <button class="char-tab" data-tab="equip" onclick="switchTab('equip')">Equipment</button>
             <button class="char-tab" data-tab="evo" onclick="switchTab('evo')">Evolution</button>
           </div>
           <div class="tab-panel active" id="tab-overview">
             <!-- Stats Full Width -->
             <div class="power-bar"><span class="power-label">POWER</span><span class="power-val" id="powerVal">0</span></div>
             <div class="stats-grid" id="statsGrid"></div>
-            <!-- Bottom: Skills + Equips -->
+            <!-- Bottom: Skills -->
             <div class="skills-row" id="skillsRow"></div>
-            <div class="equips-row" id="equipsRow"></div>
             <button class="btn-upgrade" onclick="upgrade()">⬆ Upgrade</button>
           </div>
           <div class="tab-panel" id="tab-skills"><div style="color:var(--t3);font-size:.7rem;padding:20px;text-align:center">Coming soon</div></div>
-          <div class="tab-panel" id="tab-equip"><div style="color:var(--t3);font-size:.7rem;padding:20px;text-align:center">Coming soon</div></div>
           <div class="tab-panel" id="tab-evo"><div style="color:var(--t3);font-size:.7rem;padding:20px;text-align:center">Coming soon</div></div>
         </div>
       </div>
@@ -649,9 +639,6 @@ function renderChar(){
   // Skills
   const sk=[{n:'Normal',i:'⚔️',l:c.skillLevel||3},{n:'Skill 1',i:'🔮',l:c.skillLevel||3},{n:'Skill 2',i:'💫',l:Math.max(1,(c.skillLevel||3)-1)},{n:'Ultimate',i:'✨',l:Math.max(1,(c.skillLevel||3)-2)}];
   document.getElementById('skillsRow').innerHTML=sk.map(s=>`<div class="skill-card"><div class="skill-icon">${s.i}</div><div class="skill-name">${s.n}</div><div class="skill-level">Lv.${s.l}</div></div>`).join('');
-  // Equipment
-  const eq=[{i:'⚔️',l:40,s:2},{i:'🪖',l:35,s:3},{i:'💍',l:30,s:3},{i:'👢',l:28,s:3}];
-  document.getElementById('equipsRow').innerHTML=eq.map(e=>`<div class="equip-slot has"><div class="equip-icon">${e.i}</div><div class="equip-lv">Lv.${e.l}</div><div class="equip-stars">${'★'.repeat(e.s)}</div></div>`).join('');
   // Roster
   document.getElementById('rosterGrid').innerHTML=state.chars.map((rc,i)=>{const rch=rc.character||rc;return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})"><div class="roster-ava">${EMOJI[rch.faction]||'❓'}</div><div class="roster-lv">Lv.${rc.level||1}</div></div>`}).join('');
 }
@@ -659,7 +646,7 @@ function renderChar(){
 function selectChar(i){state.idx=i;renderChar()}
 function switchTab(t){
   document.querySelectorAll('.char-tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===t));
-  ['overview','skills','equip','evo'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active',x===t));
+  ['overview','skills','evo'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active',x===t));
 }
 function upgrade(){toast('Coming soon')}
 
