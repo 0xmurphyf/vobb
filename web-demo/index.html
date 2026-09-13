@@ -482,15 +482,22 @@ async function api(p,o={}){
 
 // === Auth ===
 async function guestLogin(){
+  console.log('guestLogin clicked');
   showLoading();
   try{
     const d=await api('/auth/guest',{method:'POST',body:JSON.stringify({playerName:'Hunter'})});
+    console.log('API response:',d);
     state.accessToken=d.accessToken;state.refreshToken=d.refreshToken;state.player=d.player||d.user?.player;
     state.chars=state.player?.characterInstances||[];
-    document.getElementById('login-screen').classList.remove('active');
+    console.log('state.chars:',state.chars.length);
+    document.getElementById('login-screen').style.display='none';
     document.getElementById('main-app').style.display='flex';
     await loadAll();
-  }catch(e){toast(e.message,'err')}
+    console.log('login complete');
+  }catch(e){
+    console.error('login error:',e);
+    toast(e.message||'Login failed','err');
+  }
   hideLoading();
 }
 
