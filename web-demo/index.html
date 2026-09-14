@@ -83,7 +83,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 
 /* ========== CHARACTER SCREEN ========== */
 .char-screen{flex:1;display:flex;position:relative;z-index:1;border:1px solid var(--bdr);border-radius:12px;overflow:hidden;background:var(--bg2)}
-.char-row{flex:1;display:flex;overflow:hidden}
+.char-row{flex:1;display:flex;overflow:hidden;transition:margin-left .3s}
 .char-viewport{position:relative;width:65%;height:auto;overflow:hidden;display:flex;flex-direction:column;min-height:0}
 .char-viewport-top{flex:1;position:relative;display:flex;align-items:stretch;justify-content:center;min-height:0;padding-left:50px}
 .char-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(180,100,255,.12) 0%,transparent 50%)}
@@ -110,8 +110,9 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .faction-badge.fC{color:var(--fC);border-color:var(--fC)}
 
 /* ========== ROSTER OVERLAY ========== */
-.char-roster-wrap{position:absolute;top:0;left:0;bottom:0;z-index:10;display:flex;flex-direction:column;align-items:center;gap:0;padding:0;background:rgba(10,10,24,.95);border-right:1px solid var(--bdr);overflow:hidden;transition:width .3s;width:60px;backdrop-filter:blur(4px)}
+.char-roster-wrap{position:absolute;top:0;left:0;bottom:0;z-index:10;display:flex;flex-direction:column;align-items:center;gap:0;padding:0;background:rgba(10,10,24,.95);border-right:1px solid var(--bdr);overflow:hidden;transition:width .3s,width .3s,padding .3s;width:60px;backdrop-filter:blur(4px)}
 .char-roster-wrap.expanded{width:210px;padding:4px}
+.char-roster-wrap.expanded ~ .char-row{margin-left:150px}
 .char-roster-wrap .roster-toggle{width:28px;height:28px;flex-shrink:0;border-radius:8px;background:var(--s1);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--t2);cursor:pointer;transition:all .15s;align-self:flex-start;margin-bottom:0}
 .char-roster-wrap .roster-toggle:hover{background:var(--s2)}
 .char-roster-wrap .roster-grid{display:flex;flex-direction:column;gap:0;overflow-y:auto;overflow-x:hidden;width:100%;align-items:center}
