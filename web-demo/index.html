@@ -86,7 +86,8 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .char-screen{flex:1;display:flex;position:relative;z-index:1;border:1px solid var(--bdr);border-radius:12px;overflow:hidden;background:var(--bg2)}
 .char-row{flex:1;display:flex;overflow:hidden}
 .char-viewport{position:relative;width:65%;height:auto;overflow:hidden;display:flex;flex-direction:column;min-height:0}
-.char-viewport-top{flex:1;position:relative;display:flex;align-items:flex-end;justify-content:center;min-height:0;padding-left:70px}
+.char-viewport-top{flex:1;position:relative;display:flex;align-items:flex-end;justify-content:center;min-height:0;padding-left:70px;transition:padding-left .3s}
+.char-roster-wrap.expanded ~ .char-row .char-viewport-top{padding-left:260px}
 .char-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(180,100,255,.12) 0%,transparent 50%)}
 .char-artwork{position:relative;height:85%;z-index:2;filter:drop-shadow(0 0 40px rgba(180,100,255,.3));animation:char-idle 4s ease-in-out infinite;font-size:10rem;display:flex;align-items:center;justify-content:center}
 .char-glow{position:absolute;bottom:10%;left:50%;transform:translateX(-50%);width:120px;height:25px;background:radial-gradient(ellipse,rgba(180,100,255,.35),transparent 70%);filter:blur(8px);animation:glow-pulse 3s ease-in-out infinite}
