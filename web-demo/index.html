@@ -43,8 +43,9 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 
 /* ========== APP LAYOUT ========== */
 .app{display:flex;flex-direction:column;height:100vh;position:relative;padding:0;margin:auto;box-sizing:border-box;overflow:hidden}
-.screen{flex:1;display:none;flex-direction:column;overflow:hidden}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;z-index:1}
 .screen.active{display:flex;overflow-y:auto}
+.screen>*:not(.bg-screen){position:relative;z-index:1}
 
 /* ========== BACKGROUND LAYER ========== */
 .bg-layer{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
@@ -86,8 +87,8 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .char-row{flex:1;display:flex;overflow:hidden;transition:margin-left .3s}
 .char-viewport{position:relative;width:65%;height:auto;overflow:hidden;display:flex;flex-direction:column;min-height:0}
 .char-viewport-top{flex:1;position:relative;display:flex;align-items:stretch;justify-content:center;min-height:0;padding-left:50px}
-.char-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(180,100,255,.12) 0%,transparent 50%)}
-.char-artwork{position:relative;flex:1;align-self:stretch;z-index:2;filter:drop-shadow(0 0 40px rgba(180,100,255,.3));display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.15);border-radius:0;padding:16px;box-sizing:border-box;background-size:contain;background-repeat:no-repeat;background-position:center;background-color:rgba(6,6,15,.4)}
+.char-bg{position:absolute;inset:0;background:transparent}
+.char-artwork{position:relative;flex:1;align-self:stretch;z-index:2;filter:drop-shadow(0 0 40px rgba(180,100,255,.3));display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.15);border-radius:0;padding:16px;box-sizing:border-box;background-size:contain;background-repeat:no-repeat;background-position:center;background-color:transparent}
 .char-glow{position:absolute;bottom:10%;left:50%;transform:translateX(-50%);width:120px;height:25px;background:radial-gradient(ellipse,rgba(180,100,255,.35),transparent 70%);filter:blur(8px);animation:glow-pulse 3s ease-in-out infinite}
 .char-nameplate{position:absolute;bottom:0;left:50px;right:0;padding:12px 16px;background:linear-gradient(0deg,rgba(0,0,0,.9) 0%,transparent 100%);z-index:3}
 .char-panel{overflow-y:auto;padding:12px;background:transparent;display:flex;flex-direction:column;flex:0 0 35%;width:35%;min-width:280px;border-radius:0}
@@ -145,7 +146,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .stat-val.hp{color:var(--green)} .stat-val.atk{color:var(--red)} .stat-val.def{color:var(--blue)} .stat-val.wis{color:var(--purple)} .stat-val.agi{color:var(--cyan)}
 
 /* ========== POWER ========== */
-.power-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(10,10,24,.1);border:1px solid rgba(255,255,255,.06);border-radius:0}
+.power-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;background:rgba(10,10,24,.1);border:none;border-radius:0}
 .power-label{font-size:.6rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;font-weight:700}
 .power-val{font-size:2rem;font-weight:900;color:var(--gold);text-shadow:0 0 15px rgba(244,196,48,.25)}
 
@@ -194,7 +195,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .page-scroll{flex:1;overflow-y:auto;padding:12px;background:transparent}
 
 /* ========== SCREEN BACKGROUNDS ========== */
-.bg-screen{position:fixed;inset:0;background-size:cover;background-position:center;opacity:.45;z-index:0;pointer-events:none}
+.bg-screen{position:fixed;inset:0;background-size:cover;background-position:center;opacity:.6;z-index:0;pointer-events:none}
 .bg-char{background-image:url(/assets/bg/1-main-lobby.jpg)}
 .bg-battle{background-image:url(/assets/bg/2-battle.jpg)}
 .bg-arena{background-image:url(/assets/bg/2-battle.jpg)}
