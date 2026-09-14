@@ -28,17 +28,15 @@ async function authRoutes(app: FastifyInstance) {
       include: { player: true },
     });
 
-    // Give guest 5 starter characters (one per faction, stars 1/2/3/1/2)
+    // Give guest all 50 starter characters (stars cycle 1-2-3)
     const starterChars = await prisma.character.findMany({
-      where: { charId: { in: ['adaptive_stalker', 'steadfast', 'fungal_lurker', 'void_pearl', 'chrome_reaper'] } },
       include: { growth: true },
     });
 
     const STARTER_LEVEL = 10;
-    const STAR_VALUES = [1, 2, 3, 1, 2]; // 1-3 stars each
     for (let i = 0; i < starterChars.length; i++) {
       const char = starterChars[i];
-      const star = STAR_VALUES[i] || 1;
+      const star = (i % 3) + 1; // cycles 1,2,3
       const starMult = 1 + (star - 1) * 0.1;
       const g = char.growth ? char.growth.statMultipliers as any : null;
       const growth = g || { hp: 0.10, atk: 0.10, def: 0.08, wis: 0.08, agi: 0.08 };
