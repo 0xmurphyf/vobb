@@ -48,8 +48,8 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .screen>*:not(.bg-screen){position:relative;z-index:1}
 
 /* ========== BACKGROUND LAYER ========== */
-.bg-layer{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-.bg-gradient{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,#1a1040 0%,#0d0825 40%,#06060f 70%)}
+.bg-layer{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;opacity:.3}
+.bg-gradient{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(26,16,64,.5) 0%,rgba(13,8,37,.5) 40%,rgba(6,6,15,.5) 70%)}
 .bg-neon-1{position:absolute;top:-20%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(184,107,255,.08),transparent 60%);animation:pulse-neon 4s ease-in-out infinite alternate}
 .bg-neon-2{position:absolute;bottom:-10%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(0,209,178,.06),transparent 60%);animation:pulse-neon 5s ease-in-out infinite alternate 1s}
 .bg-fog{position:absolute;bottom:0;left:0;right:0;height:30%;background:linear-gradient(0deg,rgba(6,6,15,.95) 0%,transparent 100%)}
