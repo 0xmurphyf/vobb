@@ -109,12 +109,15 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .faction-badge.fU{color:var(--fU);border-color:var(--fU)}
 .faction-badge.fC{color:var(--fC);border-color:var(--fC)}
 
+/* ========== ROSTER TOGGLE (OUTSIDE ROSTER) ========== */
+.roster-toggle-out{position:absolute;top:8px;left:8px;z-index:20;width:28px;height:28px;border-radius:8px;background:rgba(10,10,24,.85);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--t2);cursor:pointer;transition:all .15s;backdrop-filter:blur(4px)}
+.roster-toggle-out:hover{background:var(--s2)}
+.roster-toggle-out.expanded{left:218px}
+
 /* ========== ROSTER OVERLAY ========== */
-.char-roster-wrap{position:absolute;top:0;left:0;bottom:0;z-index:10;display:flex;flex-direction:column;align-items:center;gap:0;padding:0;background:rgba(10,10,24,.95);border-right:1px solid var(--bdr);overflow:hidden;transition:width .3s,width .3s,padding .3s;width:60px;backdrop-filter:blur(4px)}
+.char-roster-wrap{position:absolute;top:0;left:0;bottom:0;z-index:10;display:flex;flex-direction:column;align-items:center;gap:0;padding:0;background:rgba(10,10,24,.95);border-right:1px solid var(--bdr);overflow:hidden;transition:width .3s,padding .3s;width:60px;backdrop-filter:blur(4px)}
 .char-roster-wrap.expanded{width:210px;padding:4px}
 .char-roster-wrap.expanded ~ .char-row{margin-left:150px}
-.char-roster-wrap .roster-toggle{width:28px;height:28px;flex-shrink:0;border-radius:8px;background:var(--s1);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--t2);cursor:pointer;transition:all .15s;align-self:flex-start;margin-bottom:0}
-.char-roster-wrap .roster-toggle:hover{background:var(--s2)}
 .char-roster-wrap .roster-grid{display:flex;flex-direction:column;gap:0;overflow-y:auto;overflow-x:hidden;width:100%;align-items:center}
 .char-roster-wrap.expanded .roster-grid{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-content:flex-start;gap:0;padding:4px}
 .char-roster-wrap .roster-item{width:38px;height:48px;border-radius:0;background:var(--s1);border:none;border-bottom:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;cursor:pointer;transition:all .2s;flex-shrink:0}
@@ -376,9 +379,10 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
     <div class="screen active" id="s-char">
       <div class="bg-screen bg-char"></div>
       <div class="char-screen">
+        <!-- Roster Toggle (outside roster) -->
+        <button class="roster-toggle-out" onclick="toggleRoster()">▸</button>
         <!-- Roster Overlay -->
         <div class="char-roster-wrap">
-          <div class="roster-toggle" onclick="toggleRoster()">▸</div>
           <div class="roster-grid" id="rosterGrid"></div>
         </div>
         <!-- Left-Right Row -->
@@ -598,8 +602,9 @@ function toggleMenu(force){
 function goHome(){showScreen('s-char')}
 function toggleRoster(){
   const roster=document.querySelector('.char-roster-wrap');
-  const btn=document.querySelector('.roster-toggle');
+  const btn=document.querySelector('.roster-toggle-out');
   roster.classList.toggle('expanded');
+  btn.classList.toggle('expanded');
   btn.style.transform=roster.classList.contains('expanded')?'rotate(180deg)':'rotate(0)';
 }
 
