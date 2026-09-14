@@ -3,12 +3,13 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const CHARACTERS = [
+
   {
-    charId: 'adaptive_stalker',
-    name: 'Adaptive Stalker',
-    faction: 'TRANSCENDENT',
-    rarity: 'R',
-    gender: 'Unknown',
+    charId: "adaptive_stalker",
+    name: "Adaptive Stalker",
+    faction: "TRANSCENDENT",
+    rarity: "R",
+    gender: "Unknown",
     evolution: 0,
     baseHp: 850,
     baseAtk: 160,
@@ -16,39 +17,71 @@ const CHARACTERS = [
     baseWis: 180,
     baseAgi: 180,
     totalExp: 5000,
-    description: 'Adapts to enemy patterns in real-time.',
+    description: "Adapts to enemy patterns in real-time.",
     skill: {
-      skillId: 'rewrite',
-      name: 'REWRITE',
-      description: 'Adapt the enemy\'s strength and turn it against them.',
-      effects: { type: 'adapt', value: 0.25 },
+      skillId: "rewrite",
+      name: "REWRITE",
+      description: "Adapt the enemy's strength and turn it against them.",
+      effects: {
+        type: "adapt",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'neural_sync',
-      name: 'Neural Sync',
-      description: 'Gains +5% AGI for each turn survived.',
-      effects: { type: 'stacking_agi', value: 0.05 },
+      passiveId: "neural_sync",
+      name: "Neural Sync",
+      description: "Gains +5% AGI for each turn survived.",
+      effects: {
+        type: "stacking_agi",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'transcendent_balanced',
-      name: 'Transcendent Balanced',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.1, def: 1.06, wis: 1.12, agi: 1.1 },
+      growthId: "transcendent_balanced",
+      name: "Transcendent Balanced",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
     },
     evolutionLine: {
-      name: 'Transcendent Path',
+      name: "Transcendent Path",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['neural_fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "neural_fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'steadfast',
-    name: 'Steadfast',
-    faction: 'PURIST',
-    rarity: 'R',
-    gender: 'M',
+    charId: "steadfast",
+    name: "Steadfast",
+    faction: "PURIST",
+    rarity: "R",
+    gender: "M",
     evolution: 0,
     baseHp: 1200,
     baseAtk: 150,
@@ -56,39 +89,72 @@ const CHARACTERS = [
     baseWis: 90,
     baseAgi: 100,
     totalExp: 5000,
-    description: 'Will not move. Will not fall.',
+    description: "Will not move. Will not fall.",
     skill: {
-      skillId: 'hold_the_line',
-      name: 'HOLD THE LINE',
-      description: 'Team gains damage reduction. Purist draws enemy fire.',
-      effects: { type: 'taunt', value: 0.3 },
+      skillId: "hold_the_line",
+      name: "HOLD THE LINE",
+      description: "Team gains damage reduction. Purist draws enemy fire.",
+      effects: {
+        type: "taunt",
+        value: 0.3
+      }
     },
     passive: {
-      passiveId: 'iron_will',
-      name: 'Iron Will',
-      description: 'When HP drops below 30%, DEF increases by 40%.',
-      effects: { type: 'low_hp_def', threshold: 0.3, value: 0.4 },
+      passiveId: "iron_will",
+      name: "Iron Will",
+      description: "When HP drops below 30%, DEF increases by 40%.",
+      effects: {
+        type: "low_hp_def",
+        threshold: 0.3,
+        value: 0.4
+      }
     },
     growth: {
-      growthId: 'purist_tank',
-      name: 'Purist Tank',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.12, atk: 1.06, def: 1.12, wis: 1.04, agi: 1.04 },
+      growthId: "purist_tank",
+      name: "Purist Tank",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
     },
     evolutionLine: {
-      name: 'Purist Resolve',
+      name: "Purist Resolve",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['veteran_badge'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "veteran_badge"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'fungal_lurker',
-    name: 'Fungal Lurker',
-    faction: 'WILD',
-    rarity: 'R',
-    gender: 'None',
+    charId: "fungal_lurker",
+    name: "Fungal Lurker",
+    faction: "WILD",
+    rarity: "R",
+    gender: "None",
     evolution: 0,
     baseHp: 800,
     baseAtk: 160,
@@ -96,39 +162,71 @@ const CHARACTERS = [
     baseWis: 120,
     baseAgi: 180,
     totalExp: 5000,
-    description: 'Life finds a way. Death spreads it.',
+    description: "Life finds a way. Death spreads it.",
     skill: {
-      skillId: 'pack_hunt',
-      name: 'PACK HUNT',
-      description: 'All Wild units focus the same target.',
-      effects: { type: 'focus_fire', value: 0.2 },
+      skillId: "pack_hunt",
+      name: "PACK HUNT",
+      description: "All Wild units focus the same target.",
+      effects: {
+        type: "focus_fire",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'regeneration',
-      name: 'Regeneration',
-      description: 'Regenerates 3% max HP each turn.',
-      effects: { type: 'heal_over_time', value: 0.03 },
+      passiveId: "regeneration",
+      name: "Regeneration",
+      description: "Regenerates 3% max HP each turn.",
+      effects: {
+        type: "heal_over_time",
+        value: 0.03
+      }
     },
     growth: {
-      growthId: 'wild_aggressive',
-      name: 'Wild Aggressive',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.12, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "wild_aggressive",
+      name: "Wild Aggressive",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Wild Evolution',
+      name: "Wild Evolution",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['primal_essence'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "primal_essence"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'void_pearl',
-    name: 'Void Pearl',
-    faction: 'UNKNOWN',
-    rarity: 'R',
-    gender: 'Unknown',
+    charId: "void_pearl",
+    name: "Void Pearl",
+    faction: "UNKNOWN",
+    rarity: "R",
+    gender: "Unknown",
     evolution: 0,
     baseHp: 750,
     baseAtk: 140,
@@ -136,39 +234,71 @@ const CHARACTERS = [
     baseWis: 160,
     baseAgi: 150,
     totalExp: 5000,
-    description: 'Reality bends around it.',
+    description: "Reality bends around it.",
     skill: {
-      skillId: 'synchronize',
-      name: 'SYNCHRONIZE',
-      description: 'Copy an enemy\'s buff and transfer it to an ally.',
-      effects: { type: 'copy_buff', value: 1.0 },
+      skillId: "synchronize",
+      name: "SYNCHRONIZE",
+      description: "Copy an enemy's buff and transfer it to an ally.",
+      effects: {
+        type: "copy_buff",
+        value: 1.0
+      }
     },
     passive: {
-      passiveId: 'unpredictable',
-      name: 'Unpredictable',
-      description: 'Each attack has a 20% chance to trigger a random effect.',
-      effects: { type: 'random_proc', chance: 0.2 },
+      passiveId: "unpredictable",
+      name: "Unpredictable",
+      description: "Each attack has a 20% chance to trigger a random effect.",
+      effects: {
+        type: "random_proc",
+        chance: 0.2
+      }
     },
     growth: {
-      growthId: 'unknown_chaos',
-      name: 'Unknown Chaos',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.08, def: 1.06, wis: 1.1, agi: 1.08 },
+      growthId: "unknown_chaos",
+      name: "Unknown Chaos",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
     },
     evolutionLine: {
-      name: 'Unknown Path',
+      name: "Unknown Path",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['void_shard'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "void_shard"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'chrome_reaper',
-    name: 'Chrome Reaper',
-    faction: 'CYBERIST',
-    rarity: 'R',
-    gender: 'None',
+    charId: "chrome_reaper",
+    name: "Chrome Reaper",
+    faction: "CYBERIST",
+    rarity: "R",
+    gender: "None",
     evolution: 0,
     baseHp: 800,
     baseAtk: 220,
@@ -176,40 +306,73 @@ const CHARACTERS = [
     baseWis: 110,
     baseAgi: 200,
     totalExp: 5000,
-    description: 'Overclocked beyond safe limits.',
+    description: "Overclocked beyond safe limits.",
     skill: {
-      skillId: 'system_override',
-      name: 'SYSTEM OVERRIDE',
-      description: 'Team gains increased skill proc rate for 3 turns.',
-      effects: { type: 'skill_proc_up', value: 0.3, duration: 3 },
+      skillId: "system_override",
+      name: "SYSTEM OVERRIDE",
+      description: "Team gains increased skill proc rate for 3 turns.",
+      effects: {
+        type: "skill_proc_up",
+        value: 0.3,
+        duration: 3
+      }
     },
     passive: {
-      passiveId: 'overclock',
-      name: 'Overclock',
-      description: 'ATK +10% but loses 2% HP each turn.',
-      effects: { type: 'atk_up_hp_drain', atkValue: 0.1, hpDrain: 0.02 },
+      passiveId: "overclock",
+      name: "Overclock",
+      description: "ATK +10% but loses 2% HP each turn.",
+      effects: {
+        type: "atk_up_hp_drain",
+        atkValue: 0.1,
+        hpDrain: 0.02
+      }
     },
     growth: {
-      growthId: 'cyberist_offense',
-      name: 'Cyberist Offense',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.14, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "cyberist_offense",
+      name: "Cyberist Offense",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Cyberist Ascension',
+      name: "Cyberist Ascension",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['quantum_core'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "quantum_core"
+            ]
+          }
+        }
+      ]
+    }
   },
-,
   {
-    charId: 'char_100',
-    name: 'Transcendent Guardian 1',
-    faction: 'TRANSCENDENT',
-    rarity: 'N',
-    gender: 'M',
+    charId: "char_100",
+    name: "Transcendent Guardian 1",
+    faction: "TRANSCENDENT",
+    rarity: "N",
+    gender: "M",
     evolution: 0,
     baseHp: 640,
     baseAtk: 120,
@@ -217,39 +380,71 @@ const CHARACTERS = [
     baseWis: 136,
     baseAgi: 136,
     totalExp: 5000,
-    description: 'A transcendent aligned warrior.',
+    description: "A transcendent aligned warrior.",
     skill: {
-      skillId: 'skill_100',
-      name: 'STRIKE',
-      description: 'Powerful transcendent skill.',
-      effects: { type: 'damage', value: 0.2 },
+      skillId: "skill_100",
+      name: "STRIKE",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'passive_100',
-      name: 'Regeneration',
-      description: 'transcendent passive ability.',
-      effects: { type: 'boost', value: 0.05 },
+      passiveId: "passive_100",
+      name: "Regeneration",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'growth_100',
-      name: 'Transcendent Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.1, def: 1.06, wis: 1.12, agi: 1.1 },
+      growthId: "growth_100",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
     },
     evolutionLine: {
-      name: 'Transcendent Path',
+      name: "Transcendent Path",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_101',
-    name: 'Purist Stalker 2',
-    faction: 'PURIST',
-    rarity: 'R',
-    gender: 'F',
+    charId: "char_101",
+    name: "Purist Stalker 2",
+    faction: "PURIST",
+    rarity: "R",
+    gender: "F",
     evolution: 0,
     baseHp: 990,
     baseAtk: 126,
@@ -257,39 +452,71 @@ const CHARACTERS = [
     baseWis: 81,
     baseAgi: 90,
     totalExp: 5000,
-    description: 'A purist aligned warrior.',
+    description: "A purist aligned warrior.",
     skill: {
-      skillId: 'skill_101',
-      name: 'BLAST',
-      description: 'Powerful purist skill.',
-      effects: { type: 'damage', value: 0.25 },
+      skillId: "skill_101",
+      name: "BLAST",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'passive_101',
-      name: 'Iron Will',
-      description: 'purist passive ability.',
-      effects: { type: 'boost', value: 0.07 },
+      passiveId: "passive_101",
+      name: "Iron Will",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
     },
     growth: {
-      growthId: 'growth_101',
-      name: 'Purist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.12, atk: 1.06, def: 1.12, wis: 1.04, agi: 1.04 },
+      growthId: "growth_101",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
     },
     evolutionLine: {
-      name: 'Purist Ascension',
+      name: "Purist Ascension",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_102',
-    name: 'Wild Hunter 3',
-    faction: 'WILD',
-    rarity: 'SR',
-    gender: 'Unknown',
+    charId: "char_102",
+    name: "Wild Hunter 3",
+    faction: "WILD",
+    rarity: "SR",
+    gender: "Unknown",
     evolution: 0,
     baseHp: 750,
     baseAtk: 160,
@@ -297,39 +524,71 @@ const CHARACTERS = [
     baseWis: 110,
     baseAgi: 180,
     totalExp: 5000,
-    description: 'A wild aligned warrior.',
+    description: "A wild aligned warrior.",
     skill: {
-      skillId: 'skill_102',
-      name: 'GUARD',
-      description: 'Powerful wild skill.',
-      effects: { type: 'damage', value: 0.3 },
+      skillId: "skill_102",
+      name: "GUARD",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
     },
     passive: {
-      passiveId: 'passive_102',
-      name: 'Swift',
-      description: 'wild passive ability.',
-      effects: { type: 'boost', value: 0.09 },
+      passiveId: "passive_102",
+      name: "Swift",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
     },
     growth: {
-      growthId: 'growth_102',
-      name: 'Wild Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.12, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_102",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Wild Evolution',
+      name: "Wild Evolution",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_103',
-    name: 'Unknown Seer 4',
-    faction: 'UNKNOWN',
-    rarity: 'N',
-    gender: 'None',
+    charId: "char_103",
+    name: "Unknown Seer 4",
+    faction: "UNKNOWN",
+    rarity: "N",
+    gender: "None",
     evolution: 0,
     baseHp: 770,
     baseAtk: 143,
@@ -337,39 +596,71 @@ const CHARACTERS = [
     baseWis: 176,
     baseAgi: 165,
     totalExp: 5000,
-    description: 'A unknown aligned warrior.',
+    description: "A unknown aligned warrior.",
     skill: {
-      skillId: 'skill_103',
-      name: 'HEAL',
-      description: 'Powerful unknown skill.',
-      effects: { type: 'damage', value: 0.2 },
+      skillId: "skill_103",
+      name: "HEAL",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'passive_103',
-      name: 'Berserker',
-      description: 'unknown passive ability.',
-      effects: { type: 'boost', value: 0.05 },
+      passiveId: "passive_103",
+      name: "Berserker",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'growth_103',
-      name: 'Unknown Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.08, def: 1.06, wis: 1.1, agi: 1.08 },
+      growthId: "growth_103",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
     },
     evolutionLine: {
-      name: 'Unknown Resolve',
+      name: "Unknown Resolve",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_104',
-    name: 'Cyberist Warden 5',
-    faction: 'CYBERIST',
-    rarity: 'R',
-    gender: 'M',
+    charId: "char_104",
+    name: "Cyberist Warden 5",
+    faction: "CYBERIST",
+    rarity: "R",
+    gender: "M",
     evolution: 0,
     baseHp: 900,
     baseAtk: 240,
@@ -377,39 +668,71 @@ const CHARACTERS = [
     baseWis: 120,
     baseAgi: 240,
     totalExp: 5000,
-    description: 'A cyberist aligned warrior.',
+    description: "A cyberist aligned warrior.",
     skill: {
-      skillId: 'skill_104',
-      name: 'CURSE',
-      description: 'Powerful cyberist skill.',
-      effects: { type: 'damage', value: 0.25 },
+      skillId: "skill_104",
+      name: "CURSE",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'passive_104',
-      name: 'Mystic',
-      description: 'cyberist passive ability.',
-      effects: { type: 'boost', value: 0.07 },
+      passiveId: "passive_104",
+      name: "Mystic",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
     },
     growth: {
-      growthId: 'growth_104',
-      name: 'Cyberist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.14, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_104",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Cyberist Awakening',
+      name: "Cyberist Awakening",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_105',
-    name: 'Transcendent Reaper 6',
-    faction: 'TRANSCENDENT',
-    rarity: 'SR',
-    gender: 'F',
+    charId: "char_105",
+    name: "Transcendent Reaper 6",
+    faction: "TRANSCENDENT",
+    rarity: "SR",
+    gender: "F",
     evolution: 0,
     baseHp: 640,
     baseAtk: 120,
@@ -417,39 +740,71 @@ const CHARACTERS = [
     baseWis: 136,
     baseAgi: 136,
     totalExp: 5000,
-    description: 'A transcendent aligned warrior.',
+    description: "A transcendent aligned warrior.",
     skill: {
-      skillId: 'skill_105',
-      name: 'BUFF',
-      description: 'Powerful transcendent skill.',
-      effects: { type: 'damage', value: 0.3 },
+      skillId: "skill_105",
+      name: "BUFF",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
     },
     passive: {
-      passiveId: 'passive_105',
-      name: 'Counter',
-      description: 'transcendent passive ability.',
-      effects: { type: 'boost', value: 0.09 },
+      passiveId: "passive_105",
+      name: "Counter",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
     },
     growth: {
-      growthId: 'growth_105',
-      name: 'Transcendent Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.1, def: 1.06, wis: 1.12, agi: 1.1 },
+      growthId: "growth_105",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
     },
     evolutionLine: {
-      name: 'Transcendent Path',
+      name: "Transcendent Path",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_106',
-    name: 'Purist Sentinel 7',
-    faction: 'PURIST',
-    rarity: 'N',
-    gender: 'Unknown',
+    charId: "char_106",
+    name: "Purist Sentinel 7",
+    faction: "PURIST",
+    rarity: "N",
+    gender: "Unknown",
     evolution: 0,
     baseHp: 990,
     baseAtk: 126,
@@ -457,39 +812,71 @@ const CHARACTERS = [
     baseWis: 81,
     baseAgi: 90,
     totalExp: 5000,
-    description: 'A purist aligned warrior.',
+    description: "A purist aligned warrior.",
     skill: {
-      skillId: 'skill_106',
-      name: 'DODGE',
-      description: 'Powerful purist skill.',
-      effects: { type: 'damage', value: 0.2 },
+      skillId: "skill_106",
+      name: "DODGE",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'passive_106',
-      name: 'Evasion',
-      description: 'purist passive ability.',
-      effects: { type: 'boost', value: 0.05 },
+      passiveId: "passive_106",
+      name: "Evasion",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'growth_106',
-      name: 'Purist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.12, atk: 1.06, def: 1.12, wis: 1.04, agi: 1.04 },
+      growthId: "growth_106",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
     },
     evolutionLine: {
-      name: 'Purist Ascension',
+      name: "Purist Ascension",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_107',
-    name: 'Wild Phantom 8',
-    faction: 'WILD',
-    rarity: 'R',
-    gender: 'None',
+    charId: "char_107",
+    name: "Wild Phantom 8",
+    faction: "WILD",
+    rarity: "R",
+    gender: "None",
     evolution: 0,
     baseHp: 750,
     baseAtk: 160,
@@ -497,39 +884,71 @@ const CHARACTERS = [
     baseWis: 110,
     baseAgi: 180,
     totalExp: 5000,
-    description: 'A wild aligned warrior.',
+    description: "A wild aligned warrior.",
     skill: {
-      skillId: 'skill_107',
-      name: 'RUSH',
-      description: 'Powerful wild skill.',
-      effects: { type: 'damage', value: 0.25 },
+      skillId: "skill_107",
+      name: "RUSH",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'passive_107',
-      name: 'Fortify',
-      description: 'wild passive ability.',
-      effects: { type: 'boost', value: 0.07 },
+      passiveId: "passive_107",
+      name: "Fortify",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
     },
     growth: {
-      growthId: 'growth_107',
-      name: 'Wild Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.12, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_107",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Wild Evolution',
+      name: "Wild Evolution",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_108',
-    name: 'Unknown Brawler 9',
-    faction: 'UNKNOWN',
-    rarity: 'SR',
-    gender: 'M',
+    charId: "char_108",
+    name: "Unknown Brawler 9",
+    faction: "UNKNOWN",
+    rarity: "SR",
+    gender: "M",
     evolution: 0,
     baseHp: 770,
     baseAtk: 143,
@@ -537,39 +956,71 @@ const CHARACTERS = [
     baseWis: 176,
     baseAgi: 165,
     totalExp: 5000,
-    description: 'A unknown aligned warrior.',
+    description: "A unknown aligned warrior.",
     skill: {
-      skillId: 'skill_108',
-      name: 'SHIELD',
-      description: 'Powerful unknown skill.',
-      effects: { type: 'damage', value: 0.3 },
+      skillId: "skill_108",
+      name: "SHIELD",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
     },
     passive: {
-      passiveId: 'passive_108',
-      name: 'Focus',
-      description: 'unknown passive ability.',
-      effects: { type: 'boost', value: 0.09 },
+      passiveId: "passive_108",
+      name: "Focus",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
     },
     growth: {
-      growthId: 'growth_108',
-      name: 'Unknown Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.08, def: 1.06, wis: 1.1, agi: 1.08 },
+      growthId: "growth_108",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
     },
     evolutionLine: {
-      name: 'Unknown Resolve',
+      name: "Unknown Resolve",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_109',
-    name: 'Cyberist Mystic 10',
-    faction: 'CYBERIST',
-    rarity: 'N',
-    gender: 'F',
+    charId: "char_109",
+    name: "Cyberist Mystic 10",
+    faction: "CYBERIST",
+    rarity: "N",
+    gender: "F",
     evolution: 0,
     baseHp: 900,
     baseAtk: 240,
@@ -577,39 +1028,71 @@ const CHARACTERS = [
     baseWis: 120,
     baseAgi: 240,
     totalExp: 5000,
-    description: 'A cyberist aligned warrior.',
+    description: "A cyberist aligned warrior.",
     skill: {
-      skillId: 'skill_109',
-      name: 'DRAIN',
-      description: 'Powerful cyberist skill.',
-      effects: { type: 'damage', value: 0.2 },
+      skillId: "skill_109",
+      name: "DRAIN",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'passive_109',
-      name: 'Revenge',
-      description: 'cyberist passive ability.',
-      effects: { type: 'boost', value: 0.05 },
+      passiveId: "passive_109",
+      name: "Revenge",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'growth_109',
-      name: 'Cyberist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.14, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_109",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Cyberist Awakening',
+      name: "Cyberist Awakening",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_110',
-    name: 'Transcendent Guardian 11',
-    faction: 'TRANSCENDENT',
-    rarity: 'R',
-    gender: 'Unknown',
+    charId: "char_110",
+    name: "Transcendent Guardian 11",
+    faction: "TRANSCENDENT",
+    rarity: "R",
+    gender: "Unknown",
     evolution: 0,
     baseHp: 640,
     baseAtk: 120,
@@ -617,39 +1100,71 @@ const CHARACTERS = [
     baseWis: 136,
     baseAgi: 136,
     totalExp: 5000,
-    description: 'A transcendent aligned warrior.',
+    description: "A transcendent aligned warrior.",
     skill: {
-      skillId: 'skill_110',
-      name: 'STRIKE',
-      description: 'Powerful transcendent skill.',
-      effects: { type: 'damage', value: 0.25 },
+      skillId: "skill_110",
+      name: "STRIKE",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'passive_110',
-      name: 'Regeneration',
-      description: 'transcendent passive ability.',
-      effects: { type: 'boost', value: 0.07 },
+      passiveId: "passive_110",
+      name: "Regeneration",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
     },
     growth: {
-      growthId: 'growth_110',
-      name: 'Transcendent Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.1, def: 1.06, wis: 1.12, agi: 1.1 },
+      growthId: "growth_110",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
     },
     evolutionLine: {
-      name: 'Transcendent Path',
+      name: "Transcendent Path",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_111',
-    name: 'Purist Stalker 12',
-    faction: 'PURIST',
-    rarity: 'SR',
-    gender: 'None',
+    charId: "char_111",
+    name: "Purist Stalker 12",
+    faction: "PURIST",
+    rarity: "SR",
+    gender: "None",
     evolution: 0,
     baseHp: 990,
     baseAtk: 126,
@@ -657,39 +1172,71 @@ const CHARACTERS = [
     baseWis: 81,
     baseAgi: 90,
     totalExp: 5000,
-    description: 'A purist aligned warrior.',
+    description: "A purist aligned warrior.",
     skill: {
-      skillId: 'skill_111',
-      name: 'BLAST',
-      description: 'Powerful purist skill.',
-      effects: { type: 'damage', value: 0.3 },
+      skillId: "skill_111",
+      name: "BLAST",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
     },
     passive: {
-      passiveId: 'passive_111',
-      name: 'Iron Will',
-      description: 'purist passive ability.',
-      effects: { type: 'boost', value: 0.09 },
+      passiveId: "passive_111",
+      name: "Iron Will",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
     },
     growth: {
-      growthId: 'growth_111',
-      name: 'Purist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.12, atk: 1.06, def: 1.12, wis: 1.04, agi: 1.04 },
+      growthId: "growth_111",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
     },
     evolutionLine: {
-      name: 'Purist Ascension',
+      name: "Purist Ascension",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_112',
-    name: 'Wild Hunter 13',
-    faction: 'WILD',
-    rarity: 'N',
-    gender: 'M',
+    charId: "char_112",
+    name: "Wild Hunter 13",
+    faction: "WILD",
+    rarity: "N",
+    gender: "M",
     evolution: 0,
     baseHp: 750,
     baseAtk: 160,
@@ -697,39 +1244,71 @@ const CHARACTERS = [
     baseWis: 110,
     baseAgi: 180,
     totalExp: 5000,
-    description: 'A wild aligned warrior.',
+    description: "A wild aligned warrior.",
     skill: {
-      skillId: 'skill_112',
-      name: 'GUARD',
-      description: 'Powerful wild skill.',
-      effects: { type: 'damage', value: 0.2 },
+      skillId: "skill_112",
+      name: "GUARD",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'passive_112',
-      name: 'Swift',
-      description: 'wild passive ability.',
-      effects: { type: 'boost', value: 0.05 },
+      passiveId: "passive_112",
+      name: "Swift",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'growth_112',
-      name: 'Wild Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.12, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_112",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Wild Evolution',
+      name: "Wild Evolution",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_113',
-    name: 'Unknown Seer 14',
-    faction: 'UNKNOWN',
-    rarity: 'R',
-    gender: 'F',
+    charId: "char_113",
+    name: "Unknown Seer 14",
+    faction: "UNKNOWN",
+    rarity: "R",
+    gender: "F",
     evolution: 0,
     baseHp: 770,
     baseAtk: 143,
@@ -737,39 +1316,71 @@ const CHARACTERS = [
     baseWis: 176,
     baseAgi: 165,
     totalExp: 5000,
-    description: 'A unknown aligned warrior.',
+    description: "A unknown aligned warrior.",
     skill: {
-      skillId: 'skill_113',
-      name: 'HEAL',
-      description: 'Powerful unknown skill.',
-      effects: { type: 'damage', value: 0.25 },
+      skillId: "skill_113",
+      name: "HEAL",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'passive_113',
-      name: 'Berserker',
-      description: 'unknown passive ability.',
-      effects: { type: 'boost', value: 0.07 },
+      passiveId: "passive_113",
+      name: "Berserker",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
     },
     growth: {
-      growthId: 'growth_113',
-      name: 'Unknown Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.08, def: 1.06, wis: 1.1, agi: 1.08 },
+      growthId: "growth_113",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
     },
     evolutionLine: {
-      name: 'Unknown Resolve',
+      name: "Unknown Resolve",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_114',
-    name: 'Cyberist Warden 15',
-    faction: 'CYBERIST',
-    rarity: 'SR',
-    gender: 'Unknown',
+    charId: "char_114",
+    name: "Cyberist Warden 15",
+    faction: "CYBERIST",
+    rarity: "SR",
+    gender: "Unknown",
     evolution: 0,
     baseHp: 900,
     baseAtk: 240,
@@ -777,39 +1388,71 @@ const CHARACTERS = [
     baseWis: 120,
     baseAgi: 240,
     totalExp: 5000,
-    description: 'A cyberist aligned warrior.',
+    description: "A cyberist aligned warrior.",
     skill: {
-      skillId: 'skill_114',
-      name: 'CURSE',
-      description: 'Powerful cyberist skill.',
-      effects: { type: 'damage', value: 0.3 },
+      skillId: "skill_114",
+      name: "CURSE",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
     },
     passive: {
-      passiveId: 'passive_114',
-      name: 'Mystic',
-      description: 'cyberist passive ability.',
-      effects: { type: 'boost', value: 0.09 },
+      passiveId: "passive_114",
+      name: "Mystic",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
     },
     growth: {
-      growthId: 'growth_114',
-      name: 'Cyberist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.14, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_114",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Cyberist Awakening',
+      name: "Cyberist Awakening",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_115',
-    name: 'Transcendent Reaper 16',
-    faction: 'TRANSCENDENT',
-    rarity: 'N',
-    gender: 'None',
+    charId: "char_115",
+    name: "Transcendent Reaper 16",
+    faction: "TRANSCENDENT",
+    rarity: "N",
+    gender: "None",
     evolution: 0,
     baseHp: 640,
     baseAtk: 120,
@@ -817,39 +1460,71 @@ const CHARACTERS = [
     baseWis: 136,
     baseAgi: 136,
     totalExp: 5000,
-    description: 'A transcendent aligned warrior.',
+    description: "A transcendent aligned warrior.",
     skill: {
-      skillId: 'skill_115',
-      name: 'BUFF',
-      description: 'Powerful transcendent skill.',
-      effects: { type: 'damage', value: 0.2 },
+      skillId: "skill_115",
+      name: "BUFF",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'passive_115',
-      name: 'Counter',
-      description: 'transcendent passive ability.',
-      effects: { type: 'boost', value: 0.05 },
+      passiveId: "passive_115",
+      name: "Counter",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'growth_115',
-      name: 'Transcendent Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.1, def: 1.06, wis: 1.12, agi: 1.1 },
+      growthId: "growth_115",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
     },
     evolutionLine: {
-      name: 'Transcendent Path',
+      name: "Transcendent Path",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_116',
-    name: 'Purist Sentinel 17',
-    faction: 'PURIST',
-    rarity: 'R',
-    gender: 'M',
+    charId: "char_116",
+    name: "Purist Sentinel 17",
+    faction: "PURIST",
+    rarity: "R",
+    gender: "M",
     evolution: 0,
     baseHp: 990,
     baseAtk: 126,
@@ -857,39 +1532,71 @@ const CHARACTERS = [
     baseWis: 81,
     baseAgi: 90,
     totalExp: 5000,
-    description: 'A purist aligned warrior.',
+    description: "A purist aligned warrior.",
     skill: {
-      skillId: 'skill_116',
-      name: 'DODGE',
-      description: 'Powerful purist skill.',
-      effects: { type: 'damage', value: 0.25 },
+      skillId: "skill_116",
+      name: "DODGE",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'passive_116',
-      name: 'Evasion',
-      description: 'purist passive ability.',
-      effects: { type: 'boost', value: 0.07 },
+      passiveId: "passive_116",
+      name: "Evasion",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
     },
     growth: {
-      growthId: 'growth_116',
-      name: 'Purist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.12, atk: 1.06, def: 1.12, wis: 1.04, agi: 1.04 },
+      growthId: "growth_116",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
     },
     evolutionLine: {
-      name: 'Purist Ascension',
+      name: "Purist Ascension",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_117',
-    name: 'Wild Phantom 18',
-    faction: 'WILD',
-    rarity: 'SR',
-    gender: 'F',
+    charId: "char_117",
+    name: "Wild Phantom 18",
+    faction: "WILD",
+    rarity: "SR",
+    gender: "F",
     evolution: 0,
     baseHp: 750,
     baseAtk: 160,
@@ -897,39 +1604,71 @@ const CHARACTERS = [
     baseWis: 110,
     baseAgi: 180,
     totalExp: 5000,
-    description: 'A wild aligned warrior.',
+    description: "A wild aligned warrior.",
     skill: {
-      skillId: 'skill_117',
-      name: 'RUSH',
-      description: 'Powerful wild skill.',
-      effects: { type: 'damage', value: 0.3 },
+      skillId: "skill_117",
+      name: "RUSH",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
     },
     passive: {
-      passiveId: 'passive_117',
-      name: 'Fortify',
-      description: 'wild passive ability.',
-      effects: { type: 'boost', value: 0.09 },
+      passiveId: "passive_117",
+      name: "Fortify",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
     },
     growth: {
-      growthId: 'growth_117',
-      name: 'Wild Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.12, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_117",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Wild Evolution',
+      name: "Wild Evolution",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_118',
-    name: 'Unknown Brawler 19',
-    faction: 'UNKNOWN',
-    rarity: 'N',
-    gender: 'Unknown',
+    charId: "char_118",
+    name: "Unknown Brawler 19",
+    faction: "UNKNOWN",
+    rarity: "N",
+    gender: "Unknown",
     evolution: 0,
     baseHp: 770,
     baseAtk: 143,
@@ -937,39 +1676,71 @@ const CHARACTERS = [
     baseWis: 176,
     baseAgi: 165,
     totalExp: 5000,
-    description: 'A unknown aligned warrior.',
+    description: "A unknown aligned warrior.",
     skill: {
-      skillId: 'skill_118',
-      name: 'SHIELD',
-      description: 'Powerful unknown skill.',
-      effects: { type: 'damage', value: 0.2 },
+      skillId: "skill_118",
+      name: "SHIELD",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'passive_118',
-      name: 'Focus',
-      description: 'unknown passive ability.',
-      effects: { type: 'boost', value: 0.05 },
+      passiveId: "passive_118",
+      name: "Focus",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'growth_118',
-      name: 'Unknown Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.08, def: 1.06, wis: 1.1, agi: 1.08 },
+      growthId: "growth_118",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
     },
     evolutionLine: {
-      name: 'Unknown Resolve',
+      name: "Unknown Resolve",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_119',
-    name: 'Cyberist Mystic 20',
-    faction: 'CYBERIST',
-    rarity: 'R',
-    gender: 'None',
+    charId: "char_119",
+    name: "Cyberist Mystic 20",
+    faction: "CYBERIST",
+    rarity: "R",
+    gender: "None",
     evolution: 0,
     baseHp: 900,
     baseAtk: 240,
@@ -977,39 +1748,71 @@ const CHARACTERS = [
     baseWis: 120,
     baseAgi: 240,
     totalExp: 5000,
-    description: 'A cyberist aligned warrior.',
+    description: "A cyberist aligned warrior.",
     skill: {
-      skillId: 'skill_119',
-      name: 'DRAIN',
-      description: 'Powerful cyberist skill.',
-      effects: { type: 'damage', value: 0.25 },
+      skillId: "skill_119",
+      name: "DRAIN",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'passive_119',
-      name: 'Revenge',
-      description: 'cyberist passive ability.',
-      effects: { type: 'boost', value: 0.07 },
+      passiveId: "passive_119",
+      name: "Revenge",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
     },
     growth: {
-      growthId: 'growth_119',
-      name: 'Cyberist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.14, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_119",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Cyberist Awakening',
+      name: "Cyberist Awakening",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_120',
-    name: 'Transcendent Guardian 21',
-    faction: 'TRANSCENDENT',
-    rarity: 'SR',
-    gender: 'M',
+    charId: "char_120",
+    name: "Transcendent Guardian 21",
+    faction: "TRANSCENDENT",
+    rarity: "SR",
+    gender: "M",
     evolution: 0,
     baseHp: 640,
     baseAtk: 120,
@@ -1017,39 +1820,71 @@ const CHARACTERS = [
     baseWis: 136,
     baseAgi: 136,
     totalExp: 5000,
-    description: 'A transcendent aligned warrior.',
+    description: "A transcendent aligned warrior.",
     skill: {
-      skillId: 'skill_120',
-      name: 'STRIKE',
-      description: 'Powerful transcendent skill.',
-      effects: { type: 'damage', value: 0.3 },
+      skillId: "skill_120",
+      name: "STRIKE",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
     },
     passive: {
-      passiveId: 'passive_120',
-      name: 'Regeneration',
-      description: 'transcendent passive ability.',
-      effects: { type: 'boost', value: 0.09 },
+      passiveId: "passive_120",
+      name: "Regeneration",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
     },
     growth: {
-      growthId: 'growth_120',
-      name: 'Transcendent Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.1, def: 1.06, wis: 1.12, agi: 1.1 },
+      growthId: "growth_120",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
     },
     evolutionLine: {
-      name: 'Transcendent Path',
+      name: "Transcendent Path",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_121',
-    name: 'Purist Stalker 22',
-    faction: 'PURIST',
-    rarity: 'N',
-    gender: 'F',
+    charId: "char_121",
+    name: "Purist Stalker 22",
+    faction: "PURIST",
+    rarity: "N",
+    gender: "F",
     evolution: 0,
     baseHp: 990,
     baseAtk: 126,
@@ -1057,39 +1892,71 @@ const CHARACTERS = [
     baseWis: 81,
     baseAgi: 90,
     totalExp: 5000,
-    description: 'A purist aligned warrior.',
+    description: "A purist aligned warrior.",
     skill: {
-      skillId: 'skill_121',
-      name: 'BLAST',
-      description: 'Powerful purist skill.',
-      effects: { type: 'damage', value: 0.2 },
+      skillId: "skill_121",
+      name: "BLAST",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'passive_121',
-      name: 'Iron Will',
-      description: 'purist passive ability.',
-      effects: { type: 'boost', value: 0.05 },
+      passiveId: "passive_121",
+      name: "Iron Will",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'growth_121',
-      name: 'Purist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.12, atk: 1.06, def: 1.12, wis: 1.04, agi: 1.04 },
+      growthId: "growth_121",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
     },
     evolutionLine: {
-      name: 'Purist Ascension',
+      name: "Purist Ascension",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_122',
-    name: 'Wild Hunter 23',
-    faction: 'WILD',
-    rarity: 'R',
-    gender: 'Unknown',
+    charId: "char_122",
+    name: "Wild Hunter 23",
+    faction: "WILD",
+    rarity: "R",
+    gender: "Unknown",
     evolution: 0,
     baseHp: 750,
     baseAtk: 160,
@@ -1097,39 +1964,71 @@ const CHARACTERS = [
     baseWis: 110,
     baseAgi: 180,
     totalExp: 5000,
-    description: 'A wild aligned warrior.',
+    description: "A wild aligned warrior.",
     skill: {
-      skillId: 'skill_122',
-      name: 'GUARD',
-      description: 'Powerful wild skill.',
-      effects: { type: 'damage', value: 0.25 },
+      skillId: "skill_122",
+      name: "GUARD",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'passive_122',
-      name: 'Swift',
-      description: 'wild passive ability.',
-      effects: { type: 'boost', value: 0.07 },
+      passiveId: "passive_122",
+      name: "Swift",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
     },
     growth: {
-      growthId: 'growth_122',
-      name: 'Wild Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.12, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_122",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Wild Evolution',
+      name: "Wild Evolution",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_123',
-    name: 'Unknown Seer 24',
-    faction: 'UNKNOWN',
-    rarity: 'SR',
-    gender: 'None',
+    charId: "char_123",
+    name: "Unknown Seer 24",
+    faction: "UNKNOWN",
+    rarity: "SR",
+    gender: "None",
     evolution: 0,
     baseHp: 770,
     baseAtk: 143,
@@ -1137,39 +2036,71 @@ const CHARACTERS = [
     baseWis: 176,
     baseAgi: 165,
     totalExp: 5000,
-    description: 'A unknown aligned warrior.',
+    description: "A unknown aligned warrior.",
     skill: {
-      skillId: 'skill_123',
-      name: 'HEAL',
-      description: 'Powerful unknown skill.',
-      effects: { type: 'damage', value: 0.3 },
+      skillId: "skill_123",
+      name: "HEAL",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
     },
     passive: {
-      passiveId: 'passive_123',
-      name: 'Berserker',
-      description: 'unknown passive ability.',
-      effects: { type: 'boost', value: 0.09 },
+      passiveId: "passive_123",
+      name: "Berserker",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
     },
     growth: {
-      growthId: 'growth_123',
-      name: 'Unknown Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.08, def: 1.06, wis: 1.1, agi: 1.08 },
+      growthId: "growth_123",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
     },
     evolutionLine: {
-      name: 'Unknown Resolve',
+      name: "Unknown Resolve",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_124',
-    name: 'Cyberist Warden 25',
-    faction: 'CYBERIST',
-    rarity: 'N',
-    gender: 'M',
+    charId: "char_124",
+    name: "Cyberist Warden 25",
+    faction: "CYBERIST",
+    rarity: "N",
+    gender: "M",
     evolution: 0,
     baseHp: 900,
     baseAtk: 240,
@@ -1177,39 +2108,71 @@ const CHARACTERS = [
     baseWis: 120,
     baseAgi: 240,
     totalExp: 5000,
-    description: 'A cyberist aligned warrior.',
+    description: "A cyberist aligned warrior.",
     skill: {
-      skillId: 'skill_124',
-      name: 'CURSE',
-      description: 'Powerful cyberist skill.',
-      effects: { type: 'damage', value: 0.2 },
+      skillId: "skill_124",
+      name: "CURSE",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'passive_124',
-      name: 'Mystic',
-      description: 'cyberist passive ability.',
-      effects: { type: 'boost', value: 0.05 },
+      passiveId: "passive_124",
+      name: "Mystic",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'growth_124',
-      name: 'Cyberist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.14, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_124",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Cyberist Awakening',
+      name: "Cyberist Awakening",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_125',
-    name: 'Transcendent Reaper 26',
-    faction: 'TRANSCENDENT',
-    rarity: 'R',
-    gender: 'F',
+    charId: "char_125",
+    name: "Transcendent Reaper 26",
+    faction: "TRANSCENDENT",
+    rarity: "R",
+    gender: "F",
     evolution: 0,
     baseHp: 640,
     baseAtk: 120,
@@ -1217,39 +2180,71 @@ const CHARACTERS = [
     baseWis: 136,
     baseAgi: 136,
     totalExp: 5000,
-    description: 'A transcendent aligned warrior.',
+    description: "A transcendent aligned warrior.",
     skill: {
-      skillId: 'skill_125',
-      name: 'BUFF',
-      description: 'Powerful transcendent skill.',
-      effects: { type: 'damage', value: 0.25 },
+      skillId: "skill_125",
+      name: "BUFF",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'passive_125',
-      name: 'Counter',
-      description: 'transcendent passive ability.',
-      effects: { type: 'boost', value: 0.07 },
+      passiveId: "passive_125",
+      name: "Counter",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
     },
     growth: {
-      growthId: 'growth_125',
-      name: 'Transcendent Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.1, def: 1.06, wis: 1.12, agi: 1.1 },
+      growthId: "growth_125",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
     },
     evolutionLine: {
-      name: 'Transcendent Path',
+      name: "Transcendent Path",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_126',
-    name: 'Purist Sentinel 27',
-    faction: 'PURIST',
-    rarity: 'SR',
-    gender: 'Unknown',
+    charId: "char_126",
+    name: "Purist Sentinel 27",
+    faction: "PURIST",
+    rarity: "SR",
+    gender: "Unknown",
     evolution: 0,
     baseHp: 990,
     baseAtk: 126,
@@ -1257,39 +2252,71 @@ const CHARACTERS = [
     baseWis: 81,
     baseAgi: 90,
     totalExp: 5000,
-    description: 'A purist aligned warrior.',
+    description: "A purist aligned warrior.",
     skill: {
-      skillId: 'skill_126',
-      name: 'DODGE',
-      description: 'Powerful purist skill.',
-      effects: { type: 'damage', value: 0.3 },
+      skillId: "skill_126",
+      name: "DODGE",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
     },
     passive: {
-      passiveId: 'passive_126',
-      name: 'Evasion',
-      description: 'purist passive ability.',
-      effects: { type: 'boost', value: 0.09 },
+      passiveId: "passive_126",
+      name: "Evasion",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
     },
     growth: {
-      growthId: 'growth_126',
-      name: 'Purist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.12, atk: 1.06, def: 1.12, wis: 1.04, agi: 1.04 },
+      growthId: "growth_126",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
     },
     evolutionLine: {
-      name: 'Purist Ascension',
+      name: "Purist Ascension",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_127',
-    name: 'Wild Phantom 28',
-    faction: 'WILD',
-    rarity: 'N',
-    gender: 'None',
+    charId: "char_127",
+    name: "Wild Phantom 28",
+    faction: "WILD",
+    rarity: "N",
+    gender: "None",
     evolution: 0,
     baseHp: 750,
     baseAtk: 160,
@@ -1297,39 +2324,71 @@ const CHARACTERS = [
     baseWis: 110,
     baseAgi: 180,
     totalExp: 5000,
-    description: 'A wild aligned warrior.',
+    description: "A wild aligned warrior.",
     skill: {
-      skillId: 'skill_127',
-      name: 'RUSH',
-      description: 'Powerful wild skill.',
-      effects: { type: 'damage', value: 0.2 },
+      skillId: "skill_127",
+      name: "RUSH",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'passive_127',
-      name: 'Fortify',
-      description: 'wild passive ability.',
-      effects: { type: 'boost', value: 0.05 },
+      passiveId: "passive_127",
+      name: "Fortify",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'growth_127',
-      name: 'Wild Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.12, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_127",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Wild Evolution',
+      name: "Wild Evolution",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_128',
-    name: 'Unknown Brawler 29',
-    faction: 'UNKNOWN',
-    rarity: 'R',
-    gender: 'M',
+    charId: "char_128",
+    name: "Unknown Brawler 29",
+    faction: "UNKNOWN",
+    rarity: "R",
+    gender: "M",
     evolution: 0,
     baseHp: 770,
     baseAtk: 143,
@@ -1337,39 +2396,71 @@ const CHARACTERS = [
     baseWis: 176,
     baseAgi: 165,
     totalExp: 5000,
-    description: 'A unknown aligned warrior.',
+    description: "A unknown aligned warrior.",
     skill: {
-      skillId: 'skill_128',
-      name: 'SHIELD',
-      description: 'Powerful unknown skill.',
-      effects: { type: 'damage', value: 0.25 },
+      skillId: "skill_128",
+      name: "SHIELD",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'passive_128',
-      name: 'Focus',
-      description: 'unknown passive ability.',
-      effects: { type: 'boost', value: 0.07 },
+      passiveId: "passive_128",
+      name: "Focus",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
     },
     growth: {
-      growthId: 'growth_128',
-      name: 'Unknown Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.08, def: 1.06, wis: 1.1, agi: 1.08 },
+      growthId: "growth_128",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
     },
     evolutionLine: {
-      name: 'Unknown Resolve',
+      name: "Unknown Resolve",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_129',
-    name: 'Cyberist Mystic 30',
-    faction: 'CYBERIST',
-    rarity: 'SR',
-    gender: 'F',
+    charId: "char_129",
+    name: "Cyberist Mystic 30",
+    faction: "CYBERIST",
+    rarity: "SR",
+    gender: "F",
     evolution: 0,
     baseHp: 900,
     baseAtk: 240,
@@ -1377,39 +2468,71 @@ const CHARACTERS = [
     baseWis: 120,
     baseAgi: 240,
     totalExp: 5000,
-    description: 'A cyberist aligned warrior.',
+    description: "A cyberist aligned warrior.",
     skill: {
-      skillId: 'skill_129',
-      name: 'DRAIN',
-      description: 'Powerful cyberist skill.',
-      effects: { type: 'damage', value: 0.3 },
+      skillId: "skill_129",
+      name: "DRAIN",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
     },
     passive: {
-      passiveId: 'passive_129',
-      name: 'Revenge',
-      description: 'cyberist passive ability.',
-      effects: { type: 'boost', value: 0.09 },
+      passiveId: "passive_129",
+      name: "Revenge",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
     },
     growth: {
-      growthId: 'growth_129',
-      name: 'Cyberist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.14, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_129",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Cyberist Awakening',
+      name: "Cyberist Awakening",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_130',
-    name: 'Transcendent Guardian 31',
-    faction: 'TRANSCENDENT',
-    rarity: 'N',
-    gender: 'Unknown',
+    charId: "char_130",
+    name: "Transcendent Guardian 31",
+    faction: "TRANSCENDENT",
+    rarity: "N",
+    gender: "Unknown",
     evolution: 0,
     baseHp: 640,
     baseAtk: 120,
@@ -1417,39 +2540,71 @@ const CHARACTERS = [
     baseWis: 136,
     baseAgi: 136,
     totalExp: 5000,
-    description: 'A transcendent aligned warrior.',
+    description: "A transcendent aligned warrior.",
     skill: {
-      skillId: 'skill_130',
-      name: 'STRIKE',
-      description: 'Powerful transcendent skill.',
-      effects: { type: 'damage', value: 0.2 },
+      skillId: "skill_130",
+      name: "STRIKE",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'passive_130',
-      name: 'Regeneration',
-      description: 'transcendent passive ability.',
-      effects: { type: 'boost', value: 0.05 },
+      passiveId: "passive_130",
+      name: "Regeneration",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'growth_130',
-      name: 'Transcendent Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.1, def: 1.06, wis: 1.12, agi: 1.1 },
+      growthId: "growth_130",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
     },
     evolutionLine: {
-      name: 'Transcendent Path',
+      name: "Transcendent Path",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_131',
-    name: 'Purist Stalker 32',
-    faction: 'PURIST',
-    rarity: 'R',
-    gender: 'None',
+    charId: "char_131",
+    name: "Purist Stalker 32",
+    faction: "PURIST",
+    rarity: "R",
+    gender: "None",
     evolution: 0,
     baseHp: 990,
     baseAtk: 126,
@@ -1457,39 +2612,71 @@ const CHARACTERS = [
     baseWis: 81,
     baseAgi: 90,
     totalExp: 5000,
-    description: 'A purist aligned warrior.',
+    description: "A purist aligned warrior.",
     skill: {
-      skillId: 'skill_131',
-      name: 'BLAST',
-      description: 'Powerful purist skill.',
-      effects: { type: 'damage', value: 0.25 },
+      skillId: "skill_131",
+      name: "BLAST",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'passive_131',
-      name: 'Iron Will',
-      description: 'purist passive ability.',
-      effects: { type: 'boost', value: 0.07 },
+      passiveId: "passive_131",
+      name: "Iron Will",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
     },
     growth: {
-      growthId: 'growth_131',
-      name: 'Purist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.12, atk: 1.06, def: 1.12, wis: 1.04, agi: 1.04 },
+      growthId: "growth_131",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
     },
     evolutionLine: {
-      name: 'Purist Ascension',
+      name: "Purist Ascension",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_132',
-    name: 'Wild Hunter 33',
-    faction: 'WILD',
-    rarity: 'SR',
-    gender: 'M',
+    charId: "char_132",
+    name: "Wild Hunter 33",
+    faction: "WILD",
+    rarity: "SR",
+    gender: "M",
     evolution: 0,
     baseHp: 750,
     baseAtk: 160,
@@ -1497,39 +2684,71 @@ const CHARACTERS = [
     baseWis: 110,
     baseAgi: 180,
     totalExp: 5000,
-    description: 'A wild aligned warrior.',
+    description: "A wild aligned warrior.",
     skill: {
-      skillId: 'skill_132',
-      name: 'GUARD',
-      description: 'Powerful wild skill.',
-      effects: { type: 'damage', value: 0.3 },
+      skillId: "skill_132",
+      name: "GUARD",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
     },
     passive: {
-      passiveId: 'passive_132',
-      name: 'Swift',
-      description: 'wild passive ability.',
-      effects: { type: 'boost', value: 0.09 },
+      passiveId: "passive_132",
+      name: "Swift",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
     },
     growth: {
-      growthId: 'growth_132',
-      name: 'Wild Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.12, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_132",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Wild Evolution',
+      name: "Wild Evolution",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_133',
-    name: 'Unknown Seer 34',
-    faction: 'UNKNOWN',
-    rarity: 'N',
-    gender: 'F',
+    charId: "char_133",
+    name: "Unknown Seer 34",
+    faction: "UNKNOWN",
+    rarity: "N",
+    gender: "F",
     evolution: 0,
     baseHp: 770,
     baseAtk: 143,
@@ -1537,39 +2756,71 @@ const CHARACTERS = [
     baseWis: 176,
     baseAgi: 165,
     totalExp: 5000,
-    description: 'A unknown aligned warrior.',
+    description: "A unknown aligned warrior.",
     skill: {
-      skillId: 'skill_133',
-      name: 'HEAL',
-      description: 'Powerful unknown skill.',
-      effects: { type: 'damage', value: 0.2 },
+      skillId: "skill_133",
+      name: "HEAL",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'passive_133',
-      name: 'Berserker',
-      description: 'unknown passive ability.',
-      effects: { type: 'boost', value: 0.05 },
+      passiveId: "passive_133",
+      name: "Berserker",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'growth_133',
-      name: 'Unknown Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.08, def: 1.06, wis: 1.1, agi: 1.08 },
+      growthId: "growth_133",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
     },
     evolutionLine: {
-      name: 'Unknown Resolve',
+      name: "Unknown Resolve",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_134',
-    name: 'Cyberist Warden 35',
-    faction: 'CYBERIST',
-    rarity: 'R',
-    gender: 'Unknown',
+    charId: "char_134",
+    name: "Cyberist Warden 35",
+    faction: "CYBERIST",
+    rarity: "R",
+    gender: "Unknown",
     evolution: 0,
     baseHp: 900,
     baseAtk: 240,
@@ -1577,39 +2828,71 @@ const CHARACTERS = [
     baseWis: 120,
     baseAgi: 240,
     totalExp: 5000,
-    description: 'A cyberist aligned warrior.',
+    description: "A cyberist aligned warrior.",
     skill: {
-      skillId: 'skill_134',
-      name: 'CURSE',
-      description: 'Powerful cyberist skill.',
-      effects: { type: 'damage', value: 0.25 },
+      skillId: "skill_134",
+      name: "CURSE",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'passive_134',
-      name: 'Mystic',
-      description: 'cyberist passive ability.',
-      effects: { type: 'boost', value: 0.07 },
+      passiveId: "passive_134",
+      name: "Mystic",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
     },
     growth: {
-      growthId: 'growth_134',
-      name: 'Cyberist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.14, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_134",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Cyberist Awakening',
+      name: "Cyberist Awakening",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_135',
-    name: 'Transcendent Reaper 36',
-    faction: 'TRANSCENDENT',
-    rarity: 'SR',
-    gender: 'None',
+    charId: "char_135",
+    name: "Transcendent Reaper 36",
+    faction: "TRANSCENDENT",
+    rarity: "SR",
+    gender: "None",
     evolution: 0,
     baseHp: 640,
     baseAtk: 120,
@@ -1617,39 +2900,71 @@ const CHARACTERS = [
     baseWis: 136,
     baseAgi: 136,
     totalExp: 5000,
-    description: 'A transcendent aligned warrior.',
+    description: "A transcendent aligned warrior.",
     skill: {
-      skillId: 'skill_135',
-      name: 'BUFF',
-      description: 'Powerful transcendent skill.',
-      effects: { type: 'damage', value: 0.3 },
+      skillId: "skill_135",
+      name: "BUFF",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
     },
     passive: {
-      passiveId: 'passive_135',
-      name: 'Counter',
-      description: 'transcendent passive ability.',
-      effects: { type: 'boost', value: 0.09 },
+      passiveId: "passive_135",
+      name: "Counter",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
     },
     growth: {
-      growthId: 'growth_135',
-      name: 'Transcendent Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.1, def: 1.06, wis: 1.12, agi: 1.1 },
+      growthId: "growth_135",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
     },
     evolutionLine: {
-      name: 'Transcendent Path',
+      name: "Transcendent Path",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_136',
-    name: 'Purist Sentinel 37',
-    faction: 'PURIST',
-    rarity: 'N',
-    gender: 'M',
+    charId: "char_136",
+    name: "Purist Sentinel 37",
+    faction: "PURIST",
+    rarity: "N",
+    gender: "M",
     evolution: 0,
     baseHp: 990,
     baseAtk: 126,
@@ -1657,39 +2972,71 @@ const CHARACTERS = [
     baseWis: 81,
     baseAgi: 90,
     totalExp: 5000,
-    description: 'A purist aligned warrior.',
+    description: "A purist aligned warrior.",
     skill: {
-      skillId: 'skill_136',
-      name: 'DODGE',
-      description: 'Powerful purist skill.',
-      effects: { type: 'damage', value: 0.2 },
+      skillId: "skill_136",
+      name: "DODGE",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'passive_136',
-      name: 'Evasion',
-      description: 'purist passive ability.',
-      effects: { type: 'boost', value: 0.05 },
+      passiveId: "passive_136",
+      name: "Evasion",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'growth_136',
-      name: 'Purist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.12, atk: 1.06, def: 1.12, wis: 1.04, agi: 1.04 },
+      growthId: "growth_136",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
     },
     evolutionLine: {
-      name: 'Purist Ascension',
+      name: "Purist Ascension",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_137',
-    name: 'Wild Phantom 38',
-    faction: 'WILD',
-    rarity: 'R',
-    gender: 'F',
+    charId: "char_137",
+    name: "Wild Phantom 38",
+    faction: "WILD",
+    rarity: "R",
+    gender: "F",
     evolution: 0,
     baseHp: 750,
     baseAtk: 160,
@@ -1697,39 +3044,71 @@ const CHARACTERS = [
     baseWis: 110,
     baseAgi: 180,
     totalExp: 5000,
-    description: 'A wild aligned warrior.',
+    description: "A wild aligned warrior.",
     skill: {
-      skillId: 'skill_137',
-      name: 'RUSH',
-      description: 'Powerful wild skill.',
-      effects: { type: 'damage', value: 0.25 },
+      skillId: "skill_137",
+      name: "RUSH",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'passive_137',
-      name: 'Fortify',
-      description: 'wild passive ability.',
-      effects: { type: 'boost', value: 0.07 },
+      passiveId: "passive_137",
+      name: "Fortify",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
     },
     growth: {
-      growthId: 'growth_137',
-      name: 'Wild Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.12, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_137",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Wild Evolution',
+      name: "Wild Evolution",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_138',
-    name: 'Unknown Brawler 39',
-    faction: 'UNKNOWN',
-    rarity: 'SR',
-    gender: 'Unknown',
+    charId: "char_138",
+    name: "Unknown Brawler 39",
+    faction: "UNKNOWN",
+    rarity: "SR",
+    gender: "Unknown",
     evolution: 0,
     baseHp: 770,
     baseAtk: 143,
@@ -1737,39 +3116,71 @@ const CHARACTERS = [
     baseWis: 176,
     baseAgi: 165,
     totalExp: 5000,
-    description: 'A unknown aligned warrior.',
+    description: "A unknown aligned warrior.",
     skill: {
-      skillId: 'skill_138',
-      name: 'SHIELD',
-      description: 'Powerful unknown skill.',
-      effects: { type: 'damage', value: 0.3 },
+      skillId: "skill_138",
+      name: "SHIELD",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
     },
     passive: {
-      passiveId: 'passive_138',
-      name: 'Focus',
-      description: 'unknown passive ability.',
-      effects: { type: 'boost', value: 0.09 },
+      passiveId: "passive_138",
+      name: "Focus",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
     },
     growth: {
-      growthId: 'growth_138',
-      name: 'Unknown Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.08, def: 1.06, wis: 1.1, agi: 1.08 },
+      growthId: "growth_138",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
     },
     evolutionLine: {
-      name: 'Unknown Resolve',
+      name: "Unknown Resolve",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_139',
-    name: 'Cyberist Mystic 40',
-    faction: 'CYBERIST',
-    rarity: 'N',
-    gender: 'None',
+    charId: "char_139",
+    name: "Cyberist Mystic 40",
+    faction: "CYBERIST",
+    rarity: "N",
+    gender: "None",
     evolution: 0,
     baseHp: 900,
     baseAtk: 240,
@@ -1777,39 +3188,71 @@ const CHARACTERS = [
     baseWis: 120,
     baseAgi: 240,
     totalExp: 5000,
-    description: 'A cyberist aligned warrior.',
+    description: "A cyberist aligned warrior.",
     skill: {
-      skillId: 'skill_139',
-      name: 'DRAIN',
-      description: 'Powerful cyberist skill.',
-      effects: { type: 'damage', value: 0.2 },
+      skillId: "skill_139",
+      name: "DRAIN",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'passive_139',
-      name: 'Revenge',
-      description: 'cyberist passive ability.',
-      effects: { type: 'boost', value: 0.05 },
+      passiveId: "passive_139",
+      name: "Revenge",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'growth_139',
-      name: 'Cyberist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.14, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_139",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Cyberist Awakening',
+      name: "Cyberist Awakening",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_140',
-    name: 'Transcendent Guardian 41',
-    faction: 'TRANSCENDENT',
-    rarity: 'R',
-    gender: 'M',
+    charId: "char_140",
+    name: "Transcendent Guardian 41",
+    faction: "TRANSCENDENT",
+    rarity: "R",
+    gender: "M",
     evolution: 0,
     baseHp: 640,
     baseAtk: 120,
@@ -1817,39 +3260,71 @@ const CHARACTERS = [
     baseWis: 136,
     baseAgi: 136,
     totalExp: 5000,
-    description: 'A transcendent aligned warrior.',
+    description: "A transcendent aligned warrior.",
     skill: {
-      skillId: 'skill_140',
-      name: 'STRIKE',
-      description: 'Powerful transcendent skill.',
-      effects: { type: 'damage', value: 0.25 },
+      skillId: "skill_140",
+      name: "STRIKE",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'passive_140',
-      name: 'Regeneration',
-      description: 'transcendent passive ability.',
-      effects: { type: 'boost', value: 0.07 },
+      passiveId: "passive_140",
+      name: "Regeneration",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
     },
     growth: {
-      growthId: 'growth_140',
-      name: 'Transcendent Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.1, def: 1.06, wis: 1.12, agi: 1.1 },
+      growthId: "growth_140",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
     },
     evolutionLine: {
-      name: 'Transcendent Path',
+      name: "Transcendent Path",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_141',
-    name: 'Purist Stalker 42',
-    faction: 'PURIST',
-    rarity: 'SR',
-    gender: 'F',
+    charId: "char_141",
+    name: "Purist Stalker 42",
+    faction: "PURIST",
+    rarity: "SR",
+    gender: "F",
     evolution: 0,
     baseHp: 990,
     baseAtk: 126,
@@ -1857,39 +3332,71 @@ const CHARACTERS = [
     baseWis: 81,
     baseAgi: 90,
     totalExp: 5000,
-    description: 'A purist aligned warrior.',
+    description: "A purist aligned warrior.",
     skill: {
-      skillId: 'skill_141',
-      name: 'BLAST',
-      description: 'Powerful purist skill.',
-      effects: { type: 'damage', value: 0.3 },
+      skillId: "skill_141",
+      name: "BLAST",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
     },
     passive: {
-      passiveId: 'passive_141',
-      name: 'Iron Will',
-      description: 'purist passive ability.',
-      effects: { type: 'boost', value: 0.09 },
+      passiveId: "passive_141",
+      name: "Iron Will",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
     },
     growth: {
-      growthId: 'growth_141',
-      name: 'Purist Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.12, atk: 1.06, def: 1.12, wis: 1.04, agi: 1.04 },
+      growthId: "growth_141",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
     },
     evolutionLine: {
-      name: 'Purist Ascension',
+      name: "Purist Ascension",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_142',
-    name: 'Wild Hunter 43',
-    faction: 'WILD',
-    rarity: 'N',
-    gender: 'Unknown',
+    charId: "char_142",
+    name: "Wild Hunter 43",
+    faction: "WILD",
+    rarity: "N",
+    gender: "Unknown",
     evolution: 0,
     baseHp: 750,
     baseAtk: 160,
@@ -1897,39 +3404,71 @@ const CHARACTERS = [
     baseWis: 110,
     baseAgi: 180,
     totalExp: 5000,
-    description: 'A wild aligned warrior.',
+    description: "A wild aligned warrior.",
     skill: {
-      skillId: 'skill_142',
-      name: 'GUARD',
-      description: 'Powerful wild skill.',
-      effects: { type: 'damage', value: 0.2 },
+      skillId: "skill_142",
+      name: "GUARD",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
     },
     passive: {
-      passiveId: 'passive_142',
-      name: 'Swift',
-      description: 'wild passive ability.',
-      effects: { type: 'boost', value: 0.05 },
+      passiveId: "passive_142",
+      name: "Swift",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
     },
     growth: {
-      growthId: 'growth_142',
-      name: 'Wild Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.06, atk: 1.12, def: 1.04, wis: 1.06, agi: 1.12 },
+      growthId: "growth_142",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
     },
     evolutionLine: {
-      name: 'Wild Evolution',
+      name: "Wild Evolution",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
-    },
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   },
   {
-    charId: 'char_143',
-    name: 'Unknown Seer 44',
-    faction: 'UNKNOWN',
-    rarity: 'R',
-    gender: 'None',
+    charId: "char_143",
+    name: "Unknown Seer 44",
+    faction: "UNKNOWN",
+    rarity: "R",
+    gender: "None",
     evolution: 0,
     baseHp: 770,
     baseAtk: 143,
@@ -1937,42 +3476,7359 @@ const CHARACTERS = [
     baseWis: 176,
     baseAgi: 165,
     totalExp: 5000,
-    description: 'A unknown aligned warrior.',
+    description: "A unknown aligned warrior.",
     skill: {
-      skillId: 'skill_143',
-      name: 'HEAL',
-      description: 'Powerful unknown skill.',
-      effects: { type: 'damage', value: 0.25 },
+      skillId: "skill_143",
+      name: "HEAL",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
     },
     passive: {
-      passiveId: 'passive_143',
-      name: 'Berserker',
-      description: 'unknown passive ability.',
-      effects: { type: 'boost', value: 0.07 },
+      passiveId: "passive_143",
+      name: "Berserker",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
     },
     growth: {
-      growthId: 'growth_143',
-      name: 'Unknown Growth',
-      expCurve: [100, 250, 500, 1000, 2000, 5000],
-      statMultipliers: { hp: 1.08, atk: 1.08, def: 1.06, wis: 1.1, agi: 1.08 },
+      growthId: "growth_143",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
     },
     evolutionLine: {
-      name: 'Unknown Resolve',
+      name: "Unknown Resolve",
       stages: [
-        { level: 10, requirements: { exp: 1000 } },
-        { level: 25, requirements: { exp: 5000, items: ['fragment'] } },
-      ],
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_144",
+    name: "Cyberist Warden 45",
+    faction: "CYBERIST",
+    rarity: "SR",
+    gender: "M",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_144",
+      name: "CURSE",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
     },
+    passive: {
+      passiveId: "passive_144",
+      name: "Mystic",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_144",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
   }
-];
 
-const STAGES = [
-  { stageId: 'stage_1_1', chapter: 1, number: 1, name: 'Abandoned Lab', staminaCost: 6, enemies: [{ name: 'Feral Slime', faction: 'WILD', level: 1, hp: 300, atk: 50, def: 30, wis: 20, agi: 40 }], rewards: { exp: 50, gold: 100 } },
-  { stageId: 'stage_1_2', chapter: 1, number: 2, name: 'Tunnel Rats', staminaCost: 6, enemies: [{ name: 'Pack Wolf', faction: 'WILD', level: 2, hp: 400, atk: 70, def: 40, wis: 30, agi: 60 }, { name: 'Pup', faction: 'WILD', level: 1, hp: 200, atk: 40, def: 20, wis: 20, agi: 50 }], rewards: { exp: 80, gold: 150 } },
-  { stageId: 'stage_1_3', chapter: 1, number: 3, name: 'Broken Signal', staminaCost: 8, enemies: [{ name: 'Signal Wraith', faction: 'UNKNOWN', level: 3, hp: 500, atk: 90, def: 50, wis: 40, agi: 80 }], rewards: { exp: 120, gold: 200 } },
-  { stageId: 'stage_1_4', chapter: 1, number: 4, name: 'Outpost Defense', staminaCost: 8, enemies: [{ name: 'Raider', faction: 'PURIST', level: 4, hp: 600, atk: 100, def: 60, wis: 40, agi: 70 }, { name: 'Mercenary', faction: 'CYBERIST', level: 3, hp: 350, atk: 80, def: 30, wis: 70, agi: 50 }], rewards: { exp: 150, gold: 250 } },
-  { stageId: 'stage_1_5', chapter: 1, number: 5, name: 'The Threshold', staminaCost: 10, enemies: [{ name: 'Transcendent Aspirant', faction: 'TRANSCENDENT', level: 5, hp: 800, atk: 130, def: 70, wis: 50, agi: 90 }, { name: 'Cultist', faction: 'UNKNOWN', level: 3, hp: 400, atk: 80, def: 40, wis: 30, agi: 70 }], rewards: { exp: 200, gold: 300 } },
-];
+]import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+const CHARACTERS = [
+[
+  {
+    charId: "adaptive_stalker",
+    name: "Adaptive Stalker",
+    faction: "TRANSCENDENT",
+    rarity: "R",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 850,
+    baseAtk: 160,
+    baseDef: 140,
+    baseWis: 180,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "Adapts to enemy patterns in real-time.",
+    skill: {
+      skillId: "rewrite",
+      name: "REWRITE",
+      description: "Adapt the enemy's strength and turn it against them.",
+      effects: {
+        type: "adapt",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "neural_sync",
+      name: "Neural Sync",
+      description: "Gains +5% AGI for each turn survived.",
+      effects: {
+        type: "stacking_agi",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "transcendent_balanced",
+      name: "Transcendent Balanced",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "neural_fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "steadfast",
+    name: "Steadfast",
+    faction: "PURIST",
+    rarity: "R",
+    gender: "M",
+    evolution: 0,
+    baseHp: 1200,
+    baseAtk: 150,
+    baseDef: 180,
+    baseWis: 90,
+    baseAgi: 100,
+    totalExp: 5000,
+    description: "Will not move. Will not fall.",
+    skill: {
+      skillId: "hold_the_line",
+      name: "HOLD THE LINE",
+      description: "Team gains damage reduction. Purist draws enemy fire.",
+      effects: {
+        type: "taunt",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "iron_will",
+      name: "Iron Will",
+      description: "When HP drops below 30%, DEF increases by 40%.",
+      effects: {
+        type: "low_hp_def",
+        threshold: 0.3,
+        value: 0.4
+      }
+    },
+    growth: {
+      growthId: "purist_tank",
+      name: "Purist Tank",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "veteran_badge"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "fungal_lurker",
+    name: "Fungal Lurker",
+    faction: "WILD",
+    rarity: "R",
+    gender: "None",
+    evolution: 0,
+    baseHp: 800,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 120,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "Life finds a way. Death spreads it.",
+    skill: {
+      skillId: "pack_hunt",
+      name: "PACK HUNT",
+      description: "All Wild units focus the same target.",
+      effects: {
+        type: "focus_fire",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "regeneration",
+      name: "Regeneration",
+      description: "Regenerates 3% max HP each turn.",
+      effects: {
+        type: "heal_over_time",
+        value: 0.03
+      }
+    },
+    growth: {
+      growthId: "wild_aggressive",
+      name: "Wild Aggressive",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "primal_essence"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "void_pearl",
+    name: "Void Pearl",
+    faction: "UNKNOWN",
+    rarity: "R",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 140,
+    baseDef: 90,
+    baseWis: 160,
+    baseAgi: 150,
+    totalExp: 5000,
+    description: "Reality bends around it.",
+    skill: {
+      skillId: "synchronize",
+      name: "SYNCHRONIZE",
+      description: "Copy an enemy's buff and transfer it to an ally.",
+      effects: {
+        type: "copy_buff",
+        value: 1.0
+      }
+    },
+    passive: {
+      passiveId: "unpredictable",
+      name: "Unpredictable",
+      description: "Each attack has a 20% chance to trigger a random effect.",
+      effects: {
+        type: "random_proc",
+        chance: 0.2
+      }
+    },
+    growth: {
+      growthId: "unknown_chaos",
+      name: "Unknown Chaos",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "void_shard"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "chrome_reaper",
+    name: "Chrome Reaper",
+    faction: "CYBERIST",
+    rarity: "R",
+    gender: "None",
+    evolution: 0,
+    baseHp: 800,
+    baseAtk: 220,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 200,
+    totalExp: 5000,
+    description: "Overclocked beyond safe limits.",
+    skill: {
+      skillId: "system_override",
+      name: "SYSTEM OVERRIDE",
+      description: "Team gains increased skill proc rate for 3 turns.",
+      effects: {
+        type: "skill_proc_up",
+        value: 0.3,
+        duration: 3
+      }
+    },
+    passive: {
+      passiveId: "overclock",
+      name: "Overclock",
+      description: "ATK +10% but loses 2% HP each turn.",
+      effects: {
+        type: "atk_up_hp_drain",
+        atkValue: 0.1,
+        hpDrain: 0.02
+      }
+    },
+    growth: {
+      growthId: "cyberist_offense",
+      name: "Cyberist Offense",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "quantum_core"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_100",
+    name: "Transcendent Guardian 1",
+    faction: "TRANSCENDENT",
+    rarity: "N",
+    gender: "M",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_100",
+      name: "STRIKE",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_100",
+      name: "Regeneration",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_100",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_101",
+    name: "Purist Stalker 2",
+    faction: "PURIST",
+    rarity: "R",
+    gender: "F",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_101",
+      name: "BLAST",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_101",
+      name: "Iron Will",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_101",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_102",
+    name: "Wild Hunter 3",
+    faction: "WILD",
+    rarity: "SR",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_102",
+      name: "GUARD",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_102",
+      name: "Swift",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_102",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_103",
+    name: "Unknown Seer 4",
+    faction: "UNKNOWN",
+    rarity: "N",
+    gender: "None",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_103",
+      name: "HEAL",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_103",
+      name: "Berserker",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_103",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_104",
+    name: "Cyberist Warden 5",
+    faction: "CYBERIST",
+    rarity: "R",
+    gender: "M",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_104",
+      name: "CURSE",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_104",
+      name: "Mystic",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_104",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_105",
+    name: "Transcendent Reaper 6",
+    faction: "TRANSCENDENT",
+    rarity: "SR",
+    gender: "F",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_105",
+      name: "BUFF",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_105",
+      name: "Counter",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_105",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_106",
+    name: "Purist Sentinel 7",
+    faction: "PURIST",
+    rarity: "N",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_106",
+      name: "DODGE",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_106",
+      name: "Evasion",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_106",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_107",
+    name: "Wild Phantom 8",
+    faction: "WILD",
+    rarity: "R",
+    gender: "None",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_107",
+      name: "RUSH",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_107",
+      name: "Fortify",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_107",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_108",
+    name: "Unknown Brawler 9",
+    faction: "UNKNOWN",
+    rarity: "SR",
+    gender: "M",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_108",
+      name: "SHIELD",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_108",
+      name: "Focus",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_108",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_109",
+    name: "Cyberist Mystic 10",
+    faction: "CYBERIST",
+    rarity: "N",
+    gender: "F",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_109",
+      name: "DRAIN",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_109",
+      name: "Revenge",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_109",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_110",
+    name: "Transcendent Guardian 11",
+    faction: "TRANSCENDENT",
+    rarity: "R",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_110",
+      name: "STRIKE",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_110",
+      name: "Regeneration",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_110",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_111",
+    name: "Purist Stalker 12",
+    faction: "PURIST",
+    rarity: "SR",
+    gender: "None",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_111",
+      name: "BLAST",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_111",
+      name: "Iron Will",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_111",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_112",
+    name: "Wild Hunter 13",
+    faction: "WILD",
+    rarity: "N",
+    gender: "M",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_112",
+      name: "GUARD",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_112",
+      name: "Swift",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_112",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_113",
+    name: "Unknown Seer 14",
+    faction: "UNKNOWN",
+    rarity: "R",
+    gender: "F",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_113",
+      name: "HEAL",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_113",
+      name: "Berserker",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_113",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_114",
+    name: "Cyberist Warden 15",
+    faction: "CYBERIST",
+    rarity: "SR",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_114",
+      name: "CURSE",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_114",
+      name: "Mystic",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_114",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_115",
+    name: "Transcendent Reaper 16",
+    faction: "TRANSCENDENT",
+    rarity: "N",
+    gender: "None",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_115",
+      name: "BUFF",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_115",
+      name: "Counter",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_115",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_116",
+    name: "Purist Sentinel 17",
+    faction: "PURIST",
+    rarity: "R",
+    gender: "M",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_116",
+      name: "DODGE",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_116",
+      name: "Evasion",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_116",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_117",
+    name: "Wild Phantom 18",
+    faction: "WILD",
+    rarity: "SR",
+    gender: "F",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_117",
+      name: "RUSH",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_117",
+      name: "Fortify",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_117",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_118",
+    name: "Unknown Brawler 19",
+    faction: "UNKNOWN",
+    rarity: "N",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_118",
+      name: "SHIELD",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_118",
+      name: "Focus",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_118",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_119",
+    name: "Cyberist Mystic 20",
+    faction: "CYBERIST",
+    rarity: "R",
+    gender: "None",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_119",
+      name: "DRAIN",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_119",
+      name: "Revenge",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_119",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_120",
+    name: "Transcendent Guardian 21",
+    faction: "TRANSCENDENT",
+    rarity: "SR",
+    gender: "M",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_120",
+      name: "STRIKE",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_120",
+      name: "Regeneration",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_120",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_121",
+    name: "Purist Stalker 22",
+    faction: "PURIST",
+    rarity: "N",
+    gender: "F",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_121",
+      name: "BLAST",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_121",
+      name: "Iron Will",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_121",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_122",
+    name: "Wild Hunter 23",
+    faction: "WILD",
+    rarity: "R",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_122",
+      name: "GUARD",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_122",
+      name: "Swift",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_122",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_123",
+    name: "Unknown Seer 24",
+    faction: "UNKNOWN",
+    rarity: "SR",
+    gender: "None",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_123",
+      name: "HEAL",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_123",
+      name: "Berserker",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_123",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_124",
+    name: "Cyberist Warden 25",
+    faction: "CYBERIST",
+    rarity: "N",
+    gender: "M",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_124",
+      name: "CURSE",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_124",
+      name: "Mystic",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_124",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_125",
+    name: "Transcendent Reaper 26",
+    faction: "TRANSCENDENT",
+    rarity: "R",
+    gender: "F",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_125",
+      name: "BUFF",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_125",
+      name: "Counter",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_125",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_126",
+    name: "Purist Sentinel 27",
+    faction: "PURIST",
+    rarity: "SR",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_126",
+      name: "DODGE",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_126",
+      name: "Evasion",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_126",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_127",
+    name: "Wild Phantom 28",
+    faction: "WILD",
+    rarity: "N",
+    gender: "None",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_127",
+      name: "RUSH",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_127",
+      name: "Fortify",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_127",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_128",
+    name: "Unknown Brawler 29",
+    faction: "UNKNOWN",
+    rarity: "R",
+    gender: "M",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_128",
+      name: "SHIELD",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_128",
+      name: "Focus",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_128",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_129",
+    name: "Cyberist Mystic 30",
+    faction: "CYBERIST",
+    rarity: "SR",
+    gender: "F",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_129",
+      name: "DRAIN",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_129",
+      name: "Revenge",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_129",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_130",
+    name: "Transcendent Guardian 31",
+    faction: "TRANSCENDENT",
+    rarity: "N",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_130",
+      name: "STRIKE",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_130",
+      name: "Regeneration",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_130",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_131",
+    name: "Purist Stalker 32",
+    faction: "PURIST",
+    rarity: "R",
+    gender: "None",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_131",
+      name: "BLAST",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_131",
+      name: "Iron Will",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_131",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_132",
+    name: "Wild Hunter 33",
+    faction: "WILD",
+    rarity: "SR",
+    gender: "M",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_132",
+      name: "GUARD",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_132",
+      name: "Swift",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_132",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_133",
+    name: "Unknown Seer 34",
+    faction: "UNKNOWN",
+    rarity: "N",
+    gender: "F",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_133",
+      name: "HEAL",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_133",
+      name: "Berserker",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_133",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_134",
+    name: "Cyberist Warden 35",
+    faction: "CYBERIST",
+    rarity: "R",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_134",
+      name: "CURSE",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_134",
+      name: "Mystic",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_134",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_135",
+    name: "Transcendent Reaper 36",
+    faction: "TRANSCENDENT",
+    rarity: "SR",
+    gender: "None",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_135",
+      name: "BUFF",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_135",
+      name: "Counter",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_135",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_136",
+    name: "Purist Sentinel 37",
+    faction: "PURIST",
+    rarity: "N",
+    gender: "M",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_136",
+      name: "DODGE",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_136",
+      name: "Evasion",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_136",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_137",
+    name: "Wild Phantom 38",
+    faction: "WILD",
+    rarity: "R",
+    gender: "F",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_137",
+      name: "RUSH",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_137",
+      name: "Fortify",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_137",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_138",
+    name: "Unknown Brawler 39",
+    faction: "UNKNOWN",
+    rarity: "SR",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_138",
+      name: "SHIELD",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_138",
+      name: "Focus",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_138",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_139",
+    name: "Cyberist Mystic 40",
+    faction: "CYBERIST",
+    rarity: "N",
+    gender: "None",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_139",
+      name: "DRAIN",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_139",
+      name: "Revenge",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_139",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_140",
+    name: "Transcendent Guardian 41",
+    faction: "TRANSCENDENT",
+    rarity: "R",
+    gender: "M",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_140",
+      name: "STRIKE",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_140",
+      name: "Regeneration",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_140",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_141",
+    name: "Purist Stalker 42",
+    faction: "PURIST",
+    rarity: "SR",
+    gender: "F",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_141",
+      name: "BLAST",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_141",
+      name: "Iron Will",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_141",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_142",
+    name: "Wild Hunter 43",
+    faction: "WILD",
+    rarity: "N",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_142",
+      name: "GUARD",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_142",
+      name: "Swift",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_142",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_143",
+    name: "Unknown Seer 44",
+    faction: "UNKNOWN",
+    rarity: "R",
+    gender: "None",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_143",
+      name: "HEAL",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_143",
+      name: "Berserker",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_143",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_144",
+    name: "Cyberist Warden 45",
+    faction: "CYBERIST",
+    rarity: "SR",
+    gender: "M",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_144",
+      name: "CURSE",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_144",
+      name: "Mystic",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_144",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  }
+]
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+const CHARACTERS = [
+[
+  {
+    charId: "adaptive_stalker",
+    name: "Adaptive Stalker",
+    faction: "TRANSCENDENT",
+    rarity: "R",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 850,
+    baseAtk: 160,
+    baseDef: 140,
+    baseWis: 180,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "Adapts to enemy patterns in real-time.",
+    skill: {
+      skillId: "rewrite",
+      name: "REWRITE",
+      description: "Adapt the enemy's strength and turn it against them.",
+      effects: {
+        type: "adapt",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "neural_sync",
+      name: "Neural Sync",
+      description: "Gains +5% AGI for each turn survived.",
+      effects: {
+        type: "stacking_agi",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "transcendent_balanced",
+      name: "Transcendent Balanced",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "neural_fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "steadfast",
+    name: "Steadfast",
+    faction: "PURIST",
+    rarity: "R",
+    gender: "M",
+    evolution: 0,
+    baseHp: 1200,
+    baseAtk: 150,
+    baseDef: 180,
+    baseWis: 90,
+    baseAgi: 100,
+    totalExp: 5000,
+    description: "Will not move. Will not fall.",
+    skill: {
+      skillId: "hold_the_line",
+      name: "HOLD THE LINE",
+      description: "Team gains damage reduction. Purist draws enemy fire.",
+      effects: {
+        type: "taunt",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "iron_will",
+      name: "Iron Will",
+      description: "When HP drops below 30%, DEF increases by 40%.",
+      effects: {
+        type: "low_hp_def",
+        threshold: 0.3,
+        value: 0.4
+      }
+    },
+    growth: {
+      growthId: "purist_tank",
+      name: "Purist Tank",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "veteran_badge"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "fungal_lurker",
+    name: "Fungal Lurker",
+    faction: "WILD",
+    rarity: "R",
+    gender: "None",
+    evolution: 0,
+    baseHp: 800,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 120,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "Life finds a way. Death spreads it.",
+    skill: {
+      skillId: "pack_hunt",
+      name: "PACK HUNT",
+      description: "All Wild units focus the same target.",
+      effects: {
+        type: "focus_fire",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "regeneration",
+      name: "Regeneration",
+      description: "Regenerates 3% max HP each turn.",
+      effects: {
+        type: "heal_over_time",
+        value: 0.03
+      }
+    },
+    growth: {
+      growthId: "wild_aggressive",
+      name: "Wild Aggressive",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "primal_essence"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "void_pearl",
+    name: "Void Pearl",
+    faction: "UNKNOWN",
+    rarity: "R",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 140,
+    baseDef: 90,
+    baseWis: 160,
+    baseAgi: 150,
+    totalExp: 5000,
+    description: "Reality bends around it.",
+    skill: {
+      skillId: "synchronize",
+      name: "SYNCHRONIZE",
+      description: "Copy an enemy's buff and transfer it to an ally.",
+      effects: {
+        type: "copy_buff",
+        value: 1.0
+      }
+    },
+    passive: {
+      passiveId: "unpredictable",
+      name: "Unpredictable",
+      description: "Each attack has a 20% chance to trigger a random effect.",
+      effects: {
+        type: "random_proc",
+        chance: 0.2
+      }
+    },
+    growth: {
+      growthId: "unknown_chaos",
+      name: "Unknown Chaos",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "void_shard"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "chrome_reaper",
+    name: "Chrome Reaper",
+    faction: "CYBERIST",
+    rarity: "R",
+    gender: "None",
+    evolution: 0,
+    baseHp: 800,
+    baseAtk: 220,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 200,
+    totalExp: 5000,
+    description: "Overclocked beyond safe limits.",
+    skill: {
+      skillId: "system_override",
+      name: "SYSTEM OVERRIDE",
+      description: "Team gains increased skill proc rate for 3 turns.",
+      effects: {
+        type: "skill_proc_up",
+        value: 0.3,
+        duration: 3
+      }
+    },
+    passive: {
+      passiveId: "overclock",
+      name: "Overclock",
+      description: "ATK +10% but loses 2% HP each turn.",
+      effects: {
+        type: "atk_up_hp_drain",
+        atkValue: 0.1,
+        hpDrain: 0.02
+      }
+    },
+    growth: {
+      growthId: "cyberist_offense",
+      name: "Cyberist Offense",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "quantum_core"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_100",
+    name: "Transcendent Guardian 1",
+    faction: "TRANSCENDENT",
+    rarity: "N",
+    gender: "M",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_100",
+      name: "STRIKE",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_100",
+      name: "Regeneration",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_100",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_101",
+    name: "Purist Stalker 2",
+    faction: "PURIST",
+    rarity: "R",
+    gender: "F",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_101",
+      name: "BLAST",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_101",
+      name: "Iron Will",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_101",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_102",
+    name: "Wild Hunter 3",
+    faction: "WILD",
+    rarity: "SR",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_102",
+      name: "GUARD",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_102",
+      name: "Swift",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_102",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_103",
+    name: "Unknown Seer 4",
+    faction: "UNKNOWN",
+    rarity: "N",
+    gender: "None",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_103",
+      name: "HEAL",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_103",
+      name: "Berserker",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_103",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_104",
+    name: "Cyberist Warden 5",
+    faction: "CYBERIST",
+    rarity: "R",
+    gender: "M",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_104",
+      name: "CURSE",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_104",
+      name: "Mystic",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_104",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_105",
+    name: "Transcendent Reaper 6",
+    faction: "TRANSCENDENT",
+    rarity: "SR",
+    gender: "F",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_105",
+      name: "BUFF",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_105",
+      name: "Counter",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_105",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_106",
+    name: "Purist Sentinel 7",
+    faction: "PURIST",
+    rarity: "N",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_106",
+      name: "DODGE",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_106",
+      name: "Evasion",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_106",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_107",
+    name: "Wild Phantom 8",
+    faction: "WILD",
+    rarity: "R",
+    gender: "None",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_107",
+      name: "RUSH",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_107",
+      name: "Fortify",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_107",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_108",
+    name: "Unknown Brawler 9",
+    faction: "UNKNOWN",
+    rarity: "SR",
+    gender: "M",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_108",
+      name: "SHIELD",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_108",
+      name: "Focus",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_108",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_109",
+    name: "Cyberist Mystic 10",
+    faction: "CYBERIST",
+    rarity: "N",
+    gender: "F",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_109",
+      name: "DRAIN",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_109",
+      name: "Revenge",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_109",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_110",
+    name: "Transcendent Guardian 11",
+    faction: "TRANSCENDENT",
+    rarity: "R",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_110",
+      name: "STRIKE",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_110",
+      name: "Regeneration",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_110",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_111",
+    name: "Purist Stalker 12",
+    faction: "PURIST",
+    rarity: "SR",
+    gender: "None",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_111",
+      name: "BLAST",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_111",
+      name: "Iron Will",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_111",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_112",
+    name: "Wild Hunter 13",
+    faction: "WILD",
+    rarity: "N",
+    gender: "M",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_112",
+      name: "GUARD",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_112",
+      name: "Swift",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_112",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_113",
+    name: "Unknown Seer 14",
+    faction: "UNKNOWN",
+    rarity: "R",
+    gender: "F",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_113",
+      name: "HEAL",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_113",
+      name: "Berserker",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_113",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_114",
+    name: "Cyberist Warden 15",
+    faction: "CYBERIST",
+    rarity: "SR",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_114",
+      name: "CURSE",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_114",
+      name: "Mystic",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_114",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_115",
+    name: "Transcendent Reaper 16",
+    faction: "TRANSCENDENT",
+    rarity: "N",
+    gender: "None",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_115",
+      name: "BUFF",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_115",
+      name: "Counter",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_115",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_116",
+    name: "Purist Sentinel 17",
+    faction: "PURIST",
+    rarity: "R",
+    gender: "M",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_116",
+      name: "DODGE",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_116",
+      name: "Evasion",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_116",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_117",
+    name: "Wild Phantom 18",
+    faction: "WILD",
+    rarity: "SR",
+    gender: "F",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_117",
+      name: "RUSH",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_117",
+      name: "Fortify",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_117",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_118",
+    name: "Unknown Brawler 19",
+    faction: "UNKNOWN",
+    rarity: "N",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_118",
+      name: "SHIELD",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_118",
+      name: "Focus",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_118",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_119",
+    name: "Cyberist Mystic 20",
+    faction: "CYBERIST",
+    rarity: "R",
+    gender: "None",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_119",
+      name: "DRAIN",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_119",
+      name: "Revenge",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_119",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_120",
+    name: "Transcendent Guardian 21",
+    faction: "TRANSCENDENT",
+    rarity: "SR",
+    gender: "M",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_120",
+      name: "STRIKE",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_120",
+      name: "Regeneration",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_120",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_121",
+    name: "Purist Stalker 22",
+    faction: "PURIST",
+    rarity: "N",
+    gender: "F",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_121",
+      name: "BLAST",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_121",
+      name: "Iron Will",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_121",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_122",
+    name: "Wild Hunter 23",
+    faction: "WILD",
+    rarity: "R",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_122",
+      name: "GUARD",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_122",
+      name: "Swift",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_122",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_123",
+    name: "Unknown Seer 24",
+    faction: "UNKNOWN",
+    rarity: "SR",
+    gender: "None",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_123",
+      name: "HEAL",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_123",
+      name: "Berserker",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_123",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_124",
+    name: "Cyberist Warden 25",
+    faction: "CYBERIST",
+    rarity: "N",
+    gender: "M",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_124",
+      name: "CURSE",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_124",
+      name: "Mystic",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_124",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_125",
+    name: "Transcendent Reaper 26",
+    faction: "TRANSCENDENT",
+    rarity: "R",
+    gender: "F",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_125",
+      name: "BUFF",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_125",
+      name: "Counter",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_125",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_126",
+    name: "Purist Sentinel 27",
+    faction: "PURIST",
+    rarity: "SR",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_126",
+      name: "DODGE",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_126",
+      name: "Evasion",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_126",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_127",
+    name: "Wild Phantom 28",
+    faction: "WILD",
+    rarity: "N",
+    gender: "None",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_127",
+      name: "RUSH",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_127",
+      name: "Fortify",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_127",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_128",
+    name: "Unknown Brawler 29",
+    faction: "UNKNOWN",
+    rarity: "R",
+    gender: "M",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_128",
+      name: "SHIELD",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_128",
+      name: "Focus",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_128",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_129",
+    name: "Cyberist Mystic 30",
+    faction: "CYBERIST",
+    rarity: "SR",
+    gender: "F",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_129",
+      name: "DRAIN",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_129",
+      name: "Revenge",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_129",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_130",
+    name: "Transcendent Guardian 31",
+    faction: "TRANSCENDENT",
+    rarity: "N",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_130",
+      name: "STRIKE",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_130",
+      name: "Regeneration",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_130",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_131",
+    name: "Purist Stalker 32",
+    faction: "PURIST",
+    rarity: "R",
+    gender: "None",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_131",
+      name: "BLAST",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_131",
+      name: "Iron Will",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_131",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_132",
+    name: "Wild Hunter 33",
+    faction: "WILD",
+    rarity: "SR",
+    gender: "M",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_132",
+      name: "GUARD",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_132",
+      name: "Swift",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_132",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_133",
+    name: "Unknown Seer 34",
+    faction: "UNKNOWN",
+    rarity: "N",
+    gender: "F",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_133",
+      name: "HEAL",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_133",
+      name: "Berserker",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_133",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_134",
+    name: "Cyberist Warden 35",
+    faction: "CYBERIST",
+    rarity: "R",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_134",
+      name: "CURSE",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_134",
+      name: "Mystic",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_134",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_135",
+    name: "Transcendent Reaper 36",
+    faction: "TRANSCENDENT",
+    rarity: "SR",
+    gender: "None",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_135",
+      name: "BUFF",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_135",
+      name: "Counter",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_135",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_136",
+    name: "Purist Sentinel 37",
+    faction: "PURIST",
+    rarity: "N",
+    gender: "M",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_136",
+      name: "DODGE",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_136",
+      name: "Evasion",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_136",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_137",
+    name: "Wild Phantom 38",
+    faction: "WILD",
+    rarity: "R",
+    gender: "F",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_137",
+      name: "RUSH",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_137",
+      name: "Fortify",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_137",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_138",
+    name: "Unknown Brawler 39",
+    faction: "UNKNOWN",
+    rarity: "SR",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_138",
+      name: "SHIELD",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_138",
+      name: "Focus",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_138",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_139",
+    name: "Cyberist Mystic 40",
+    faction: "CYBERIST",
+    rarity: "N",
+    gender: "None",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_139",
+      name: "DRAIN",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_139",
+      name: "Revenge",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_139",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_140",
+    name: "Transcendent Guardian 41",
+    faction: "TRANSCENDENT",
+    rarity: "R",
+    gender: "M",
+    evolution: 0,
+    baseHp: 640,
+    baseAtk: 120,
+    baseDef: 104,
+    baseWis: 136,
+    baseAgi: 136,
+    totalExp: 5000,
+    description: "A transcendent aligned warrior.",
+    skill: {
+      skillId: "skill_140",
+      name: "STRIKE",
+      description: "Powerful transcendent skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_140",
+      name: "Regeneration",
+      description: "transcendent passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_140",
+      name: "Transcendent Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.1,
+        def: 1.06,
+        wis: 1.12,
+        agi: 1.1
+      }
+    },
+    evolutionLine: {
+      name: "Transcendent Path",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_141",
+    name: "Purist Stalker 42",
+    faction: "PURIST",
+    rarity: "SR",
+    gender: "F",
+    evolution: 0,
+    baseHp: 990,
+    baseAtk: 126,
+    baseDef: 153,
+    baseWis: 81,
+    baseAgi: 90,
+    totalExp: 5000,
+    description: "A purist aligned warrior.",
+    skill: {
+      skillId: "skill_141",
+      name: "BLAST",
+      description: "Powerful purist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_141",
+      name: "Iron Will",
+      description: "purist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_141",
+      name: "Purist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.12,
+        atk: 1.06,
+        def: 1.12,
+        wis: 1.04,
+        agi: 1.04
+      }
+    },
+    evolutionLine: {
+      name: "Purist Ascension",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_142",
+    name: "Wild Hunter 43",
+    faction: "WILD",
+    rarity: "N",
+    gender: "Unknown",
+    evolution: 0,
+    baseHp: 750,
+    baseAtk: 160,
+    baseDef: 100,
+    baseWis: 110,
+    baseAgi: 180,
+    totalExp: 5000,
+    description: "A wild aligned warrior.",
+    skill: {
+      skillId: "skill_142",
+      name: "GUARD",
+      description: "Powerful wild skill.",
+      effects: {
+        type: "damage",
+        value: 0.2
+      }
+    },
+    passive: {
+      passiveId: "passive_142",
+      name: "Swift",
+      description: "wild passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.05
+      }
+    },
+    growth: {
+      growthId: "growth_142",
+      name: "Wild Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.12,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Wild Evolution",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_143",
+    name: "Unknown Seer 44",
+    faction: "UNKNOWN",
+    rarity: "R",
+    gender: "None",
+    evolution: 0,
+    baseHp: 770,
+    baseAtk: 143,
+    baseDef: 99,
+    baseWis: 176,
+    baseAgi: 165,
+    totalExp: 5000,
+    description: "A unknown aligned warrior.",
+    skill: {
+      skillId: "skill_143",
+      name: "HEAL",
+      description: "Powerful unknown skill.",
+      effects: {
+        type: "damage",
+        value: 0.25
+      }
+    },
+    passive: {
+      passiveId: "passive_143",
+      name: "Berserker",
+      description: "unknown passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.07
+      }
+    },
+    growth: {
+      growthId: "growth_143",
+      name: "Unknown Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.08,
+        atk: 1.08,
+        def: 1.06,
+        wis: 1.1,
+        agi: 1.08
+      }
+    },
+    evolutionLine: {
+      name: "Unknown Resolve",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    charId: "char_144",
+    name: "Cyberist Warden 45",
+    faction: "CYBERIST",
+    rarity: "SR",
+    gender: "M",
+    evolution: 0,
+    baseHp: 900,
+    baseAtk: 240,
+    baseDef: 120,
+    baseWis: 120,
+    baseAgi: 240,
+    totalExp: 5000,
+    description: "A cyberist aligned warrior.",
+    skill: {
+      skillId: "skill_144",
+      name: "CURSE",
+      description: "Powerful cyberist skill.",
+      effects: {
+        type: "damage",
+        value: 0.3
+      }
+    },
+    passive: {
+      passiveId: "passive_144",
+      name: "Mystic",
+      description: "cyberist passive ability.",
+      effects: {
+        type: "boost",
+        value: 0.09
+      }
+    },
+    growth: {
+      growthId: "growth_144",
+      name: "Cyberist Growth",
+      expCurve: [
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000
+      ],
+      statMultipliers: {
+        hp: 1.06,
+        atk: 1.14,
+        def: 1.04,
+        wis: 1.06,
+        agi: 1.12
+      }
+    },
+    evolutionLine: {
+      name: "Cyberist Awakening",
+      stages: [
+        {
+          level: 10,
+          requirements: {
+            exp: 1000
+          }
+        },
+        {
+          level: 25,
+          requirements: {
+            exp: 5000,
+            items: [
+              "fragment"
+            ]
+          }
+        }
+      ]
+    }
+  }
+]
+;
 
 async function main() {
   console.log('Seeding database...');
