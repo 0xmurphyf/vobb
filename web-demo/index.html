@@ -42,10 +42,9 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .hidden{display:none!important}
 
 /* ========== APP LAYOUT ========== */
-.app{display:flex;flex-direction:column;height:100vh;position:relative;padding:0;margin:auto;box-sizing:border-box;overflow:hidden}
-.screen{position:absolute;inset:0;display:none;flex-direction:column;z-index:1}
+.app{display:flex;flex-direction:column;width:100vw;height:100vh;position:relative;padding:0;box-sizing:border-box;overflow:hidden}
+.screen{position:absolute;inset:0;display:none;flex-direction:column}
 .screen.active{display:flex;overflow-y:auto}
-.screen>*:not(.bg-screen){position:relative;z-index:1}
 
 /* ========== BACKGROUND LAYER ========== */
 .bg-layer{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;opacity:.3}
