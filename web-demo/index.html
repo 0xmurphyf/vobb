@@ -87,7 +87,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .char-viewport{position:relative;width:65%;height:auto;overflow:hidden;display:flex;flex-direction:column;min-height:0}
 .char-viewport-top{flex:1;position:relative;display:flex;align-items:stretch;justify-content:center;min-height:0;padding-left:50px}
 .char-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(180,100,255,.12) 0%,transparent 50%)}
-.char-artwork{position:relative;flex:1;align-self:stretch;z-index:2;filter:drop-shadow(0 0 40px rgba(180,100,255,.3));font-size:10rem;display:flex;align-items:center;justify-content:center;border:2px solid var(--bdr2);border-radius:12px;padding:16px;box-sizing:border-box}
+.char-artwork{position:relative;flex:1;align-self:stretch;z-index:2;filter:drop-shadow(0 0 40px rgba(180,100,255,.3));display:flex;align-items:center;justify-content:center;border:2px solid var(--bdr2);border-radius:12px;padding:16px;box-sizing:border-box;background-size:contain;background-repeat:no-repeat;background-position:center}
 .char-glow{position:absolute;bottom:10%;left:50%;transform:translateX(-50%);width:120px;height:25px;background:radial-gradient(ellipse,rgba(180,100,255,.35),transparent 70%);filter:blur(8px);animation:glow-pulse 3s ease-in-out infinite}
 .char-nameplate{position:absolute;bottom:0;left:50px;right:0;padding:12px 16px;background:linear-gradient(0deg,rgba(0,0,0,.9) 0%,transparent 100%);z-index:3}
 .char-panel{overflow-y:auto;padding:12px;background:var(--bg2);display:flex;flex-direction:column;flex:0 0 35%;width:35%;min-width:280px}
@@ -604,10 +604,21 @@ function toggleRoster(){
 }
 
 // === Character ===
+// === Character Art Mapping ===
+const CHAR_ART = {
+  TRANSCENDENT: '/assets/char/char_1.jpg',
+  PURIST: '/assets/char/char_2.jpg',
+  WILD: '/assets/char/char_3.jpg',
+  UNKNOWN: '/assets/char/char_4.jpg',
+  CYBERIST: '/assets/char/char_5.jpg'
+};
+
 function renderChar(){
   const c=state.chars[state.idx];if(!c)return;
   const ch=c.character||c;
-  document.getElementById('charArt').textContent=EMOJI[ch.faction]||'❓';
+  const art = CHAR_ART[ch.faction] || CHAR_ART.TRANSCENDENT;
+  document.getElementById('charArt').style.backgroundImage = `url(${art})`;
+  document.getElementById('charArt').textContent='';
   document.getElementById('charName').textContent=ch.name;
   document.getElementById('charRar').textContent=ch.rarity;
   document.getElementById('charRar').className='char-rar '+(ch.rarity||'').toLowerCase();
@@ -655,7 +666,7 @@ function renderChar(){
   const sk=[{n:'Normal',i:'⚔️',l:c.skillLevel||3},{n:'Skill 1',i:'🔮',l:c.skillLevel||3},{n:'Skill 2',i:'💫',l:Math.max(1,(c.skillLevel||3)-1)},{n:'Ultimate',i:'✨',l:Math.max(1,(c.skillLevel||3)-2)}];
   document.getElementById('skillsRow').innerHTML=sk.map(s=>`<div class="skill-card"><div class="skill-icon">${s.i}</div><div class="skill-name">${s.n}</div><div class="skill-level">Lv.${s.l}</div></div>`).join('');
   // Roster
-  document.getElementById('rosterGrid').innerHTML=state.chars.map((rc,i)=>{const rch=rc.character||rc;return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})"><div class="roster-ava">${EMOJI[rch.faction]||'❓'}</div><div class="roster-lv">${'★'.repeat(rc.star||1)} ${rc.level||1}</div></div>`}).join('');
+  document.getElementById('rosterGrid').innerHTML=state.chars.map((rc,i)=>{const rch=rc.character||rc;const art=CHAR_ART[rch.faction]||CHAR_ART.TRANSCENDENT;return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})" style="background-image:url(${art});background-size:cover;background-position:center"><div class="roster-ava" style="background:rgba(0,0,0.5);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:.7rem">${EMOJI[rch.faction]||'❓'}</div><div class="roster-lv">${'★'.repeat(rc.star||1)} ${rc.level||1}</div></div>`}).join('');
 }
 
 function selectChar(i){state.idx=i;renderChar();if(document.getElementById('tab-story').classList.contains('active'))renderStory()}
