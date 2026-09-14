@@ -241,7 +241,7 @@ const CHARACTERS = [
       description: "Copy an enemy's buff and transfer it to an ally.",
       effects: {
         type: "copy_buff",
-        value: 1.0
+        value: 1
       }
     },
     passive: {
@@ -3609,19 +3609,6 @@ const CHARACTERS = [
   }
 
 ];
-
-
-const STAGES = [
-  { stageId: 'stage_1_1', chapter: 1, number: 1, name: 'Abandoned Lab', staminaCost: 6, enemies: [{ name: 'Feral Slime', faction: 'WILD', level: 1, hp: 300, atk: 50, def: 30, wis: 20, agi: 40 }], rewards: { exp: 50, gold: 100 } },
-  { stageId: 'stage_1_2', chapter: 1, number: 2, name: 'Tunnel Rats', staminaCost: 6, enemies: [{ name: 'Pack Wolf', faction: 'WILD', level: 2, hp: 400, atk: 70, def: 40, wis: 30, agi: 60 }, { name: 'Pup', faction: 'WILD', level: 1, hp: 200, atk: 40, def: 20, wis: 20, agi: 50 }], rewards: { exp: 80, gold: 150 } },
-  { stageId: 'stage_1_3', chapter: 1, number: 3, name: 'Broken Signal', staminaCost: 8, enemies: [{ name: 'Signal Wraith', faction: 'UNKNOWN', level: 3, hp: 500, atk: 90, def: 50, wis: 40, agi: 80 }], rewards: { exp: 120, gold: 200 } },
-  { stageId: 'stage_1_4', chapter: 1, number: 4, name: 'Outpost Defense', staminaCost: 8, enemies: [{ name: 'Raider', faction: 'PURIST', level: 4, hp: 600, atk: 100, def: 60, wis: 40, agi: 70 }, { name: 'Mercenary', faction: 'CYBERIST', level: 3, hp: 350, atk: 80, def: 30, wis: 70, agi: 50 }], rewards: { exp: 150, gold: 250 } },
-  { stageId: 'stage_1_5', chapter: 1, number: 5, name: 'The Threshold', staminaCost: 10, enemies: [{ name: 'Transcendent Aspirant', faction: 'TRANSCENDENT', level: 5, hp: 800, atk: 130, def: 70, wis: 50, agi: 90 }, { name: 'Cultist', faction: 'UNKNOWN', level: 3, hp: 400, atk: 80, def: 40, wis: 30, agi: 70 }], rewards: { exp: 200, gold: 300 } },
-];
-
-
-
-
 
 const STAGES = [
   { stageId: 'stage_1_1', chapter: 1, number: 1, name: 'Abandoned Lab', staminaCost: 6, enemies: [{ name: 'Feral Slime', faction: 'WILD', level: 1, hp: 300, atk: 50, def: 30, wis: 20, agi: 40 }], rewards: { exp: 50, gold: 100 } },
