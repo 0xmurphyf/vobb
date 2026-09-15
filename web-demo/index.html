@@ -423,8 +423,36 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
             <div class="skills-row" id="skillsRow"></div>
             <button class="btn-upgrade" onclick="upgrade()">⬆ Upgrade</button>
           </div>
-          <div class="tab-panel" id="tab-skills"><div style="color:var(--t3);font-size:.7rem;padding:20px;text-align:center">Coming soon</div></div>
-          <div class="tab-panel" id="tab-evo"><div style="color:var(--t3);font-size:.7rem;padding:20px;text-align:center">Coming soon</div></div>
+          <div class="tab-panel" id="tab-skills">
+            <div style="padding:12px">
+              <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Active Skill</div>
+              <div style="background:rgba(10,10,24,.1);border:1px solid rgba(255,255,255,.06);padding:12px;margin-bottom:16px">
+                <div style="font-size:.8rem;font-weight:700;color:var(--cyan);margin-bottom:4px" id="skillName">—</div>
+                <div style="font-size:.65rem;color:var(--t2);line-height:1.5" id="skillDesc">—</div>
+              </div>
+              <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Passive</div>
+              <div style="background:rgba(10,10,24,.1);border:1px solid rgba(255,255,255,.06);padding:12px;margin-bottom:16px">
+                <div style="font-size:.8rem;font-weight:700;color:var(--purple);margin-bottom:4px" id="passiveName">—</div>
+                <div style="font-size:.65rem;color:var(--t2);line-height:1.5" id="passiveDesc">—</div>
+              </div>
+              <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Skill Level</div>
+              <div id="skillLevels" style="display:flex;gap:8px"></div>
+            </div>
+          </div>
+          <div class="tab-panel" id="tab-evo">
+            <div style="padding:12px">
+              <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Evolution Tree</div>
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+                <div style="width:48px;height:48px;background:rgba(10,10,24,.1);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.2rem" id="evoCurrent">⭐</div>
+                <div style="font-size:.6rem;color:var(--t3)">→</div>
+                <div style="width:48px;height:48px;background:rgba(10,10,24,.1);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:1.2rem;opacity:.4" id="evoNext">⭐</div>
+              </div>
+              <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Requirement</div>
+              <div style="font-size:.7rem;color:var(--t);margin-bottom:12px" id="evoReq">Lv.20 + 5000 Gold</div>
+              <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Stat Bonus</div>
+              <div style="font-size:.7rem;color:var(--green)" id="evoBonus">+15% HP / +10% ATK</div>
+            </div>
+          </div>
           <div class="tab-panel" id="tab-story"><div id="storyContent" style="color:var(--t3);font-size:.7rem;padding:20px;text-align:center">Loading...</div></div>
         </div>
       </div>
@@ -648,20 +676,37 @@ function renderChar(){
   const pts=angles.map(a=>({x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)}));
   const counters={TRANSCENDENT:['WILD','CYBERIST'],PURIST:['TRANSCENDENT','WILD'],WILD:['UNKNOWN','CYBERIST'],UNKNOWN:['PURIST','TRANSCENDENT'],CYBERIST:['UNKNOWN','PURIST']};
   let svg='<svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">';
-  svg+=`<defs><marker id="arrow" markerWidth="3" markerHeight="3" refX="2" refY="1.5" orient="auto"><path d="M0,0 L3,1.5 L0,3 Z" fill="#aab"/></marker></defs>`;
+  svg+=`<defs><marker id="arrow" markerWidth="3" markerHeight="3" refX="2" refY="1.5" orient="auto"><path d="M0,0 L3,1.5 L0,3 Z" fill="#fff"/></marker></defs>`;
   factions.forEach((f,i)=>{
     counters[f].forEach(target=>{
       const ti=factions.indexOf(target);
-      svg+=`<line x1="${pts[i].x}" y1="${pts[i].y}" x2="${pts[ti].x}" y2="${pts[ti].y}" stroke="${colors[f]}" stroke-width="1" opacity="0.6" marker-end="url(#arrow)"/>`;
+      svg+=`<line x1="${pts[i].x}" y1="${pts[i].y}" x2="${pts[ti].x}" y2="${pts[ti].y}" stroke="${colors[f]}" stroke-width="1.2" opacity="0.8" marker-end="url(#arrow)"/>`;
     });
   });
   factions.forEach((f,i)=>{
     const isActive=f===ch.faction;
-    svg+=`<circle cx="${pts[i].x}" cy="${pts[i].y}" r="${isActive?6:3.5}" fill="${isActive?colors[f]:'#1a1a40'}" stroke="${colors[f]}" stroke-width="${isActive?1.5:0.8}"/>`;
-    svg+=`<text x="${pts[i].x}" y="${pts[i].y+2}" text-anchor="middle" font-size="4.5" font-weight="700" fill="${isActive?'#fff':'#aab'}">${labels[f]}</text>`;
+    svg+=`<circle cx="${pts[i].x}" cy="${pts[i].y}" r="${isActive?7:4}" fill="${isActive?colors[f]:'#12122a'}" stroke="${colors[f]}" stroke-width="${isActive?2:1}"/>`;
+    svg+=`<text x="${pts[i].x}" y="${pts[i].y+2.5}" text-anchor="middle" font-size="5.5" font-weight="800" fill="${isActive?'#fff':'#ddd'}">${labels[f]}</text>`;
   });
   svg+='</svg>';
   document.getElementById('counterChart').innerHTML=svg;
+  // Skills Tab
+  const skillName=ch.skill?.name||'Unknown';
+  const skillDesc=ch.skill?.description||'—';
+  const passiveName=ch.passive?.name||'Unknown';
+  const passiveDesc=ch.passive?.description||'—';
+  const skillLv=c.skillLevel||3;
+  document.getElementById('skillName').textContent=skillName;
+  document.getElementById('skillDesc').textContent=skillDesc;
+  document.getElementById('passiveName').textContent=passiveName;
+  document.getElementById('passiveDesc').textContent=passiveDesc;
+  document.getElementById('skillLevels').innerHTML=[1,2,3,4,5].map(l=>`<div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;border:1px solid ${l<=skillLv?colors[ch.faction]:'var(--bdr)'};background:${l<=skillLv?colors[ch.faction]+'33':'transparent'};color:${l<=skillLv?'#fff':'var(--t3)'}">Lv.${l}</div>`).join('');
+  // Evo Tab
+  const curStar=c.star||1;
+  document.getElementById('evoCurrent').textContent='⭐'.repeat(curStar);
+  document.getElementById('evoNext').textContent='⭐'.repeat(Math.min(5,curStar+1));
+  document.getElementById('evoReq').textContent=`Lv.${(curStar*10)+10} + ${(curStar*5000).toLocaleString()} Gold`;
+  document.getElementById('evoBonus').textContent=`+${(curStar*5)+10}% HP / +${(curStar*5)+5}% ATK`;
   // Skills
   const sk=[{n:'Normal',i:'⚔️',l:c.skillLevel||3},{n:'Skill 1',i:'🔮',l:c.skillLevel||3},{n:'Skill 2',i:'💫',l:Math.max(1,(c.skillLevel||3)-1)},{n:'Ultimate',i:'✨',l:Math.max(1,(c.skillLevel||3)-2)}];
   document.getElementById('skillsRow').innerHTML=sk.map(s=>`<div class="skill-card"><div class="skill-icon">${s.i}</div><div class="skill-name">${s.n}</div><div class="skill-level">Lv.${s.l}</div></div>`).join('');
@@ -675,7 +720,23 @@ function switchTab(t){
   ['overview','skills','evo','story'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active',x===t));
   if(t==='story') renderStory();
 }
-function upgrade(){toast('Coming soon')}
+function upgrade(){
+  const c=state.chars[state.idx];if(!c)return;
+  const ch=c.character||c;
+  const cost=500+((c.level||1)*100);
+  const gold=state.player?.currencies?.find(x=>x.type==='gold');
+  if(!gold||gold.amount<cost){toast('Not enough gold! Need '+cost.toLocaleString(),'err');return}
+  gold.amount-=cost;
+  c.level=(c.level||1)+1;
+  const mult=1+(c.level-1)*0.1;
+  c.currentHp=Math.round(ch.baseHp*mult);
+  c.currentAtk=Math.round(ch.baseAtk*mult);
+  c.currentDef=Math.round(ch.baseDef*mult);
+  c.currentWis=Math.round(ch.baseWis*mult);
+  c.currentAgi=Math.round(ch.baseAgi*mult);
+  renderChar();renderRes();
+  toast('Level Up! Now Lv.'+c.level,'ok');
+}
 
 function renderStory(){
   const c=state.chars[state.idx];

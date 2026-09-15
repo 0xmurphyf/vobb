@@ -8,11 +8,16 @@ const characters=[
 ];
 let instances=[];
 const stages=[
-  {stageId:'1_1',chapter:1,number:1,name:'Abandoned Lab',staminaCost:6,enemies:[{name:'Feral Slime',faction:'WILD',level:1,hp:300,atk:50,def:30,wis:20,agi:40}]},
-  {stageId:'1_2',chapter:1,number:2,name:'Tunnel Rats',staminaCost:6,enemies:[{name:'Pack Wolf',faction:'WILD',level:2,hp:400,atk:70,def:40,wis:30,agi:60}]},
-  {stageId:'1_3',chapter:1,number:3,name:'Broken Signal',staminaCost:8,enemies:[{name:'Signal Wraith',faction:'UNKNOWN',level:3,hp:500,atk:90,def:50,wis:40,agi:80}]},
-  {stageId:'1_4',chapter:1,number:4,name:'Outpost Defense',staminaCost:8,enemies:[{name:'Raider',faction:'PURIST',level:4,hp:600,atk:100,def:60,wis:40,agi:70}]},
-  {stageId:'1_5',chapter:1,number:5,name:'The Threshold',staminaCost:10,enemies:[{name:'Transcendent Aspirant',faction:'TRANSCENDENT',level:5,hp:800,atk:130,def:70,wis:50,agi:90}]},
+  {stageId:'1_1',chapter:1,number:1,name:'Abandoned Lab',staminaCost:6,difficulty:1,enemies:[{name:'Feral Slime',faction:'WILD',level:1,hp:300,atk:50,def:30,wis:20,agi:40}]},
+  {stageId:'1_2',chapter:1,number:2,name:'Tunnel Rats',staminaCost:6,difficulty:1,enemies:[{name:'Pack Wolf',faction:'WILD',level:2,hp:400,atk:70,def:40,wis:30,agi:60}]},
+  {stageId:'1_3',chapter:1,number:3,name:'Broken Signal',staminaCost:8,difficulty:2,enemies:[{name:'Signal Wraith',faction:'UNKNOWN',level:3,hp:500,atk:90,def:50,wis:40,agi:80}]},
+  {stageId:'1_4',chapter:1,number:4,name:'Outpost Defense',staminaCost:8,difficulty:2,enemies:[{name:'Raider',faction:'PURIST',level:4,hp:600,atk:100,def:60,wis:40,agi:70}]},
+  {stageId:'1_5',chapter:1,number:5,name:'The Threshold',staminaCost:10,difficulty:3,enemies:[{name:'Transcendent Aspirant',faction:'TRANSCENDENT',level:5,hp:800,atk:130,def:70,wis:50,agi:90}]},
+  {stageId:'2_1',chapter:2,number:1,name:'Neon Wastes',staminaCost:10,difficulty:3,enemies:[{name:'Scrap Bot',faction:'CYBERIST',level:6,hp:700,atk:110,def:80,wis:50,agi:90}]},
+  {stageId:'2_2',chapter:2,number:2,name:'Fungal Depths',staminaCost:12,difficulty:4,enemies:[{name:'Spore Beast',faction:'WILD',level:7,hp:900,atk:120,def:70,wis:60,agi:100}]},
+  {stageId:'2_3',chapter:2,number:3,name:'Void Rift',staminaCost:12,difficulty:4,enemies:[{name:'Void Stalker',faction:'UNKNOWN',level:8,hp:1000,atk:140,def:80,wis:70,agi:110}]},
+  {stageId:'2_4',chapter:2,number:4,name:'Last Bastion',staminaCost:14,difficulty:5,enemies:[{name:'Purist Guardian',faction:'PURIST',level:9,hp:1200,atk:150,def:100,wis:70,agi:100}]},
+  {stageId:'2_5',chapter:2,number:5,name:'The Core',staminaCost:16,difficulty:5,enemies:[{name:'Cyber Overlord',faction:'CYBERIST',level:10,hp:1500,atk:180,def:110,wis:80,agi:120}]},
 ];
 let pityCounters={};
 const gachaPool={id:'pool1',name:'The Awakening',active:true};
