@@ -32,8 +32,11 @@ const srv=http.createServer((req,res)=>{
     if(req.method==='GET'&&!pp.startsWith('/api')){try{const fp=path.join(__dirname,pp==='/'?'/index.html':pp);const c=fs.readFileSync(fp);const ext=path.extname(fp).slice(1);const t={html:'text/html;charset=utf-8',js:'application/javascript',css:'text/css',png:'image/png',jpg:'image/jpeg',svg:'image/svg+xml',ico:'image/x-icon'};res.writeHead(200,{'Content-Type':t[ext]||'text/plain'});res.end(c)}catch{res.writeHead(404);res.end('NF')}return}
     const api=pp.replace('/api','');
     try{
-      if(api==='/auth/guest'&&req.method==='POST')return send(res,{accessToken:'t_'+Date.now(),refreshToken:'r_'+Date.now(),player:{id:'p1',name:pd.playerName||'Hunter',level:1,currencies:[{type:'gold',amount:1000},{type:'gems',amount:500},{type:'stamina',amount:100}]},user:{id:'u1',username:'guest_'+Date.now().toString(36),guest:true}});
-      if(api==='/player/me'&&req.method==='GET')return send(res,{name:'Hunter',level:1,currencies:[{type:'gold',amount:1000},{type:'gems',amount:500},{type:'stamina',amount:100}]});
+      if(api==='/auth/guest'&&req.method==='POST'){
+        const starterChars=characters.map((c,i)=>({id:'inst_'+i,characterId:c.id,level:1,star:1,skillLevel:1,currentHp:c.baseHp,currentAtk:c.baseAtk,currentDef:c.baseDef,currentWis:c.baseWis,currentAgi:c.baseAgi,exp:0,expMax:100,character:c}));
+        return send(res,{accessToken:'t_'+Date.now(),refreshToken:'r_'+Date.now(),player:{id:'p1',name:pd.playerName||'Hunter',level:1,currencies:[{type:'gold',amount:5000},{type:'gems',amount:3000},{type:'stamina',amount:100}],characters:starterChars},user:{id:'u1',username:'guest_'+Date.now().toString(36),guest:true}});
+      }
+      if(api==='/player/me'&&req.method==='GET')return send(res,{name:'Hunter',level:1,currencies:[{type:'gold',amount:5000},{type:'gems',amount:3000},{type:'stamina',amount:100}],characters:instances.length?instances:characters.map((c,i)=>({id:'inst_'+i,characterId:c.id,level:1,star:1,skillLevel:1,currentHp:c.baseHp,currentAtk:c.baseAtk,currentDef:c.baseDef,currentWis:c.baseWis,currentAgi:c.baseAgi,exp:0,expMax:100,character:c}))});
       if(api==='/characters'&&req.method==='GET')return send(res,characters);
       if(api==='/characters/mine'&&req.method==='GET')return send(res,instances);
       if(api.match(/\/characters\/.+\/levelup/)&&req.method==='POST'){const id=api.split('/')[2];const i=instances.find(x=>x.id===id);if(!i)return send(res,{error:'not_found'},404);i.level=(i.level||1)+1;const c=characters.find(x=>x.id===i.characterId);Object.assign(i,cs(c,i.level,i.star));return send(res,{success:true,newLevel:i.level,stats:i})}
