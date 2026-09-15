@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>VOBB — Five Warlords</title>
+<style>
+:root {
+  --bg: #06060f;
+  --bg2: #0a0a1a;
+  --s1: #12122a;
+  --s2: #1a1a40;
+  --s3: #252560;
+  --bdr: #1e1e4a;
+  --bdr2: #2a2a6a;
+  --t: #eee;
+  --t2: #aab;
+  --t3: #667;
+  --gold: #f4c430;
+  --red: #ff3860;
+  --green: #23d160;
+  --blue: #3298dc;
+  --purple: #b86bff;
+  --cyan: #00d1b2;
+  --orange: #ff6b35;
+  --ssr: #f4c430;
+  --sr: #b86bff;
+  --r: #3298dc;
+  --n: #667;
+  --fT: #b86bff;
+  --fP: #ff6b35;
+  --fW: #23d160;
+  --fU: #3298dc;
+  --fC: #ff3860;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#000;color:var(--t);height:100vh;overflow:hidden;margin:0;display:block}
+::-webkit-scrollbar{display:none}
+*{scrollbar-width:none;-ms-overflow-style:none}
+button{font-family:inherit;cursor:pointer;border:none;outline:none;background:none;color:inherit}
+.hidden{display:none!important}
+
+/* ========== APP LAYOUT ========== */
+.app{display:flex;flex-direction:column;width:100vw;height:100vh;position:relative;padding:0;box-sizing:border-box;overflow:hidden}
+.screen{position:absolute;inset:0;display:none;flex-direction:column}
+.screen.active{display:flex;overflow-y:auto}
+
+/* ========== BACKGROUND LAYER ========== */
+.bg-layer{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;opacity:.3}
+.bg-gradient{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(26,16,64,.5) 0%,rgba(13,8,37,.5) 40%,rgba(6,6,15,.5) 70%)}
+.bg-neon-1{position:absolute;top:-20%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(184,107,255,.08),transparent 60%);animation:pulse-neon 4s ease-in-out infinite alternate}
+.bg-neon-2{position:absolute;bottom:-10%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(0,209,178,.06),transparent 60%);animation:pulse-neon 5s ease-in-out infinite alternate 1s}
+.bg-fog{position:absolute;bottom:0;left:0;right:0;height:30%;background:linear-gradient(0deg,rgba(6,6,15,.95) 0%,transparent 100%)}
+.bg-particles{position:absolute;inset:0}
+.bg-particle{position:absolute;width:2px;height:2px;background:rgba(184,107,255,.3);border-radius:50%;animation:float-particle linear infinite}
+
+@keyframes pulse-neon{0%{opacity:.5;transform:scale(1)}100%{opacity:1;transform:scale(1.1)}}
+@keyframes float-particle{0%{transform:translateY(100vh) translateX(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100vh) translateX(50px);opacity:0}}
+
+/* ========== LOGIN SCREEN ========== */
+#login-screen{position:fixed;inset:0;z-index:10;align-items:center;justify-content:center;background:transparent}
+.login-content{text-align:center;z-index:2}
+.login-logo{font-size:5rem;animation:float-logo 3s ease-in-out infinite}
+@keyframes float-logo{0%,100%{transform:translateY(0);filter:drop-shadow(0 0 30px rgba(244,196,48,.4))}50%{transform:translateY(-10px);filter:drop-shadow(0 0 50px rgba(244,196,48,.6))}}
+.login-title{font-size:3rem;font-weight:900;background:linear-gradient(135deg,var(--gold),#fff,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:6px;margin:12px 0 8px}
+.login-sub{font-size:.8rem;color:var(--t2);letter-spacing:3px;text-transform:uppercase;margin-bottom:40px}
+.login-btn{padding:16px 56px;border-radius:0;font-size:.9rem;font-weight:700;letter-spacing:3px;background:linear-gradient(135deg,var(--gold),#e6a817);color:#000;box-shadow:0 4px 30px rgba(244,196,48,.3);transition:all .3s;text-transform:uppercase}
+.login-btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 8px 40px rgba(244,196,48,.5)}
+.login-btn:active{transform:scale(.96)}
+
+/* ========== TOP BAR ========== */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:4px 12px;background:transparent;border-bottom:1px solid rgba(255,255,255,.06);backdrop-filter:blur(8px);position:sticky;top:0;z-index:100}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.btn-icon{width:28px;height:28px;border-radius:0;background:rgba(10,10,24,.7);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--t2);transition:all .2s}
+.btn-icon:hover{background:var(--s2);border-color:var(--bdr2)}
+.topbar-title{font-size:.65rem;color:var(--t2);font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.res{display:flex;align-items:center;gap:3px;padding:3px 6px;border-radius:0;background:rgba(10,10,24,.7);border:1px solid var(--bdr);font-size:.6rem;font-weight:700}
+.res.gems{color:var(--cyan);border-color:rgba(0,209,178,.2)}
+.res.gold{color:var(--gold);border-color:rgba(244,196,48,.2)}
+.res.stam{color:var(--green);border-color:rgba(35,209,96,.2)}
+
+/* ========== CHARACTER SCREEN ========== */
+.char-screen{flex:1;display:flex;position:relative;z-index:1;border-radius:0;overflow:hidden;background:transparent}
+.char-row{flex:1;display:flex;overflow:hidden;transition:margin-left .3s}
+.char-viewport{position:relative;width:65%;height:auto;overflow:hidden;display:flex;flex-direction:column;min-height:0}
+.char-viewport-top{flex:1;position:relative;display:flex;align-items:stretch;justify-content:center;min-height:0;padding-left:50px}
+.char-bg{position:absolute;inset:0;background:transparent}
+.char-artwork{position:relative;flex:1;align-self:stretch;z-index:2;filter:drop-shadow(0 0 40px rgba(180,100,255,.3));display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.15);border-radius:0;padding:16px;box-sizing:border-box;background-size:contain;background-repeat:no-repeat;background-position:center;background-color:transparent}
+.char-glow{position:absolute;bottom:10%;left:50%;transform:translateX(-50%);width:120px;height:25px;background:radial-gradient(ellipse,rgba(180,100,255,.35),transparent 70%);filter:blur(8px);animation:glow-pulse 3s ease-in-out infinite}
+.char-nameplate{position:absolute;bottom:0;left:50px;right:0;padding:12px 16px;background:linear-gradient(0deg,rgba(0,0,0,.9) 0%,transparent 100%);z-index:3}
+.char-panel{overflow-y:auto;padding:12px;background:transparent;display:flex;flex-direction:column;flex:0 0 35%;width:35%;min-width:280px;border-radius:0}
+@keyframes char-idle{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.02)}}
+.char-name{font-size:1.5rem;font-weight:800;color:rgba(255,255,255,.95);text-shadow:0 0 20px rgba(0,0,0,.8)}
+.char-sub-row{display:flex;align-items:center;gap:6px;margin-top:2px;font-size:.7rem}
+.char-stars{color:var(--gold);font-size:.8rem;letter-spacing:2px}
+.char-rar{padding:2px 8px;border-radius:0;font-size:.6rem;font-weight:700;background:rgba(0,0,0,.5);border:none}
+.char-rar.ssr{color:var(--ssr)} .char-rar.sr{color:var(--sr)} .char-rar.r{color:var(--r)}
+.char-lv{font-size:.85rem;font-weight:700;color:var(--cyan)}
+.char-lock{width:28px;height:28px;border-radius:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--t2);border:1px solid rgba(255,255,255,.1);transition:all .15s}
+.char-lock:hover{background:rgba(255,255,255,.1)}
+.char-lock:active{transform:scale(.9)}
+.char-exp-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:0;transition:width .5s}
+.faction-badge{position:absolute;top:12px;right:12px;padding:4px 12px;border-radius:0;font-size:.6rem;font-weight:700;letter-spacing:1px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);z-index:4}
+.faction-badge.fT{color:var(--fT);border-color:var(--fT)}
+.faction-badge.fP{color:var(--fP);border-color:var(--fP)}
+.faction-badge.fW{color:var(--fW);border-color:var(--fW)}
+.faction-badge.fU{color:var(--fU);border-color:var(--fU)}
+.faction-badge.fC{color:var(--fC);border-color:var(--fC)}
+
+/* ========== ROSTER TOGGLE (FIRST ITEM IN ROSTER) ========== */
+.char-roster-wrap .roster-toggle-btn{width:38px;height:48px;border-radius:0;background:transparent;border:none;border-bottom:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.7rem;color:var(--t2);cursor:pointer;transition:all .2s;flex-shrink:0;margin-bottom:0}
+.char-roster-wrap .roster-toggle-btn:hover{background:var(--s2)}
+.char-roster-wrap.expanded .roster-toggle-btn{transform:rotate(180deg)}
+
+/* ========== ROSTER OVERLAY ========== */
+.char-roster-wrap{position:absolute;top:0;left:0;bottom:0;z-index:10;display:flex;flex-direction:column;align-items:center;gap:0;padding:0;background:rgba(10,10,24,.95);border-right:1px solid var(--bdr);overflow:hidden;transition:width .3s,padding .3s;width:60px;backdrop-filter:blur(4px);border-radius:0}
+.char-roster-wrap.expanded{width:210px;padding:4px}
+.char-roster-wrap .roster-grid{display:flex;flex-direction:column;gap:0;overflow-y:auto;overflow-x:hidden;width:100%;align-items:center}
+.char-roster-wrap.expanded .roster-grid{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-content:flex-start;gap:0;padding:4px}
+.char-roster-wrap .roster-item{width:38px;height:48px;border-radius:0;background:var(--s1);border:none;border-bottom:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;cursor:pointer;transition:all .2s;flex-shrink:0}
+.char-roster-wrap .roster-item:hover{background:var(--s2)}
+.char-roster-wrap .roster-item.active{border-color:var(--gold);box-shadow:0 0 12px rgba(244,196,48,.25)}
+.char-roster-wrap .roster-item.active .roster-lv{color:var(--gold)}
+.roster-lv{font-size:.5rem;font-weight:700;color:var(--t3)}
+
+
+
+/* ========== CHARACTER PANEL ========== */
+.char-panel{flex:1;overflow-y:auto;padding:12px;background:transparent}
+.char-tabs{display:flex;gap:0;border-bottom:2px solid var(--bdr);margin-bottom:12px}
+.char-tab{padding:8px 16px;font-size:.7rem;font-weight:600;color:var(--t3);position:relative;cursor:pointer;transition:color .2s}
+.char-tab.active{color:var(--t)}
+.char-tab.active::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--cyan)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* ========== STATS ========== */
+.stats-grid{display:flex;flex-direction:column;gap:3px;margin-bottom:10px}
+.stat-item{background:rgba(10,10,24,.1);border:none;border-radius:0;padding:6px 10px;text-align:left;display:flex;align-items:center;gap:8px}
+.stat-icon{font-size:.8rem;width:24px;text-align:center;flex-shrink:0}
+.stat-name{font-size:.5rem;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;flex:1}
+.stat-val{font-size:.75rem;font-weight:700;white-space:nowrap}
+.stat-val.hp{color:var(--green)} .stat-val.atk{color:var(--red)} .stat-val.def{color:var(--blue)} .stat-val.wis{color:var(--purple)} .stat-val.agi{color:var(--cyan)}
+
+/* ========== POWER ========== */
+.power-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;background:rgba(10,10,24,.1);border:none;border-radius:0}
+.power-label{font-size:.6rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;font-weight:700}
+.power-val{font-size:2rem;font-weight:900;color:var(--gold);text-shadow:0 0 15px rgba(244,196,48,.25)}
+
+/* ========== COUNTER CHART ========== */
+.counter-chart{position:absolute;top:50px;right:12px;width:70px;height:70px;background:transparent;border:none;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:4}
+.counter-chart svg{width:100%;height:100%;overflow:visible}
+
+/* ========== SKILLS ========== */
+.skills-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.skill-card{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 6px;background:rgba(10,10,24,.1);border:none;border-radius:0;transition:all .2s}
+.skill-card:hover{border-color:var(--purple);background:var(--s2)}
+.skill-icon{width:40px;height:40px;border-radius:0;background:rgba(10,10,24,.15);display:flex;align-items:center;justify-content:center;font-size:1.1rem;border:none}
+.skill-name{font-size:.55rem;color:var(--t3);text-align:center}
+.skill-level{font-size:.55rem;font-weight:700;color:var(--gold)}
+
+
+/* ========== UPGRADE BUTTON ========== */
+.btn-upgrade{width:100%;padding:13px;border-radius:0;font-size:.85rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(135deg,rgba(50,152,220,.85),rgba(184,107,255,.85));color:#fff;border:none;box-shadow:0 4px 15px rgba(180,100,255,.25);transition:all .2s}
+.btn-upgrade:hover{transform:translateY(-2px);box-shadow:0 6px 25px rgba(180,100,255,.4)}
+.btn-upgrade:active{transform:scale(.97)}
+
+/* ========== BOTTOM ACTIONS ========== */
+/* ========== MENU ========== */
+.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:90;opacity:0;pointer-events:none;transition:opacity .3s}
+.menu-overlay.open{opacity:1;pointer-events:auto}
+.menu-panel{position:fixed;top:0;left:0;bottom:0;width:260px;background:var(--bg2);border-right:1px solid var(--bdr);z-index:95;transform:translateX(-100%);transition:transform .3s;display:flex;flex-direction:column}
+.menu-panel.open{transform:translateX(0)}
+.menu-header{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--bdr)}
+.menu-logo{font-size:1rem;font-weight:800;color:var(--gold);letter-spacing:2px}
+.menu-items{flex:1;overflow-y:auto;padding:8px}
+.menu-item{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border-radius:0;font-size:.8rem;font-weight:600;color:var(--t2);transition:all .15s;text-align:left}
+.menu-item:hover{background:var(--s1);color:var(--t)}
+.menu-item.active{background:var(--s2);color:var(--gold)}
+.menu-icon{font-size:1.2rem;width:28px;text-align:center}
+.menu-label{flex:1}
+
+/* ========== OTHER SCREENS ========== */
+.page-scroll{flex:1;overflow-y:auto;padding:12px;background:transparent}
+
+/* ========== SCREEN BACKGROUNDS ========== */
+.bg-screen{position:fixed;inset:0;background-size:cover;background-position:center;opacity:.6;z-index:0;pointer-events:none}
+.bg-char{background-image:url(/assets/bg/1-main-lobby.jpg)}
+.bg-battle{background-image:url(/assets/bg/2-battle.jpg)}
+.bg-arena{background-image:url(/assets/bg/2-battle.jpg)}
+.bg-gacha{background-image:url(/assets/bg/4-gacha.jpg)}
+.bg-result{background-image:url(/assets/bg/5-result.jpg)}
+.bg-formation{background-image:url(/assets/bg/3-character.jpg)}
+.bg-codex{background-image:url(/assets/bg/1-main-lobby.jpg)}
+.page-title{font-size:.75rem;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+
+/* ========== BATTLE LIST ========== */
+.bl-section{margin-bottom:16px}
+.bl-title{font-size:.7rem;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;padding-left:4px}
+.bl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.stage-card{background:rgba(10,10,24,.7);border:1px solid var(--bdr);border-radius:0;padding:14px;cursor:pointer;transition:all .2s;position:relative}
+.stage-card:active{transform:scale(.96);background:var(--s2)}
+.stage-num{position:absolute;top:8px;right:10px;font-size:.55rem;color:var(--t3);font-weight:700}
+.stage-name{font-size:.85rem;font-weight:700;margin-bottom:4px}
+.stage-cost{font-size:.65rem;color:var(--green)}
+.stage-diff{margin-top:6px;display:flex;gap:3px}
+.diff-dot{width:7px;height:7px;border-radius:50%;background:var(--bdr)}
+.diff-dot.filled{background:var(--gold);box-shadow:0 0 4px var(--gold)}
+
+/* ========== GACHA ========== */
+.gacha-banner{width:100%;max-width:360px;margin:0 auto 16px;background:rgba(10,10,24,.7);border:1px solid var(--bdr2);border-radius:0;padding:24px;text-align:center;position:relative;overflow:hidden}
+.gacha-banner::before{content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;background:radial-gradient(circle,rgba(244,196,48,.12),transparent);border-radius:50%}
+.gacha-banner h2{font-size:1.3rem;font-weight:800;margin-bottom:4px}
+.gacha-banner p{font-size:.7rem;color:var(--t2)}
+.gacha-rates{display:flex;justify-content:center;gap:8px;margin:10px 0;flex-wrap:wrap}
+.gacha-rates span{font-size:.65rem;padding:3px 10px;border-radius:0;background:rgba(0,0,0,.3);font-weight:700}
+.gacha-info{width:100%;max-width:360px;margin:0 auto 16px;background:rgba(10,10,24,.7);border:1px solid var(--bdr);border-radius:0;padding:12px}
+.gacha-info-row{display:flex;justify-content:space-between;font-size:.75rem;padding:4px 0}
+.gacha-info-row .lbl{color:var(--t3)}
+.gacha-info-row .val{font-weight:700;color:var(--gold)}
+.gacha-btns{width:100%;max-width:360px;margin:0 auto;display:flex;gap:10px}
+.gacha-btn{flex:1;padding:14px;border-radius:0;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.gacha-btn.single{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff}
+.gacha-btn.multi{background:linear-gradient(135deg,var(--gold),var(--orange));color:#000}
+.gacha-btn:active{transform:scale(.96)}
+.gacha-btn:disabled{opacity:.4;pointer-events:none}
+.gacha-result{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.gacha-card{width:70px;height:90px;border-radius:0;padding:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(10,10,24,.7);border:1px solid var(--bdr2);animation:pop .4s ease-out}
+@keyframes pop{from{opacity:0;transform:scale(.5) rotateY(90deg)}to{opacity:1;transform:scale(1) rotateY(0)}}
+.gc-icon{font-size:1.8rem}
+.gc-name{font-size:.55rem;font-weight:700;margin-top:4px;text-align:center}
+.gc-rar{font-size:.55rem;font-weight:700;margin-top:2px}
+
+/* ========== CODEX ========== */
+.codex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.codex-card{background:rgba(10,10,24,.7);border:1px solid var(--bdr);border-radius:0;padding:12px 8px;text-align:center}
+.cc-ava{font-size:2rem}
+.cc-name{font-size:.7rem;font-weight:700;margin-top:4px}
+.cc-rar{font-size:.6rem;font-weight:700;margin-top:2px}
+.cc-fact{font-size:.55rem;color:var(--t3);margin-top:2px}
+
+/* ========== FORMATION ========== */
+.form-slots{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.f-slot{aspect-ratio:1;border:2px dashed var(--bdr);border-radius:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;transition:all .2s}
+.f-slot:active{background:var(--s1)}
+.f-slot.filled{border-style:solid;border-color:var(--blue);background:var(--s1)}
+.fs-name{font-size:.65rem;font-weight:700}
+.fs-lv{font-size:.5rem;color:var(--t3)}
+.fs-empty{font-size:.55rem;color:var(--t3)}
+.form-title{font-size:.7rem;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.form-chars{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.f-char{background:rgba(10,10,24,.7);border:1px solid var(--bdr);border-radius:0;padding:10px 6px;text-align:center;cursor:pointer;transition:all .15s}
+.f-char:active{transform:scale(.95);background:var(--s2)}
+.fc-ava{font-size:1.5rem}
+.fc-nm{font-size:.6rem;font-weight:700;margin-top:3px}
+.fc-lv{font-size:.5rem;color:var(--t3)}
+.form-save{width:100%;padding:13px;border-radius:0;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;background:linear-gradient(135deg,var(--green),var(--cyan));color:#000;margin-top:16px}
+
+/* ========== BATTLE ARENA ========== */
+.battle-arena{flex:1;display:flex;flex-direction:column;overflow:hidden;background:transparent}
+.ba-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:rgba(10,10,24,.7);border-bottom:1px solid var(--bdr)}
+.ba-timer{font-size:.75rem;color:var(--t2);font-weight:700}
+.ba-field{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:12px;background:linear-gradient(180deg,rgba(10,10,24,.55),rgba(6,6,15,.65),rgba(10,10,24,.55));overflow-y:auto}
+.ba-team{display:flex;gap:8px;justify-content:center}
+.ba-team.enemy{flex-wrap:wrap;gap:6px}
+.ba-unit{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 10px;background:rgba(10,10,24,.7);border:1px solid var(--bdr);border-radius:0;min-width:60px;position:relative}
+.ba-unit.dead{opacity:.3}
+.ba-unit.act{border-color:var(--cyan);box-shadow:0 0 10px rgba(0,209,178,.3)}
+.ba-u-ava{font-size:1.6rem}
+.ba-u-nm{font-size:.55rem;font-weight:700;max-width:55px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
+.ba-u-hp{width:100%;height:4px;background:var(--bdr);border-radius:0;overflow:hidden;margin-top:3px}
+.ba-u-hp-fill{height:100%;background:var(--green);border-radius:0;transition:width .3s}
+.ba-vs{display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;color:var(--gold);padding:6px 0}
+.ba-log{flex:1;background:rgba(10,10,24,.7);border:1px solid var(--bdr);border-radius:0;padding:10px;margin:8px 0;overflow-y:auto;font-size:.65rem;line-height:1.6;max-height:140px}
+.ba-log-entry{padding:2px 0;border-bottom:1px solid rgba(255,255,255,.03)}
+.ba-log-entry.dmg{color:var(--red)} .ba-log-entry.heal{color:var(--green)} .ba-log-entry.skill{color:var(--purple)} .ba-log-entry.death{color:var(--orange)}
+.ba-actions{display:flex;gap:8px;padding:10px 12px;background:rgba(10,10,24,.7);border-top:1px solid var(--bdr)}
+.ba-btn{flex:1;padding:12px;border-radius:0;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.ba-btn.atk{background:linear-gradient(135deg,var(--red),var(--orange));color:#fff}
+.ba-btn.skill{background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff}
+.ba-btn.auto{background:var(--s2);color:var(--t2);border:1px solid var(--bdr)}
+.ba-btn:active{transform:scale(.95)}
+
+/* ========== LOADING & TOAST ========== */
+.loading{position:fixed;inset:0;background:rgba(6,6,15,.92);display:flex;align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(8px)}
+.loading div{width:32px;height:32px;border:3px solid var(--bdr);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);padding:8px 20px;border-radius:0;background:var(--s2);border:1px solid var(--gold);font-size:.75rem;z-index:1001;animation:slideDown .25s}
+@keyframes slideDown{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.toast.err{border-color:var(--red)} .toast.ok{border-color:var(--green)}
+
+/* ========== RESPONSIVE ========== */
+@media(min-width:768px){
+  .char-artwork{font-size:9rem}
+  .login-title{font-size:4rem}
+  .power-val{font-size:2.5rem}
+}
+@media(min-width:1024px){
+  .char-screen{flex-direction:row}
+  .char-viewport{width:65%;height:auto}
+  .char-panel{width:35%}
+  .char-artwork{font-size:10rem}
+}
+@media(max-width:767px){
+  .char-artwork{font-size:6rem}
+  .char-viewport-top{padding-left:50px}
+}
+</style>
+</head>
+<body>
+
+  <!-- Loading Overlay -->
+  <div class="loading hidden" id="loading"><div></div></div>
+
+  <!-- Background Layer -->
+  <div class="bg-layer">
+    <div class="bg-gradient"></div>
+    <div class="bg-neon-1"></div>
+    <div class="bg-neon-2"></div>
+    <div class="bg-fog"></div>
+    <div class="bg-particles" id="bgParticles"></div>
+  </div>
+
+  <!-- Login Screen -->
+  <div class="screen active" id="login-screen">
+    <div class="login-content">
+      <div class="login-logo">⚔️</div>
+      <div class="login-title">VOBB</div>
+      <div class="login-sub">Five Warlords</div>
+      <button class="login-btn" onclick="guestLogin()">Enter as Guest</button>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div id="main-app" style="flex:1;display:none;flex-direction:column;position:relative;z-index:1">
+
+    <!-- Top Bar -->
+    <div class="topbar" id="topbar">
+      <div class="topbar-left">
+        <button class="btn-icon" onclick="toggleMenu()">☰</button>
+        <span class="topbar-title" id="tb-title">Character</span>
+      </div>
+      <div class="topbar-right">
+        <div class="res gems"><span>💎</span><span id="gems">0</span></div>
+        <div class="res gold"><span>🪙</span><span id="gold">0</span></div>
+        <div class="res stam"><span>⚡</span><span id="stam">0</span></div>
+      </div>
+    </div>
+
+    <!-- Slide-out Menu -->
+    <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+    <div class="menu-panel" id="menuPanel">
+      <div class="menu-header">
+        <div class="menu-logo">⚔️ VOBB</div>
+        <button class="btn-icon" onclick="toggleMenu()">✕</button>
+      </div>
+      <div class="menu-items">
+        <button class="menu-item active" data-screen="s-char" onclick="showScreen('s-char')"><span class="menu-icon">👤</span><span class="menu-label">Character</span></button>
+        <button class="menu-item" data-screen="s-battle" onclick="showScreen('s-battle')"><span class="menu-icon">⚔️</span><span class="menu-label">Battle</span></button>
+        <button class="menu-item" data-screen="s-gacha" onclick="showScreen('s-gacha')"><span class="menu-icon">🎰</span><span class="menu-label">Gacha</span></button>
+        <button class="menu-item" data-screen="s-codex" onclick="showScreen('s-codex')"><span class="menu-icon">📖</span><span class="menu-label">Codex</span></button>
+        <button class="menu-item" data-screen="s-formation" onclick="showScreen('s-formation')"><span class="menu-icon">🛡️</span><span class="menu-label">Formation</span></button>
+      </div>
+    </div>
+
+    <!-- Character Screen -->
+    <div class="screen active" id="s-char">
+      <div class="bg-screen bg-char"></div>
+      <div class="char-screen">
+        <!-- Roster Overlay -->
+        <div class="char-roster-wrap">
+          <div class="roster-toggle-btn" onclick="toggleRoster()">▸</div>
+          <div class="roster-grid" id="rosterGrid"></div>
+        </div>
+        <!-- Left-Right Row -->
+        <div class="char-row">
+        <!-- Left: Viewport -->
+        <div class="char-viewport">
+          <div class="char-viewport-top">
+            <div class="char-bg"></div>
+            <div class="char-artwork" id="charArt">🧬</div>
+            <div class="char-glow"></div>
+            <div class="char-nameplate">
+              <div class="char-name-row">
+                <div class="char-name" id="charName">—</div>
+                <div class="char-sub-row">
+                  <span class="char-stars" id="charStars">★★★★★</span>
+                  <span class="char-rar" id="charRar">SSR</span>
+                  <span class="char-lv" id="charLv">Lv.1</span>
+                  <button class="char-lock" onclick="toast('Locked')" title="Lock">🔒</button>
+                </div>
+              </div>
+              <div class="char-exp"><div class="char-exp-fill" id="charExp" style="width:0%"></div></div>
+            </div>
+            <div class="faction-badge" id="charFact">TRANSCENDENT</div>
+            <div class="counter-chart" id="counterChart"></div>
+          </div>
+        </div>
+        <!-- Right: Panel -->
+        <div class="char-panel" id="charPanel">
+          <div class="char-tabs">
+            <button class="char-tab active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
+            <button class="char-tab" data-tab="skills" onclick="switchTab('skills')">Skills</button>
+            <button class="char-tab" data-tab="evo" onclick="switchTab('evo')">Evolution</button>
+            <button class="char-tab" data-tab="story" onclick="switchTab('story')">About</button>
+          </div>
+          <div class="tab-panel active" id="tab-overview">
+            <!-- Stats Full Width -->
+            <div class="power-bar"><span class="power-label">POWER</span><span class="power-val" id="powerVal">0</span></div>
+            <div class="stats-grid" id="statsGrid"></div>
+            <!-- Bottom: Skills -->
+            <div class="skills-row" id="skillsRow"></div>
+            <button class="btn-upgrade" onclick="upgrade()">⬆ Upgrade</button>
+          </div>
+          <div class="tab-panel" id="tab-skills">
+            <div style="padding:12px">
+              <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Active Skill</div>
+              <div style="background:rgba(10,10,24,.1);border:1px solid rgba(255,255,255,.06);padding:12px;margin-bottom:16px">
+                <div style="font-size:.8rem;font-weight:700;color:var(--cyan);margin-bottom:4px" id="skillName">—</div>
+                <div style="font-size:.65rem;color:var(--t2);line-height:1.5" id="skillDesc">—</div>
+              </div>
+              <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Passive</div>
+              <div style="background:rgba(10,10,24,.1);border:1px solid rgba(255,255,255,.06);padding:12px;margin-bottom:16px">
+                <div style="font-size:.8rem;font-weight:700;color:var(--purple);margin-bottom:4px" id="passiveName">—</div>
+                <div style="font-size:.65rem;color:var(--t2);line-height:1.5" id="passiveDesc">—</div>
+              </div>
+              <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Skill Level</div>
+              <div id="skillLevels" style="display:flex;gap:8px"></div>
+            </div>
+          </div>
+          <div class="tab-panel" id="tab-evo">
+            <div style="padding:12px">
+              <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Evolution Tree</div>
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+                <div style="width:48px;height:48px;background:rgba(10,10,24,.1);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.2rem" id="evoCurrent">⭐</div>
+                <div style="font-size:.6rem;color:var(--t3)">→</div>
+                <div style="width:48px;height:48px;background:rgba(10,10,24,.1);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:1.2rem;opacity:.4" id="evoNext">⭐</div>
+              </div>
+              <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Requirement</div>
+              <div style="font-size:.7rem;color:var(--t);margin-bottom:12px" id="evoReq">Lv.20 + 5000 Gold</div>
+              <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Stat Bonus</div>
+              <div style="font-size:.7rem;color:var(--green)" id="evoBonus">+15% HP / +10% ATK</div>
+            </div>
+          </div>
+          <div class="tab-panel" id="tab-story"><div id="storyContent" style="color:var(--t3);font-size:.7rem;padding:20px;text-align:center">Loading...</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Battle Screen -->
+    <div class="screen" id="s-battle">
+      <div class="bg-screen bg-battle"></div>
+      <div class="page-scroll" id="battleList"></div>
+    </div>
+
+    <!-- Battle Arena -->
+    <div class="screen" id="s-arena">
+      <div class="bg-screen bg-arena"></div>
+      <div class="battle-arena">
+        <div class="ba-header">
+          <button class="btn-icon" onclick="exitArena()">✕</button>
+          <span class="ba-timer" id="baTimer">⏱ 0:00</span>
+          <span style="font-size:.7rem;color:var(--t2);font-weight:700" id="baStageName">Stage</span>
+        </div>
+        <div class="ba-field">
+          <div class="ba-team enemy" id="baEnemy"></div>
+          <div class="ba-vs">⚔️</div>
+          <div class="ba-team" id="baPlayer"></div>
+        </div>
+        <div class="ba-log" id="baLog"></div>
+        <div class="ba-actions">
+          <button class="ba-btn atk" onclick="baAction('atk')">Attack</button>
+          <button class="ba-btn skill" onclick="baAction('skill')">Skill</button>
+          <button class="ba-btn auto" onclick="baAction('auto')">Auto</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gacha Screen -->
+    <div class="screen" id="s-gacha">
+      <div class="bg-screen bg-gacha"></div>
+      <div class="page-scroll" style="display:flex;flex-direction:column;align-items:center;padding-top:20px">
+        <div class="gacha-banner">
+          <h2>🎰 The Awakening</h2>
+          <p>Summon characters aligned with the Five Warlords</p>
+          <div class="gacha-rates"><span style="color:var(--ssr)">SSR 1%</span><span style="color:var(--sr)">SR 4%</span><span style="color:var(--r)">R 25%</span><span style="color:var(--n)">N 70%</span></div>
+        </div>
+        <div class="gacha-info">
+          <div class="gacha-info-row"><span class="lbl">Pity Count</span><span class="val" id="gachaPity">0</span></div>
+          <div class="gacha-info-row"><span class="lbl">SR Guarantee</span><span class="val">at 30</span></div>
+          <div class="gacha-info-row"><span class="lbl">SSR Guarantee</span><span class="val">at 90</span></div>
+        </div>
+        <div class="gacha-btns">
+          <button class="gacha-btn single" id="btnPull1" onclick="doGacha('single')">Single<br><span style="font-size:.6rem;font-weight:400">300💎</span></button>
+          <button class="gacha-btn multi" id="btnPull10" onclick="doGacha('multi')">Multi<br><span style="font-size:.6rem;font-weight:400">2700💎</span></button>
+        </div>
+        <div class="gacha-result" id="gachaResult"></div>
+      </div>
+    </div>
+
+    <!-- Formation Screen -->
+    <div class="screen" id="s-formation">
+      <div class="bg-screen bg-formation"></div>
+      <div class="page-scroll">
+        <div class="form-title">Formation (5 Slots)</div>
+        <div class="form-slots" id="formSlots"></div>
+        <div class="form-title">Available Characters</div>
+        <div class="form-chars" id="formChars"></div>
+        <button class="form-save" onclick="saveFormation()">💾 Save Formation</button>
+      </div>
+    </div>
+
+    <!-- Codex Screen -->
+    <div class="screen" id="s-codex">
+      <div class="bg-screen bg-codex"></div>
+      <div class="page-scroll">
+        <div class="page-title">All Characters</div>
+        <div class="codex-grid" id="codexGrid"></div>
+      </div>
+    </div>
+
+    <!-- Bottom Nav removed - using slide-out menu instead -->
+  </div>
+</div>
+
+<script>
+const API='/api';
+const EMOJI={TRANSCENDENT:'🧬',PURIST:'⚔️',WILD:'🐺',UNKNOWN:'👁️',CYBERIST:'🤖'};
+const FCLASS={TRANSCENDENT:'fT',PURIST:'fP',WILD:'fW',UNKNOWN:'fU',CYBERIST:'fC'};
+
+const CHARACTERS=[
+  {id:'1001',name:'Adaptive Stalker',faction:'TRANSCENDENT',rarity:'R',baseHp:850,baseAtk:160,baseDef:140,baseWis:180,baseAgi:180,evolution:0,gender:'Unknown',skill:{name:'REWRITE',description:'Adapt enemy strength'},passive:{name:'Neural Sync',description:'+5% AGI per turn'},description:'Adapts to enemy patterns in real-time.'},
+  {id:'1002',name:'Steadfast',faction:'PURIST',rarity:'R',baseHp:1200,baseAtk:150,baseDef:180,baseWis:90,baseAgi:100,evolution:0,gender:'M',skill:{name:'HOLD THE LINE',description:'Team DEF +20%, taunt'},passive:{name:'Iron Will',description:'DEF +40% when HP < 30%'},description:'Will not move. Will not fall.'},
+  {id:'1003',name:'Fungal Lurker',faction:'WILD',rarity:'R',baseHp:800,baseAtk:160,baseDef:100,baseWis:120,baseAgi:180,evolution:0,gender:'None',skill:{name:'PACK HUNT',description:'All allies focus one target'},passive:{name:'Regeneration',description:'Heal 3% HP per turn'},description:'Life finds a way.'},
+  {id:'1004',name:'Void Pearl',faction:'UNKNOWN',rarity:'R',baseHp:750,baseAtk:140,baseDef:90,baseWis:160,baseAgi:150,evolution:0,gender:'Unknown',skill:{name:'SYNCHRONIZE',description:'Copy enemy buff to ally'},passive:{name:'Unpredictable',description:'20% chance random buff'},description:'Reality bends around it.'},
+  {id:'1005',name:'Chrome Reaper',faction:'CYBERIST',rarity:'R',baseHp:800,baseAtk:220,baseDef:100,baseWis:110,baseAgi:200,evolution:0,gender:'None',skill:{name:'SYSTEM OVERRIDE',description:'Team Skill Proc +30%'},passive:{name:'Overclock',description:'ATK +10%, HP drain'},description:'Overclocked beyond safe limits.'},
+];
+
+const STAGES=[
+  {id:'1_1',chapter:1,number:1,name:'Abandoned Lab',staminaCost:6,difficulty:1,enemies:[{name:'Feral Slime',faction:'WILD',level:1,hp:300,atk:50,def:30,wis:20,agi:40}]},
+  {id:'1_2',chapter:1,number:2,name:'Tunnel Rats',staminaCost:6,difficulty:1,enemies:[{name:'Pack Wolf',faction:'WILD',level:2,hp:400,atk:70,def:40,wis:30,agi:60}]},
+  {id:'1_3',chapter:1,number:3,name:'Broken Signal',staminaCost:8,difficulty:2,enemies:[{name:'Signal Wraith',faction:'UNKNOWN',level:3,hp:500,atk:90,def:50,wis:40,agi:80}]},
+  {id:'1_4',chapter:1,number:4,name:'Outpost Defense',staminaCost:8,difficulty:2,enemies:[{name:'Raider',faction:'PURIST',level:4,hp:600,atk:100,def:60,wis:40,agi:70}]},
+  {id:'1_5',chapter:1,number:5,name:'The Threshold',staminaCost:10,difficulty:3,enemies:[{name:'Transcendent Aspirant',faction:'TRANSCENDENT',level:5,hp:800,atk:130,def:70,wis:50,agi:90}]},
+  {id:'2_1',chapter:2,number:1,name:'Neon Wastes',staminaCost:10,difficulty:3,enemies:[{name:'Scrap Bot',faction:'CYBERIST',level:6,hp:700,atk:110,def:80,wis:50,agi:90}]},
+  {id:'2_2',chapter:2,number:2,name:'Fungal Depths',staminaCost:12,difficulty:4,enemies:[{name:'Spore Beast',faction:'WILD',level:7,hp:900,atk:120,def:70,wis:60,agi:100}]},
+  {id:'2_3',chapter:2,number:3,name:'Void Rift',staminaCost:12,difficulty:4,enemies:[{name:'Void Stalker',faction:'UNKNOWN',level:8,hp:1000,atk:140,def:80,wis:70,agi:110}]},
+  {id:'2_4',chapter:2,number:4,name:'Last Bastion',staminaCost:14,difficulty:5,enemies:[{name:'Purist Guardian',faction:'PURIST',level:9,hp:1200,atk:150,def:100,wis:70,agi:100}]},
+  {id:'2_5',chapter:2,number:5,name:'The Core',staminaCost:16,difficulty:5,enemies:[{name:'Cyber Overlord',faction:'CYBERIST',level:10,hp:1500,atk:180,def:110,wis:80,agi:120}]},
+];
+
+let state={accessToken:null,refreshToken:null,player:null,chars:[],allChars:[],idx:0,formation:[null,null,null,null,null],stages:[],pity:0,battle:null,timer:null};
+
+// === API ===
+async function api(p,o={}){
+  const h={'Content-Type':'application/json',...o.headers};
+  if(state.accessToken)h['Authorization']='Bearer '+state.accessToken;
+  let r=await fetch(API+p,{...o,headers:h});
+  if(r.status===401&&state.refreshToken){await refresh();h['Authorization']='Bearer '+state.accessToken;r=await fetch(API+p,{...o,headers:h})}
+  const d=await r.json();if(!r.ok)throw new Error(d.message||d.error||'Error');return d;
+}
+
+// === Auth ===
+function guestLogin(){
+  console.log('guestLogin clicked');
+  // Always work offline-first with localStorage
+  const stored=localStorage.getItem('vobb_guest');
+  if(stored){
+    try{
+      const d=JSON.parse(stored);
+      state.accessToken=d.accessToken;state.refreshToken=d.refreshToken;state.player=d.player;state.chars=d.chars||[];
+      console.log('restored saved session, chars:',state.chars.length);
+    }catch{ localStorage.removeItem('vobb_guest'); }
+  }
+  if(!state.chars.length){
+    state.accessToken='local_guest';state.refreshToken='local_guest';
+    state.player={id:'local',name:'Hunter',level:1,currencies:[{type:'gold',amount:5000},{type:'gems',amount:3000},{type:'stamina',amount:100}]};
+    state.chars=CHARACTERS.map((c,i)=>({id:'c'+(i+1),characterId:c.id,level:1,star:1,skillLevel:1,currentHp:c.baseHp,currentAtk:c.baseAtk,currentDef:c.baseDef,currentWis:c.baseWis,currentAgi:c.baseAgi,exp:0,expMax:100,character:c}));
+    localStorage.setItem('vobb_guest',JSON.stringify({accessToken:state.accessToken,refreshToken:state.refreshToken,player:state.player,chars:state.chars}));
+  }
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('main-app').style.display='flex';
+  state.allChars=CHARACTERS;
+  state.stages=STAGES;
+  renderRes();renderChar();renderBattle();renderGacha();renderCodex();
+  console.log('login complete');
+}
+
+async function refresh(){
+  try{const d=await api('/auth/refresh',{method:'POST',body:JSON.stringify({refreshToken:state.refreshToken})});state.accessToken=d.accessToken;return true}
+  catch{return false}
+}
+
+// === Load Data ===
+async function loadAll(){
+  try{state.allChars=await api('/characters')}catch{state.allChars=CHARACTERS}
+  try{state.stages=await api('/stages')}catch{state.stages=STAGES}
+  try{const p=await api('/gacha/pity');state.pity=p.count||0}catch{}
+  renderRes();renderChar();renderBattle();renderGacha();renderCodex();
+}
+
+function renderRes(){
+  const c=state.player?.currencies||[];
+  const g=c.find(x=>x.type==='gold'),gm=c.find(x=>x.type==='gems'),s=c.find(x=>x.type==='stamina');
+  document.getElementById('gold').textContent=fmt(g?.amount||0);
+  document.getElementById('gems').textContent=fmt(gm?.amount||0);
+  document.getElementById('stam').textContent=(s?.amount||0)+'/'+(state.player?.staminaMax||100);
+}
+
+function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toString()}
+function fmtFull(n){return n.toLocaleString()}
+
+// === Navigation ===
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.menu-item').forEach(b=>b.classList.toggle('active',b.dataset.screen===id));
+  const titles={'s-char':'Character','s-battle':'Battle','s-gacha':'Gacha','s-codex':'Codex','s-formation':'Formation','s-arena':'Battle'};
+  document.getElementById('tb-title').textContent=titles[id]||'';
+  const isArena=id==='s-arena';
+  document.getElementById('topbar').style.display=isArena?'none':'flex';
+  toggleMenu(false);
+}
+
+function toggleMenu(force){
+  const panel=document.getElementById('menuPanel');
+  const overlay=document.getElementById('menuOverlay');
+  const isOpen=panel.classList.contains('open');
+  const shouldOpen=force===undefined?!isOpen:force;
+  panel.classList.toggle('open',shouldOpen);
+  overlay.classList.toggle('open',shouldOpen);
+}
+
+function goHome(){showScreen('s-char')}
+function toggleRoster(){
+  const roster=document.querySelector('.char-roster-wrap');
+  roster.classList.toggle('expanded');
+}
+
+// === Character ===
+const CHAR_ART = {
+  TRANSCENDENT: '/assets/char/char_1.jpg',
+  PURIST: '/assets/char/char_2.jpg',
+  WILD: '/assets/char/char_3.jpg',
+  UNKNOWN: '/assets/char/char_4.jpg',
+  CYBERIST: '/assets/char/char_5.jpg'
+};
+
+function renderChar(){
+  const c=state.chars[state.idx];if(!c)return;
+  const ch=c.character||c;
+  const art = CHAR_ART[ch.faction] || CHAR_ART.TRANSCENDENT;
+  document.getElementById('charArt').style.backgroundImage = `url(${art})`;
+  document.getElementById('charArt').textContent='';
+  document.getElementById('charName').textContent=ch.name;
+  document.getElementById('charRar').textContent=ch.rarity;
+  document.getElementById('charRar').className='char-rar '+(ch.rarity||'').toLowerCase();
+  const maxStar=5,curStar=c.star||1;
+  document.getElementById('charStars').innerHTML='★'.repeat(curStar)+'<span style="opacity:.3">' + '★'.repeat(maxStar-curStar) + '</span>';
+  document.getElementById('charLv').textContent='Lv.'+(c.level||1)+'/60';
+  document.getElementById('charExp').style.width=Math.min(100,((c.exp||0)/(c.expMax||100))*100)+'%';
+  const fb=document.getElementById('charFact');fb.textContent=ch.faction;fb.className='faction-badge '+(FCLASS[ch.faction]||'');
+  // Power
+  const pwr=Math.floor((c.currentHp||ch.baseHp||0)/10+(c.currentAtk||ch.baseAtk||0)*3+(c.currentDef||ch.baseDef||0)*2+(c.currentWis||ch.baseWis||0)*1.5+(c.currentAgi||ch.baseAgi||0)*1.5);
+  document.getElementById('powerVal').textContent=fmtFull(pwr);
+  // Stats
+  const st=[
+    {n:'HP',v:c.currentHp||ch.baseHp||0,i:'❤️',c:'hp'},
+    {n:'ATK',v:c.currentAtk||ch.baseAtk||0,i:'⚔️',c:'atk'},
+    {n:'DEF',v:c.currentDef||ch.baseDef||0,i:'🛡️',c:'def'},
+    {n:'WIS',v:c.currentWis||ch.baseWis||0,i:'✨',c:'wis'},
+    {n:'AGI',v:c.currentAgi||ch.baseAgi||0,i:'💨',c:'agi'},
+  ];
+  document.getElementById('statsGrid').innerHTML=st.map(s=>`<div class="stat-item"><span class="stat-icon">${s.i}</span><span class="stat-name">${s.n}</span><span class="stat-val ${s.c}">${fmtFull(s.v)}</span></div>`).join('');
+  // Counter Chart
+  const factions=['TRANSCENDENT','PURIST','WILD','UNKNOWN','CYBERIST'];
+  const colors={TRANSCENDENT:'#b86bff',PURIST:'#ff6b35',WILD:'#23d160',UNKNOWN:'#3298dc',CYBERIST:'#ff3860'};
+  const labels={TRANSCENDENT:'T',PURIST:'P',WILD:'W',UNKNOWN:'U',CYBERIST:'C'};
+  const cx=35,cy=35,r=25;
+  const angles=[-90,-18,54,126,198].map(a=>a*Math.PI/180);
+  const pts=angles.map(a=>({x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)}));
+  const counters={TRANSCENDENT:['WILD','CYBERIST'],PURIST:['TRANSCENDENT','WILD'],WILD:['UNKNOWN','CYBERIST'],UNKNOWN:['PURIST','TRANSCENDENT'],CYBERIST:['UNKNOWN','PURIST']};
+  let svg='<svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">';
+  svg+=`<defs><marker id="arrow" markerWidth="3" markerHeight="3" refX="2" refY="1.5" orient="auto"><path d="M0,0 L3,1.5 L0,3 Z" fill="#fff"/></marker></defs>`;
+  factions.forEach((f,i)=>{
+    counters[f].forEach(target=>{
+      const ti=factions.indexOf(target);
+      svg+=`<line x1="${pts[i].x}" y1="${pts[i].y}" x2="${pts[ti].x}" y2="${pts[ti].y}" stroke="${colors[f]}" stroke-width="1.2" opacity="0.8" marker-end="url(#arrow)"/>`;
+    });
+  });
+  factions.forEach((f,i)=>{
+    const isActive=f===ch.faction;
+    svg+=`<circle cx="${pts[i].x}" cy="${pts[i].y}" r="${isActive?7:4}" fill="${isActive?colors[f]:'#12122a'}" stroke="${colors[f]}" stroke-width="${isActive?2:1}"/>`;
+    svg+=`<text x="${pts[i].x}" y="${pts[i].y+2.5}" text-anchor="middle" font-size="5.5" font-weight="800" fill="${isActive?'#fff':'#ddd'}">${labels[f]}</text>`;
+  });
+  svg+='</svg>';
+  document.getElementById('counterChart').innerHTML=svg;
+  // Skills Tab
+  const skillName=ch.skill?.name||'Unknown';
+  const skillDesc=ch.skill?.description||'—';
+  const passiveName=ch.passive?.name||'Unknown';
+  const passiveDesc=ch.passive?.description||'—';
+  const skillLv=c.skillLevel||3;
+  document.getElementById('skillName').textContent=skillName;
+  document.getElementById('skillDesc').textContent=skillDesc;
+  document.getElementById('passiveName').textContent=passiveName;
+  document.getElementById('passiveDesc').textContent=passiveDesc;
+  document.getElementById('skillLevels').innerHTML=[1,2,3,4,5].map(l=>`<div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;border:1px solid ${l<=skillLv?colors[ch.faction]:'var(--bdr)'};background:${l<=skillLv?colors[ch.faction]+'33':'transparent'};color:${l<=skillLv?'#fff':'var(--t3)'}">Lv.${l}</div>`).join('');
+  // Evo Tab
+  const curStar=c.star||1;
+  document.getElementById('evoCurrent').textContent='⭐'.repeat(curStar);
+  document.getElementById('evoNext').textContent='⭐'.repeat(Math.min(5,curStar+1));
+  document.getElementById('evoReq').textContent=`Lv.${(curStar*10)+10} + ${(curStar*5000).toLocaleString()} Gold`;
+  document.getElementById('evoBonus').textContent=`+${(curStar*5)+10}% HP / +${(curStar*5)+5}% ATK`;
+  // Skills
+  const sk=[{n:'Normal',i:'⚔️',l:c.skillLevel||3},{n:'Skill 1',i:'🔮',l:c.skillLevel||3},{n:'Skill 2',i:'💫',l:Math.max(1,(c.skillLevel||3)-1)},{n:'Ultimate',i:'✨',l:Math.max(1,(c.skillLevel||3)-2)}];
+  document.getElementById('skillsRow').innerHTML=sk.map(s=>`<div class="skill-card"><div class="skill-icon">${s.i}</div><div class="skill-name">${s.n}</div><div class="skill-level">Lv.${s.l}</div></div>`).join('');
+  // Roster
+  document.getElementById('rosterGrid').innerHTML=state.chars.map((rc,i)=>{const rch=rc.character||rc;const art=CHAR_ART[rch.faction]||CHAR_ART.TRANSCENDENT;return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})" style="background-image:url(${art});background-size:cover;background-position:center"><div class="roster-ava" style="background:rgba(0,0,0.5);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:.7rem">${EMOJI[rch.faction]||'❓'}</div><div class="roster-lv">${'★'.repeat(rc.star||1)} ${rc.level||1}</div></div>`}).join('');
+}
+
+function selectChar(i){state.idx=i;renderChar();if(document.getElementById('tab-story').classList.contains('active'))renderStory()}
+function switchTab(t){
+  document.querySelectorAll('.char-tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===t));
+  ['overview','skills','evo','story'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active',x===t));
+  if(t==='story') renderStory();
+}
+function upgrade(){
+  const c=state.chars[state.idx];if(!c)return;
+  const ch=c.character||c;
+  const cost=500+((c.level||1)*100);
+  const gold=state.player?.currencies?.find(x=>x.type==='gold');
+  if(!gold||gold.amount<cost){toast('Not enough gold! Need '+cost.toLocaleString(),'err');return}
+  gold.amount-=cost;
+  c.level=(c.level||1)+1;
+  const mult=1+(c.level-1)*0.1;
+  c.currentHp=Math.round(ch.baseHp*mult);
+  c.currentAtk=Math.round(ch.baseAtk*mult);
+  c.currentDef=Math.round(ch.baseDef*mult);
+  c.currentWis=Math.round(ch.baseWis*mult);
+  c.currentAgi=Math.round(ch.baseAgi*mult);
+  renderChar();renderRes();
+  toast('Level Up! Now Lv.'+c.level,'ok');
+}
+
+function renderStory(){
+  const c=state.chars[state.idx];
+  if(!c)return;
+  const ch=c.character||c;
+  const el=document.getElementById('storyContent');
+  el.innerHTML=`
+    <div style="text-align:left;line-height:1.8">
+      <div style="font-size:.85rem;font-weight:700;color:var(--gold);margin-bottom:8px">${ch.name}</div>
+      <div style="font-size:.7rem;color:var(--t2);margin-bottom:12px">${ch.description||'No description available.'}</div>
+      <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Faction</div>
+      <div style="font-size:.7rem;color:var(--t);margin-bottom:12px">${ch.faction}</div>
+      <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Rarity</div>
+      <div style="font-size:.7rem;color:var(--${ch.rarity==='SSR'?'ssr':ch.rarity==='SR'?'sr':ch.rarity==='R'?'r':'n'});margin-bottom:12px">${ch.rarity}</div>
+      <div style="font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Gender</div>
+      <div style="font-size:.7rem;color:var(--t);margin-bottom:12px">${ch.gender||'Unknown'}</div>
+    </div>`;
+}
+
+// === Battle ===
+function renderBattle(){
+  const el=document.getElementById('battleList');
+  if(!state.stages.length){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--t3)">No stages available</div>';return}
+  let html='';const chapters={};
+  state.stages.forEach(s=>{if(!chapters[s.chapter])chapters[s.chapter]=[];chapters[s.chapter].push(s)});
+  Object.keys(chapters).sort((a,b)=>a-b).forEach(ch=>{
+    html+=`<div class="bl-section"><div class="bl-title">Chapter ${ch}</div><div class="bl-grid">`;
+    chapters[ch].forEach(s=>{
+      html+=`<div class="stage-card" onclick="startBattle('${s.id}')"><div class="stage-num">${s.number}</div><div class="stage-name">${s.name}</div><div class="stage-cost">⚡ ${s.staminaCost}</div><div class="stage-diff">${[1,2,3,4,5].map(i=>`<div class="diff-dot ${i<=s.difficulty?'filled':''}"></div>`).join('')}</div></div>`;
+    });
+    html+='</div></div>';
+  });
+  el.innerHTML=html;
+}
+
+function startBattle(stageId){
+  const stage=state.stages.find(s=>s.id===stageId);if(!stage)return;
+  const playerUnits=state.chars.slice(0,5).map(c=>({id:c.id,name:(c.character||c).name,faction:(c.character||c).faction,hp:c.currentHp||1000,maxHp:c.currentHp||1000,atk:c.currentAtk||100,def:c.currentDef||50,alive:true,isPlayer:true}));
+  const enemyUnits=stage.enemies.map((e,i)=>({id:'e'+i,name:e.name,faction:e.faction,hp:e.hp,maxHp:e.hp,atk:e.atk,def:e.def,alive:true,isPlayer:false}));
+  state.battle={stage,playerUnits,enemyUnits,log:[],turn:'player',auto:false,time:0};
+  showScreen('s-arena');
+  renderArena();
+  if(state.timer)clearInterval(state.timer);
+  state.timer=setInterval(()=>{state.battle.time++;const m=Math.floor(state.battle.time/60),sc=state.battle.time%60;document.getElementById('baTimer').textContent=`⏱ ${m}:${sc.toString().padStart(2,'0')}`},1000);
+}
+
+function renderArena(){
+  const b=state.battle;if(!b)return;
+  document.getElementById('baStageName').textContent=b.stage.name;
+  document.getElementById('baPlayer').innerHTML=b.playerUnits.map((u,i)=>`<div class="ba-unit ${!u.alive?'dead':''} ${b.activeUnit===i&&b.turn==='player'?'act':''}" onclick="selectUnit(${i})"><div class="ba-u-ava">${EMOJI[u.faction]||'❓'}</div><div class="ba-u-nm">${u.name}</div><div class="ba-u-hp"><div class="ba-u-hp-fill" style="width:${(u.hp/u.maxHp)*100}%"></div></div></div>`).join('');
+  document.getElementById('baEnemy').innerHTML=b.enemyUnits.map((u,i)=>`<div class="ba-unit ${!u.alive?'dead':''}" onclick="targetEnemy(${i})"><div class="ba-u-ava">${EMOJI[u.faction]||'❓'}</div><div class="ba-u-nm">${u.name}</div><div class="ba-u-hp"><div class="ba-u-hp-fill" style="width:${(u.hp/u.maxHp)*100}%"></div></div></div>`).join('');
+  document.getElementById('baLog').innerHTML=b.log.map(e=>`<div class="ba-log-entry ${e.type}">${e.msg}</div>`).join('')||'<div style="color:var(--t3)">Battle Start!</div>';
+  document.getElementById('baLog').scrollTop=document.getElementById('baLog').scrollHeight;
+  b.activeUnit=b.playerUnits.findIndex(u=>u.alive);
+  b.targetEnemy=b.enemyUnits.findIndex(u=>u.alive);
+}
+
+function selectUnit(i){if(state.battle.playerUnits[i].alive){state.battle.activeUnit=i;renderArena()}}
+function targetEnemy(i){if(state.battle.enemyUnits[i].alive){state.battle.targetEnemy=i;renderArena()}}
+
+function baAction(type){
+  const b=state.battle;if(!b||b.turn!=='player')return;
+  const u=b.playerUnits[b.activeUnit];if(!u||!u.alive)return;
+  const t=b.enemyUnits[b.targetEnemy];if(!t||!t.alive)return;
+  let dmg=0;let msg='';
+  if(type==='atk'){dmg=Math.max(1,u.atk-Math.floor(t.def*0.5));t.hp=Math.max(0,t.hp-dmg);b.log.push({type:'dmg',msg:`${u.name} attacks ${t.name} for ${dmg} damage!`})}
+  else if(type==='skill'){dmg=Math.max(1,Math.floor(u.atk*1.5)-Math.floor(t.def*0.3));t.hp=Math.max(0,t.hp-dmg);b.log.push({type:'skill',msg:`${u.name} uses Skill on ${t.name} for ${dmg} damage!`})}
+  if(t.hp<=0){t.alive=false;b.log.push({type:'death',msg:`${t.name} defeated!`})}
+  b.targetEnemy=b.enemyUnits.findIndex(x=>x.alive);
+  if(b.targetEnemy===-1){endBattle(true);return}
+  b.turn='enemy';renderArena();
+  if(type==='auto'){setTimeout(()=>baAction('auto'),800);return}
+  setTimeout(enemyTurn,800);
+}
+
+function enemyTurn(){
+  const b=state.battle;if(!b)return;
+  const aliveEnemies=b.enemyUnits.filter(u=>u.alive);
+  if(!aliveEnemies.length){endBattle(true);return}
+  const alivePlayers=b.playerUnits.filter(u=>u.alive);
+  if(!alivePlayers.length){endBattle(false);return}
+  aliveEnemies.forEach(e=>{
+    const target=alivePlayers[Math.floor(Math.random()*alivePlayers.length)];
+    const dmg=Math.max(1,e.atk-Math.floor(target.def*0.5));
+    target.hp=Math.max(0,target.hp-dmg);
+    b.log.push({type:'dmg',msg:`${e.name} attacks ${target.name} for ${dmg} damage!`});
+    if(target.hp<=0){target.alive=false;b.log.push({type:'death',msg:`${target.name} defeated!`})}
+  });
+  const stillAlive=b.playerUnits.filter(u=>u.alive);
+  if(!stillAlive.length){endBattle(false);return}
+  b.turn='player';b.activeUnit=b.playerUnits.findIndex(u=>u.alive);renderArena();
+}
+
+function endBattle(win){
+  clearInterval(state.timer);
+  state.battle.log.push({type:'skill',msg:win?'🎉 Victory!':'💀 Defeated...'});
+  renderArena();
+  setTimeout(()=>{
+    if(win){
+      const reward=1000+(state.battle.stage.staminaCost*100);
+      const gold=state.player?.currencies?.find(c=>c.type==='gold');
+      if(gold)gold.amount+=reward;
+      toast('Victory! +'+reward.toLocaleString()+' Gold','ok');
+    }
+    else toast('Defeated. Try again.','err');
+    setTimeout(()=>{exitArena();renderRes()},1500);
+  },1000);
+}
+
+function exitArena(){if(state.timer)clearInterval(state.timer);state.battle=null;showScreen('s-battle')}
+
+// === Gacha ===
+function renderGacha(){document.getElementById('gachaPity').textContent=state.pity}
+
+function doGacha(type){
+  const cost=type==='multi'?2700:300;
+  const gems=state.player?.currencies?.find(c=>c.type==='gems');
+  if(!gems||gems.amount<cost){toast('Not enough gems!','err');return}
+  document.getElementById('btnPull1').disabled=true;
+  document.getElementById('btnPull10').disabled=true;
+  gems.amount-=cost;
+  const results=[];
+  const count=type==='multi'?10:1;
+  for(let i=0;i<count;i++){
+    state.pity++;
+    const r=Math.random();
+    let rarity='N';
+    if(state.pity>=100){rarity='SSR';state.pity=0}
+    else if(r<.01){rarity='SSR';state.pity=0}
+    else if(r<.25)rarity='R';
+    const c=CHARACTERS[Math.floor(Math.random()*CHARACTERS.length)];
+    const existing=state.chars.find(x=>(x.character||x).id===c.id);
+    if(!existing){
+      state.chars.push({id:'c'+(state.chars.length+1),characterId:c.id,level:1,star:1,skillLevel:1,currentHp:c.baseHp,currentAtk:c.baseAtk,currentDef:c.baseDef,currentWis:c.baseWis,currentAgi:c.baseAgi,exp:0,expMax:100,character:c});
+    }
+    results.push({name:c.name,faction:c.faction,rarity});
+  }
+  document.getElementById('gachaResult').innerHTML=results.map((r,i)=>`<div class="gacha-card" style="animation-delay:${i*0.08}s"><div class="gc-icon">${EMOJI[r.faction]||'❓'}</div><div class="gc-name">${r.name}</div><div class="gc-rar" style="color:var(--${r.rarity==='SSR'?'ssr':r.rarity==='SR'?'sr':r.rarity==='R'?'r':'n'})">${r.rarity}</div></div>`).join('');
+  renderRes();renderGacha();renderCodex();
+  document.getElementById('btnPull1').disabled=false;
+  document.getElementById('btnPull10').disabled=false;
+}
+
+// === Formation ===
+function renderFormation(){
+  document.getElementById('formSlots').innerHTML=state.formation.map((sid,i)=>{
+    const c=sid?state.chars.find(x=>x.id===sid):null;
+    if(c){const ch=c.character||c;return `<div class="f-slot filled" onclick="removeSlot(${i})"><div class="fs-name">${ch.name}</div><div class="fs-lv">Lv.${c.level||1}</div></div>`}
+    return `<div class="f-slot" onclick="pickSlot(${i})"><div class="fs-empty">Slot ${i+1}</div></div>`;
+  }).join('');
+  const used=state.formation.filter(Boolean);
+  const avail=state.chars.filter(c=>!used.includes(c.id));
+  document.getElementById('formChars').innerHTML=avail.map(c=>{const ch=c.character||c;return `<div class="f-char" onclick="addToSlot('${c.id}')"><div class="fc-ava">${EMOJI[ch.faction]||'❓'}</div><div class="fc-nm">${ch.name}</div><div class="fc-lv">Lv.${c.level||1}</div></div>`}).join('')||'<div style="grid-column:1/-1;color:var(--t3);font-size:.7rem">All characters in formation</div>';
+}
+
+let pickingSlot=-1;
+function pickSlot(i){pickingSlot=i;renderFormation()}
+function addToSlot(charId){
+  if(pickingSlot<0){const empty=state.formation.findIndex(s=>!s);if(empty===-1){toast('Formation full','err');return}state.formation[empty]=charId}
+  else{state.formation[pickingSlot]=charId;pickingSlot=-1}
+  renderFormation();
+}
+function removeSlot(i){state.formation[i]=null;renderFormation()}
+
+function saveFormation(){
+  toast('Formation saved!','ok');
+}
+
+// === Codex ===
+function renderCodex(){
+  document.getElementById('codexGrid').innerHTML=state.allChars.map(c=>`<div class="codex-card"><div class="cc-ava">${EMOJI[c.faction]||'❓'}</div><div class="cc-nm">${c.name}</div><div class="cc-rar" style="color:var(--${c.rarity==='SSR'?'ssr':c.rarity==='SR'?'sr':c.rarity==='R'?'r':'n'})">${c.rarity}</div><div class="cc-fact">${c.faction}</div></div>`).join('')||'<div style="grid-column:1/-1;color:var(--t3);text-align:center;padding:20px">No data</div>';
+}
+
+// === Utils ===
+function showLoading(){document.getElementById('loading').classList.remove('hidden')}
+function hideLoading(){document.getElementById('loading').classList.add('hidden')}
+function toast(m,type=''){const e=document.createElement('div');e.className='toast '+type;e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),2000)}
+
+// === Background Particles ===
+(function(){
+  const container=document.getElementById('bgParticles');
+  for(let i=0;i<30;i++){
+    const p=document.createElement('div');
+    p.className='bg-particle';
+    p.style.left=Math.random()*100+'%';
+    p.style.animationDuration=(8+Math.random()*12)+'s';
+    p.style.animationDelay=Math.random()*10+'s';
+    p.style.width=p.style.height=(1+Math.random()*2)+'px';
+    container.appendChild(p);
+  }
+})();
+</script>
+</body>
+</html>
