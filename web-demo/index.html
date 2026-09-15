@@ -76,7 +76,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .faction-badge.W{color:var(--fW);border-color:var(--fW)}
 .faction-badge.U{color:var(--fU);border-color:var(--fU)}
 .faction-badge.C{color:var(--fC);border-color:var(--fC)}
-.counter-chart{position:absolute;top:50px;left:12px;width:80px;height:80px}
+.counter-chart{position:absolute;top:50px;left:12px;width:80px;height:80px;z-index:2}
 
 /* ========== PANEL ========== */
 .panel{width:320px;background:var(--card);border-left:1px solid var(--bdr);overflow-y:auto;padding:12px;flex-shrink:0}
@@ -501,7 +501,7 @@ function renderChar(){
   const pts=ang.map(a=>({x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)}));
   const cnt={TRANSCENDENT:['WILD','CYBERIST'],PURIST:['TRANSCENDENT','WILD'],WILD:['UNKNOWN','CYBERIST'],UNKNOWN:['PURIST','TRANSCENDENT'],CYBERIST:['UNKNOWN','PURIST']};
   let svg='<svg viewBox="0 0 80 80">';
-  f.forEach(i=>cnt[i].forEach(t=>{const ti=f.indexOf(t);svg+=`<line x1="${pts[f.indexOf(i)].x}" y1="${pts[f.indexOf(i)].y}" x2="${pts[ti].x}" y2="${pts[ti].y}" stroke="${col[i]}" stroke-width="1.5" opacity=".7"/></svg>`}));
+  f.forEach(i=>cnt[i].forEach(t=>{const ti=f.indexOf(t);svg+=`<line x1="${pts[f.indexOf(i)].x}" y1="${pts[f.indexOf(i)].y}" x2="${pts[ti].x}" y2="${pts[ti].y}" stroke="${col[i]}" stroke-width="1.5" opacity=".7"/>`}));
   f.forEach((i,idx)=>{const on=i===ch.faction;svg+=`<circle cx="${pts[idx].x}" cy="${pts[idx].y}" r="${on?7:4}" fill="${on?col[i]:'#1a1a40'}" stroke="${col[i]}" stroke-width="2"/>`;svg+=`<text x="${pts[idx].x}" y="${pts[idx].y+3}" text-anchor="middle" font-size="6" font-weight="800" fill="${on?'#fff':'#ddd'}">${lab[i]}</text>`});
   svg+='</svg>';
   document.getElementById('counterChart').innerHTML=svg;
@@ -526,7 +526,7 @@ function renderChar(){
 
 function switchTab(t){
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===t));
-  ['overview','skills','evo','story'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active',x===t));
+  ['stat','skills','evo','story'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active',x===t));
 }
 
 function upgrade(){
