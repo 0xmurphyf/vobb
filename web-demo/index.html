@@ -54,8 +54,8 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .roster-item:hover{border-color:var(--bdr2)}
 .roster-item.active{border-color:var(--gold);box-shadow:0 0 8px rgba(244,196,48,.3)}
 .roster-lv{font-size:.4rem;font-weight:700;color:var(--t3);position:absolute;bottom:1px;left:2px}
-.roster-fact{font-size:.8rem;position:absolute;top:1px;right:2px;text-shadow:0 1px 2px #000}
-.roster-stars{font-size:.35rem;position:absolute;bottom:1px;right:2px;color:var(--gold);letter-spacing:-1px}
+.roster-fact{font-size:.5rem;font-weight:800;position:absolute;top:1px;right:2px;text-shadow:0 1px 2px #000;font-family:monospace}
+.roster-stars{font-size:.35rem;position:absolute;bottom:1px;right:2px;color:var(--gold);letter-spacing:-1px;max-width:24px;text-align:center;line-height:.4rem}
 .roster.open .roster-item{width:180px;height:56px;flex-direction:row;justify-content:flex-start;padding:0 8px;gap:6px}
 
 /* ========== VIEWPORT ========== */
@@ -460,12 +460,12 @@ function toggleRoster(){document.getElementById('rosterWrap').classList.toggle('
 // === Roster ===
 function renderRoster(){
   document.getElementById('rosterGrid').innerHTML=state.chars.map((c,i)=>{
-    const ch=c.character;
+    const ch=c.character;const stars=c.star;const l1=Math.min(stars,3);const l2=Math.max(stars-3,0);
     return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})" style="background-image:url(assets/char/char_${i+1}.jpg)">
       <span class="roster-rar" style="color:var(--${ch.rarity==='SSR'?'gold':ch.rarity==='R'?'blue':'purple'})">${ch.rarity}</span>
-      <span class="roster-fact">${EMOJI[ch.faction]}</span>
+      <span class="roster-fact">${FCLASS[ch.faction]||ch.faction[0]}</span>
       <span class="roster-lv">Lv.${c.level}</span>
-      <span class="roster-stars">${'★'.repeat(c.star)}</span>
+      <span class="roster-stars">${'★'.repeat(l1)}${l2>0?'<br>'+'★'.repeat(l2):''}</span>
     </div>`;
   }).join('');
 }
