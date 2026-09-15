@@ -709,11 +709,11 @@ function renderChar(){
   document.getElementById('passiveDesc').textContent=passiveDesc;
   document.getElementById('skillLevels').innerHTML=[1,2,3,4,5].map(l=>`<div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;border:1px solid ${l<=skillLv?colors[ch.faction]:'var(--bdr)'};background:${l<=skillLv?colors[ch.faction]+'33':'transparent'};color:${l<=skillLv?'#fff':'var(--t3)'}">Lv.${l}</div>`).join('');
   // Evo Tab
-  const curStar=c.star||1;
-  document.getElementById('evoCurrent').textContent='⭐'.repeat(curStar);
-  document.getElementById('evoNext').textContent='⭐'.repeat(Math.min(5,curStar+1));
-  document.getElementById('evoReq').textContent=`Lv.${(curStar*10)+10} + ${(curStar*5000).toLocaleString()} Gold`;
-  document.getElementById('evoBonus').textContent=`+${(curStar*5)+10}% HP / +${(curStar*5)+5}% ATK`;
+  const evoStar=c.star||1;
+  document.getElementById('evoCurrent').textContent='⭐'.repeat(evoStar);
+  document.getElementById('evoNext').textContent='⭐'.repeat(Math.min(5,evoStar+1));
+  document.getElementById('evoReq').textContent=`Lv.${(evoStar*10)+10} + ${(evoStar*5000).toLocaleString()} Gold`;
+  document.getElementById('evoBonus').textContent=`+${(evoStar*5)+10}% HP / +${(evoStar*5)+5}% ATK`;
   // Skills
   const sk=[{n:'Normal',i:'⚔️',l:c.skillLevel||3},{n:'Skill 1',i:'🔮',l:c.skillLevel||3},{n:'Skill 2',i:'💫',l:Math.max(1,(c.skillLevel||3)-1)},{n:'Ultimate',i:'✨',l:Math.max(1,(c.skillLevel||3)-2)}];
   document.getElementById('skillsRow').innerHTML=sk.map(s=>`<div class="skill-card"><div class="skill-icon">${s.i}</div><div class="skill-name">${s.n}</div><div class="skill-level">Lv.${s.l}</div></div>`).join('');
