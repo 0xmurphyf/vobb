@@ -54,8 +54,8 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .roster-item:hover{border-color:var(--bdr2)}
 .roster-item.active{border-color:var(--gold);box-shadow:0 0 8px rgba(244,196,48,.3)}
 .roster-lv{font-size:.4rem;font-weight:700;color:var(--t3);position:absolute;bottom:1px;left:2px}
-.roster-rar{font-size:.35rem;font-weight:800;position:absolute;top:1px;right:2px}
-.roster-stars{font-size:.3rem;position:absolute;bottom:1px;right:2px;color:var(--gold)}
+.roster-fact{font-size:.8rem;position:absolute;top:1px;right:2px;text-shadow:0 1px 2px #000}
+.roster-stars{font-size:.35rem;position:absolute;bottom:1px;right:2px;color:var(--gold);letter-spacing:-1px}
 .roster.open .roster-item{width:180px;height:56px;flex-direction:row;justify-content:flex-start;padding:0 8px;gap:6px}
 
 /* ========== VIEWPORT ========== */
@@ -422,7 +422,7 @@ let state={player:null,chars:[],idx:0,formation:[null,null,null,null,null],pity:
 // === Guest Login (offline, no API) ===
 function guestLogin(){
   state.player={name:'Hunter',currencies:[{type:'gold',amount:5000},{type:'gems',amount:3000},{type:'stamina',amount:100}]};
-  state.chars=CHARS.map((c,i)=>({id:'c'+(i+1),characterId:c.id,level:1,star:1,skillLevel:1,currentHp:c.baseHp,currentAtk:c.baseAtk,currentDef:c.baseDef,currentWis:c.baseWis,currentAgi:c.baseAgi,character:c}));
+  state.chars=CHARS.map((c,i)=>({id:'c'+(i+1),characterId:c.id,level:1,star:i===0?5:1,skillLevel:1,currentHp:c.baseHp,currentAtk:c.baseAtk,currentDef:c.baseDef,currentWis:c.baseWis,currentAgi:c.baseAgi,character:c}));
   document.getElementById('login-screen').style.display='none';
   document.getElementById('main-app').style.display='flex';
   renderAll();
@@ -463,8 +463,9 @@ function renderRoster(){
     const ch=c.character;
     return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})" style="background-image:url(assets/char/char_${i+1}.jpg)">
       <span class="roster-rar" style="color:var(--${ch.rarity==='SSR'?'gold':ch.rarity==='R'?'blue':'purple'})">${ch.rarity}</span>
-      <span class="roster-stars">${'★'.repeat(c.star)}</span>
+      <span class="roster-fact">${EMOJI[ch.faction]}</span>
       <span class="roster-lv">Lv.${c.level}</span>
+      <span class="roster-stars">${'★'.repeat(c.star)}</span>
     </div>`;
   }).join('');
 }
