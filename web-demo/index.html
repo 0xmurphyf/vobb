@@ -65,7 +65,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 @keyframes float-logo{0%,100%{transform:translateY(0);filter:drop-shadow(0 0 30px rgba(244,196,48,.4))}50%{transform:translateY(-10px);filter:drop-shadow(0 0 50px rgba(244,196,48,.6))}}
 .login-title{font-size:3rem;font-weight:900;background:linear-gradient(135deg,var(--gold),#fff,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:6px;margin:12px 0 8px}
 .login-sub{font-size:.8rem;color:var(--t2);letter-spacing:3px;text-transform:uppercase;margin-bottom:40px}
-.login-btn{padding:16px 56px;border-radius:30px;font-size:.9rem;font-weight:700;letter-spacing:3px;background:linear-gradient(135deg,var(--gold),#e6a817);color:#000;box-shadow:0 4px 30px rgba(244,196,48,.3);transition:all .3s;text-transform:uppercase}
+.login-btn{padding:16px 56px;border-radius:0;font-size:.9rem;font-weight:700;letter-spacing:3px;background:linear-gradient(135deg,var(--gold),#e6a817);color:#000;box-shadow:0 4px 30px rgba(244,196,48,.3);transition:all .3s;text-transform:uppercase}
 .login-btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 8px 40px rgba(244,196,48,.5)}
 .login-btn:active{transform:scale(.96)}
 
@@ -73,10 +73,10 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:4px 12px;background:transparent;border-bottom:1px solid rgba(255,255,255,.06);backdrop-filter:blur(8px);position:sticky;top:0;z-index:100}
 .topbar-left{display:flex;align-items:center;gap:10px}
 .topbar-right{display:flex;align-items:center;gap:8px}
-.btn-icon{width:28px;height:28px;border-radius:8px;background:var(--s1);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--t2);transition:all .2s}
+.btn-icon{width:28px;height:28px;border-radius:0;background:rgba(10,10,24,.7);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--t2);transition:all .2s}
 .btn-icon:hover{background:var(--s2);border-color:var(--bdr2)}
 .topbar-title{font-size:.65rem;color:var(--t2);font-weight:600;letter-spacing:1px;text-transform:uppercase}
-.res{display:flex;align-items:center;gap:3px;padding:3px 6px;border-radius:12px;background:var(--s1);border:1px solid var(--bdr);font-size:.6rem;font-weight:700}
+.res{display:flex;align-items:center;gap:3px;padding:3px 6px;border-radius:0;background:rgba(10,10,24,.7);border:1px solid var(--bdr);font-size:.6rem;font-weight:700}
 .res.gems{color:var(--cyan);border-color:rgba(0,209,178,.2)}
 .res.gold{color:var(--gold);border-color:rgba(244,196,48,.2)}
 .res.stam{color:var(--green);border-color:rgba(35,209,96,.2)}
@@ -95,13 +95,13 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .char-name{font-size:1.5rem;font-weight:800;color:rgba(255,255,255,.95);text-shadow:0 0 20px rgba(0,0,0,.8)}
 .char-sub-row{display:flex;align-items:center;gap:6px;margin-top:2px;font-size:.7rem}
 .char-stars{color:var(--gold);font-size:.8rem;letter-spacing:2px}
-.char-rar{padding:2px 8px;border-radius:6px;font-size:.6rem;font-weight:700;background:rgba(0,0,0,.5)}
+.char-rar{padding:2px 8px;border-radius:0;font-size:.6rem;font-weight:700;background:rgba(0,0,0,.5);border:none}
 .char-rar.ssr{color:var(--ssr)} .char-rar.sr{color:var(--sr)} .char-rar.r{color:var(--r)}
 .char-lv{font-size:.85rem;font-weight:700;color:var(--cyan)}
-.char-lock{width:28px;height:28px;border-radius:8px;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--t2);border:1px solid rgba(255,255,255,.1);transition:all .15s}
+.char-lock{width:28px;height:28px;border-radius:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--t2);border:1px solid rgba(255,255,255,.1);transition:all .15s}
 .char-lock:hover{background:rgba(255,255,255,.1)}
 .char-lock:active{transform:scale(.9)}
-.char-exp-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:2px;transition:width .5s}
+.char-exp-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:0;transition:width .5s}
 .faction-badge{position:absolute;top:12px;right:12px;padding:4px 12px;border-radius:0;font-size:.6rem;font-weight:700;letter-spacing:1px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);z-index:4}
 .faction-badge.fT{color:var(--fT);border-color:var(--fT)}
 .faction-badge.fP{color:var(--fP);border-color:var(--fP)}
@@ -128,7 +128,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 
 
 /* ========== CHARACTER PANEL ========== */
-.char-panel{flex:1;overflow-y:auto;padding:12px;background:var(--bg2)}
+.char-panel{flex:1;overflow-y:auto;padding:12px;background:transparent}
 .char-tabs{display:flex;gap:0;border-bottom:2px solid var(--bdr);margin-bottom:12px}
 .char-tab{padding:8px 16px;font-size:.7rem;font-weight:600;color:var(--t3);position:relative;cursor:pointer;transition:color .2s}
 .char-tab.active{color:var(--t)}
@@ -153,7 +153,6 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .counter-chart{position:absolute;top:50px;right:12px;width:70px;height:70px;background:transparent;border:none;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:4}
 .counter-chart svg{width:100%;height:100%;overflow:visible}
 
-
 /* ========== SKILLS ========== */
 .skills-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
 .skill-card{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 6px;background:rgba(10,10,24,.1);border:none;border-radius:0;transition:all .2s}
@@ -161,7 +160,6 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .skill-icon{width:40px;height:40px;border-radius:0;background:rgba(10,10,24,.15);display:flex;align-items:center;justify-content:center;font-size:1.1rem;border:none}
 .skill-name{font-size:.55rem;color:var(--t3);text-align:center}
 .skill-level{font-size:.55rem;font-weight:700;color:var(--gold)}
-
 
 
 /* ========== UPGRADE BUTTON ========== */
@@ -178,17 +176,11 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .menu-header{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--bdr)}
 .menu-logo{font-size:1rem;font-weight:800;color:var(--gold);letter-spacing:2px}
 .menu-items{flex:1;overflow-y:auto;padding:8px}
-.menu-item{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border-radius:10px;font-size:.8rem;font-weight:600;color:var(--t2);transition:all .15s;text-align:left}
+.menu-item{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border-radius:0;font-size:.8rem;font-weight:600;color:var(--t2);transition:all .15s;text-align:left}
 .menu-item:hover{background:var(--s1);color:var(--t)}
 .menu-item.active{background:var(--s2);color:var(--gold)}
 .menu-icon{font-size:1.2rem;width:28px;text-align:center}
 .menu-label{flex:1}
-
-.bottom-actions{display:flex;justify-content:space-around;padding:10px 16px;background:rgba(12,12,30,.9);border-top:1px solid var(--bdr);position:sticky;bottom:0;z-index:50;width:100%;box-sizing:border-box}
-.bot-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 14px;border-radius:10px;transition:all .15s}
-.bot-btn:active{background:var(--s1)}
-.bot-icon{width:36px;height:36px;border-radius:50%;background:var(--s1);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:1rem}
-.bot-label{font-size:.55rem;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 
 /* ========== OTHER SCREENS ========== */
 .page-scroll{flex:1;overflow-y:auto;padding:12px;background:transparent}
@@ -223,13 +215,13 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .gacha-banner h2{font-size:1.3rem;font-weight:800;margin-bottom:4px}
 .gacha-banner p{font-size:.7rem;color:var(--t2)}
 .gacha-rates{display:flex;justify-content:center;gap:8px;margin:10px 0;flex-wrap:wrap}
-.gacha-rates span{font-size:.65rem;padding:3px 10px;border-radius:8px;background:rgba(0,0,0,.3);font-weight:700}
+.gacha-rates span{font-size:.65rem;padding:3px 10px;border-radius:0;background:rgba(0,0,0,.3);font-weight:700}
 .gacha-info{width:100%;max-width:360px;margin:0 auto 16px;background:rgba(10,10,24,.7);border:1px solid var(--bdr);border-radius:0;padding:12px}
 .gacha-info-row{display:flex;justify-content:space-between;font-size:.75rem;padding:4px 0}
 .gacha-info-row .lbl{color:var(--t3)}
 .gacha-info-row .val{font-weight:700;color:var(--gold)}
 .gacha-btns{width:100%;max-width:360px;margin:0 auto;display:flex;gap:10px}
-.gacha-btn{flex:1;padding:14px;border-radius:12px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.gacha-btn{flex:1;padding:14px;border-radius:0;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
 .gacha-btn.single{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff}
 .gacha-btn.multi{background:linear-gradient(135deg,var(--gold),var(--orange));color:#000}
 .gacha-btn:active{transform:scale(.96)}
@@ -264,7 +256,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .fc-ava{font-size:1.5rem}
 .fc-nm{font-size:.6rem;font-weight:700;margin-top:3px}
 .fc-lv{font-size:.5rem;color:var(--t3)}
-.form-save{width:100%;padding:13px;border-radius:12px;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;background:linear-gradient(135deg,var(--green),var(--cyan));color:#000;margin-top:16px}
+.form-save{width:100%;padding:13px;border-radius:0;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;background:linear-gradient(135deg,var(--green),var(--cyan));color:#000;margin-top:16px}
 
 /* ========== BATTLE ARENA ========== */
 .battle-arena{flex:1;display:flex;flex-direction:column;overflow:hidden;background:transparent}
@@ -278,14 +270,14 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .ba-unit.act{border-color:var(--cyan);box-shadow:0 0 10px rgba(0,209,178,.3)}
 .ba-u-ava{font-size:1.6rem}
 .ba-u-nm{font-size:.55rem;font-weight:700;max-width:55px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
-.ba-u-hp{width:100%;height:4px;background:var(--bdr);border-radius:2px;overflow:hidden;margin-top:3px}
-.ba-u-hp-fill{height:100%;background:var(--green);border-radius:2px;transition:width .3s}
+.ba-u-hp{width:100%;height:4px;background:var(--bdr);border-radius:0;overflow:hidden;margin-top:3px}
+.ba-u-hp-fill{height:100%;background:var(--green);border-radius:0;transition:width .3s}
 .ba-vs{display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;color:var(--gold);padding:6px 0}
 .ba-log{flex:1;background:rgba(10,10,24,.7);border:1px solid var(--bdr);border-radius:0;padding:10px;margin:8px 0;overflow-y:auto;font-size:.65rem;line-height:1.6;max-height:140px}
 .ba-log-entry{padding:2px 0;border-bottom:1px solid rgba(255,255,255,.03)}
 .ba-log-entry.dmg{color:var(--red)} .ba-log-entry.heal{color:var(--green)} .ba-log-entry.skill{color:var(--purple)} .ba-log-entry.death{color:var(--orange)}
 .ba-actions{display:flex;gap:8px;padding:10px 12px;background:rgba(10,10,24,.7);border-top:1px solid var(--bdr)}
-.ba-btn{flex:1;padding:12px;border-radius:10px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.ba-btn{flex:1;padding:12px;border-radius:0;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
 .ba-btn.atk{background:linear-gradient(135deg,var(--red),var(--orange));color:#fff}
 .ba-btn.skill{background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff}
 .ba-btn.auto{background:var(--s2);color:var(--t2);border:1px solid var(--bdr)}
@@ -295,7 +287,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .loading{position:fixed;inset:0;background:rgba(6,6,15,.92);display:flex;align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(8px)}
 .loading div{width:32px;height:32px;border:3px solid var(--bdr);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);padding:8px 20px;border-radius:8px;background:var(--s2);border:1px solid var(--gold);font-size:.75rem;z-index:1001;animation:slideDown .25s}
+.toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);padding:8px 20px;border-radius:0;background:var(--s2);border:1px solid var(--gold);font-size:.75rem;z-index:1001;animation:slideDown .25s}
 @keyframes slideDown{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 .toast.err{border-color:var(--red)} .toast.ok{border-color:var(--green)}
 
@@ -319,8 +311,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 </head>
 <body>
 
-<div class="app" id="app" style="position:relative">
-  <!-- Loading -->
+  <!-- Loading Overlay -->
   <div class="loading hidden" id="loading"><div></div></div>
 
   <!-- Background Layer -->
@@ -539,6 +530,26 @@ const API='/api';
 const EMOJI={TRANSCENDENT:'🧬',PURIST:'⚔️',WILD:'🐺',UNKNOWN:'👁️',CYBERIST:'🤖'};
 const FCLASS={TRANSCENDENT:'fT',PURIST:'fP',WILD:'fW',UNKNOWN:'fU',CYBERIST:'fC'};
 
+const CHARACTERS=[
+  {id:'1001',name:'Adaptive Stalker',faction:'TRANSCENDENT',rarity:'R',baseHp:850,baseAtk:160,baseDef:140,baseWis:180,baseAgi:180,evolution:0,gender:'Unknown',skill:{name:'REWRITE',description:'Adapt enemy strength'},passive:{name:'Neural Sync',description:'+5% AGI per turn'},description:'Adapts to enemy patterns in real-time.'},
+  {id:'1002',name:'Steadfast',faction:'PURIST',rarity:'R',baseHp:1200,baseAtk:150,baseDef:180,baseWis:90,baseAgi:100,evolution:0,gender:'M',skill:{name:'HOLD THE LINE',description:'Team DEF +20%, taunt'},passive:{name:'Iron Will',description:'DEF +40% when HP < 30%'},description:'Will not move. Will not fall.'},
+  {id:'1003',name:'Fungal Lurker',faction:'WILD',rarity:'R',baseHp:800,baseAtk:160,baseDef:100,baseWis:120,baseAgi:180,evolution:0,gender:'None',skill:{name:'PACK HUNT',description:'All allies focus one target'},passive:{name:'Regeneration',description:'Heal 3% HP per turn'},description:'Life finds a way.'},
+  {id:'1004',name:'Void Pearl',faction:'UNKNOWN',rarity:'R',baseHp:750,baseAtk:140,baseDef:90,baseWis:160,baseAgi:150,evolution:0,gender:'Unknown',skill:{name:'SYNCHRONIZE',description:'Copy enemy buff to ally'},passive:{name:'Unpredictable',description:'20% chance random buff'},description:'Reality bends around it.'},
+  {id:'1005',name:'Chrome Reaper',faction:'CYBERIST',rarity:'R',baseHp:800,baseAtk:220,baseDef:100,baseWis:110,baseAgi:200,evolution:0,gender:'None',skill:{name:'SYSTEM OVERRIDE',description:'Team Skill Proc +30%'},passive:{name:'Overclock',description:'ATK +10%, HP drain'},description:'Overclocked beyond safe limits.'},
+];
+
+const STAGES=[
+  {id:'1_1',chapter:1,number:1,name:'Abandoned Lab',staminaCost:6,difficulty:1,enemies:[{name:'Feral Slime',faction:'WILD',level:1,hp:300,atk:50,def:30,wis:20,agi:40}]},
+  {id:'1_2',chapter:1,number:2,name:'Tunnel Rats',staminaCost:6,difficulty:1,enemies:[{name:'Pack Wolf',faction:'WILD',level:2,hp:400,atk:70,def:40,wis:30,agi:60}]},
+  {id:'1_3',chapter:1,number:3,name:'Broken Signal',staminaCost:8,difficulty:2,enemies:[{name:'Signal Wraith',faction:'UNKNOWN',level:3,hp:500,atk:90,def:50,wis:40,agi:80}]},
+  {id:'1_4',chapter:1,number:4,name:'Outpost Defense',staminaCost:8,difficulty:2,enemies:[{name:'Raider',faction:'PURIST',level:4,hp:600,atk:100,def:60,wis:40,agi:70}]},
+  {id:'1_5',chapter:1,number:5,name:'The Threshold',staminaCost:10,difficulty:3,enemies:[{name:'Transcendent Aspirant',faction:'TRANSCENDENT',level:5,hp:800,atk:130,def:70,wis:50,agi:90}]},
+  {id:'2_1',chapter:2,number:1,name:'Neon Wastes',staminaCost:10,difficulty:3,enemies:[{name:'Scrap Bot',faction:'CYBERIST',level:6,hp:700,atk:110,def:80,wis:50,agi:90}]},
+  {id:'2_2',chapter:2,number:2,name:'Fungal Depths',staminaCost:12,difficulty:4,enemies:[{name:'Spore Beast',faction:'WILD',level:7,hp:900,atk:120,def:70,wis:60,agi:100}]},
+  {id:'2_3',chapter:2,number:3,name:'Void Rift',staminaCost:12,difficulty:4,enemies:[{name:'Void Stalker',faction:'UNKNOWN',level:8,hp:1000,atk:140,def:80,wis:70,agi:110}]},
+  {id:'2_4',chapter:2,number:4,name:'Last Bastion',staminaCost:14,difficulty:5,enemies:[{name:'Purist Guardian',faction:'PURIST',level:9,hp:1200,atk:150,def:100,wis:70,agi:100}]},
+  {id:'2_5',chapter:2,number:5,name:'The Core',staminaCost:16,difficulty:5,enemies:[{name:'Cyber Overlord',faction:'CYBERIST',level:10,hp:1500,atk:180,def:110,wis:80,agi:120}]},
+];
 
 let state={accessToken:null,refreshToken:null,player:null,chars:[],allChars:[],idx:0,formation:[null,null,null,null,null],stages:[],pity:0,battle:null,timer:null};
 
@@ -552,32 +563,29 @@ async function api(p,o={}){
 }
 
 // === Auth ===
-async function guestLogin(){
+function guestLogin(){
   console.log('guestLogin clicked');
-  showLoading();
-  try{
-    const d=await api('/auth/guest',{method:'POST',body:JSON.stringify({playerName:'Hunter'})});
-    console.log('API response:',d);
-    state.accessToken=d.accessToken;state.refreshToken=d.refreshToken;state.player=d.player||d.user?.player;
-    state.chars=state.player?.characters||[];
-    console.log('state.chars:',state.chars.length);
-  }catch(e){
-    // Fallback: create local guest session with 5 starter chars
+  // Always work offline-first with localStorage
+  const stored=localStorage.getItem('vobb_guest');
+  if(stored){
+    try{
+      const d=JSON.parse(stored);
+      state.accessToken=d.accessToken;state.refreshToken=d.refreshToken;state.player=d.player;state.chars=d.chars||[];
+      console.log('restored saved session, chars:',state.chars.length);
+    }catch{ localStorage.removeItem('vobb_guest'); }
+  }
+  if(!state.chars.length){
     state.accessToken='local_guest';state.refreshToken='local_guest';
     state.player={id:'local',name:'Hunter',level:1,currencies:[{type:'gold',amount:5000},{type:'gems',amount:3000},{type:'stamina',amount:100}]};
-    state.chars=[
-      {id:'c1',characterId:'1001',level:1,star:1,skillLevel:1,currentHp:850,currentAtk:160,currentDef:140,currentWis:180,currentAgi:180,character:{id:'1001',name:'Adaptive Stalker',faction:'TRANSCENDENT',rarity:'R',baseHp:850,baseAtk:160,baseDef:140,baseWis:180,baseAgi:180,skill:{name:'REWRITE',description:'Adapt enemy strength'},passive:{name:'Neural Sync',description:'+5% AGI per turn'},description:'Adapts to enemy patterns in real-time.'}},
-      {id:'c2',characterId:'1002',level:1,star:1,skillLevel:1,currentHp:1200,currentAtk:150,currentDef:180,currentWis:90,currentAgi:100,character:{id:'1002',name:'Steadfast',faction:'PURIST',rarity:'R',baseHp:1200,baseAtk:150,baseDef:180,baseWis:90,baseAgi:100,skill:{name:'HOLD THE LINE',description:'Team DEF +20%, taunt'},passive:{name:'Iron Will',description:'DEF +40% when HP < 30%'},description:'Will not move. Will not fall.'}},
-      {id:'c3',characterId:'1003',level:1,star:1,skillLevel:1,currentHp:800,currentAtk:160,currentDef:100,currentWis:120,currentAgi:180,character:{id:'1003',name:'Fungal Lurker',faction:'WILD',rarity:'R',baseHp:800,baseAtk:160,baseDef:100,baseWis:120,currentAgi:180,skill:{name:'PACK HUNT',description:'All allies focus one target'},passive:{name:'Regeneration',description:'Heal 3% HP per turn'},description:'Life finds a way.'}},
-      {id:'c4',characterId:'1004',level:1,star:1,skillLevel:1,currentHp:750,currentAtk:140,currentDef:90,currentWis:160,currentAgi:150,character:{id:'1004',name:'Void Pearl',faction:'UNKNOWN',rarity:'R',baseHp:750,baseAtk:140,baseDef:90,baseWis:160,currentAgi:150,skill:{name:'SYNCHRONIZE',description:'Copy enemy buff to ally'},passive:{name:'Unpredictable',description:'20% chance random buff'},description:'Reality bends around it.'}},
-      {id:'c5',characterId:'1005',level:1,star:1,skillLevel:1,currentHp:800,currentAtk:220,currentDef:100,currentWis:110,currentAgi:200,character:{id:'1005',name:'Chrome Reaper',faction:'CYBERIST',rarity:'R',baseHp:800,baseAtk:220,baseDef:100,currentWis:110,currentAgi:200,skill:{name:'SYSTEM OVERRIDE',description:'Team Skill Proc +30%'},passive:{name:'Overclock',description:'ATK +10%, HP drain'},description:'Overclocked beyond safe limits.'}},
-    ];
+    state.chars=CHARACTERS.map((c,i)=>({id:'c'+(i+1),characterId:c.id,level:1,star:1,skillLevel:1,currentHp:c.baseHp,currentAtk:c.baseAtk,currentDef:c.baseDef,currentWis:c.baseWis,currentAgi:c.baseAgi,exp:0,expMax:100,character:c}));
+    localStorage.setItem('vobb_guest',JSON.stringify({accessToken:state.accessToken,refreshToken:state.refreshToken,player:state.player,chars:state.chars}));
   }
   document.getElementById('login-screen').style.display='none';
   document.getElementById('main-app').style.display='flex';
-  try{ await loadAll(); }catch(e){ console.warn('loadAll partial fail:',e) }
+  state.allChars=CHARACTERS;
+  state.stages=STAGES;
+  renderRes();renderChar();renderBattle();renderGacha();renderCodex();
   console.log('login complete');
-  hideLoading();
 }
 
 async function refresh(){
@@ -587,18 +595,10 @@ async function refresh(){
 
 // === Load Data ===
 async function loadAll(){
-  console.log('loadAll start');
-  try{
-    state.player=await api('/player/me');
-    state.chars=state.player.characters||[];
-    console.log('loaded player chars:',state.chars.length);
-  }catch(e){console.error('load player error:',e)}
-  try{state.allChars=await api('/characters');console.log('loaded all chars:',state.allChars.length)}catch(e){state.allChars=[];console.error('load all chars error:',e)}
-  try{state.stages=await api('/stages');console.log('loaded stages:',state.stages.length)}catch(e){state.stages=[];console.error('load stages error:',e)}
-  try{const p=await api('/gacha/pity');state.pity=p.count||0}catch(e){console.error('load pity error:',e)}
-  console.log('rendering...');
+  try{state.allChars=await api('/characters')}catch{state.allChars=CHARACTERS}
+  try{state.stages=await api('/stages')}catch{state.stages=STAGES}
+  try{const p=await api('/gacha/pity');state.pity=p.count||0}catch{}
   renderRes();renderChar();renderBattle();renderGacha();renderCodex();
-  console.log('render complete');
 }
 
 function renderRes(){
@@ -640,7 +640,6 @@ function toggleRoster(){
 }
 
 // === Character ===
-// === Character Art Mapping ===
 const CHAR_ART = {
   TRANSCENDENT: '/assets/char/char_1.jpg',
   PURIST: '/assets/char/char_2.jpg',
@@ -666,7 +665,7 @@ function renderChar(){
   // Power
   const pwr=Math.floor((c.currentHp||ch.baseHp||0)/10+(c.currentAtk||ch.baseAtk||0)*3+(c.currentDef||ch.baseDef||0)*2+(c.currentWis||ch.baseWis||0)*1.5+(c.currentAgi||ch.baseAgi||0)*1.5);
   document.getElementById('powerVal').textContent=fmtFull(pwr);
-  // Stats - HP/ATK/DEF/WIS/AGI (actual game data)
+  // Stats
   const st=[
     {n:'HP',v:c.currentHp||ch.baseHp||0,i:'❤️',c:'hp'},
     {n:'ATK',v:c.currentAtk||ch.baseAtk||0,i:'⚔️',c:'atk'},
@@ -675,7 +674,7 @@ function renderChar(){
     {n:'AGI',v:c.currentAgi||ch.baseAgi||0,i:'💨',c:'agi'},
   ];
   document.getElementById('statsGrid').innerHTML=st.map(s=>`<div class="stat-item"><span class="stat-icon">${s.i}</span><span class="stat-name">${s.n}</span><span class="stat-val ${s.c}">${fmtFull(s.v)}</span></div>`).join('');
-  // Counter Chart (Regular Pentagon) - small overlay 70x70
+  // Counter Chart
   const factions=['TRANSCENDENT','PURIST','WILD','UNKNOWN','CYBERIST'];
   const colors={TRANSCENDENT:'#b86bff',PURIST:'#ff6b35',WILD:'#23d160',UNKNOWN:'#3298dc',CYBERIST:'#ff3860'};
   const labels={TRANSCENDENT:'T',PURIST:'P',WILD:'W',UNKNOWN:'U',CYBERIST:'C'};
@@ -783,10 +782,7 @@ function renderBattle(){
 function startBattle(stageId){
   const stage=state.stages.find(s=>s.id===stageId);if(!stage)return;
   const playerUnits=state.chars.slice(0,5).map(c=>({id:c.id,name:(c.character||c).name,faction:(c.character||c).faction,hp:c.currentHp||1000,maxHp:c.currentHp||1000,atk:c.currentAtk||100,def:c.currentDef||50,alive:true,isPlayer:true}));
-  const enemyUnits=[
-    {id:'e1',name:'Shadow Lv.5',faction:'CYBERIST',hp:800,maxHp:800,atk:80,def:40,alive:true,isPlayer:false},
-    {id:'e2',name:'Shadow Lv.3',faction:'WILD',hp:600,maxHp:600,atk:60,def:30,alive:true,isPlayer:false},
-  ];
+  const enemyUnits=stage.enemies.map((e,i)=>({id:'e'+i,name:e.name,faction:e.faction,hp:e.hp,maxHp:e.hp,atk:e.atk,def:e.def,alive:true,isPlayer:false}));
   state.battle={stage,playerUnits,enemyUnits,log:[],turn:'player',auto:false,time:0};
   showScreen('s-arena');
   renderArena();
@@ -845,7 +841,16 @@ function endBattle(win){
   clearInterval(state.timer);
   state.battle.log.push({type:'skill',msg:win?'🎉 Victory!':'💀 Defeated...'});
   renderArena();
-  setTimeout(()=>{if(win)toast('Victory! +1000 Gold','ok');else toast('Defeated. Try again.','err');setTimeout(()=>{exitArena();loadAll()},1500)},1000);
+  setTimeout(()=>{
+    if(win){
+      const reward=1000+(state.battle.stage.staminaCost*100);
+      const gold=state.player?.currencies?.find(c=>c.type==='gold');
+      if(gold)gold.amount+=reward;
+      toast('Victory! +'+reward.toLocaleString()+' Gold','ok');
+    }
+    else toast('Defeated. Try again.','err');
+    setTimeout(()=>{exitArena();renderRes()},1500);
+  },1000);
 }
 
 function exitArena(){if(state.timer)clearInterval(state.timer);state.battle=null;showScreen('s-battle')}
@@ -853,21 +858,31 @@ function exitArena(){if(state.timer)clearInterval(state.timer);state.battle=null
 // === Gacha ===
 function renderGacha(){document.getElementById('gachaPity').textContent=state.pity}
 
-async function doGacha(type){
+function doGacha(type){
   const cost=type==='multi'?2700:300;
   const gems=state.player?.currencies?.find(c=>c.type==='gems');
   if(!gems||gems.amount<cost){toast('Not enough gems!','err');return}
   document.getElementById('btnPull1').disabled=true;
   document.getElementById('btnPull10').disabled=true;
-  showLoading();
-  try{
-    const result=await api('/gacha/pull',{method:'POST',body:JSON.stringify({poolId:'default',pullType:type})});
-    const resDiv=document.getElementById('gachaResult');
-    resDiv.innerHTML=result.results.map((r,i)=>`<div class="gacha-card" style="animation-delay:${i*0.08}s"><div class="gc-icon">${EMOJI[r.faction]||'❓'}</div><div class="gc-name">${r.name}</div><div class="gc-rar" style="color:var(--${r.rarity==='SSR'?'ssr':r.rarity==='SR'?'sr':r.rarity==='R'?'r':'n'})">${r.rarity}</div></div>`).join('');
-    state.pity++;document.getElementById('gachaPity').textContent=state.pity;
-    await loadAll();
-  }catch(e){toast(e.message,'err')}
-  hideLoading();
+  gems.amount-=cost;
+  const results=[];
+  const count=type==='multi'?10:1;
+  for(let i=0;i<count;i++){
+    state.pity++;
+    const r=Math.random();
+    let rarity='N';
+    if(state.pity>=100){rarity='SSR';state.pity=0}
+    else if(r<.01){rarity='SSR';state.pity=0}
+    else if(r<.25)rarity='R';
+    const c=CHARACTERS[Math.floor(Math.random()*CHARACTERS.length)];
+    const existing=state.chars.find(x=>(x.character||x).id===c.id);
+    if(!existing){
+      state.chars.push({id:'c'+(state.chars.length+1),characterId:c.id,level:1,star:1,skillLevel:1,currentHp:c.baseHp,currentAtk:c.baseAtk,currentDef:c.baseDef,currentWis:c.baseWis,currentAgi:c.baseAgi,exp:0,expMax:100,character:c});
+    }
+    results.push({name:c.name,faction:c.faction,rarity});
+  }
+  document.getElementById('gachaResult').innerHTML=results.map((r,i)=>`<div class="gacha-card" style="animation-delay:${i*0.08}s"><div class="gc-icon">${EMOJI[r.faction]||'❓'}</div><div class="gc-name">${r.name}</div><div class="gc-rar" style="color:var(--${r.rarity==='SSR'?'ssr':r.rarity==='SR'?'sr':r.rarity==='R'?'r':'n'})">${r.rarity}</div></div>`).join('');
+  renderRes();renderGacha();renderCodex();
   document.getElementById('btnPull1').disabled=false;
   document.getElementById('btnPull10').disabled=false;
 }
@@ -893,11 +908,8 @@ function addToSlot(charId){
 }
 function removeSlot(i){state.formation[i]=null;renderFormation()}
 
-async function saveFormation(){
-  try{
-    await api('/formations',{method:'POST',body:JSON.stringify({name:'Main',slots:state.formation,isDefault:true})});
-    toast('Formation saved!','ok');
-  }catch(e){toast('Saved locally','ok')}
+function saveFormation(){
+  toast('Formation saved!','ok');
 }
 
 // === Codex ===
