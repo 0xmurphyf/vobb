@@ -426,7 +426,7 @@ let state={player:null,chars:[],idx:0,formation:[null,null,null,null,null],pity:
 // === Guest Login (offline, no API) ===
 function guestLogin(){
   state.player={name:'Hunter',currencies:[{type:'gold',amount:5000},{type:'gems',amount:3000},{type:'stamina',amount:100}]};
-  state.chars=CHARS.map((c,i)=>({id:'c'+(i+1),characterId:c.id,level:1,star:i===0?5:1,skillLevel:1,currentHp:c.baseHp,currentAtk:c.baseAtk,currentDef:c.baseDef,currentWis:c.baseWis,currentAgi:c.baseAgi,character:c}));
+  state.chars=CHARS.map((c,i)=>({id:'c'+(i+1),characterId:c.id,level:i===0?100:1,star:i===0?5:1,skillLevel:i===0?5:1,rarity:i===0?'SSR':'R',currentHp:c.baseHp+(i===0?10000:0),currentAtk:c.baseAtk+(i===0?2000:0),currentDef:c.baseDef+(i===0?1500:0),currentWis:c.baseWis+(i===0?1500:0),currentAgi:c.baseAgi+(i===0?2000:0),character:{...c,rarity:i===0?'SSR':'R'}}));
   document.getElementById('login-screen').style.display='none';
   document.getElementById('main-app').style.display='flex';
   renderAll();
