@@ -561,14 +561,22 @@ async function guestLogin(){
     state.accessToken=d.accessToken;state.refreshToken=d.refreshToken;state.player=d.player||d.user?.player;
     state.chars=state.player?.characters||[];
     console.log('state.chars:',state.chars.length);
-    document.getElementById('login-screen').style.display='none';
-    document.getElementById('main-app').style.display='flex';
-    await loadAll();
-    console.log('login complete');
   }catch(e){
-    console.error('login error:',e);
-    toast(e.message||'Login failed','err');
+    // Fallback: create local guest session with 5 starter chars
+    state.accessToken='local_guest';state.refreshToken='local_guest';
+    state.player={id:'local',name:'Hunter',level:1,currencies:[{type:'gold',amount:5000},{type:'gems',amount:3000},{type:'stamina',amount:100}]};
+    state.chars=[
+      {id:'c1',characterId:'1001',level:1,star:1,skillLevel:1,currentHp:850,currentAtk:160,currentDef:140,currentWis:180,currentAgi:180,character:{id:'1001',name:'Adaptive Stalker',faction:'TRANSCENDENT',rarity:'R',baseHp:850,baseAtk:160,baseDef:140,baseWis:180,baseAgi:180,skill:{name:'REWRITE',description:'Adapt enemy strength'},passive:{name:'Neural Sync',description:'+5% AGI per turn'},description:'Adapts to enemy patterns in real-time.'}},
+      {id:'c2',characterId:'1002',level:1,star:1,skillLevel:1,currentHp:1200,currentAtk:150,currentDef:180,currentWis:90,currentAgi:100,character:{id:'1002',name:'Steadfast',faction:'PURIST',rarity:'R',baseHp:1200,baseAtk:150,baseDef:180,baseWis:90,baseAgi:100,skill:{name:'HOLD THE LINE',description:'Team DEF +20%, taunt'},passive:{name:'Iron Will',description:'DEF +40% when HP < 30%'},description:'Will not move. Will not fall.'}},
+      {id:'c3',characterId:'1003',level:1,star:1,skillLevel:1,currentHp:800,currentAtk:160,currentDef:100,currentWis:120,currentAgi:180,character:{id:'1003',name:'Fungal Lurker',faction:'WILD',rarity:'R',baseHp:800,baseAtk:160,baseDef:100,baseWis:120,currentAgi:180,skill:{name:'PACK HUNT',description:'All allies focus one target'},passive:{name:'Regeneration',description:'Heal 3% HP per turn'},description:'Life finds a way.'}},
+      {id:'c4',characterId:'1004',level:1,star:1,skillLevel:1,currentHp:750,currentAtk:140,currentDef:90,currentWis:160,currentAgi:150,character:{id:'1004',name:'Void Pearl',faction:'UNKNOWN',rarity:'R',baseHp:750,baseAtk:140,baseDef:90,baseWis:160,currentAgi:150,skill:{name:'SYNCHRONIZE',description:'Copy enemy buff to ally'},passive:{name:'Unpredictable',description:'20% chance random buff'},description:'Reality bends around it.'}},
+      {id:'c5',characterId:'1005',level:1,star:1,skillLevel:1,currentHp:800,currentAtk:220,currentDef:100,currentWis:110,currentAgi:200,character:{id:'1005',name:'Chrome Reaper',faction:'CYBERIST',rarity:'R',baseHp:800,baseAtk:220,baseDef:100,currentWis:110,currentAgi:200,skill:{name:'SYSTEM OVERRIDE',description:'Team Skill Proc +30%'},passive:{name:'Overclock',description:'ATK +10%, HP drain'},description:'Overclocked beyond safe limits.'}},
+    ];
   }
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('main-app').style.display='flex';
+  try{ await loadAll(); }catch(e){ console.warn('loadAll partial fail:',e) }
+  console.log('login complete');
   hideLoading();
 }
 
