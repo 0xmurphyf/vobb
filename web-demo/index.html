@@ -283,20 +283,20 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
       <!-- Panel -->
       <div class="panel" id="charPanel">
         <div class="tabs">
-          <button class="tab active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
+          <button class="tab active" data-tab="stat" onclick="switchTab('stat')">Stat</button>
           <button class="tab" data-tab="skills" onclick="switchTab('skills')">Skills</button>
           <button class="tab" data-tab="evo" onclick="switchTab('evo')">Evo</button>
           <button class="tab" data-tab="story" onclick="switchTab('story')">About</button>
         </div>
 
-        <div class="tab-panel active" id="tab-overview">
+        <div class="tab-panel active" id="tab-stat">
           <div class="power-bar"><span class="power-label">POWER</span><span class="power-val" id="powerVal">0</span></div>
           <div id="statsGrid"></div>
-          <div class="skill-grid" id="skillsRow"></div>
           <button class="upgrade-btn" onclick="upgrade()">⬆ UPGRADE</button>
         </div>
 
         <div class="tab-panel" id="tab-skills">
+          <div class="skill-grid" id="skillsRow"></div>
           <div class="detail-box"><div class="label">Active Skill</div><div class="value" id="skillName">—</div><div class="value" style="font-size:.65rem;color:var(--t2);margin-top:4px" id="skillDesc">—</div></div>
           <div class="detail-box"><div class="label">Passive</div><div class="value" id="passiveName">—</div><div class="value" style="font-size:.65rem;color:var(--t2);margin-top:4px" id="passiveDesc">—</div></div>
           <div class="label" style="margin-top:12px">Skill Level</div>
