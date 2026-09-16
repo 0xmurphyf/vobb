@@ -31,7 +31,12 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .content{position:absolute;top:60px;left:0;right:0;bottom:0;display:flex}
 
 /* === Roster (Left Sidebar) === */
-.roster{width:112px;background:rgba(18,18,42,.35);border-right:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;padding:6px;gap:6px;overflow-y:auto;backdrop-filter:blur(8px)}
+.roster{width:112px;background:rgba(18,18,42,.35);border-right:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;padding:6px;gap:6px;overflow-y:auto;backdrop-filter:blur(8px);transition:width .2s;flex-shrink:0}
+.roster.collapsed{width:48px}
+.roster-toggle{padding:4px 0;color:rgba(255,255,255,.4);font-size:.7rem;cursor:pointer;text-align:center;width:100%}
+.roster-toggle:hover{color:#fff}
+.roster-toggle:before{content:'◀'}
+.roster.collapsed .roster-toggle:before{content:'▶'}
 .roster-item{width:100px;height:100px;border-radius:4px;background-size:cover;background-position:center;border:1px solid var(--bdr);cursor:pointer;flex-shrink:0;position:relative;transition:all .15s}
 .roster-item:hover{border-color:rgba(255,255,255,.4);transform:scale(1.02)}
 .roster-item.active{border-color:var(--gold);box-shadow:0 0 12px rgba(244,196,48,.4)}
@@ -134,7 +139,9 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 <div class="content">
 
   <!-- Roster -->
-  <div class="roster" id="rosterGrid"></div>
+  <div class="roster" id="rosterGrid">
+    <div class="roster-toggle" onclick="toggleRoster()"></div>
+  </div>
 
   <!-- Character Art -->
   <div class="char-area">
@@ -279,7 +286,10 @@ function renderAll(){
 
 function renderRoster(){
   const grid=document.getElementById('rosterGrid');
-  grid.innerHTML=state.chars.map((c,i)=>{
+  const toggle=grid.querySelector('.roster-toggle');
+  grid.innerHTML='';
+  grid.appendChild(toggle);
+  grid.innerHTML+=state.chars.map((c,i)=>{
     const stars=c.star; const l1=Math.min(stars,3); const l2=Math.max(stars-3,0);
     return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})" style="background-image:url(${CHAR_THUMBS[c.id]})">
       <span class="roster-fact" style="color:${FACTION_COLORS[c.faction]}">${FCLASS[c.faction]}</span>
@@ -288,6 +298,20 @@ function renderRoster(){
       <span class="roster-stars"><span class="row">${'★'.repeat(l1)}</span>${l2>0?'<span class="row">'+'★'.repeat(l2)+'</span>':''}</span>
     </div>`;
   }).join('');
+}
+
+function toggleRoster(){
+  const r=document.getElementById('rosterGrid');
+  r.classList.toggle('collapsed');
+  const items=r.querySelectorAll('.roster-item');
+  items.forEach(item=>{
+    item.style.width=r.classList.contains('collapsed')?'36px':'100px';
+    item.style.height=r.classList.contains('collapsed')?'36px':'100px';
+    item.querySelector('.roster-fact').style.display=r.classList.contains('collapsed')?'none':'';
+    item.querySelector('.roster-rar').style.display=r.classList.contains('collapsed')?'none':'';
+    item.querySelector('.roster-lv').style.display=r.classList.contains('collapsed')?'none':'';
+    item.querySelector('.roster-stars').style.display=r.classList.contains('collapsed')?'none':'';
+  });
 }
 
 function selectChar(i){state.idx=i; renderRoster(); renderChar();}
