@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOBB — PixiJS Preview</title>
+<script src="https://pixijs.download/v7.4.2/pixi.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{margin:0;padding:0;overflow:hidden;background:#000;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+#gameCanvas{width:100vw;height:100vh;display:block}
+
+/* === HUD === */
+#hud{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:10}
+#hud *{pointer-events:auto}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:rgba(18,18,42,.4);border-bottom:2px solid rgba(255,255,255,.15);backdrop-filter:blur(8px)}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.topbar-title{font-size:.975rem;color:#fff;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.btn-icon{width:42px;height:42px;border-radius:4px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#fff;cursor:pointer}
+.btn-icon:hover{background:rgba(255,255,255,.2)}
+.res-bar{display:flex;align-items:center;gap:6px}
+.res{display:flex;align-items:center;gap:4px;padding:5px 12px;border-radius:4px;background:rgba(255,255,255,.1);font-size:.9rem;font-weight:700;color:#fff}
+
+.bottom-bar{position:absolute;bottom:0;left:0;right:0;padding:12px 24px;background:rgba(18,18,42,.4);border-top:2px solid rgba(255,255,255,.15);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:space-between}
+.info-card{padding:8px 16px;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1);border-radius:4px}
+.info-label{font-size:.55rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px}
+.info-val{font-size:1rem;font-weight:700;color:#fff}
+.faction-badge{padding:4px 12px;border-radius:4px;font-size:.6rem;font-weight:700;background:rgba(0,0,0,.4);border:1px solid}
+
+.side-panel{position:absolute;top:80px;right:20px;width:200px;padding:16px;background:rgba(18,18,42,.6);border:1px solid rgba(255,255,255,.1);border-radius:8px;backdrop-filter:blur(8px)}
+.stat-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.stat-row:last-child{border-bottom:none}
+.stat-name{font-size:.65rem;color:rgba(255,255,255,.5)}
+.stat-val{font-size:.85rem;font-weight:700;color:#fff}
+
+.btn{width:100%;padding:10px;border-radius:6px;font-size:.75rem;font-weight:700;cursor:pointer;border:1px solid rgba(255,255,255,.2);color:#fff;margin-top:8px}
+.btn-primary{background:rgba(50,152,220,.4);border-color:rgba(50,152,220,.6)}
+.btn-primary:hover{background:rgba(50,152,220,.6)}
+.btn-gold{background:rgba(244,196,48,.3);border-color:rgba(244,196,48,.6);color:#000}
+.btn-gold:hover{background:rgba(244,196,48,.5)}
+
+.layer-panel{position:absolute;bottom:80px;right:20px;display:flex;gap:4px;padding:8px;background:rgba(0,0,0,.8);border:1px solid rgba(255,255,255,.2);border-radius:6px;flex-wrap:wrap;max-width:300px;justify-content:flex-end}
+.layer-btn{padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer}
+.layer-btn.active{background:rgba(0,209,178,.3)}
+.layer-btn:hover{background:rgba(255,255,255,.2)}
+
+.char-select{position:absolute;top:80px;left:20px;display:flex;flex-direction:column;gap:6px}
+.char-thumb{width:60px;height:60px;border-radius:4px;background-size:cover;background-position:center;border:2px solid rgba(255,255,255,.2);cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.char-thumb:hover{border-color:rgba(255,255,255,.5)}
+.char-thumb.active{border-color:#f4c430;box-shadow:0 0 8px rgba(244,196,48,.4)}
+.char-thumb .lv{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.7);font-size:.45rem;color:#fff;text-align:center;padding:1px 0}
+.char-thumb .fact{position:absolute;top:1px;right:2px;font-size:.5rem;font-weight:800;font-family:monospace}
+
+/* Battle effects overlay */
+#battleFx{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:5}
+</style>
+</head>
+<body>
+<canvas id="gameCanvas"></canvas>
+<div id="battleFx"></div>
+
+<div id="hud">
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="btn-icon" id="btnMenu">☰</button>
+      <span class="topbar-title" id="title">Character</span>
+    </div>
+    <div class="res-bar">
+      <div class="res"><span>💎</span><span id="gems">3.0K</span></div>
+      <div class="res"><span>🪙</span><span id="gold">5.0K</span></div>
+      <div class="res"><span>⚡</span><span id="stam">100/100</span></div>
+    </div>
+  </div>
+
+  <div class="char-select" id="charSelect"></div>
+
+  <div class="side-panel">
+    <div class="info-card" style="margin-bottom:8px">
+      <div class="info-label">POWER</div>
+      <div class="info-val" id="powerVal">16,635</div>
+    </div>
+    <div id="statsList"></div>
+    <button class="btn btn-primary" id="btnUpgrade">UPGRADE</button>
+    <button class="btn btn-gold" id="btnGacha">PULL ×10</button>
+    <button class="btn" id="btnBattle" style="background:rgba(255,56,96,.3);border-color:rgba(255,56,96,.5)">⚔️ BATTLE</button>
+  </div>
+
+  <div class="layer-panel" id="layerPanel">
+    <button class="layer-btn active" data-layer="char">CHAR</button>
+    <button class="layer-btn active" data-layer="fx">FX</button>
+    <button class="layer-btn active" data-layer="particles">PARTICLES</button>
+    <button class="layer-btn active" data-layer="hud">HUD</button>
+  </div>
+
+  <div class="bottom-bar">
+    <div style="display:flex;gap:8px">
+      <div class="info-card"><div class="info-label">Name</div><div class="info-val" id="charName">Adaptive Stalker</div></div>
+      <div class="info-card"><div class="info-label">Level</div><div class="info-val" id="charLv">100</div></div>
+      <div class="info-card"><div class="info-label">Stars</div><div class="info-val" id="charStars">★★★★★</div></div>
+    </div>
+    <div><span class="faction-badge T" id="charFact">TRANSCENDENT</span></div>
+  </div>
+</div>
+
+<script>
+// ============ Config ============
+const FACTIONS = ['TRANSCENDENT', 'PURIST', 'WILD', 'UNKNOWN', 'CYBERIST'];
+const FACTION_COLORS = { TRANSCENDENT:'#b86bff', PURIST:'#ff6b35', WILD:'#23d160', UNKNOWN:'#3298dc', CYBERIST:'#ff3860' };
+const FCLASS = { TRANSCENDENT:'T', PURIST:'P', WILD:'W', UNKNOWN:'U', CYBERIST:'C' };
+
+const CHARS = [
+  { id:'c1', name:'Adaptive Stalker', faction:'TRANSCENDENT', rarity:'SSR', hp:10850, atk:2160, def:1640, wis:1680, agi:2180 },
+  { id:'c2', name:'Purity Enforcer', faction:'PURIST', rarity:'R', hp:720, atk:140, def:130, wis:120, agi:130 },
+  { id:'c3', name:'Fungal Overlord', faction:'WILD', rarity:'R', hp:900, atk:110, def:150, wis:100, agi:90 },
+  { id:'c4', name:'Null Entity', faction:'UNKNOWN', rarity:'R', hp:650, atk:150, def:100, wis:160, agi:150 },
+  { id:'c5', name:'Chrome Revenant', faction:'CYBERIST', rarity:'R', hp:800, atk:170, def:120, wis:110, agi:140 },
+];
+
+const CHAR_IMAGES = { c1:'assets/char/char_1.jpg', c2:'assets/char/char_2.jpg', c3:'assets/char/char_3.jpg', c4:'assets/char/char_4.jpg', c5:'assets/char/char_5.jpg' };
+const CHAR_THUMBS = { c1:'assets/char/char_1_s.jpg', c2:'assets/char/char_2_s.jpg', c3:'assets/char/char_3_s.jpg', c4:'assets/char/char_4_s.jpg', c5:'assets/char/char_5.jpg' };
+
+let idx = 0;
+let pixiApp, charContainer, fxContainer, particleContainer;
+let charSprite, glowSprite;
+let particles = [];
+let battleAnimating = false;
+
+// ============ PixiJS Setup ============
+async function initPixi() {
+  pixiApp = new PIXI.Application({
+    view: document.getElementById('gameCanvas'),
+    resizeTo: window,
+    backgroundColor: 0x06060f,
+    antialias: true,
+    resolution: window.devicePixelRatio || 1,
+    autoDensity: true,
+  });
+
+  // Containers (layers)
+  particleContainer = new PIXI.Container();
+  fxContainer = new PIXI.Container();
+  charContainer = new PIXI.Container();
+
+  pixiApp.stage.addChild(particleContainer);
+  pixiApp.stage.addChild(fxContainer);
+  pixiApp.stage.addChild(charContainer);
+
+  // Load textures
+  await PIXI.Assets.load(Object.values(CHAR_IMAGES));
+  await PIXI.Assets.load(Object.values(CHAR_THUMBS));
+
+  // Create character sprite
+  charSprite = new PIXI.Sprite(PIXI.Texture.from(CHAR_IMAGES.c1));
+  charSprite.anchor.set(0.5, 0.5);
+  charContainer.addChild(charSprite);
+
+  // Glow behind character
+  glowSprite = new PIXI.Sprite(PIXI.Texture.WHITE);
+  glowSprite.anchor.set(0.5, 0.5);
+  glowSprite.tint = 0xb86bff;
+  glowSprite.alpha = 0.15;
+  charContainer.addChildAt(glowSprite, 0);
+
+  // Grid lines
+  const grid = new PIXI.Graphics();
+  for (let i = -10; i <= 10; i++) {
+    grid.lineStyle(1, 0x2a2a6a, 0.3);
+    grid.moveTo(i * 50, -500); grid.lineTo(i * 50, 500);
+    grid.moveTo(-500, i * 50); grid.lineTo(500, i * 50);
+  }
+  pixiApp.stage.addChildAt(grid, 0);
+
+  // Floating particles
+  createParticles();
+
+  // Animation loop
+  pixiApp.ticker.add((delta) => {
+    updateParticles(delta);
+    updateCharAnimation(delta);
+  });
+
+  resize();
+  window.addEventListener('resize', resize);
+}
+
+function resize() {
+  const w = pixiApp.screen.width;
+  const h = pixiApp.screen.height;
+  charContainer.x = w / 2;
+  charContainer.y = h / 2;
+  fxContainer.x = w / 2;
+  fxContainer.y = h / 2;
+  particleContainer.x = w / 2;
+  particleContainer.y = h / 2;
+
+  // Scale character to fit
+  const scale = Math.min(w * 0.4 / charSprite.texture.width, h * 0.6 / charSprite.texture.height);
+  charSprite.scale.set(scale);
+  glowSprite.width = charSprite.width * 1.5;
+  glowSprite.height = charSprite.height * 1.5;
+}
+
+// ============ Particles ============
+function createParticles() {
+  for (let i = 0; i < 50; i++) {
+    const p = new PIXI.Graphics();
+    p.beginFill(0xb86bff, Math.random() * 0.5 + 0.2);
+    p.drawCircle(0, 0, Math.random() * 3 + 1);
+    p.endFill();
+    p.x = (Math.random() - 0.5) * 600;
+    p.y = (Math.random() - 0.5) * 600;
+    p.vx = (Math.random() - 0.5) * 30;
+    p.vy = Math.random() * -40 - 10;
+    p.alpha = Math.random() * 0.6 + 0.2;
+    particleContainer.addChild(p);
+    particles.push(p);
+  }
+}
+
+function updateParticles(delta) {
+  particles.forEach(p => {
+    p.x += p.vx * delta * 0.05;
+    p.y += p.vy * delta * 0.05;
+    if (p.y < -300) { p.y = 300; p.x = (Math.random() - 0.5) * 600; }
+    if (p.x < -300 || p.x > 300) p.vx *= -1;
+  });
+}
+
+// ============ Character Animation ============
+let animTime = 0;
+function updateCharAnimation(delta) {
+  animTime += delta * 0.05;
+  // Float
+  charSprite.y = Math.sin(animTime) * 8;
+  glowSprite.y = charSprite.y;
+  // Pulse glow
+  glowSprite.alpha = 0.1 + Math.sin(animTime * 2) * 0.05;
+  // Subtle rotation
+  charSprite.rotation = Math.sin(animTime * 0.5) * 0.02;
+}
+
+// ============ Battle Animation ============
+function playBattleAnimation() {
+  if (battleAnimating) return;
+  battleAnimating = true;
+
+  const c = CHARS[idx];
+  const colHex = FACTION_COLORS[c.faction];
+  const colNum = parseInt(colHex.replace('#', ''));
+
+  // Flash
+  const flash = new PIXI.Graphics();
+  flash.beginFill(colNum, 0.8);
+  flash.drawRect(-pixiApp.screen.width/2, -pixiApp.screen.height/2, pixiApp.screen.width, pixiApp.screen.height);
+  flash.endFill();
+  flash.alpha = 0;
+  fxContainer.addChild(flash);
+
+  // Slash effect
+  const slash = new PIXI.Graphics();
+  slash.lineStyle(4, colNum, 1);
+  slash.moveTo(-200, -100);
+  slash.lineTo(200, 100);
+  slash.lineStyle(2, 0xffffff, 0.8);
+  slash.moveTo(-180, -100);
+  slash.lineTo(220, 100);
+  slash.alpha = 0;
+  slash.scale.set(0, 1);
+  fxContainer.addChild(slash);
+
+  // Impact circles
+  const circles = [];
+  for (let i = 0; i < 5; i++) {
+    const circle = new PIXI.Graphics();
+    circle.lineStyle(2, colNum, 0.8 - i * 0.15);
+    circle.drawCircle(0, 0, 50 + i * 30);
+    circle.endFill();
+    circle.alpha = 0;
+    fxContainer.addChild(circle);
+    circles.push(circle);
+  }
+
+  // Damage text
+  const dmgText = new PIXI.Text('9999', {
+    fontFamily: 'monospace',
+    fontSize: 48,
+    fontWeight: '900',
+    fill: colNum,
+    stroke: 0x000000,
+    strokeThickness: 4,
+  });
+  dmgText.anchor.set(0.5);
+  dmgText.y = -150;
+  dmgText.alpha = 0;
+  fxContainer.addChild(dmgText);
+
+  // Animate
+  let t = 0;
+  const animDuration = 60; // frames
+
+  function animateBattle() {
+    t++;
+    const progress = t / animDuration;
+
+    // Flash fade in/out
+    if (progress < 0.1) flash.alpha = progress * 8;
+    else if (progress < 0.3) flash.alpha = 1 - (progress - 0.1) / 0.2;
+    else flash.alpha = 0;
+
+    // Slash expand
+    if (progress > 0.1 && progress < 0.5) {
+      const p = (progress - 0.1) / 0.4;
+      slash.alpha = 1 - p;
+      slash.scale.set(p * 2, 1);
+    }
+
+    // Impact circles
+    circles.forEach((circle, i) => {
+      const delay = 0.2 + i * 0.05;
+      if (progress > delay && progress < delay + 0.3) {
+        const p = (progress - delay) / 0.3;
+        circle.alpha = 1 - p;
+        circle.scale.set(p * 2);
+      } else {
+        circle.alpha = 0;
+      }
+    });
+
+    // Damage text
+    if (progress > 0.3 && progress < 0.8) {
+      dmgText.alpha = progress < 0.4 ? (progress - 0.3) / 0.1 : 1 - (progress - 0.4) / 0.4;
+      dmgText.y = -150 - (progress - 0.3) * 100;
+      dmgText.scale.set(1 + Math.sin(progress * 10) * 0.1);
+    }
+
+    // Character shake
+    if (progress > 0.2 && progress < 0.6) {
+      charSprite.x = (Math.random() - 0.5) * 20;
+    } else {
+      charSprite.x = 0;
+    }
+
+    if (t < animDuration) {
+      requestAnimationFrame(animateBattle);
+    } else {
+      fxContainer.removeChildren();
+      battleAnimating = false;
+    }
+  }
+  animateBattle();
+}
+
+// ============ UI ============
+function fmt(n) { return n >= 1000 ? (n/1000).toFixed(1) + 'K' : n.toString(); }
+
+function renderUI() {
+  const c = CHARS[idx];
+  document.getElementById('charName').textContent = c.name;
+  document.getElementById('charLv').textContent = c.id === 'c1' ? '100' : '1';
+  document.getElementById('charStars').textContent = c.id === 'c1' ? '★★★★★' : '★☆☆☆☆';
+  const fb = document.getElementById('charFact');
+  fb.textContent = c.faction;
+  fb.style.color = FACTION_COLORS[c.faction];
+  fb.style.borderColor = FACTION_COLORS[c.faction];
+
+  const power = c.hp + c.atk + c.def + c.wis + c.agi;
+  document.getElementById('powerVal').textContent = fmt(power);
+
+  const stats = [
+    { name: 'HP', value: c.hp, icon: '❤️' },
+    { name: 'ATK', value: c.atk, icon: '⚔️' },
+    { name: 'DEF', value: c.def, icon: '🛡️' },
+    { name: 'WIS', value: c.wis, icon: '✨' },
+    { name: 'AGI', value: c.agi, icon: '💨' },
+  ];
+  document.getElementById('statsList').innerHTML = stats.map(s =>
+    `<div class="stat-row"><span class="stat-name">${s.icon} ${s.name}</span><span class="stat-val">${fmt(s.value)}</span></div>`
+  ).join('');
+
+  // Update PixiJS textures
+  if (charSprite) {
+    charSprite.texture = PIXI.Texture.from(CHAR_IMAGES[c.id]);
+    const colHex = FACTION_COLORS[c.faction];
+    glowSprite.tint = parseInt(colHex.replace('#', ''));
+    resize();
+  }
+
+  // Update particle color
+  const colHex = FACTION_COLORS[c.faction];
+  const colNum = parseInt(colHex.replace('#', ''));
+  particles.forEach(p => { p.tint = colNum; });
+}
+
+// Character select
+const charSelect = document.getElementById('charSelect');
+CHARS.forEach((c, i) => {
+  const thumb = document.createElement('div');
+  thumb.className = 'char-thumb' + (i === 0 ? ' active' : '');
+  thumb.style.backgroundImage = `url(${CHAR_THUMBS[c.id]})`;
+  thumb.innerHTML = `<span class="fact" style="color:${FACTION_COLORS[c.faction]}">${FCLASS[c.faction]}</span><span class="lv">Lv.${c.id==='c1'?'100':'1'}</span>`;
+  thumb.onclick = () => {
+    idx = i;
+    document.querySelectorAll('.char-thumb').forEach((t, j) => t.classList.toggle('active', j === i));
+    renderUI();
+  };
+  charSelect.appendChild(thumb);
+});
+
+// Layer toggle
+document.querySelectorAll('.layer-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const layer = btn.dataset.layer;
+    const isActive = btn.classList.contains('active');
+    btn.classList.toggle('active');
+    if (layer === 'char') {
+      charContainer.visible = !isActive;
+    } else if (layer === 'fx') {
+      fxContainer.visible = !isActive;
+    } else if (layer === 'particles') {
+      particleContainer.visible = !isActive;
+    } else if (layer === 'hud') {
+      document.getElementById('hud').style.opacity = isActive ? '0' : '1';
+    }
+  });
+});
+
+// Buttons
+document.getElementById('btnUpgrade').onclick = () => {
+  const c = CHARS[idx];
+  c.hp += 50; c.atk += 20; c.def += 15; c.wis += 15; c.agi += 20;
+  renderUI();
+};
+
+document.getElementById('btnGacha').onclick = () => {
+  const r = Math.random();
+  const rarity = r < 0.03 ? 'SSR' : r < 0.13 ? 'SR' : 'R';
+  const pool = CHARS.filter(c => c.rarity === rarity);
+  const result = pool[Math.floor(Math.random() * pool.length)];
+  alert('🎉 Pulled: ' + result.rarity + ' ' + result.name);
+};
+
+document.getElementById('btnBattle').onclick = () => {
+  playBattleAnimation();
+};
+
+// Init
+initPixi().then(() => renderUI());
+</script>
+</body>
+</html>
