@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOBB — Character</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#000;color:#eee;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#2a2a6a;border-radius:0}
+button{font-family:inherit;cursor:pointer;border:none;outline:none;background:none;color:inherit}
+
+:root{
+  --bg:#06060f;--card2:#1a1a40;--bdr:#1e1e4a;--bdr2:#2a2a6a;
+  --gold:#f4c430;--red:#ff3860;--green:#23d160;--blue:#3298dc;--purple:#b86bff;--cyan:#00d1b2;--orange:#ff6b35;
+}
+
+/* === Game Container === */
+#game{position:relative;width:1920px;height:1080px;flex-shrink:0;overflow:hidden;background:var(--bg);transform-origin:center}
+
+/* === Topbar === */
+.topbar{position:absolute;top:0;left:0;right:0;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(18,18,42,.4);border-bottom:2px solid rgba(255,255,255,.15);z-index:5;backdrop-filter:blur(8px)}
+.topbar-left{display:flex;align-items:center;gap:16px}
+.btn-icon{width:42px;height:42px;border-radius:4px;background:rgba(255,255,255,.1);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#fff}
+.btn-icon:hover{background:rgba(255,255,255,.2)}
+.topbar-title{font-size:.975rem;color:#fff;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.res-bar{display:flex;gap:6px}
+.res{display:flex;align-items:center;gap:4px;padding:5px 12px;border-radius:4px;background:rgba(255,255,255,.1);font-size:.9rem;font-weight:700;color:#fff}
+
+/* === Layout === */
+.content{position:absolute;top:60px;left:0;right:0;bottom:0;display:flex}
+
+/* === Roster (Left Sidebar) === */
+.roster{width:112px;background:rgba(18,18,42,.35);border-right:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;padding:6px;gap:6px;overflow-y:auto;backdrop-filter:blur(8px)}
+.roster-item{width:100px;height:100px;border-radius:4px;background-size:cover;background-position:center;border:1px solid var(--bdr);cursor:pointer;flex-shrink:0;position:relative;transition:all .15s}
+.roster-item:hover{border-color:rgba(255,255,255,.4);transform:scale(1.02)}
+.roster-item.active{border-color:var(--gold);box-shadow:0 0 12px rgba(244,196,48,.4)}
+.roster-fact{font-size:.7rem;font-weight:800;font-family:monospace;position:absolute;top:3px;left:4px;background:rgba(0,0,0,.6);padding:1px 5px;border-radius:3px}
+.roster-rar{font-size:.55rem;font-weight:800;position:absolute;top:3px;right:4px;background:rgba(0,0,0,.6);padding:1px 5px;border-radius:3px}
+.roster-lv{font-size:.55rem;font-weight:800;color:#fff;position:absolute;bottom:3px;left:4px;background:rgba(0,0,0,.6);padding:1px 5px;border-radius:3px}
+.roster-stars{font-size:.4rem;color:var(--gold);position:absolute;bottom:3px;right:4px;background:rgba(0,0,0,.6);padding:1px 3px;border-radius:2px;text-align:center;max-width:16px}
+.roster-stars .row{display:block;font-size:.4rem;line-height:.7}
+
+/* === Character Art Area === */
+.char-area{flex:1;display:flex;align-items:center;justify-content:center;background:rgba(6,6,15,.5);overflow:hidden;position:relative}
+.char-frame{aspect-ratio:16/9;max-width:100%;max-height:100%;position:relative;background:#000;overflow:hidden}
+.artwork{position:absolute;top:0;left:0;right:0;bottom:0;background-size:contain;background-repeat:no-repeat;background-position:center}
+.char-nameplate{position:absolute;bottom:0;left:0;right:0;padding:20px 24px;background:linear-gradient(0deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.6) 60%,transparent 100%)}
+.char-name{font-size:2rem;font-weight:800;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.8)}
+.char-meta{display:flex;align-items:center;gap:12px;margin-top:6px}
+.char-stars{color:var(--gold);font-size:1rem}
+.char-rarity{padding:3px 10px;border-radius:4px;font-size:.7rem;font-weight:700;background:rgba(0,0,0,.6);color:#fff}
+.char-level{color:var(--cyan);font-weight:700;font-size:.85rem}
+.faction-group{position:absolute;top:16px;right:16px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;z-index:2}
+.faction-badge{padding:6px 14px;border-radius:4px;font-size:.75rem;font-weight:700;background:rgba(0,0,0,.5);border:1px solid}
+.counter-chart{width:80px;height:80px;background:rgba(255,200,100,.1);border:1px solid rgba(255,200,100,.25);border-radius:4px}
+
+/* === Right Panel === */
+.panel{width:440px;background:rgba(18,18,42,.5);border-left:2px solid rgba(255,255,255,.15);display:flex;flex-direction:column;overflow:hidden}
+.tabs{display:flex;border-bottom:2px solid rgba(255,255,255,.15)}
+.tab{flex:1;padding:14px;font-size:.75rem;font-weight:600;color:rgba(255,255,255,.45);cursor:pointer;text-align:center;transition:all .2s;position:relative}
+.tab:hover{color:rgba(255,255,255,.8);background:rgba(255,255,255,.05)}
+.tab.active{color:#fff;background:rgba(0,209,178,.1);box-shadow:inset 0 -2px 0 var(--cyan)}
+.tab-panel{display:none;flex:1;overflow-y:auto;padding:16px}
+.tab-panel.active{display:flex;flex-direction:column}
+
+/* === Stat Panel === */
+.power-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:rgba(244,196,48,.08);border:1px solid rgba(244,196,48,.25);border-radius:6px;margin-bottom:14px}
+.power-label{font-size:.65rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1.5px}
+.power-val{font-size:2.4rem;font-weight:900;color:var(--gold);text-shadow:0 0 16px rgba(244,196,48,.3)}
+.stat-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(26,26,64,.4);border-radius:4px;margin-bottom:6px}
+.stat-icon{width:28px;text-align:center;font-size:1.1rem}
+.stat-name{flex:1;font-size:.7rem;color:rgba(255,255,255,.5);text-transform:uppercase;font-weight:600}
+.stat-val{font-size:.95rem;font-weight:700;color:#fff}
+.stat-bar{width:100px;height:4px;background:rgba(255,255,255,.1);border-radius:0;margin-left:auto;overflow:hidden}
+.stat-bar-fill{height:100%;background:var(--cyan);border-radius:0}
+.section-title{font-size:.7rem;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin:16px 0 10px}
+.upgrade-btn{width:100%;padding:16px;border-radius:6px;font-size:.95rem;font-weight:700;background:rgba(50,152,220,.35);color:#fff;margin-top:auto;border:1px solid rgba(50,152,220,.5)}
+.upgrade-btn:hover{background:rgba(50,152,220,.55)}
+
+/* === Skills Panel === */
+.skill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.skill-box{text-align:center;padding:14px 8px;background:rgba(26,26,64,.4);border-radius:6px;border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:all .15s}
+.skill-box:hover{border-color:rgba(255,255,255,.2);background:rgba(26,26,64,.6)}
+.skill-box .icon{width:36px;height:36px;background:rgba(100,200,255,.25);border-radius:6px;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.skill-box .name{font-size:.65rem;font-weight:700;color:#fff}
+.skill-box .lv{font-size:.55rem;color:var(--gold);font-weight:700;margin-top:2px}
+.detail-box{padding:10px 12px;background:rgba(26,26,64,.4);border:1px solid rgba(255,255,255,.06);border-radius:6px;margin-bottom:8px}
+.detail-box .label{font-size:.5rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.detail-box .value{font-size:.7rem;color:rgba(255,255,255,.85);line-height:1.4}
+.skill-lv{display:flex;gap:6px;margin-top:8px}
+.skill-lv .lv{width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:700;border:1px solid rgba(255,255,255,.12);border-radius:3px;color:rgba(255,255,255,.4)}
+.skill-lv .lv.on{border-color:var(--cyan);background:rgba(0,209,178,.25);color:#fff}
+
+/* === Evo Panel === */
+.evo-compare{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.evo-star{width:56px;height:56px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:900}
+.evo-star.current{background:rgba(244,196,48,.15);border:1px solid var(--gold)}
+.evo-star.next{background:rgba(26,26,64,.4);border:1px solid var(--bdr);opacity:.4}
+.evo-arrow{font-size:1.5rem;color:rgba(255,255,255,.3)}
+.evo-btn{width:100%;padding:14px;border-radius:6px;font-size:.9rem;font-weight:700;background:rgba(244,196,48,.25);color:var(--gold);margin-top:auto;border:1px solid rgba(244,196,48,.4)}
+.evo-btn:hover{background:rgba(244,196,48,.4)}
+
+/* === About Panel === */
+.about-text{font-size:.75rem;color:rgba(255,255,255,.7);line-height:1.6;margin-bottom:12px}
+.about-faction{display:flex;align-items:center;gap:10px;padding:12px;background:rgba(26,26,64,.4);border-radius:6px;margin-bottom:8px}
+.about-faction .dot{width:12px;height:12px;border-radius:50%}
+.about-faction .name{font-weight:700;color:#fff;font-size:.8rem}
+
+/* === Battle Screen (placeholder) === */
+.screen{display:none}
+.screen.active{display:flex}
+#s-char{flex-direction:column}
+</style>
+</head>
+<body>
+
+<div id="game">
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="topbar-left">
+    <button class="btn-icon">☰</button>
+    <span class="topbar-title">Character</span>
+  </div>
+  <div class="res-bar">
+    <div class="res"><span>💎</span><span id="gems">3.0K</span></div>
+    <div class="res"><span>🪙</span><span id="gold">5.0K</span></div>
+    <div class="res"><span>⚡</span><span id="stam">100</span></div>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+  <!-- Roster -->
+  <div class="roster" id="rosterGrid"></div>
+
+  <!-- Character Art -->
+  <div class="char-area">
+    <div class="char-frame" id="charFrame">
+      <div class="artwork" id="artwork" style="background-image:url(assets/char/char_1.jpg)"></div>
+      <div class="char-nameplate">
+        <div class="char-name" id="charName">Adaptive Stalker</div>
+        <div class="char-meta">
+          <span class="char-stars" id="charStars">★★★★★</span>
+          <span class="char-rarity" id="charRar">SSR</span>
+          <span class="char-level" id="charLv">Lv.100/60</span>
+        </div>
+      </div>
+      <div class="faction-group">
+        <div class="faction-badge T" id="charFact">TRANSCENDENT</div>
+        <div class="counter-chart" id="counterChart"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel -->
+  <div class="panel">
+    <div class="tabs">
+      <button class="tab active" data-tab="stat" onclick="switchTab('stat')">Stat</button>
+      <button class="tab" data-tab="skills" onclick="switchTab('skills')">Skills</button>
+      <button class="tab" data-tab="evo" onclick="switchTab('evo')">Evo</button>
+      <button class="tab" data-tab="story" onclick="switchTab('story')">About</button>
+    </div>
+
+    <!-- Stat -->
+    <div class="tab-panel active" id="tab-stat">
+      <div class="power-bar">
+        <span class="power-label">POWER</span>
+        <span class="power-val" id="powerVal">16,635</span>
+      </div>
+      <div id="statsGrid"></div>
+      <div style="flex:1"></div>
+      <button class="upgrade-btn" onclick="upgrade()">⬆ UPGRADE</button>
+    </div>
+
+    <!-- Skills -->
+    <div class="tab-panel" id="tab-skills">
+      <div class="skill-grid" id="skillsRow"></div>
+      <div class="detail-box">
+        <div class="label">Active Skill</div>
+        <div class="value" id="skillName">—</div>
+        <div class="value" style="font-size:.65rem;color:rgba(255,255,255,.5);margin-top:4px" id="skillDesc">—</div>
+      </div>
+      <div class="detail-box">
+        <div class="label">Passive</div>
+        <div class="value" id="passiveName">—</div>
+        <div class="value" style="font-size:.65rem;color:rgba(255,255,255,.5);margin-top:4px" id="passiveDesc">—</div>
+      </div>
+      <div class="section-title">Skill Level</div>
+      <div class="skill-lv" id="skillLevels"></div>
+    </div>
+
+    <!-- Evo -->
+    <div class="tab-panel" id="tab-evo">
+      <div class="evo-compare">
+        <div class="evo-star current" id="evoCurrent">★★★★★</div>
+        <span class="evo-arrow">→</span>
+        <div class="evo-star next" id="evoNext">★★★★★★</div>
+      </div>
+      <div class="detail-box">
+        <div class="label">Requirement</div>
+        <div class="value" id="evoReq">Lv.60 + 50,000 Gold + 5 Evolution Core</div>
+      </div>
+      <div class="detail-box">
+        <div class="label">Stat Bonus</div>
+        <div class="value" style="color:var(--green)" id="evoBonus">+20% HP / +15% ATK / +10% All Stats</div>
+      </div>
+      <div class="detail-box">
+        <div class="label">New Skill Unlock</div>
+        <div class="value" style="color:var(--cyan)">Ultimate: Reality Fracture</div>
+      </div>
+      <div style="flex:1"></div>
+      <button class="evo-btn" onclick="evolve()">✦ EVOLVE</button>
+    </div>
+
+    <!-- About -->
+    <div class="tab-panel" id="tab-story">
+      <div class="about-text" id="aboutText">A cybernetic entity born from the fusion of human consciousness and quantum AI. Adaptive Stalker hunts those who threaten the balance between realms.</div>
+      <div class="section-title">Faction Info</div>
+      <div class="about-faction">
+        <div class="dot" style="background:#b86bff"></div>
+        <div class="name">TRANSCENDENT</div>
+      </div>
+      <div class="about-text" style="font-size:.7rem;opacity:.7">Beings who have evolved beyond physical form. They manipulate space-time to their advantage, striking from dimensions unknown.</div>
+      <div class="section-title" style="margin-top:20px">Counter Chart</div>
+      <div class="about-text" style="font-size:.7rem">Strong vs: PURIST • Weak vs: CYBERIST</div>
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+<script>
+const FACTIONS = ['TRANSCENDENT', 'PURIST', 'WILD', 'UNKNOWN', 'CYBERIST'];
+const FACTION_COLORS = { TRANSCENDENT:'#b86bff', PURIST:'#ff6b35', WILD:'#23d160', UNKNOWN:'#3298dc', CYBERIST:'#ff3860' };
+const RARITY_COLORS = { N:'#888', R:'#3298dc', SR:'#b86bff', SSR:'#f4c430', UR:'#ff3860' };
+const FCLASS = { TRANSCENDENT:'T', PURIST:'P', WILD:'W', UNKNOWN:'U', CYBERIST:'C' };
+
+const CHARS = [
+  { id:'c1', name:'Adaptive Stalker', faction:'TRANSCENDENT', rarity:'SSR', hp:10850, atk:2160, def:1640, wis:1680, agi:2180 },
+  { id:'c2', name:'Purity Enforcer', faction:'PURIST', rarity:'R', hp:720, atk:140, def:130, wis:120, agi:130 },
+  { id:'c3', name:'Fungal Overlord', faction:'WILD', rarity:'R', hp:900, atk:110, def:150, wis:100, agi:90 },
+  { id:'c4', name:'Null Entity', faction:'UNKNOWN', rarity:'R', hp:650, atk:150, def:100, wis:160, agi:150 },
+  { id:'c5', name:'Chrome Revenant', faction:'CYBERIST', rarity:'R', hp:800, atk:170, def:120, wis:110, agi:140 },
+];
+
+const SKILLS = [
+  { s1:'Reality Slash', s1desc:'Slashes through dimensions, dealing 180% ATK to all enemies', s2:'Quantum Surge', s2desc:'Channels quantum energy for 320% ATK single target', p1:'Ethereal Body', p1desc:'+15% Evasion against physical attacks', p2:'Mind Over Matter', p2desc:'+10% WIS for each defeated enemy' },
+  { s1:'Holy Strike', s1desc:'Divine attack dealing 150% ATK', s2:'Judgment', s1desc:'Purifies target for 250% ATK', p1:'Faith Shield', p1desc:'+10% DEF', p2:'Divine Grace', p2desc:'Heal 3% HP per turn' },
+  { s1:'Spore Burst', s1desc:'Releases toxic spores for 120% ATK AoE', s2:'Fungal Overgrowth', s2desc:'Engulfs enemy for 200% ATK + poison', p1:'Regeneration', p1desc:'Recover 5% HP per turn', p2:'Toxic Aura', p2desc:'Enemies take 2% HP damage per turn' },
+  { s1:'Null Blast', s1desc:'Erases matter for 160% ATK', s2:'Void Collapse', s2desc:'Creates black hole for 280% ATK', p1:'Phase Shift', p1desc:'20% chance to dodge any attack', p2:'Reality Anchor', p2desc:'Immune to displacement effects' },
+  { s1:'Chrome Pierce', s1desc:'Mechanical thrust for 170% ATK', s2:'Overclock', s2desc:'Boosts AGI by 50% for 3 turns', p1:'Armor Plating', p1desc:'+15% DEF', p2:'Overdrive', p2desc:'ATK +20% when HP < 50%' },
+];
+
+const CHAR_IMAGES = { c1:'assets/char/char_1.jpg', c2:'assets/char/char_2.jpg', c3:'assets/char/char_3.jpg', c4:'assets/char/char_4.jpg', c5:'assets/char/char_5.jpg' };
+const CHAR_THUMBS = { c1:'assets/char/char_1_s.jpg', c2:'assets/char/char_2_s.jpg', c3:'assets/char/char_3_s.jpg', c4:'assets/char/char_4.jpg', c5:'assets/char/char_5.jpg' };
+
+let state = { player:{ name:'Hunter', currencies:[{type:'gold',amount:5000},{type:'gems',amount:3000},{type:'stamina',amount:100}] }, chars:[], idx:0 };
+
+function init() {
+  state.chars = CHARS.map((c,i) => ({ ...c, level:i===0?100:1, star:i===0?5:1, skillLevel:i===0?5:1,
+    currentHp:c.hp+(i===0?10000:0), currentAtk:c.atk+(i===0?2000:0), currentDef:c.def+(i===0?1500:0),
+    currentWis:c.wis+(i===0?1500:0), currentAgi:c.agi+(i===0?2000:0) }));
+  renderAll();
+}
+
+function fmt(n){return n>=1e3?(n/1e3).toFixed(1)+'K':n.toString()}
+
+function renderAll(){
+  const g=state.player.currencies.find(x=>x.type==='gold');
+  const gm=state.player.currencies.find(x=>x.type==='gems');
+  document.getElementById('gold').textContent=g?fmt(g.amount):'0';
+  document.getElementById('gems').textContent=gm?fmt(gm.amount):'0';
+  renderRoster(); renderChar();
+}
+
+function renderRoster(){
+  const grid=document.getElementById('rosterGrid');
+  grid.innerHTML=state.chars.map((c,i)=>{
+    const stars=c.star; const l1=Math.min(stars,3); const l2=Math.max(stars-3,0);
+    return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})" style="background-image:url(${CHAR_THUMBS[c.id]})">
+      <span class="roster-fact" style="color:${FACTION_COLORS[c.faction]}">${FCLASS[c.faction]}</span>
+      <span class="roster-rar" style="color:${RARITY_COLORS[c.rarity]}">${c.rarity}</span>
+      <span class="roster-lv">Lv.${c.level}</span>
+      <span class="roster-stars"><span class="row">${'★'.repeat(l1)}</span>${l2>0?'<span class="row">'+'★'.repeat(l2)+'</span>':''}</span>
+    </div>`;
+  }).join('');
+}
+
+function selectChar(i){state.idx=i; renderRoster(); renderChar();}
+
+function renderChar(){
+  const c=state.chars[state.idx];
+  document.getElementById('artwork').style.backgroundImage=`url(${CHAR_IMAGES[c.id]})`;
+  document.getElementById('charName').textContent=c.name;
+  document.getElementById('charStars').innerHTML='★'.repeat(c.star)+'☆'.repeat(5-c.star);
+  const rar=document.getElementById('charRar'); rar.textContent=c.rarity; rar.style.color=RARITY_COLORS[c.rarity];
+  document.getElementById('charLv').textContent='Lv.'+c.level+'/60';
+  const fb=document.getElementById('charFact'); fb.textContent=c.faction;
+  fb.style.color=FACTION_COLORS[c.faction]; fb.style.borderColor=FACTION_COLORS[c.faction];
+  fb.className='faction-badge '+FCLASS[c.faction];
+
+  // Counter chart
+  const pts=[{x:40,y:8},{x:72,y:32},{x:62,y:70},{x:18,y:70},{x:8,y:32}];
+  const me=FACTIONS.indexOf(c.faction);
+  let svg='<svg viewBox="0 0 80 80" width="100%" height="100%">';
+  FACTIONS.forEach((f,i)=>{if(i===me)return;
+    svg+=`<line x1="${pts[me].x}" y1="${pts[me].y}" x2="${pts[i].x}" y2="${pts[i].y}" stroke="${FACTION_COLORS[c.faction]}" stroke-width="1.5" opacity=".6"/>`;
+  });
+  FACTIONS.forEach((f,i)=>{const col=i===me?FACTION_COLORS[f]:'#1a1a40';
+    svg+=`<circle cx="${pts[i].x}" cy="${pts[i].y}" r="7" fill="${col}" stroke="#fff" stroke-width="${i===me?2:1}"/>`;
+    svg+=`<text x="${pts[i].x}" y="${pts[i].y+3}" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold">${FCLASS[f]}</text>`;
+  });
+  svg+='</svg>';
+  document.getElementById('counterChart').innerHTML=svg;
+
+  // Stats
+  const maxVal = 12000;
+  const statsGrid=document.getElementById('statsGrid');
+  const stats=[{key:'HP',val:c.currentHp,icon:'❤️'},{key:'ATK',val:c.currentAtk,icon:'⚔️'},{key:'DEF',val:c.currentDef,icon:'🛡️'},{key:'WIS',val:c.currentWis,icon:'✨'},{key:'AGI',val:c.currentAgi,icon:'💨'}];
+  statsGrid.innerHTML=stats.map(s=>`<div class="stat-row">
+    <span class="stat-icon">${s.icon}</span>
+    <span class="stat-name">${s.key}</span>
+    <span class="stat-val">${fmt(s.val)}</span>
+    <div class="stat-bar"><div class="stat-bar-fill" style="width:${Math.min(s.val/maxVal*100,100)}%"></div></div>
+  </div>`).join('');
+
+  const power=c.currentHp+c.currentAtk+c.currentDef+c.currentWis+c.currentAgi;
+  document.getElementById('powerVal').textContent=fmt(power);
+
+  // Skills
+  const sk=SKILLS[state.idx];
+  const actives=[{name:sk.s1,desc:sk.s1desc},{name:sk.s2,desc:sk.s2desc}];
+  const passives=[{name:sk.p1,desc:sk.p1desc},{name:sk.p2,desc:sk.p2desc}];
+  document.getElementById('skillsRow').innerHTML=actives.map((s,i)=>`<div class="skill-box" onclick="selectSkill(${i})">
+    <div class="icon">${['⚡','💥'][i]}</div><div class="name">${s.name}</div><div class="lv">Lv.${c.skillLevel}</div>
+  </div>`).join('')+passives.map((s,i)=>`<div class="skill-box" style="opacity:.7">
+    <div class="icon">${['🛡️','✨'][i]}</div><div class="name">${s.name}</div><div class="lv">—</div>
+  </div>`).join('');
+  document.getElementById('skillName').textContent=actives[0].name;
+  document.getElementById('skillDesc').textContent=actives[0].desc;
+  document.getElementById('passiveName').textContent=passives[0].name;
+  document.getElementById('passiveDesc').textContent=passives[0].desc;
+  document.getElementById('skillLevels').innerHTML=[1,2,3,4,5].map(i=>`<span class="lv ${i<=c.skillLevel?'on':''}">${i}</span>`).join('');
+
+  // Evo
+  document.getElementById('evoCurrent').innerHTML='★'.repeat(c.star);
+  document.getElementById('evoNext').innerHTML='★'.repeat(Math.min(c.star+1,6));
+
+  // About
+  const aboutTexts={
+    c1:'A cybernetic entity born from the fusion of human consciousness and quantum AI. Adaptive Stalker hunts those who threaten the balance between realms.',
+    c2:'A zealot who believes in absolute purity. Purity Enforcer hunts down corrupted beings with divine flames.',
+    c3:'A sentient fungal colony that consumes and assimilates all organic matter. Commands the spore network.',
+    c4:'An entity from the void between dimensions. Its true form cannot be perceived by mortal eyes.',
+    c5:'A war machine from a fallen civilization. Seeks to rebuild its empire from the ashes of the old world.'
+  };
+  document.getElementById('aboutText').textContent=aboutTexts[c.id]||'';
+}
+
+function selectSkill(i){
+  const sk=SKILLS[state.idx];
+  const actives=[{name:sk.s1,desc:sk.s1desc},{name:sk.s2,desc:sk.s2desc}];
+  document.getElementById('skillName').textContent=actives[i].name;
+  document.getElementById('skillDesc').textContent=actives[i].desc;
+}
+
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+t));
+}
+
+function upgrade(){
+  const c=state.chars[state.idx]; if(!c)return;
+  const gold=state.player.currencies.find(x=>x.type==='gold');
+  const cost=100*c.level;
+  if(!gold||gold.amount<cost){alert('Gold不足！需要 '+fmt(cost));return;}
+  gold.amount-=cost; c.level++;
+  c.currentHp+=Math.floor(c.hp*0.05); c.currentAtk+=Math.floor(c.atk*0.05);
+  c.currentDef+=Math.floor(c.def*0.05); c.currentWis+=Math.floor(c.wis*0.05); c.currentAgi+=Math.floor(c.agi*0.05);
+  renderAll();
+}
+
+function evolve(){
+  const c=state.chars[state.idx];
+  if(c.level<60){alert('需要 Lv.60 才能进化！');return;}
+  const gold=state.player.currencies.find(x=>x.type==='gold');
+  if(!gold||gold.amount<50000){alert('Gold不足！需要 50,000');return;}
+  gold.amount-=50000; c.star=Math.min(c.star+1,6); c.level=1;
+  c.currentHp=Math.floor(c.hp*1.2); c.currentAtk=Math.floor(c.atk*1.15);
+  c.currentDef=Math.floor(c.def*1.1); c.currentWis=Math.floor(c.wis*1.1); c.currentAgi=Math.floor(c.agi*1.1);
+  alert('进化成功！星级提升至 '+c.star+'★');
+  renderAll();
+}
+
+// Scale to fit
+function resize(){
+  const gc=document.getElementById('game');
+  const scale=Math.min(window.innerWidth/1920,window.innerHeight/1080);
+  gc.style.transform='scale('+scale+')';
+  gc.style.marginLeft=((window.innerWidth-1920*scale)/2)+'px';
+  gc.style.marginTop=((window.innerHeight-1080*scale)/2)+'px';
+}
+window.addEventListener('resize',resize);
+window.addEventListener('load',function(){init();resize();});
+</script>
+</body>
+</html>
