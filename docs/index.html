@@ -55,7 +55,8 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .roster-fact{font-size:.7rem;font-weight:800;position:absolute;top:2px;left:3px;font-family:monospace;background:rgba(0,0,0,.5);padding:1px 4px;border-radius:3px}
 .roster-fact.T{color:var(--fT)}.roster-fact.P{color:var(--fP)}.roster-fact.W{color:var(--fW)}.roster-fact.U{color:var(--fU)}.roster-fact.C{color:var(--fC)}
 .roster-rar{font-size:.55rem;font-weight:800;position:absolute;top:2px;right:3px;background:rgba(0,0,0,.5);padding:1px 4px;border-radius:3px}
-.roster-stars{font-size:.55rem;position:absolute;bottom:2px;right:3px;color:var(--gold);background:rgba(0,0,0,.5);padding:0 3px;border-radius:3px;letter-spacing:-1px;white-space:nowrap}
+.roster-stars{font-size:.55rem;position:absolute;bottom:2px;right:3px;color:var(--gold);background:rgba(0,0,0,.5);padding:1px 3px;border-radius:3px;text-align:center;max-width:20px}
+.roster-stars .row{display:block;font-size:.55rem;line-height:.85}
 .roster.open .roster-item{width:180px;height:56px;flex-direction:row;justify-content:flex-start;padding:0 8px;gap:6px}
 
 /* ========== VIEWPORT ========== */
@@ -473,7 +474,7 @@ function renderRoster(){
       <span class="roster-fact ${FCLASS[ch.faction]}">${FCLASS[ch.faction]||ch.faction[0]}</span>
       <span class="roster-rar" style="color:var(--${ch.rarity==='SSR'?'gold':ch.rarity==='R'?'blue':'purple'})">${ch.rarity}</span>
       <span class="roster-lv">Lv.${c.level}</span>
-      <span class="roster-stars">${'★'.repeat(c.star)}</span>
+      <span class="roster-stars"><span class="row">${'★'.repeat(l1)}</span>${l2>0?'<span class="row">'+'★'.repeat(l2)+'</span>':''}</span>
     </div>`;
   }).join('');
 }
