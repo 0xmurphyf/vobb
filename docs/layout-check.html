@@ -60,11 +60,11 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .roster.open .roster-item{width:180px;height:56px;flex-direction:row;justify-content:flex-start;padding:0 8px;gap:6px}
 
 /* ========== VIEWPORT ========== */
-.viewport{flex:1;margin-left:112px;display:flex;align-items:stretch;justify-content:center;background:rgba(6,6,15,.5);overflow:hidden}
+.viewport{flex:1;display:flex;align-items:stretch;justify-content:center;background:rgba(6,6,15,.5);overflow:hidden}
 .viewport-inner{display:flex;flex-direction:column;aspect-ratio:16/9;max-width:min(100%,calc(100vh - 60px) * 16 / 9);max-height:calc(100vh - 72px);overflow:hidden;background:rgba(18,18,42,.5);border-left:2px solid rgba(255,255,255,.15);border-right:2px solid rgba(255,255,255,.15)}
-.viewport-top{position:relative;flex:1;min-height:0;background:rgba(10,10,24,.5);padding-left:112px}
-.artwork{position:absolute;top:0;left:112px;right:0;bottom:0;background:rgba(100,100,200,.25);border:2px dashed rgba(100,100,200,.4);z-index:1;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:rgba(255,255,255,.4)}
-.nameplate{position:absolute;bottom:0;left:112px;right:0;padding:16px;background:rgba(0,0,0,.7);z-index:2}
+.viewport-top{position:relative;flex:1;min-height:0;background:rgba(10,10,24,.5)}
+.artwork{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(100,100,200,.25);border:2px dashed rgba(100,100,200,.4);z-index:1;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:rgba(255,255,255,.4)}
+.nameplate{position:absolute;bottom:0;left:0;right:0;padding:16px;background:rgba(0,0,0,.7);z-index:2}
 .char-name{font-size:1.8rem;font-weight:800;color:#fff;background:rgba(0,0,0,.3);padding:4px 12px;border-radius:4px}
 .char-sub{display:flex;align-items:center;gap:8px;margin-top:4px;font-size:.75rem;background:rgba(0,0,0,.3);padding:4px 12px;border-radius:4px}
 .stars{color:var(--gold);font-size:.9rem}
@@ -266,16 +266,17 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
   <!-- Content Area -->
   <div class="content">
 
-    <!-- ========== CHARACTER SCREEN ========== -->
-    <div class="screen active" id="s-char">
-      <div class="bg bg-char" style="position:absolute"></div>
-
-      <!-- Roster Sidebar -->
+    <!-- Roster (layer on screen) -->
+    <div style="position:absolute;top:0;left:0;bottom:0;width:112px;z-index:5">
+    <!-- Roster Sidebar -->
       <div class="roster" id="rosterWrap">
         <div class="roster-toggle" onclick="toggleRoster()">▸</div>
         <div class="roster-grid" id="rosterGrid"></div>
       </div>
+    </div>
 
+    <!-- Char Art (layer on screen) -->
+    <div style="position:absolute;top:0;left:112px;right:440px;bottom:0;z-index:4">
       <!-- Viewport -->
       <div class="viewport">
         <div class="viewport-inner">
@@ -296,6 +297,15 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- ========== CHARACTER SCREEN ========== -->
+    <div class="screen active" id="s-char">
+      <div class="bg bg-char" style="position:absolute"></div>
+
+  
+
+
 
       <!-- Panel -->
       <div class="panel" id="charPanel">
