@@ -1,0 +1,21 @@
+{
+  "engine": "cocos-creator",
+  "packages": {
+    "cc": {
+      "version": "3.8.0",
+      "name": "cocos creator base layer"
+    }
+  },
+  "name": "vobb-cocos",
+  "id": "com.voxxinc.vobb",
+  "version": "0.1.0",
+  "isNative": false,
+  "hasNativeRenderer": false,
+  "scenes": [
+    {
+      "url": "db://assets/scenes/main.scene",
+      "uuid": "main-scene-uuid"
+    }
+  ],
+  "startScene": "main-scene-uuid"
+}
