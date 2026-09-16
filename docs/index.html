@@ -73,13 +73,13 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .rarity{padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:700;background:rgba(0,0,0,.6)}
 .level{color:var(--cyan);font-weight:700}
 .faction-group{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;align-items:flex-end;gap:6px;z-index:3}
-.faction-badge{padding:4px 12px;border-radius:4px;font-size:.6rem;font-weight:700;background:rgba(0,0,0,.6);border:1px solid}
+.faction-badge{padding:8px 18px;border-radius:6px;font-size:.9rem;font-weight:700;background:rgba(0,0,0,.6);border:1px solid}
 .faction-badge.T{color:var(--fT);border-color:var(--fT)}
 .faction-badge.P{color:var(--fP);border-color:var(--fP)}
 .faction-badge.W{color:var(--fW);border-color:var(--fW)}
 .faction-badge.U{color:var(--fU);border-color:var(--fU)}
 .faction-badge.C{color:var(--fC);border-color:var(--fC)}
-.counter-chart{width:80px;height:80px}
+.counter-chart{width:100px;height:100px}
 
 /* ========== PANEL ========== */
 .panel{width:440px;background:rgba(18,18,42,.15);border-left:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;backdrop-filter:blur(10px)}
@@ -94,9 +94,9 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .power-val{font-size:2.4rem;font-weight:900;color:var(--gold);text-shadow:0 0 12px rgba(244,196,48,.25)}
 .stat-row{display:flex;align-items:center;padding:14px 16px;background:rgba(26,26,64,.4);border:1px solid rgba(255,255,255,.06);border-radius:6px;margin-bottom:6px}
 .stat-icon{width:36px;text-align:center;font-size:1.6rem;margin-right:12px}
-.stat-name{flex:1;font-size:.9rem;color:#fff;text-transform:uppercase;font-weight:700;letter-spacing:.5px}
+.stat-name{flex:1;font-size:.9rem;text-transform:uppercase;font-weight:700;letter-spacing:.5px}
 .stat-val{font-size:1.35rem;font-weight:900}
-.stat-val.hp{color:#ff3860}.stat-val.atk{color:#ff6b35}.stat-val.def{color:#3298dc}.stat-val.wis{color:#b86bff}.stat-val.agi{color:#23d160}
+.stat-name.hp,.stat-val.hp{color:#ff3860}.stat-name.atk,.stat-val.atk{color:#ff6b35}.stat-name.def,.stat-val.def{color:#3298dc}.stat-name.wis,.stat-val.wis{color:#b86bff}.stat-name.agi,.stat-val.agi{color:#23d160}
 .section-title{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.5px;margin:16px 0 10px}
 .skill-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}
 .skill-box{text-align:center;padding:14px 10px;background:rgba(26,26,64,.4);border:1px solid rgba(255,255,255,.08);border-radius:6px;cursor:pointer;transition:all .15s}
@@ -505,7 +505,7 @@ function renderChar(){
   document.getElementById('powerVal').textContent=Math.floor(hp/10+atk*3+def*2+wis*1.5+agi*1.5).toLocaleString();
   document.getElementById('statsGrid').innerHTML=[
     {n:'HP',v:hp,i:'❤️',c:'hp'},{n:'ATK',v:atk,i:'⚔️',c:'atk'},{n:'DEF',v:def,i:'🛡️',c:'def'},{n:'WIS',v:wis,i:'✨',c:'wis'},{n:'AGI',v:agi,i:'💨',c:'agi'},
-  ].map(s=>`<div class="stat-row"><span class="stat-icon">${s.i}</span><span class="stat-name">${s.n}</span><span class="stat-val ${s.c}">${s.v}</span></div>`).join('');
+  ].map(s=>`<div class="stat-row"><span class="stat-icon">${s.i}</span><span class="stat-name ${s.c}">${s.n}</span><span class="stat-val ${s.c}">${s.v}</span></div>`).join('');
   document.getElementById('skillsRow').innerHTML=['⚔️','🔮','💫','✨'].map((i,j)=>`<div class="skill-box"><div class="icon">${i}</div><div class="name">${['Normal','Skill 1','Skill 2','Ultimate'][j]}</div><div class="lv">Lv.${Math.max(1,(c.skillLevel||1)-j)}</div></div>`).join('');
 
   // Counter chart
