@@ -469,7 +469,7 @@ function toggleRoster(){document.getElementById('rosterWrap').classList.toggle('
 function renderRoster(){
   document.getElementById('rosterGrid').innerHTML=state.chars.map((c,i)=>{
     const ch=c.character;const stars=c.star;const l1=Math.min(stars,3);const l2=Math.max(stars-3,0);
-    return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})" style="background-image:url(assets/char/char_${i+1}.jpg)">
+    return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})" style="background-image:url(assets/char/char_${i+1}_s.jpg)">
       <span class="roster-fact ${FCLASS[ch.faction]}">${FCLASS[ch.faction]||ch.faction[0]}</span>
       <span class="roster-rar" style="color:var(--${ch.rarity==='SSR'?'gold':ch.rarity==='R'?'blue':'purple'})">${ch.rarity}</span>
       <span class="roster-lv">Lv.${c.level}</span>
