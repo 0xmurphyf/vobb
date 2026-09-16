@@ -43,7 +43,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 
 /* === Character Art Area === */
 .char-area{flex:1;display:flex;align-items:center;justify-content:center;background:rgba(6,6,15,.5);overflow:hidden;position:relative}
-.char-frame{aspect-ratio:16/9;max-width:100%;max-height:100%;position:relative;background:#000;overflow:hidden}
+.char-frame{aspect-ratio:16/9;width:100%;height:100%;position:relative;background:#000;overflow:hidden;max-width:calc((100vh - 200px) * 16 / 9);max-height:calc(100vh - 200px)}
 .artwork{position:absolute;top:0;left:0;right:0;bottom:0;background-size:contain;background-repeat:no-repeat;background-position:center}
 .char-nameplate{position:absolute;bottom:0;left:0;right:0;padding:20px 24px;background:linear-gradient(0deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.6) 60%,transparent 100%)}
 .char-name{font-size:2rem;font-weight:800;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.8)}
