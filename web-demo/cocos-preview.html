@@ -34,9 +34,9 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .roster-layer{position:absolute;top:60px;left:0;bottom:0;width:112px;background:rgba(18,18,42,.3);border-right:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;padding:4px;gap:4px;overflow-y:auto;z-index:5;backdrop-filter:blur(8px)}
 .roster-toggle{color:rgba(255,255,255,.4);font-size:.7rem;cursor:pointer;padding:2px}
 .roster-toggle:hover{color:#fff}
-.roster-item{width:100px;height:100px;border-radius:4px;background:rgba(80,80,160,.3);border:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:.9rem;position:relative}
+.roster-item{width:100px;height:100px;border-radius:4px;background-size:cover;background-position:center;border:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:.9rem;position:relative}
 .roster-item:hover{border-color:rgba(255,255,255,.3)}
-.roster-item.active{border-color:var(--gold);background:rgba(244,196,48,.15)}
+.roster-item.active{border-color:var(--gold);box-shadow:0 0 8px rgba(244,196,48,.4)}
 .roster-fact{font-size:.7rem;font-weight:800;font-family:monospace;background:rgba(0,0,0,.5);padding:1px 4px;border-radius:3px;position:absolute;top:2px;left:3px}
 .roster-rar{font-size:.55rem;font-weight:800;background:rgba(0,0,0,.5);padding:1px 4px;border-radius:3px;position:absolute;top:2px;right:3px}
 .roster-lv{font-size:.55rem;font-weight:800;color:#fff;background:rgba(0,0,0,.5);padding:0 3px;border-radius:2px;position:absolute;bottom:2px;left:3px}
@@ -48,8 +48,8 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .char-viewport{flex:1;display:flex;align-items:stretch;justify-content:center;overflow:hidden;background:rgba(6,6,15,.5)}
 .char-viewport-inner{display:flex;flex-direction:column;aspect-ratio:16/9;max-width:min(100%,calc(100vh - 120px) * 16 / 9);max-height:calc(100vh - 120px);overflow:hidden;background:rgba(18,18,42,.5);border-left:2px solid rgba(255,255,255,.15);border-right:2px solid rgba(255,255,255,.15)}
 .char-viewport-top{position:relative;flex:1;min-height:0;background:rgba(10,10,24,.5)}
-.artwork{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(100,100,200,.25);border:2px dashed rgba(100,100,200,.4);z-index:1;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:rgba(255,255,255,.4)}
-.nameplate{position:absolute;bottom:0;left:0;right:0;padding:16px;background:rgba(0,0,0,.7);z-index:2}
+.artwork{position:absolute;top:0;left:0;right:0;bottom:0;background-size:contain;background-repeat:no-repeat;background-position:center;z-index:1}
+.nameplate{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(0deg,rgba(0,0,0,.9) 0%,transparent 100%);z-index:2}
 .char-name{font-size:1.8rem;font-weight:800;color:#fff}
 .char-sub{display:flex;align-items:center;gap:8px;margin-top:4px;font-size:.75rem}
 .stars{color:var(--gold);font-size:.9rem}
@@ -129,15 +129,15 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .slot.filled{border-style:solid;border-color:var(--blue);background:rgba(50,152,220,.3)}
 .slot .nm{font-size:.6rem;font-weight:700;color:#fff}
 .f-char{padding:8px;background:rgba(18,18,42,.5);border:1px solid rgba(255,255,255,.1);border-radius:6px;text-align:center;cursor:pointer}
-.f-char .ava{width:32px;height:32px;background:rgba(100,100,200,.3);border-radius:4px;margin:0 auto 4px}
+.f-char .ava{width:32px;height:32px;background:rgba(100,100,200,.3);border-radius:4px;margin:0 auto 4px;background-size:cover;background-position:center}
 .f-char .nm{font-size:.55rem;font-weight:700;margin-top:2px;color:#fff}
 .codex-card{padding:12px;background:rgba(18,18,42,.5);border:1px solid rgba(255,255,255,.1);border-radius:6px;text-align:center}
-.codex-card .ava{height:40px;background:rgba(100,100,200,.3);border-radius:4px;margin:0 auto 8px;width:40px}
+.codex-card .ava{height:40px;background:rgba(100,100,200,.3);border-radius:4px;margin:0 auto 8px;width:40px;background-size:cover;background-position:center}
 .codex-card .nm{font-size:.65rem;font-weight:700;margin-top:4px;color:#fff}
 .codex-card .rar{font-size:.55rem;font-weight:700;margin-top:2px;color:var(--gold)}
 .battle-field{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:16px;overflow-y:auto;background:rgba(18,18,42,.4)}
 .unit{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px;background:rgba(18,18,42,.5);border:1px solid rgba(255,255,255,.1);border-radius:6px;min-width:56px}
-.unit .ava{width:32px;height:32px;background:rgba(100,100,200,.3);border-radius:4px;margin-bottom:2px}
+.unit .ava{width:32px;height:32px;background:rgba(100,100,200,.3);border-radius:4px;margin-bottom:2px;background-size:cover;background-position:center}
 .unit .nm{font-size:.5rem;font-weight:700;color:#fff}
 .unit .hp-bar{width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:0;margin-top:2px}
 .unit .hp-fill{height:100%;background:var(--green);border-radius:0}
@@ -215,7 +215,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
       <div class="char-viewport">
         <div class="char-viewport-inner">
           <div class="char-viewport-top">
-            <div class="artwork" id="charArt"><span>CHAR ART 16:9</span></div>
+            <div class="artwork" id="charArt" style="background-image:url(assets/char/char_1.jpg)"></div>
             <div class="nameplate">
               <div class="char-name" id="charName">Adaptive Stalker</div>
               <div class="char-sub">
@@ -333,7 +333,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 </div><!-- /game-container -->
 
 <script>
-// ============ Config (mirrors Cocos config.ts) ============
+// ============ Config ============
 const FACTIONS = ['TRANSCENDENT', 'PURIST', 'WILD', 'UNKNOWN', 'CYBERIST'];
 const FACTION_COLORS = { TRANSCENDENT:'#b86bff', PURIST:'#ff6b35', WILD:'#23d160', UNKNOWN:'#3298dc', CYBERIST:'#ff3860' };
 const RARITY_COLORS = { N:'#888', R:'#3298dc', SR:'#b86bff', SSR:'#f4c430', UR:'#ff3860' };
@@ -348,6 +348,22 @@ const CHARS = [
   { id:'c4', name:'Null Entity', faction:'UNKNOWN', rarity:'R', baseHp:650, baseAtk:150, baseDef:100, baseWis:160, baseAgi:150 },
   { id:'c5', name:'Chrome Revenant', faction:'CYBERIST', rarity:'R', baseHp:800, baseAtk:170, baseDef:120, baseWis:110, baseAgi:140 },
 ];
+
+const CHAR_IMAGES = {
+  c1: 'assets/char/char_1.jpg',
+  c2: 'assets/char/char_2.jpg',
+  c3: 'assets/char/char_3.jpg',
+  c4: 'assets/char/char_4.jpg',
+  c5: 'assets/char/char_5.jpg',
+};
+
+const CHAR_THUMBS = {
+  c1: 'assets/char/char_1_s.jpg',
+  c2: 'assets/char/char_2_s.jpg',
+  c3: 'assets/char/char_3_s.jpg',
+  c4: 'assets/char/char_4_s.jpg',
+  c5: 'assets/char/char_5_s.jpg',
+};
 
 let state = {
   player: { name:'Hunter', currencies:[{type:'gold',amount:5000},{type:'gems',amount:3000},{type:'stamina',amount:100}] },
@@ -389,7 +405,8 @@ function renderRoster(){
   const grid=document.getElementById('rosterGrid');
   grid.innerHTML=state.chars.map((c,i)=>{
     const ch=c.character; const stars=c.star; const l1=Math.min(stars,3); const l2=Math.max(stars-3,0);
-    return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})">
+    const thumb=CHAR_THUMBS[c.id]||'';
+    return `<div class="roster-item ${i===state.idx?'active':''}" onclick="selectChar(${i})" style="background-image:url(${thumb})">
       <span class="roster-fact" style="color:${FACTION_COLORS[ch.faction]}">${FCLASS[ch.faction]}</span>
       <span class="roster-rar" style="color:${RARITY_COLORS[ch.rarity]}">${ch.rarity}</span>
       <span class="roster-lv">Lv.${c.level}</span>
@@ -406,7 +423,9 @@ function toggleRoster(){document.getElementById('rosterLayer').classList.toggle(
 function renderChar(){
   if(state.chars.length===0) return;
   const c=state.chars[state.idx]; const ch=c.character;
-  document.getElementById('charArt').innerHTML=`<span>CHAR ART 16:9<br><small style="font-size:.8rem;opacity:.6">${ch.name}</small></span>`;
+  const art=document.getElementById('charArt');
+  art.style.backgroundImage=`url(${CHAR_IMAGES[c.id]||''})`;
+  art.innerHTML='';
   document.getElementById('charName').textContent=ch.name;
   document.getElementById('charStars').innerHTML='★'.repeat(c.star)+'☆☆☆☆☆'.slice(0,5-c.star);
   document.getElementById('charRar').textContent=ch.rarity;
@@ -512,14 +531,21 @@ function pullGacha(n){
 function renderFormation(){
   document.getElementById('formSlots').innerHTML=[0,1,2,3,4].map(i=>{
     const cid=state.formation[i]; const c=cid?state.chars.find(x=>x.id===cid):null;
-    return `<div class="slot ${c?'filled':''}">${c?`<div class="nm">${c.character.name.slice(0,6)}</div><div class="lv">Lv.${c.level}</div>`:'<span style="opacity:.3">+</span>'}</div>`;
+    const thumb=c?CHAR_THUMBS[c.id]:'';
+    return `<div class="slot ${c?'filled':''}" style="${c?'background-image:url('+thumb+');background-size:cover;background-position:center':''}">${c?'<div class="nm">'+c.character.name.slice(0,6)+'</div><div class="lv">Lv.'+c.level+'</div>':'<span style="opacity:.3">+</span>'}</div>`;
   }).join('');
-  document.getElementById('formChars').innerHTML=state.chars.map(c=>`<div class="f-char"><div class="ava"></div><div class="nm">${c.character.name}</div></div>`).join('');
+  document.getElementById('formChars').innerHTML=state.chars.map(c=>{
+    const thumb=CHAR_THUMBS[c.id]||'';
+    return `<div class="f-char"><div class="ava" style="background-image:url(${thumb})"></div><div class="nm">${c.character.name}</div></div>`;
+  }).join('');
 }
 
 // ============ Codex ============
 function renderCodex(){
-  document.getElementById('codexGrid').innerHTML=CHARS.map(c=>`<div class="codex-card"><div class="ava"></div><div class="nm">${c.name}</div><div class="rar" style="color:${RARITY_COLORS[c.rarity]}">${c.rarity}</div></div>`).join('');
+  document.getElementById('codexGrid').innerHTML=CHARS.map(c=>{
+    const thumb=CHAR_THUMBS[c.id]||'';
+    return `<div class="codex-card"><div class="ava" style="background-image:url(${thumb});width:60px;height:60px;border-radius:4px"></div><div class="nm">${c.name}</div><div class="rar" style="color:${RARITY_COLORS[c.rarity]}">${c.rarity}</div></div>`;
+  }).join('');
 }
 
 // ============ Layer Toggle ============
