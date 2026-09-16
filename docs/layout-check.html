@@ -229,6 +229,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
     <button class="layer-btn active" data-layer="bg" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">BG</button>
     <button class="layer-btn active" data-layer="screen" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">SCREEN</button>
     <button class="layer-btn active" data-layer="topbar" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">TOPBAR</button>
+    <button class="layer-btn active" data-layer="charart" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">CHAR</button>
     <button class="layer-btn active" data-layer="content" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">CONTENT</button>
     <button class="layer-btn active" data-layer="panel" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">PANEL</button>
     <button class="layer-btn active" data-layer="menu" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">MENU</button>
@@ -276,28 +277,8 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
     </div>
 
     <!-- Char Art (layer on screen) -->
-    <div style="position:absolute;top:0;left:112px;right:440px;bottom:0;z-index:4">
-      <!-- Viewport -->
-      <div class="viewport">
-        <div class="viewport-inner">
-          <div class="viewport-top">
-            <div class="artwork" id="charArt"><span>CHAR ART 16:9</span></div>
-            <div class="nameplate">
-              <div class="char-name" id="charName">Adaptive Stalker</div>
-              <div class="char-sub">
-                <span class="stars" id="charStars">★★★★★</span>
-                <span class="rarity" id="charRar">R</span>
-                <span class="level" id="charLv">Lv.1</span>
-              </div>
-            </div>
-            <div class="faction-group">
-              <div class="faction-badge T" id="charFact">TRANSCENDENT</div>
-              <div class="counter-chart" id="counterChart"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="charLayer" style="position:absolute;top:0;left:112px;right:440px;bottom:0;z-index:4">
+
 
     <!-- ========== CHARACTER SCREEN ========== -->
     <div class="screen active" id="s-char">
@@ -678,6 +659,7 @@ function renderCodex(){
     screen: document.querySelectorAll('.screen.active'),
     topbar: document.getElementById('topbar') ? [document.getElementById('topbar')] : [],
     content: document.querySelector('.content') ? [document.querySelector('.content')] : [],
+    charart: document.getElementById('charLayer') ? [document.getElementById('charLayer')] : [],
     panel: document.querySelector('.panel') ? [document.querySelector('.panel')] : [],
     menu: document.getElementById('menuPanel') ? [document.getElementById('menuPanel')] : []
   };
