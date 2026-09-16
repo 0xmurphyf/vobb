@@ -232,6 +232,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
     <button class="layer-btn active" data-layer="charart" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">CHAR</button>
     <button class="layer-btn active" data-layer="content" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">CONTENT</button>
     <button class="layer-btn active" data-layer="panel" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">PANEL</button>
+    <button class="layer-btn active" data-layer="roster" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">ROSTER</button>
     <button class="layer-btn active" data-layer="menu" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">MENU</button>
   </div>
 
@@ -268,7 +269,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
   <div class="content">
 
     <!-- Roster (layer on screen) -->
-    <div style="position:absolute;top:0;left:0;bottom:0;width:112px;z-index:5">
+    <div id="rosterLayer" style="position:absolute;top:0;left:0;bottom:0;width:112px;z-index:5">
     <!-- Roster Sidebar -->
       <div class="roster" id="rosterWrap">
         <div class="roster-toggle" onclick="toggleRoster()">▸</div>
