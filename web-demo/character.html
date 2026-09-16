@@ -47,9 +47,9 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .roster-stars .row{display:block;font-size:.4rem;line-height:.7}
 
 /* === Character Art Area === */
-.char-area{flex:1;display:flex;align-items:center;justify-content:center;background:rgba(6,6,15,.5);overflow:hidden;position:relative}
-.char-frame{aspect-ratio:16/9;width:100%;height:100%;position:relative;background:#000;overflow:hidden;max-width:calc((100vh - 200px) * 16 / 9);max-height:calc(100vh - 200px)}
-.artwork{position:absolute;top:0;left:0;right:0;bottom:0;background-size:contain;background-repeat:no-repeat;background-position:center}
+.char-area{flex:1;display:flex;align-items:stretch;justify-content:center;background:rgba(6,6,15,.5);overflow:hidden;position:relative}
+.char-frame{width:100%;height:100%;position:relative;background:#000;overflow:hidden}
+.artwork{position:absolute;top:0;left:0;right:0;bottom:0;background-size:cover;background-repeat:no-repeat;background-position:center}
 .char-nameplate{position:absolute;bottom:0;left:0;right:0;padding:20px 24px;background:linear-gradient(0deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.6) 60%,transparent 100%)}
 .char-name{font-size:2rem;font-weight:800;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.8)}
 .char-meta{display:flex;align-items:center;gap:12px;margin-top:6px}
@@ -327,16 +327,23 @@ function renderChar(){
   fb.style.color=FACTION_COLORS[c.faction]; fb.style.borderColor=FACTION_COLORS[c.faction];
   fb.className='faction-badge '+FCLASS[c.faction];
 
-  // Counter chart
-  const pts=[{x:40,y:8},{x:72,y:32},{x:62,y:70},{x:18,y:70},{x:8,y:32}];
+  // Counter chart (regular pentagram)
+  const cx=40, cy=40, r=30;
+  const pts=[];
+  for(let i=0;i<5;i++){const angle=(Math.PI*2*i)/5 - Math.PI/2; pts.push({x:cx+r*Math.cos(angle), y:cy+r*Math.sin(angle)})}
   const me=FACTIONS.indexOf(c.faction);
   let svg='<svg viewBox="0 0 80 80" width="100%" height="100%">';
-  FACTIONS.forEach((f,i)=>{if(i===me)return;
-    svg+=`<line x1="${pts[me].x}" y1="${pts[me].y}" x2="${pts[i].x}" y2="${pts[i].y}" stroke="${FACTION_COLORS[c.faction]}" stroke-width="1.5" opacity=".6"/>`;
-  });
+  // Draw star lines (connect every 2nd point: 0-2-4-1-3-0)
+  const starOrder=[0,2,4,1,3,0];
+  const lineCol=FACTION_COLORS[c.faction];
+  for(let i=0;i<starOrder.length-1;i++){
+    const a=pts[starOrder[i]], b=pts[starOrder[i+1]];
+    svg+=`<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="${lineCol}" stroke-width="1.5" opacity=".7"/>`;
+  }
+  // Draw dots and labels
   FACTIONS.forEach((f,i)=>{const col=i===me?FACTION_COLORS[f]:'#1a1a40';
-    svg+=`<circle cx="${pts[i].x}" cy="${pts[i].y}" r="7" fill="${col}" stroke="#fff" stroke-width="${i===me?2:1}"/>`;
-    svg+=`<text x="${pts[i].x}" y="${pts[i].y+3}" text-anchor="middle" font-size="7" fill="#fff" font-weight="bold">${FCLASS[f]}</text>`;
+    svg+=`<circle cx="${pts[i].x}" cy="${pts[i].y}" r="6" fill="${col}" stroke="#fff" stroke-width="${i===me?2:1}"/>`;
+    svg+=`<text x="${pts[i].x}" y="${pts[i].y+3}" text-anchor="middle" font-size="6" fill="#fff" font-weight="bold">${FCLASS[f]}</text>`;
   });
   svg+='</svg>';
   document.getElementById('counterChart').innerHTML=svg;
