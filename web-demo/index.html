@@ -32,9 +32,9 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .bg-codex{background-image:url(assets/bg/1-main-lobby.jpg)}
 
 /* ========== TOPBAR ========== */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:var(--card);border-bottom:1px solid var(--bdr);position:relative;z-index:5;flex-shrink:0}
-.topbar-title{font-size:.975rem;color:var(--t2);font-weight:600;letter-spacing:1px;text-transform:uppercase}
-.res{display:flex;align-items:center;gap:4px;padding:5px 12px;border-radius:4px;background:var(--card2);font-size:.9rem;font-weight:700}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:rgba(18,18,42,.3);border-bottom:1px solid rgba(255,255,255,.08);position:relative;z-index:5;flex-shrink:0;backdrop-filter:blur(8px)}
+.topbar-title{font-size:.975rem;color:#fff;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.res{display:flex;align-items:center;gap:4px;padding:5px 12px;border-radius:4px;background:rgba(255,255,255,.1);font-size:.9rem;font-weight:700}
 .res.g{color:var(--cyan)}.res.o{color:var(--gold)}.res.s{color:var(--green)}
 .btn-icon{width:42px;height:42px;border-radius:4px;background:var(--card2);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--t2)}
 .btn-icon:hover{background:var(--s2);border-color:var(--bdr2)}
@@ -46,7 +46,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .card{background:var(--card);border:1px solid var(--bdr);border-radius:8px}
 
 /* ========== ROSTER ========== */
-.roster{width:88px;background:var(--card);border-right:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;padding:4px;gap:4px;overflow-y:auto;flex-shrink:0;z-index:5;position:relative}
+.roster{width:88px;background:rgba(18,18,42,.3);border-right:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;padding:4px;gap:4px;overflow-y:auto;flex-shrink:0;z-index:5;position:relative;backdrop-filter:blur(8px)}
 .roster.open{position:absolute;top:0;left:0;bottom:0;width:180px;z-index:5;box-shadow:4px 0 24px rgba(0,0,0,.6)}
 .roster-item{width:60px;height:60px;border-radius:4px;background:var(--card2);border:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;background-size:cover;background-position:center;font-size:.9rem;position:relative}
 .roster-item:hover{border-color:var(--bdr2)}
