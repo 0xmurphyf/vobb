@@ -224,6 +224,16 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 <!-- Main App -->
 <div id="main-app" style="position:absolute;inset:0;display:none;flex-direction:column;z-index:1">
 
+  <!-- Layer Toggle Panel -->
+  <div id="layerPanel" style="position:fixed;bottom:10px;right:10px;z-index:100;display:flex;gap:4px;padding:8px;background:rgba(0,0,0,.8);border:1px solid rgba(255,255,255,.2);border-radius:6px">
+    <button class="layer-btn active" data-layer="bg" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">BG</button>
+    <button class="layer-btn active" data-layer="screen" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">SCREEN</button>
+    <button class="layer-btn active" data-layer="topbar" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">TOPBAR</button>
+    <button class="layer-btn active" data-layer="content" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">CONTENT</button>
+    <button class="layer-btn active" data-layer="panel" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">PANEL</button>
+    <button class="layer-btn active" data-layer="menu" style="padding:4px 8px;font-size:.55rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer">MENU</button>
+  </div>
+
   <!-- Top Bar -->
   <div class="topbar" id="topbar">
     <div style="display:flex;align-items:center;gap:10px">
@@ -644,10 +654,39 @@ function renderCodex(){
 
 // === Init ===
 (function(){
-  const c=document.getElementById('bg-char');
+  // Remove duplicate bg divs from non-char screens
   document.querySelectorAll('.screen').forEach(s=>{
     if(s.id==='s-char')return;
     if(s.id==='s-battle'||s.id==='s-arena')s.querySelector('.bg')&&s.querySelector('.bg').remove();
+  });
+})();
+
+// === Layer Toggle ===
+(function(){
+  const layers = {
+    bg: document.querySelectorAll('.bg'),
+    screen: document.querySelectorAll('.screen.active'),
+    topbar: document.getElementById('topbar') ? [document.getElementById('topbar')] : [],
+    content: document.querySelector('.content') ? [document.querySelector('.content')] : [],
+    panel: document.querySelector('.panel') ? [document.querySelector('.panel')] : [],
+    menu: document.getElementById('menuPanel') ? [document.getElementById('menuPanel')] : []
+  };
+  
+  document.querySelectorAll('.layer-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const layer = btn.dataset.layer;
+      const isActive = btn.classList.contains('active');
+      
+      btn.classList.toggle('active');
+      btn.style.background = isActive ? 'rgba(255,255,255,.05)' : 'rgba(0,209,178,.3)';
+      
+      if (layers[layer]) {
+        layers[layer].forEach(el => {
+          el.style.opacity = isActive ? '0' : '1';
+          el.style.pointerEvents = isActive ? 'none' : 'auto';
+        });
+      }
+    });
   });
 })();
 </script>
