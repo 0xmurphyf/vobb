@@ -69,13 +69,14 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .stars{color:var(--gold);font-size:.9rem}
 .rarity{padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:700;background:rgba(0,0,0,.6)}
 .level{color:var(--cyan);font-weight:700}
-.faction-badge{position:absolute;top:12px;right:12px;padding:4px 12px;border-radius:4px;font-size:.6rem;font-weight:700;background:rgba(0,0,0,.6);border:1px solid}
+.faction-group{position:absolute;top:12px;left:12px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;z-index:3}
+.faction-badge{padding:4px 12px;border-radius:4px;font-size:.6rem;font-weight:700;background:rgba(0,0,0,.6);border:1px solid}
 .faction-badge.T{color:var(--fT);border-color:var(--fT)}
 .faction-badge.P{color:var(--fP);border-color:var(--fP)}
 .faction-badge.W{color:var(--fW);border-color:var(--fW)}
 .faction-badge.U{color:var(--fU);border-color:var(--fU)}
 .faction-badge.C{color:var(--fC);border-color:var(--fC)}
-.counter-chart{position:absolute;top:50px;left:12px;width:80px;height:80px;z-index:2}
+.counter-chart{width:80px;height:80px}
 
 /* ========== PANEL ========== */
 .panel{width:440px;background:var(--card);border-left:1px solid var(--bdr);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
@@ -276,8 +277,10 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
                 <span class="level" id="charLv">Lv.1</span>
               </div>
             </div>
-            <div class="faction-badge T" id="charFact">TRANSCENDENT</div>
-            <div class="counter-chart" id="counterChart"></div>
+            <div class="faction-group">
+              <div class="faction-badge T" id="charFact">TRANSCENDENT</div>
+              <div class="counter-chart" id="counterChart"></div>
+            </div>
           </div>
         </div>
       </div>
