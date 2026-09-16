@@ -327,24 +327,17 @@ function renderChar(){
   fb.style.color=FACTION_COLORS[c.faction]; fb.style.borderColor=FACTION_COLORS[c.faction];
   fb.className='faction-badge '+FCLASS[c.faction];
 
-  // Counter chart (regular pentagram)
-  const cx=40, cy=40, r=30;
-  const pts=[];
-  for(let i=0;i<5;i++){const angle=(Math.PI*2*i)/5 - Math.PI/2; pts.push({x:cx+r*Math.cos(angle), y:cy+r*Math.sin(angle)})}
-  const me=FACTIONS.indexOf(c.faction);
+  // Counter chart (same as original)
+  const f=['TRANSCENDENT','PURIST','WILD','UNKNOWN','CYBERIST'];
+  const col={TRANSCENDENT:'#b86bff',PURIST:'#ff6b35',WILD:'#23d160',UNKNOWN:'#3298dc',CYBERIST:'#ff3860'};
+  const lab={TRANSCENDENT:'T',PURIST:'P',WILD:'W',UNKNOWN:'U',CYBERIST:'C'};
+  const cx=40,cy=40,r=30;
+  const ang=[-90,-18,54,126,198].map(a=>a*Math.PI/180);
+  const pts=ang.map(a=>({x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)}));
+  const cnt={TRANSCENDENT:['WILD','CYBERIST'],PURIST:['TRANSCENDENT','WILD'],WILD:['UNKNOWN','CYBERIST'],UNKNOWN:['PURIST','TRANSCENDENT'],CYBERIST:['UNKNOWN','PURIST']};
   let svg='<svg viewBox="0 0 80 80" width="100%" height="100%">';
-  // Draw star lines (connect every 2nd point: 0-2-4-1-3-0)
-  const starOrder=[0,2,4,1,3,0];
-  const lineCol=FACTION_COLORS[c.faction];
-  for(let i=0;i<starOrder.length-1;i++){
-    const a=pts[starOrder[i]], b=pts[starOrder[i+1]];
-    svg+=`<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="${lineCol}" stroke-width="1.5" opacity=".7"/>`;
-  }
-  // Draw dots and labels
-  FACTIONS.forEach((f,i)=>{const col=i===me?FACTION_COLORS[f]:'#1a1a40';
-    svg+=`<circle cx="${pts[i].x}" cy="${pts[i].y}" r="6" fill="${col}" stroke="#fff" stroke-width="${i===me?2:1}"/>`;
-    svg+=`<text x="${pts[i].x}" y="${pts[i].y+3}" text-anchor="middle" font-size="6" fill="#fff" font-weight="bold">${FCLASS[f]}</text>`;
-  });
+  f.forEach(i=>cnt[i].forEach(t=>{const ti=f.indexOf(t);svg+=`<line x1="${pts[f.indexOf(i)].x}" y1="${pts[f.indexOf(i)].y}" x2="${pts[ti].x}" y2="${pts[ti].y}" stroke="${col[i]}" stroke-width="1.5" opacity=".7"/>`}));
+  f.forEach((i,idx)=>{const on=i===ch.faction;svg+=`<circle cx="${pts[idx].x}" cy="${pts[idx].y}" r="${on?7:4}" fill="${on?col[i]:'#1a1a40'}" stroke="${col[i]}" stroke-width="2"/>`;svg+=`<text x="${pts[idx].x}" y="${pts[idx].y+3}" text-anchor="middle" font-size="6" font-weight="800" fill="${on?'#fff':'#ddd'}">${lab[i]}</text>`});
   svg+='</svg>';
   document.getElementById('counterChart').innerHTML=svg;
 
