@@ -51,12 +51,11 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .roster-item{width:100px;height:100px;border-radius:4px;background:var(--card2);border:1px solid var(--bdr);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;background-size:cover;background-position:center;font-size:.9rem;position:relative}
 .roster-item:hover{border-color:var(--bdr2)}
 .roster-item.active{border-color:var(--gold);box-shadow:0 0 8px rgba(244,196,48,.3)}
-.roster-lv{font-size:.55rem;font-weight:800;color:#fff;position:absolute;bottom:2px;left:3px;background:rgba(0,0,0,.5);padding:0 3px;border-radius:2px;line-height:.9}
-.roster-fact{font-size:.7rem;font-weight:800;position:absolute;top:2px;left:3px;font-family:monospace;background:rgba(0,0,0,.5);padding:1px 4px;border-radius:3px}
+.roster-lv{font-size:.75rem;font-weight:800;color:#fff;position:absolute;bottom:3px;left:4px;background:rgba(0,0,0,.6);padding:2px 6px;border-radius:3px;line-height:1}
+.roster-fact{font-size:.75rem;font-weight:800;font-family:monospace;position:absolute;top:3px;left:4px;background:rgba(0,0,0,.6);padding:2px 6px;border-radius:3px;line-height:1}
 .roster-fact.T{color:var(--fT)}.roster-fact.P{color:var(--fP)}.roster-fact.W{color:var(--fW)}.roster-fact.U{color:var(--fU)}.roster-fact.C{color:var(--fC)}
-.roster-rar{font-size:.55rem;font-weight:800;position:absolute;top:2px;right:3px;background:rgba(0,0,0,.5);padding:1px 4px;border-radius:3px}
-.roster-stars{font-size:.4rem;position:absolute;bottom:2px;right:2px;color:var(--gold);background:rgba(0,0,0,.5);padding:1px 2px;border-radius:2px;text-align:center;max-width:14px;letter-spacing:-.5px}
-.roster-stars .row{display:block;font-size:.4rem;line-height:.7}
+.roster-rar{font-size:.75rem;font-weight:800;position:absolute;top:3px;right:4px;background:rgba(0,0,0,.6);padding:2px 6px;border-radius:3px;line-height:1}
+.roster-stars{font-size:.75rem;position:absolute;bottom:3px;right:4px;color:var(--gold);background:rgba(0,0,0,.6);padding:2px 5px;border-radius:3px;line-height:1.1;white-space:nowrap}
 .roster.open .roster-item{width:180px;height:56px;flex-direction:row;justify-content:flex-start;padding:0 8px;gap:6px}
 
 /* ========== VIEWPORT ========== */
@@ -72,14 +71,14 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;background:no
 .stars{color:var(--gold);font-size:.9rem}
 .rarity{padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:700;background:rgba(0,0,0,.6)}
 .level{color:var(--cyan);font-weight:700}
-.faction-group{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;align-items:flex-end;gap:6px;z-index:3}
-.faction-badge{padding:8px 18px;border-radius:6px;font-size:.9rem;font-weight:700;background:rgba(0,0,0,.6);border:1px solid}
+.faction-group{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;align-items:flex-end;gap:6px;z-index:10}
+.faction-badge{padding:10px 22px;border-radius:6px;font-size:1rem;font-weight:800;background:rgba(0,0,0,.6);border:1px solid}
 .faction-badge.T{color:var(--fT);border-color:var(--fT)}
 .faction-badge.P{color:var(--fP);border-color:var(--fP)}
 .faction-badge.W{color:var(--fW);border-color:var(--fW)}
 .faction-badge.U{color:var(--fU);border-color:var(--fU)}
 .faction-badge.C{color:var(--fC);border-color:var(--fC)}
-.counter-chart{width:100px;height:100px}
+.counter-chart{width:120px;height:120px}
 
 /* ========== PANEL ========== */
 .panel{width:440px;background:rgba(18,18,42,.15);border-left:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;backdrop-filter:blur(10px)}
